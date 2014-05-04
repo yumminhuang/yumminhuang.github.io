@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yumminhuang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2014-05-04T10:00:00-04:00</updated><entry><title>Objective-C语法总结</title><link href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html" rel="alternate"></link><updated>2014-05-04T10:00:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:objective-cyu-fa-zong-jie.html</id><summary type="html">&lt;p&gt;最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yumminhuang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/objective-c.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2014-05-04T10:00:00-04:00</updated><entry><title>Objective-C语法总结</title><link href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html" rel="alternate"></link><updated>2014-05-04T10:00:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:objective-cyu-fa-zong-jie.html</id><summary type="html">&lt;p&gt;最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。&lt;/p&gt;
 &lt;p&gt;在看过了Objective-C的基本语法之后，明白了为什么之前会觉得Objective-C的语法奇怪。绝大部分的面向对象的程序语言，包括C++, Java到后来的Python等在调用方法的格式都是&lt;code&gt;object.method(argument1, argument2...)&lt;/code&gt;。然而Objective-C的格式却是&lt;code&gt;[object method: argument1 andArg: argument2...]&lt;/code&gt;。所以长期使用C++, Java的程序员在第一次看到Objective-C代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉Objective-C的语法也有它的优点。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;废话不多说，上干货。下面以Java作比对，总结一下Objective-C的语法。&lt;/p&gt;
@@ -96,25 +96,4 @@
 
 
 &lt;hr /&gt;
-&lt;p&gt;由于我也是初学Objective-C，难免有错误和总结不全面的地方，恳请指正。&lt;/p&gt;</summary><category term="Objective-C"></category></entry><entry><title>Execute a Command in the Background on Remote Server using SSH</title><link href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html" rel="alternate"></link><updated>2014-05-04T09:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:execute-a-command-in-the-background-on-remote-server-using-ssh.html</id><summary type="html">&lt;p&gt;In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Since there are several remote servers, I have to run the server program in the background on all remote machines.&lt;/p&gt;
-&lt;p&gt;At first, I simply add the ampersand (&amp;amp;) at the end of the command like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;cd /some/directory; ./program &amp;amp;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;But my script just hangs after it runs first remote server. After googling this program, I found this command to solve my problem.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;sh -c &amp;#39;cd /some/directory; nohup ./program &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 &amp;amp;&amp;#39;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This command is quiet complicated. It need to use nohup as well as output redirection. But it works and solved my problem.&lt;/p&gt;
-&lt;h3&gt;Reference&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine"&gt;Stackoverflow&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Nohup"&gt;nohup&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry></feed>
+&lt;p&gt;由于我也是初学Objective-C，难免有错误和总结不全面的地方，恳请指正。&lt;/p&gt;</summary><category term="Objective-C"></category></entry></feed>

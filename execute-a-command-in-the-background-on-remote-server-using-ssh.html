@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Execute a Command in the Background on Remote Server using SSH - Yumminhuang's Blog</title>
+    <title>Execute a Command in the Background on Remote Server using SSH - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -11,11 +11,11 @@
     
 
     <!-- Open Graph tags -->
-        <meta property="og:site_name" content="Yumminhuang's Blog" />
+        <meta property="og:site_name" content="Yumminhuang" />
             <meta property="og:type" content="article"/>
             <meta property="og:title" content="Execute a Command in the Background on Remote Server using SSH"/>
             <meta property="og:url" content="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html"/>
-            <meta property="og:description" content="In a project, I have to depoly a server program on serveral remote servers. So I wrote a shell script to depoly and run the program using scp and ssh. Since there are several remote servers, I have to run the server program in the background on all remote machines ..."/>
+            <meta property="og:description" content="In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using scp and ssh. Since there are several remote servers, I have to run the server program in the background on all remote machines ..."/>
             <meta property="article:published_time" content="2014-05-04" />
             <meta property="article:section" content="Shell" />
             <meta property="article:tag" content="Linux" />
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Yumminhuang's Blog ATOM Feed"/>
+              title="Yumminhuang ATOM Feed"/>
 
 </head>
 <body>
@@ -44,13 +44,16 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="http://yumminhuang.github.io/" class="navbar-brand">
-Yumminhuang's Blog            </a>
+Yumminhuang            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
+                        </li>
                         <li class="active">
                             <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
                         </li>
@@ -96,7 +99,7 @@ Yumminhuang's Blog            </a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>In a project, I have to depoly a server program on serveral remote servers. So I wrote a shell script to depoly and run the program using <code>scp</code> and <code>ssh</code>.</p>
+                <p>In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using <code>scp</code> and <code>ssh</code>.</p>
 <p>Since there are several remote servers, I have to run the server program in the background on all remote machines.</p>
 <p>At first, I simply add the ampersand (&amp;) at the end of the command like this:</p>
 <div class="highlight"><pre><span class="n">ssh</span> <span class="n">user</span><span class="err">@</span><span class="n">host</span> <span class="s">&quot;cd /some/directory; ./program &amp;</span>
@@ -164,6 +167,11 @@ Yumminhuang's Blog            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>

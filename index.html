@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Yumminhuang's Blog</title>
+    <title>Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -11,11 +11,11 @@
     
 
     <!-- Open Graph tags -->
-        <meta property="og:site_name" content="Yumminhuang's Blog" />
+        <meta property="og:site_name" content="Yumminhuang" />
             <meta property="og:type" content="website"/>
-            <meta property="og:title" content="Yumminhuang's Blog"/>
+            <meta property="og:title" content="Yumminhuang"/>
             <meta property="og:url" content="http://yumminhuang.github.io"/>
-            <meta property="og:description" content="Yumminhuang's Blog"/>
+            <meta property="og:description" content="Yumminhuang"/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Yumminhuang's Blog ATOM Feed"/>
+              title="Yumminhuang ATOM Feed"/>
 
 </head>
 <body>
@@ -40,13 +40,16 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="http://yumminhuang.github.io/" class="navbar-brand">
-Yumminhuang's Blog            </a>
+Yumminhuang            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
+                        </li>
                         <li >
                             <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
                         </li>
@@ -64,8 +67,25 @@ Yumminhuang's Blog            </a>
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">Objective-C语法总结</a></h2>
+                <div class="summary"><p>最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。</p>
+<p>在看过了Objective-C的基本语法之后，明白了为什么之前会觉得Objective-C的语法奇怪。绝大部分的面向对象的程序语言，包括C++, Java到后来的Python等在调用方法的格式都是<code>object.method(argument1, argument2...)</code>。然而Objective-C的格式却是<code>[object method: argument1 andArg: argument2...]</code>。所以长期使用C++, Java的程序员在第一次看到Objective-C代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉Objective-C的语法也有它的优点。</p>
+<hr />
+<p>废话不多说，上干货。下面以Java作比对，总结一下Objective-C的语法。</p>
+<h3>1.基本语法</h3>
+<h4>1.1 创建对象</h4>
+<p><strong>Java:</strong> <code>obj = new MyClass()</code></p>
+<p><strong>Objective-C:</strong> <code>MyClass *obj = [[MyClass alloc] init];</code></p>
+<h4>1.2 调用方法</h4>
+<p><strong>Java:</strong></p>
+<div class="highlight"><pre><span class="n">obj</span><span class="p">.</span><span class="n">method1 ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">Execute a Command in the Background on Remote Server using SSH</a></h2>
-                <div class="summary"><p>In a project, I have to depoly a server program on serveral remote servers. So I wrote a shell script to depoly and run the program using <code>scp</code> and <code>ssh</code>.</p>
+                <div class="summary"><p>In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using <code>scp</code> and <code>ssh</code>.</p>
 <p>Since there are several remote servers, I have to run the server program in the background on all remote machines ...</p>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">more ...</a>
                 </div>
@@ -113,6 +133,11 @@ Yumminhuang's Blog            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
