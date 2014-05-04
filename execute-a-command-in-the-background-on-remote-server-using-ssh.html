@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Tags - Yumminhuang's Blog</title>
+    <title>Execute a Command in the Background on Remote Server using SSH - Yumminhuang's Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,10 +12,14 @@
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yumminhuang's Blog" />
-            <meta property="og:type" content="website"/>
-            <meta property="og:title" content="Yumminhuang's Blog"/>
-            <meta property="og:url" content="http://yumminhuang.github.io"/>
-            <meta property="og:description" content="Yumminhuang's Blog"/>
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Execute a Command in the Background on Remote Server using SSH"/>
+            <meta property="og:url" content="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html"/>
+            <meta property="og:description" content="In a project, I have to depoly a server program on serveral remote servers. So I wrote a shell script to depoly and run the program using scp and ssh. Since there are several remote servers, I have to run the server program in the background on all remote machines ..."/>
+            <meta property="article:published_time" content="2014-05-04" />
+            <meta property="article:section" content="Shell" />
+            <meta property="article:tag" content="Linux" />
+            <meta property="article:tag" content="Shell" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -47,7 +51,7 @@ Yumminhuang's Blog            </a>
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
                         </li>
             </ul>
@@ -63,35 +67,62 @@ Yumminhuang's Blog            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="tags">
-        <h1>Tags for Yumminhuang's Blog</h1>
-        <div class="panel-group" id="accordion">            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-linux">Linux <span class="badge pull-right">1</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-linux" class="panel-collapse collapse">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html"
+                       rel="bookmark"
+                       title="Permalink to Execute a Command in the Background on Remote Server using SSH">
+                        Execute a Command in the Background on Remote Server using SSH
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
                     <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2014-05-04T09:20:00">Sun 04 May 2014</time></span> <a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">Execute a Command in the Background on Remote Server using SSH</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-shell">Shell <span class="badge pull-right">1</span></a>
-                    </h4>
-                </div>
-                <div id="collapse-shell" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2014-05-04T09:20:00">Sun 04 May 2014</time></span> <a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">Execute a Command in the Background on Remote Server using SSH</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-05-04T09:20:00"> Sun 04 May 2014</time>
+    </span>
 
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://yumminhuang.github.io/tag/linux.html">Linux</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/shell.html">Shell</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>In a project, I have to depoly a server program on serveral remote servers. So I wrote a shell script to depoly and run the program using <code>scp</code> and <code>ssh</code>.</p>
+<p>Since there are several remote servers, I have to run the server program in the background on all remote machines.</p>
+<p>At first, I simply add the ampersand (&amp;) at the end of the command like this:</p>
+<div class="highlight"><pre><span class="n">ssh</span> <span class="n">user</span><span class="err">@</span><span class="n">host</span> <span class="s">&quot;cd /some/directory; ./program &amp;</span>
+</pre></div>
+
+
+<p>But my script just hangs after it runs first remote server. After googling this program, I found this command to solve my problem.</p>
+<div class="highlight"><pre><span class="n">ssh</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">f</span> <span class="n">user</span><span class="err">@</span><span class="n">host</span> <span class="s">&quot;sh -c &#39;cd /some/directory; nohup ./program &gt; /dev/null 2&gt;&amp;1 &amp;&#39;&quot;</span>
+</pre></div>
+
+
+<p>This command is quiet complicated. It need to use nohup as well as output redirection. But it works and solved my problem.</p>
+<h3>Reference</h3>
+<ol>
+<li>
+<p><a href="http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine">Stackoverflow</a></p>
+</li>
+<li>
+<p><a href="http://en.wikipedia.org/wiki/Nohup">nohup</a></p>
+</li>
+</ol>
+            </div>
+            <!-- /.entry-content -->
+        </article>
     </section>
+
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 
