@@ -102,7 +102,7 @@ Yumminhuang            </a>
 <p>废话不多说，上干货。下面以Java作比对，总结一下Objective-C的语法。</p>
 <h3>1.基本语法</h3>
 <h4>1.1 创建对象</h4>
-<p><strong>Java:</strong> </p>
+<p><strong>Java:</strong></p>
 <div class="highlight"><pre><span class="n">obj</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MyClass</span><span class="p">();</span>
 </pre></div>
 
@@ -158,7 +158,7 @@ Yumminhuang            </a>
 <p>MyClass.m</p>
 <div class="highlight"><pre><span class="cp">#import&quot;MyClass.h&quot;</span>
 <span class="k">@implementation</span> <span class="nc">MyClass</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">methodf</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">method1</span>
 <span class="p">{</span>
     <span class="p">...</span>
 <span class="p">}</span>
@@ -169,19 +169,19 @@ Yumminhuang            </a>
 
 <p>此外，Objective-C还有一个非常方便的“语法糖”——<code>@property</code>和<code>@synthesize</code>两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
 在头文件中加上<code>@property int attr1;</code>就等同于声明了两个方法：</p>
-<div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">attr1</span><span class="p">;</span>  
+<div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">attr1</span><span class="p">;</span>
 <span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setAttr1</span><span class="o">:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">newAttr1</span><span class="p">;</span>
 </pre></div>
 
 
 <p>实现文件里加上<code>@synthesize attr1;</code>就等同于定义了两个方法：</p>
-<div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">attr1</span>  
-<span class="p">{</span>  
-    <span class="k">return</span> <span class="n">attr1</span><span class="p">;</span>  
-<span class="p">}</span>  
-<span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setAttr1</span><span class="o">:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">newAttr1</span>  
-<span class="p">{</span>  
-    <span class="n">attr1</span> <span class="o">=</span> <span class="n">newAttr1</span><span class="p">;</span>  
+<div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">attr1</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">attr1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setAttr1</span><span class="o">:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">newAttr1</span>
+<span class="p">{</span>
+    <span class="n">attr1</span> <span class="o">=</span> <span class="n">newAttr1</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -191,6 +191,7 @@ Yumminhuang            </a>
 定义接口</p>
 <div class="highlight"><pre><span class="n">public</span> <span class="n">interface</span> <span class="n">MyInterface</span> <span class="p">{</span>
     <span class="n">public</span> <span class="kt">void</span> <span class="n">aInterfaceMethod</span><span class="p">();</span>
+    <span class="n">public</span> <span class="kt">void</span> <span class="nf">anotherInterfaceMethod</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 
