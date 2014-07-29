@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>About Me - Yumminhuang</title>
+    <title>Python - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,9 +12,10 @@
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yumminhuang" />
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="About Me"/>
-            <meta property="og:url" content="http://yumminhuang.github.io/pages/about-me.html"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Yumminhuang"/>
+            <meta property="og:url" content="http://yumminhuang.github.io"/>
+            <meta property="og:description" content="Yumminhuang"/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -43,13 +44,13 @@ Yumminhuang            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                         <li class="active"><a href="http://yumminhuang.github.io/pages/about-me.html">
+                         <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
                         <li >
                             <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/python.html">Python</a>
                         </li>
                         <li >
@@ -68,42 +69,31 @@ Yumminhuang            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="content" class="body">
-        <h1 class="entry-title">About Me</h1>
-        
-        <div class="entry-content">
-            <p>Thanks for visiting! I am a masters student in computer science at Northeastern University.</p>
-<p>This site will aggregate my scattered online presence and hopefully provide a place for recording what I learn.</p>
-<hr />
-<h2>Education</h2>
-<p><strong>Northeastern University</strong>, Boston, United States</p>
-<p>Master of Science in Computer Science</p>
-<p>Sept. 2013 –-- Dec. 2015 (expected)</p>
-<p><strong>Jinan University</strong>, Guangzhou, China</p>
-<p>Bachelor of Engineering in Software Engineering</p>
-<p>Sept. 2009 –-- Jul. 2013</p>
-<hr />
-<h2>Experience</h2>
-<p><a href="http://www.locately.com/"><strong>Locately</strong></a>, Boston, United States</p>
-<p>Software Engineer Internship</p>
-<p>Jul. 2014 --- Aug. 2014</p>
-<p><strong>Aston University</strong>, Birmingham, U.K.</p>
-<p>Software Developer Internship</p>
-<p>Mar. 2012 —-- Apr. 2012</p>
-<hr />
-<h2>Extracurricular Interests</h2>
-<ul>
-<li>Photography</li>
-<li>Travel</li>
-<li>Soccer</li>
-<li>Digital Technologies</li>
-</ul>
-<hr />
-<p><strong>Contact me</strong></p>
-<p>Email:
-<code>&gt;&gt;&gt; print base64.b64decode('aHVhbmcueWFtQGh1c2t5Lm5ldS5lZHU=')</code></p>
-        </div>
-    </section>
+            <article>
+                <h2><a href="http://yumminhuang.github.io/5-great-python-interview-questions.html">5 Great Python Interview Questions</a></h2>
+                <div class="summary"><blockquote>
+<p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
+</blockquote>
+<h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
+<div class="highlight"><pre><span class="n">class</span> <span class="n">Parent</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">class</span> <span class="n">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">pass</span>
+
+<span class="n">class</span> <span class="n">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">pass</span>
+
+<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
+<span class="n">Child1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
+<span class="n">Parent</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">print</span> <span class="n">Parent ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5-great-python-interview-questions.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
 
