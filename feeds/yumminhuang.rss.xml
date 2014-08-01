@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yumminhuang</title><link>http://yumminhuang.github.io/</link><description></description><atom:link href="http://yumminhuang.github.io/feeds/yumminhuang.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 28 Jul 2014 21:20:00 -0400</lastBuildDate><item><title>5 Great Python Interview Questions</title><link>http://yumminhuang.github.io/5-great-python-interview-questions.html</link><description>&lt;blockquote&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yumminhuang</title><link>http://yumminhuang.github.io/</link><description></description><atom:link href="http://yumminhuang.github.io/feeds/yumminhuang.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 31 Jul 2014 19:39:00 -0400</lastBuildDate><item><title>How do I remove all .pyc files from a project?</title><link>http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html</link><description>&lt;p&gt;I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of &lt;code&gt;.pyc&lt;/code&gt; files. And I found this command, which is very convenient to batch delete files in a directory.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*.pyc&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;exec&lt;/span&gt; &lt;span class="n"&gt;rm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rf&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I can also delete all &lt;code&gt;*.class&lt;/code&gt; files for Java project and &lt;code&gt;.o&lt;/code&gt; files for C project in this way.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*.class&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;exec&lt;/span&gt; &lt;span class="n"&gt;rm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rf&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;*.o&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;exec&lt;/span&gt; &lt;span class="n"&gt;rm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rf&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or I can delete all files whose name starts with 'test'.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;find&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;test*&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;exec&lt;/span&gt; &lt;span class="n"&gt;rm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rf&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project"&gt;How do I remove all .pyc files from a project?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Yumminhuang</dc:creator><pubDate>Thu, 31 Jul 2014 19:39:00 -0400</pubDate><guid>tag:yumminhuang.github.io,2014-07-31:how-do-i-remove-all-pyc-files-from-a-project.html</guid><category>Shell</category></item><item><title>5 Great Python Interview Questions</title><link>http://yumminhuang.github.io/5-great-python-interview-questions.html</link><description>&lt;blockquote&gt;
 &lt;p&gt;注：本文的原文是 &lt;a href="http://www.toptal.com/python/interview-questions"&gt;5 Great Python Interview Questions&lt;/a&gt;。中文翻译和解释转自&lt;a href="http://blog.segmentfault.com/yexiaobai/1190000000618513"&gt;5 个很好的 Python 面试题&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3&gt;问题一：以下的代码的输出将是什么? 说出你的答案并解释。&lt;/h3&gt;

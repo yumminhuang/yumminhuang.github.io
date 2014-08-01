@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Python - Yumminhuang</title>
+    <title>How do I remove all .pyc files from a project? - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,10 +12,13 @@
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yumminhuang" />
-            <meta property="og:type" content="website"/>
-            <meta property="og:title" content="Yumminhuang"/>
-            <meta property="og:url" content="http://yumminhuang.github.io"/>
-            <meta property="og:description" content="Yumminhuang"/>
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="How do I remove all .pyc files from a project?"/>
+            <meta property="og:url" content="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html"/>
+            <meta property="og:description" content="I am a paranoid guy. I like to delete all &#34;useless&#34; files. I want to clean up my project repository today. There are lots of .pyc files. And I found this command, which is very convenient to batch delete files in a directory. find . -name &#34;*.pyc&#34; -exec rm -rf {} \; I ..."/>
+            <meta property="article:published_time" content="2014-07-31" />
+            <meta property="article:section" content="Shell" />
+            <meta property="article:tag" content="Shell" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -53,7 +56,7 @@ Yumminhuang            </a>
                         <li >
                             <a href="http://yumminhuang.github.io/category/python.html">Python</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
                         </li>
             </ul>
@@ -69,30 +72,57 @@ Yumminhuang            </a>
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="http://yumminhuang.github.io/5-great-python-interview-questions.html">5 Great Python Interview Questions</a></h2>
-                <div class="summary"><blockquote>
-<p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
-</blockquote>
-<h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
-<div class="highlight"><pre><span class="n">class</span> <span class="n">Parent</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html"
+                       rel="bookmark"
+                       title="Permalink to How do I remove all .pyc files from a project?">
+                        How do I remove all .pyc files from a project?
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-07-31T19:39:00"> Thu 31 July 2014</time>
+    </span>
 
-<span class="n">class</span> <span class="n">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
 
-<span class="n">class</span> <span class="n">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
 
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Child1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Parent</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">print</span> <span class="n">Parent ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5-great-python-interview-questions.html">more ...</a>
+<span class="label label-default">Tags</span>
+	<a href="http://yumminhuang.github.io/tag/shell.html">Shell</a>
+    
+</footer><!-- /.post-info -->                    </div>
                 </div>
-            </article>
-            <hr/>
+                <p>I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
+<div class="highlight"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.pyc&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">{}</span> <span class="err">\</span><span class="p">;</span>
+</pre></div>
+
+
+<p>I can also delete all <code>*.class</code> files for Java project and <code>.o</code> files for C project in this way.</p>
+<div class="highlight"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.class&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">{}</span> <span class="err">\</span><span class="p">;</span>
+<span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.o&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">{}</span> <span class="err">\</span><span class="p">;</span>
+</pre></div>
+
+
+<p>Or I can delete all files whose name starts with 'test'.</p>
+<div class="highlight"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;test*&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">{}</span> <span class="err">\</span><span class="p">;</span>
+</pre></div>
+
+
+<p><strong>Reference:</strong></p>
+<blockquote>
+<p><a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project">How do I remove all .pyc files from a project?</a></p>
+</blockquote>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
