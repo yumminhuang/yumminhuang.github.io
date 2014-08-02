@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Replace Instances in AWS Auto Scaling Group - Yumminhuang</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Yumminhuang" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Replace Instances in AWS Auto Scaling Group"/>
+            <meta property="og:url" content="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html"/>
+            <meta property="og:description" content="这两周，我被分配的任务是实现AWS的Auto Scaling功能。多亏有了Boto， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下： 创建并配置（下载新发布的代码）多个新的Instance； 依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。 这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。 现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。 我想到的办法步骤如下： 将Auto Scaling Group挂起（避免激发Scaling Policy ..."/>
+            <meta property="article:published_time" content="2014-08-02" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="Python" />
+            <meta property="article:tag" content="Boto" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://yumminhuang.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Yumminhuang ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://yumminhuang.github.io/" class="navbar-brand">
+Yumminhuang            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://yumminhuang.github.io/pages/about-me.html">
+                             About Me
+                          </a></li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://yumminhuang.github.io/category/python.html">Python</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html"
+                       rel="bookmark"
+                       title="Permalink to Replace Instances in AWS Auto Scaling Group">
+                        Replace Instances in AWS Auto Scaling Group
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-08-02T14:39:00"> Sat 02 August 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://yumminhuang.github.io/tag/python.html">Python</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/boto.html">Boto</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>这两周，我被分配的任务是实现<a href="http://aws.amazon.com/">AWS</a>的<a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a>功能。多亏有了<a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
+<p>我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
+<ol>
+<li>创建并配置（下载新发布的代码）多个新的Instance；</li>
+<li>依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。</li>
+</ol>
+<p>这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。</p>
+<p>现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。</p>
+<p>我想到的办法步骤如下：</p>
+<ol>
+<li>将Auto Scaling Group挂起（避免激发Scaling Policy）；</li>
+<li>按照以前的方法替换旧的Instance；</li>
+<li>将新创建的Instance添加到Auto Scaling Group。</li>
+</ol>
+<p>因为AWS Auto Scaling的特性（比如Auto Scaling Group被挂起的时候不能够添加Instance，<code>desired_capacity</code>不能小于<code>min_size</code>），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：</p>
+<ol>
+<li>将Auto Scaling Group的<code>desired_capacity</code>和<code>min_size</code>分别置为<code>0</code>（防止恢复Auto Scaling Group的时候自动创建Instance）；</li>
+<li>恢复Auto Scaling Group（结束挂起状态，然后才可以添加Instance）；</li>
+<li>添加Instance到Auto Scaling Group里；</li>
+<li>恢复Auto Scaling Group的<code>min_size</code>。</li>
+</ol>
+<p>下面提供一份示例代码以供参考：</p>
+<div class="highlight"><pre><span class="n">import</span> <span class="n">sys</span>
+<span class="n">import</span> <span class="n">time</span>
+
+<span class="n">from</span> <span class="n">boto</span><span class="p">.</span><span class="n">ec2</span><span class="p">.</span><span class="n">autoscale</span> <span class="n">import</span> <span class="n">AutoScaleConnection</span>
+<span class="n">from</span> <span class="n">boto</span><span class="p">.</span><span class="n">ec2</span><span class="p">.</span><span class="n">connection</span> <span class="n">import</span> <span class="n">EC2Connection</span>
+
+<span class="n">AUTO_SCALING_GROUP</span> <span class="o">=</span> <span class="s">&quot;test_auto_scaling_group&quot;</span>
+<span class="n">NEW_INSTANCES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;i-4acb0666&quot;</span><span class="p">,</span> <span class="s">&quot;i-4acbqa9&quot;</span><span class="p">]</span>
+<span class="n">CHECK_INTERVAL</span> <span class="o">=</span> <span class="mi">5</span>
+
+
+<span class="n">def</span> <span class="n">suspend</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Suspend</span> <span class="k">auto</span> <span class="n">scaling</span> <span class="n">group</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">as_conn</span><span class="p">.</span><span class="n">suspend_processes</span><span class="p">(</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">)</span>
+    <span class="n">print</span> <span class="s">&quot;Suspend Done</span><span class="se">\n</span><span class="s">&quot;</span>
+
+
+<span class="n">def</span> <span class="n">resume</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Resume</span> <span class="k">auto</span> <span class="n">scaling</span> <span class="n">group</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">as_conn</span><span class="p">.</span><span class="n">resume_processes</span><span class="p">(</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">)</span>
+    <span class="n">print</span> <span class="s">&quot;Resume Done</span><span class="se">\n</span><span class="s">&quot;</span>
+
+
+<span class="n">def</span> <span class="n">get_instance_by_id</span><span class="p">(</span><span class="n">ec2conn</span><span class="p">,</span> <span class="n">inst_id</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Get</span> <span class="n">instance</span> <span class="n">by</span> <span class="n">its</span> <span class="n">id</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="p">...</span>
+    <span class="n">pass</span>
+
+<span class="n">def</span> <span class="n">deactivate_instance</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Deactivate</span> <span class="n">instance</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="p">...</span>
+    <span class="n">pass</span>
+
+
+<span class="n">def</span> <span class="n">delete_instances</span><span class="p">(</span><span class="n">as_conn</span><span class="p">,</span> <span class="n">ec2conn</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Delete</span> <span class="n">instances</span> <span class="n">in</span> <span class="k">auto</span> <span class="n">scaling</span> <span class="n">group</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">as_group</span> <span class="o">=</span> <span class="n">as_conn</span><span class="p">.</span><span class="n">get_all_groups</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_instance_by_id</span><span class="p">(</span><span class="n">ec2conn</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">instance_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">as_group</span><span class="p">.</span><span class="n">instances</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">instance</span> <span class="n">in</span> <span class="n">instances</span><span class="o">:</span>
+        <span class="k">if</span> <span class="n">instance</span><span class="p">.</span><span class="n">state</span> <span class="o">!=</span> <span class="s">&quot;terminated&quot;</span><span class="o">:</span>
+            <span class="n">print</span> <span class="s">&quot;*** Terminate Instance %s&quot;</span> <span class="o">%</span> <span class="n">instance</span><span class="p">.</span><span class="n">id</span>
+            <span class="n">deactivate_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+    <span class="err">#</span> <span class="n">All</span> <span class="n">instances</span> <span class="n">should</span> <span class="n">be</span> <span class="n">terminated</span>
+    <span class="k">while</span> <span class="n">any</span><span class="p">([</span><span class="n">inst</span><span class="p">.</span><span class="n">update</span><span class="p">()</span> <span class="o">!=</span> <span class="s">&quot;terminated&quot;</span> <span class="k">for</span> <span class="n">inst</span> <span class="n">in</span> <span class="n">instances</span><span class="p">])</span><span class="o">:</span>
+        <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">CHECK_INTERVAL</span><span class="p">)</span>
+    <span class="n">print</span> <span class="s">&quot;.</span><span class="se">\n</span><span class="s">Delete Done</span><span class="se">\n</span><span class="s">&quot;</span>
+
+
+<span class="n">def</span> <span class="n">attach_instances</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Attach</span> <span class="n">instances</span> <span class="n">into</span> <span class="k">auto</span> <span class="n">scaling</span> <span class="n">group</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">True</span><span class="o">:</span>
+        <span class="n">as_group</span> <span class="o">=</span> <span class="n">as_conn</span><span class="p">.</span><span class="n">get_all_groups</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">as_group</span><span class="p">.</span><span class="n">instances</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="o">:</span>
+            <span class="n">as_conn</span><span class="p">.</span><span class="n">attach_instances</span><span class="p">(</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">,</span> <span class="n">NEW_INSTANCES</span><span class="p">)</span>
+            <span class="n">print</span> <span class="s">&quot;Attach Done</span><span class="se">\n</span><span class="s">&quot;</span>
+            <span class="k">return</span>
+        <span class="nl">else:</span>
+            <span class="n">print</span> <span class="s">&quot;There are instances still in the group&quot;</span>
+            <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">CHECK_INTERVAL</span><span class="p">)</span>
+
+
+<span class="n">def</span> <span class="n">set_capacity</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Set</span> <span class="n">desired</span> <span class="n">capacity</span> <span class="n">and</span> <span class="n">minimum</span> <span class="n">size</span> <span class="n">as</span> <span class="mi">0</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">as_group</span> <span class="o">=</span> <span class="n">as_conn</span><span class="p">.</span><span class="n">get_all_groups</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">as_group</span><span class="p">.</span><span class="n">min_size</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">as_group</span><span class="p">.</span><span class="n">desired_capacity</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">as_group</span><span class="p">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">print</span> <span class="s">&quot;Set Capacity Done</span><span class="se">\n</span><span class="s">&quot;</span>
+
+
+<span class="n">def</span> <span class="n">resume_capacity</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">Resume</span> <span class="n">minimum</span> <span class="n">size</span> <span class="n">as</span> <span class="n">the</span> <span class="n">original</span> <span class="n">value</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="n">as_group</span> <span class="o">=</span> <span class="n">as_conn</span><span class="p">.</span><span class="n">get_all_groups</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">setattr</span><span class="p">(</span><span class="n">as_group</span><span class="p">,</span> <span class="s">&quot;min_size&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">as_group</span><span class="p">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="n">print</span> <span class="s">&quot;Resume Capacity Done</span><span class="se">\n</span><span class="s">&quot;</span>
+
+
+<span class="n">def</span> <span class="n">main</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">as_conn</span> <span class="o">=</span> <span class="n">AutoScaleConnection</span><span class="p">()</span>
+    <span class="n">ec2conn</span> <span class="o">=</span> <span class="n">EC2Connection</span><span class="p">()</span>
+
+    <span class="n">print</span> <span class="s">&quot;Suspend Auto Scaling Group&quot;</span>
+    <span class="n">suspend</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span>
+
+    <span class="n">print</span> <span class="s">&quot;Delete Instances&quot;</span>
+    <span class="n">delete_instances</span><span class="p">(</span><span class="n">as_conn</span><span class="p">,</span> <span class="n">ec2conn</span><span class="p">)</span>
+
+    <span class="n">print</span> <span class="s">&quot;Set Capacity&quot;</span>
+    <span class="n">set_capacity</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span>
+
+    <span class="n">print</span> <span class="s">&quot;Resume Auto Scaling Group&quot;</span>
+    <span class="n">resume</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span>
+
+    <span class="n">print</span> <span class="s">&quot;Attach Instances&quot;</span>
+    <span class="n">attach_instances</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span>
+
+    <span class="n">print</span> <span class="s">&quot;Resume Capacity&quot;</span>
+    <span class="n">resume_capacity</span><span class="p">(</span><span class="n">as_conn</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="o">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://github.com/yumminhuang"><i
+                            class="fa fa-github fa-lg"></i> github
+                    </a></li>
+                    <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i
+                            class="fa fa-stack-overflow fa-lg"></i> stack-overflow
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i
+                            class="fa fa-linkedin fa-lg"></i> linkedin
+                    </a></li>
+                    <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i
+                            class="fa fa-twitter fa-lg"></i> twitter
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i
+                            class="fa fa-weibo fa-lg"></i> weibo
+                    </a></li>
+                    <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i
+                            class="fa fa-instagram fa-lg"></i> instagram
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/boto.html">
+                                Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://www.northeastern.edu/" target="_blank">
+                NEU
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.ccs.neu.edu/" target="_blank">
+                CCIS
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Yumminhuang
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://yumminhuang.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://yumminhuang.github.io/theme/js/respond.min.js"></script>
+
+</body>
+</html>

@@ -70,6 +70,23 @@ Yumminhuang            </a>
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html">Replace Instances in AWS Auto Scaling Group</a></h2>
+                <div class="summary"><p>这两周，我被分配的任务是实现<a href="http://aws.amazon.com/">AWS</a>的<a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a>功能。多亏有了<a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
+<p>我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
+<ol>
+<li>创建并配置（下载新发布的代码）多个新的Instance；</li>
+<li>依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。</li>
+</ol>
+<p>这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。</p>
+<p>现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。</p>
+<p>我想到的办法步骤如下：</p>
+<ol>
+<li>将Auto Scaling Group挂起（避免激发Scaling Policy ...</li></ol>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://yumminhuang.github.io/5-great-python-interview-questions.html">5 Great Python Interview Questions</a></h2>
                 <div class="summary"><blockquote>
 <p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
@@ -128,23 +145,28 @@ Yumminhuang            </a>
                 <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
                             <a href="http://yumminhuang.github.io/tag/shell.html">
                                 Shell
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/python.html">
-                                Python
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/boto.html">
+                                Boto
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
                             </a>
                         </li>
                     </ul>

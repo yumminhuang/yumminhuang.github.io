@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Articles by Yumminhuang - Yumminhuang</title>
+    <title>Boto - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -83,75 +83,6 @@ Yumminhuang            </a>
 <ol>
 <li>将Auto Scaling Group挂起（避免激发Scaling Policy ...</li></ol>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html">How do I remove all .pyc files from a project?</a></h2>
-                <div class="summary"><p>I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
-<div class="highlight"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.pyc&quot;</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">{}</span> <span class="err">\</span><span class="p">;</span>
-</pre></div>
-
-
-<p>I ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/5-great-python-interview-questions.html">5 Great Python Interview Questions</a></h2>
-                <div class="summary"><blockquote>
-<p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
-</blockquote>
-<h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
-<div class="highlight"><pre><span class="n">class</span> <span class="n">Parent</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="n">class</span> <span class="n">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
-
-<span class="n">class</span> <span class="n">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
-
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Child1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Parent</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">print</span> <span class="n">Parent ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5-great-python-interview-questions.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">Objective-C语法总结</a></h2>
-                <div class="summary"><p>最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。</p>
-<p>在看过了Objective-C的基本语法之后，明白了为什么之前会觉得Objective-C的语法奇怪。绝大部分的面向对象的程序语言，包括C++、Java、Python等在调用方法的格式都是<code>object.method(argument1, argument2...)</code>。然而Objective-C的格式却是<code>[object method: argument1 andArg: argument2...]</code>。所以长期使用C++, Java的程序员在第一次看到Objective-C代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉Objective-C的语法也有它的优点。</p>
-<hr />
-<p>废话不多说，上干货。下面以Java作比对，总结一下Objective-C的语法。</p>
-<h3>1.基本语法</h3>
-<h4>1.1 创建对象</h4>
-<p><strong>Java:</strong></p>
-<div class="highlight"><pre><span class="n">obj</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MyClass</span><span class="p">();</span>
-</pre></div>
-
-
-<p><strong>Objective-C:</strong></p>
-<div class="highlight"><pre><span class="n">MyClass</span> <span class="o">*</span><span class="n">obj</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyClass</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</pre></div>
-
-
-<h4>1.2 调用方法</h4>
-<p><strong>Java:</strong></p>
-<div class="highlight"><pre><span class="n">obj ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">Execute a Command in the Background on Remote Server using SSH</a></h2>
-                <div class="summary"><p>In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using <code>scp</code> and <code>ssh</code>.</p>
-<p>Since there are several remote servers, I have to run the server program in the background on all remote machines ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">more ...</a>
                 </div>
             </article>
             <hr/>
