@@ -15,7 +15,7 @@
             <meta property="og:type" content="article"/>
             <meta property="og:title" content="Objective-C语法总结"/>
             <meta property="og:url" content="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html"/>
-            <meta property="og:description" content="最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。 在看过了Objective-C的基本语法之后，明白了为什么之前会觉得Objective-C的语法奇怪。绝大部分的面向对象的程序语言，包括C++、Java、Python等在调用方法的格式都是object.method(argument1, argument2...)。然而Objective-C的格式却是[object method: argument1 andArg: argument2...]。所以长期使用C++, Java的程序员在第一次看到Objective-C代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉Objective-C的语法也有它的优点。 废话不多说，上干货。下面以Java作比对，总结一下Objective-C的语法。 1.基本语法 1.1 创建对象 Java: obj = new MyClass(); Objective-C: MyClass *obj = [[MyClass alloc] init]; 1.2 调用方法 Java: obj ..."/>
+            <meta property="og:description" content="最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。 在看过了Objective-C的基本语法之后，明白了为什么之前会觉得Objective-C的语法奇怪。绝大部分的面向对象的程序语言，包括C++、Java、Python等在调用方法的格式都是object.method(argument1, argument2...)。然而Objective-C的格式却是[object method: argument1 andArg: argument2...]。所以长期使用C++, Java的程序员在第一次看到Objective-C代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉Objective-C的语法也有它的优点。 废话不多说，上干货。下面以Java作比对，总结一下Objective-C的语法。 1.基本语法 1.1 创建对象 Java: 1obj = new MyClass(); Objective-C: MyClass *obj = [[MyClass alloc] init]; 1.2 调用方法 Java ..."/>
             <meta property="article:published_time" content="2014-05-04" />
             <meta property="article:section" content="Objective-C" />
             <meta property="article:tag" content="Objective-C" />
@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
     <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://yumminhuang.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="http://yumminhuang.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
@@ -106,9 +106,9 @@ Yumminhuang            </a>
 <h3>1.基本语法</h3>
 <h4>1.1 创建对象</h4>
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre><span class="n">obj</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MyClass</span><span class="p">();</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="o">();</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>Objective-C:</strong></p>
 <div class="highlight"><pre><span class="n">MyClass</span> <span class="o">*</span><span class="n">obj</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MyClass</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
@@ -117,36 +117,55 @@ Yumminhuang            </a>
 
 <h4>1.2 调用方法</h4>
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre><span class="n">obj</span><span class="p">.</span><span class="n">method1</span><span class="p">()</span> <span class="c1">//没有参数</span>
-<span class="n">obj</span><span class="p">.</span><span class="n">method2</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span> <span class="c1">//一个参数</span>
-<span class="n">obj</span><span class="p">.</span><span class="n">method3</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">)</span> <span class="c1">//多个参数</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">obj</span><span class="o">.</span><span class="na">method1</span><span class="o">()</span> <span class="c1">//没有参数</span>
+<span class="n">obj</span><span class="o">.</span><span class="na">method2</span><span class="o">(</span><span class="n">arg1</span><span class="o">)</span> <span class="c1">//一个参数</span>
+<span class="n">obj</span><span class="o">.</span><span class="na">method3</span><span class="o">(</span><span class="n">arg1</span><span class="o">,</span><span class="n">arg2</span><span class="o">)</span> <span class="c1">//多个参数</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>Objective-C:</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">obj</span> <span class="n">method1</span><span class="p">]</span> <span class="c1">//没有参数</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="n">obj</span> <span class="n">method1</span><span class="p">]</span> <span class="c1">//没有参数</span>
 <span class="p">[</span><span class="n">obj</span> <span class="n">method2</span><span class="o">:</span><span class="n">arg1</span><span class="p">]</span> <span class="c1">//一个参数</span>
 <span class="p">[</span><span class="n">obj</span> <span class="n">method3</span><span class="o">:</span><span class="n">arg2</span> <span class="n">andArg</span><span class="o">:</span> <span class="n">arg2</span><span class="p">]</span> <span class="c1">//多个参数</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>2.类的定义</h3>
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">MyClass</span> <span class="n">extend</span> <span class="n">SuperClass</span> <span class="p">{</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="n">extend</span> <span class="n">SuperClass</span> <span class="o">{</span>
 
-    <span class="n">private</span> <span class="kt">int</span> <span class="n">attr1</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">attr1</span><span class="o">;</span>
 
-    <span class="n">public</span> <span class="kt">void</span> <span class="nf">method1</span><span class="p">()</span> <span class="p">{</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method1</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>Objective-C:</strong></p>
 <p>Objectove-C定义一个类时需要两个文件，分别是负责声明的Header File和负责具体实现的Implementation File。</p>
 <p>MyClass.h</p>
-<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">SuperClass</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">SuperClass</span>
 <span class="p">{</span>
     <span class="kt">int</span> <span class="n">attr1</span><span class="p">;</span>
 <span class="p">}</span>
@@ -156,10 +175,17 @@ Yumminhuang            </a>
 <span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">classMethod</span><span class="p">;</span> <span class="c1">//相当于Java中的static方法</span>
 <span class="k">@end</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>MyClass.m</p>
-<div class="highlight"><pre><span class="cp">#import&quot;MyClass.h&quot;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#import&quot;MyClass.h&quot;</span>
 <span class="k">@implementation</span> <span class="nc">MyClass</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">method1</span>
 <span class="p">{</span>
@@ -168,60 +194,79 @@ Yumminhuang            </a>
 <span class="p">...</span>
 <span class="k">@end</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>此外，Objective-C还有一个非常方便的“语法糖”——<code>@property</code>和<code>@synthesize</code>两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
 在头文件中加上<code>@property int attr1;</code>就等同于声明了两个方法：</p>
-<div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">attr1</span><span class="p">;</span>
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setAttr1</span><span class="o">:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">newAttr1</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nf">attr1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setAttr1:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">newAttr1</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>实现文件里加上<code>@synthesize attr1;</code>就等同于定义了两个方法：</p>
-<div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">attr1</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nf">attr1</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">attr1</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="o">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">setAttr1</span><span class="o">:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">newAttr1</span>
+<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setAttr1:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">newAttr1</span>
 <span class="p">{</span>
     <span class="n">attr1</span> <span class="o">=</span> <span class="n">newAttr1</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>3.协议（接口）的定义</h3>
 <p><strong>Java:</strong>
 定义接口</p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">interface</span> <span class="n">MyInterface</span> <span class="p">{</span>
-    <span class="n">public</span> <span class="kt">void</span> <span class="n">aInterfaceMethod</span><span class="p">();</span>
-    <span class="n">public</span> <span class="kt">void</span> <span class="nf">anotherInterfaceMethod</span><span class="p">();</span>
-<span class="p">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MyInterface</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">aInterfaceMethod</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherInterfaceMethod</span><span class="o">();</span>
+<span class="o">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>实现接口</p>
-<div class="highlight"><pre><span class="n">public</span> <span class="n">class</span> <span class="n">MyClass</span> <span class="n">extend</span> <span class="n">SuperClass</span> <span class="n">implements</span> <span class="n">MyInterface</span> <span class="p">{</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="n">extend</span> <span class="n">SuperClass</span> <span class="kd">implements</span> <span class="n">MyInterface</span> <span class="o">{</span>
     <span class="c1">// method declarations</span>
-<span class="p">}</span>
+<span class="o">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>Objective-C:</strong>
 在Objective-C中，用关键字<code>@protocol</code>定义协议，也就是Java中的接口。</p>
-<div class="highlight"><pre><span class="k">@protocol</span> <span class="nc">MyProtocol</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">@protocol</span> <span class="nc">MyProtocol</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">aProtocolMethod</span><span class="p">;</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">anotherProcotolMethod</span><span class="p">;</span>
 <span class="k">@end</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>当一个类需要实现协议时，</p>
-<div class="highlight"><pre><span class="cp">#import &quot;MyProtocol.h&quot;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#import &quot;MyProtocol.h&quot;</span>
 <span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">SuperClass</span> <span class="o">&lt;</span> <span class="n">MyProtocol</span><span class="p">,</span> <span class="n">AnotherProtocol</span> <span class="o">&gt;</span>
     <span class="c1">// method declarations</span>
 <span class="k">@end</span>
 </pre></div>
-
+</td></tr></table>
 
 <hr />
 <p>由于我也是初学Objective-C，难免有错误和总结不全面的地方，恳请指正。</p>
@@ -274,11 +319,6 @@ Yumminhuang            </a>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
                             </a>
@@ -286,6 +326,11 @@ Yumminhuang            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>

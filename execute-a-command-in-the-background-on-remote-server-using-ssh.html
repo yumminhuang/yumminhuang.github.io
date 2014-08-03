@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
     <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://yumminhuang.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="http://yumminhuang.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
@@ -105,12 +105,12 @@ Yumminhuang            </a>
                 <p>In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using <code>scp</code> and <code>ssh</code>.</p>
 <p>Since there are several remote servers, I have to run the server program in the background on all remote machines.</p>
 <p>At first, I simply add the ampersand (&amp;) at the end of the command like this:</p>
-<div class="highlight"><pre><span class="n">ssh</span> <span class="n">user</span><span class="err">@</span><span class="n">host</span> <span class="s">&quot;cd /some/directory; ./program &amp;</span>
+<div class="highlight"><pre>ssh user@host <span class="err">&quot;</span><span class="nb">cd</span> /some/directory; ./program &amp;
 </pre></div>
 
 
 <p>But my script just hangs after it runs first remote server. After googling this program, I found this command to solve my problem.</p>
-<div class="highlight"><pre><span class="n">ssh</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">f</span> <span class="n">user</span><span class="err">@</span><span class="n">host</span> <span class="s">&quot;sh -c &#39;cd /some/directory; nohup ./program &gt; /dev/null 2&gt;&amp;1 &amp;&#39;&quot;</span>
+<div class="highlight"><pre>ssh -n -f user@host <span class="s2">&quot;sh -c &#39;cd /some/directory; nohup ./program &gt; /dev/null 2&gt;&amp;1 &amp;&#39;&quot;</span>
 </pre></div>
 
 
@@ -173,11 +173,6 @@ Yumminhuang            </a>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
                             </a>
@@ -185,6 +180,11 @@ Yumminhuang            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
