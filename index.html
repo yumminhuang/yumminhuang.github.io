@@ -104,30 +104,20 @@ Yumminhuang            </a>
 <p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
 </blockquote>
 <h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight"><pre><span class="n">class</span> <span class="n">Parent</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="o">:</span>
     <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="k">class</span> <span class="nc">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
-    <span class="k">pass</span>
+<span class="n">class</span> <span class="n">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">pass</span>
 
-<span class="k">class</span> <span class="nc">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
-    <span class="k">pass</span>
+<span class="n">class</span> <span class="n">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">pass</span>
 
-<span class="k">print</span> <span class="n">Parent</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="o">.</span><span class="n">x</span>
-<span class="n">Child1 ...</span></pre></div></td></tr></table>
+<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
+<span class="n">Child1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
+<span class="n">Parent</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">print</span> <span class="n">Parent ...</span></pre></div>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5-great-python-interview-questions.html">more ...</a>
                 </div>
             </article>
@@ -199,18 +189,13 @@ Yumminhuang            </a>
                 <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://yumminhuang.github.io/tag/python.html">
-                                Python
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://yumminhuang.github.io/tag/shell.html">
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/boto.html">
-                                Boto
+                        <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/python.html">
+                                Python
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -221,6 +206,11 @@ Yumminhuang            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/objective-c.html">
                                 Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/boto.html">
+                                Boto
                             </a>
                         </li>
                     </ul>

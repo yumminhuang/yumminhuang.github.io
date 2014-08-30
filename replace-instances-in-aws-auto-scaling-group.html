@@ -308,7 +308,7 @@ Yumminhuang            </a>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attach instances into auto scaling group</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">NEW_INSTANCES</span><span class="p">:</span>
         <span class="n">as_group</span> <span class="o">=</span> <span class="n">as_conn</span><span class="o">.</span><span class="n">get_all_groups</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">as_group</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">as_conn</span><span class="o">.</span><span class="n">attach_instances</span><span class="p">(</span><span class="n">AUTO_SCALING_GROUP</span><span class="p">,</span> <span class="n">NEW_INSTANCES</span><span class="p">)</span>
@@ -406,18 +406,13 @@ Yumminhuang            </a>
                 <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://yumminhuang.github.io/tag/python.html">
-                                Python
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://yumminhuang.github.io/tag/shell.html">
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/boto.html">
-                                Boto
+                        <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/python.html">
+                                Python
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -428,6 +423,11 @@ Yumminhuang            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/objective-c.html">
                                 Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/boto.html">
+                                Boto
                             </a>
                         </li>
                     </ul>
