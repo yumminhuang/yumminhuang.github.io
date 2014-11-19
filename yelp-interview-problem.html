@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Yelp Interview Problem - Yumminhuang</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Yumminhuang" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Yelp Interview Problem"/>
+            <meta property="og:url" content="http://yumminhuang.github.io/yelp-interview-problem.html"/>
+            <meta property="og:description" content="Today, I have a Skype interview with Yelp. Interview First, the interviewer asked me about my experience. Then, he asked me some technical questions, such as What will cause access a website slowly?, Difference between thread and process, What is deadlock? or What&#39;s your favorite programming language? And why ..."/>
+            <meta property="article:published_time" content="2014-11-18" />
+            <meta property="article:section" content="Interview" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://yumminhuang.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Yumminhuang ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://yumminhuang.github.io/" class="navbar-brand">
+Yumminhuang            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://yumminhuang.github.io/pages/about-me.html">
+                             About Me
+                          </a></li>
+                        <li class="active">
+                            <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/python.html">Python</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://yumminhuang.github.io/yelp-interview-problem.html"
+                       rel="bookmark"
+                       title="Permalink to Yelp Interview Problem">
+                        Yelp Interview Problem
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-11-18T18:02:00-05:00"> Tue 18 November 2014</time>
+    </span>
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Today, I have a Skype interview with Yelp.</p>
+<h3>Interview</h3>
+<p>First, the interviewer asked me about my experience. Then, he asked me some technical questions, such as <em>What will cause access a website slowly?</em>, <em>Difference between thread and process</em>, <em>What is deadlock?</em> or <em>What's your favorite programming language? And why?</em>. The last part of the interview is coding question. The interviewer sent me a link of <a href="http://coderpad.io">CoderPad</a> and asked me to write code on it.</p>
+<h3>Coding Problem Description</h3>
+<p>The problem is not very difficult. Write a function to <strong>find the longest prefix of a list of string.</strong> For example,
+<code>['abc', 'abcde', 'abxyz'] =&gt; 'ab'</code></p>
+<h3>Solutions</h3>
+<p>During the interview, I chose the simplest way to solve it. Here is my answer.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">longest_prefix</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">))):</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+               <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">tmp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                   <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Obviously, my solution is not good. My function does not work when input is a empty list. The return of my function is a list instead of a string. It would be better if modify my solution like this way:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">longest_prefix</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;&#39;</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">))):</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">prefix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">prefix</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">prefix</span><span class="p">))</span>
+</pre></div>
+
+
+<h3>Better solutions</h3>
+<p>After the interview, I searched this problem and tried to find <a href="http://stackoverflow.com/questions/6718196/python-determine-prefix-from-a-set-of-similar-strings">some better solutions</a>. I want to code like a <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html"><em>pythonista</em></a>. Here are some good solutions.</p>
+<div class="highlight"><pre><span class="n">def</span> <span class="n">commonprefix</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">:</span>
+    <span class="s">&quot;&quot;&quot;&quot;</span>
+    <span class="n">Return</span> <span class="n">the</span> <span class="n">longest</span> <span class="n">prefix</span> <span class="n">of</span> <span class="n">all</span> <span class="n">list</span> <span class="n">elements</span><span class="p">.</span>
+    <span class="s">&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">not</span> <span class="n">m</span><span class="o">:</span> <span class="k">return</span> <span class="err">&#39;&#39;</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="n">in</span> <span class="n">enumerate</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">:</span>
+            <span class="k">return</span> <span class="n">s1</span><span class="p">[</span><span class="o">:</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">s1</span>
+</pre></div>
+
+
+<p>Some guy even find a way to solve this problem using one line python code.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">lsst</span> <span class="o">=</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abcde</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abxyz</span><span class="err">&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">itertools</span> <span class="n">import</span> <span class="n">takewhile</span><span class="p">,</span> <span class="n">izip</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="err">&#39;&#39;</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="n">in</span> <span class="n">takewhile</span><span class="p">(</span><span class="n">lambda</span> <span class="n">x</span><span class="o">:</span> <span class="n">all</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="n">in</span> <span class="n">x</span><span class="p">),</span> <span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">lst</span><span class="p">)))</span>
+<span class="err">&#39;</span><span class="n">ab</span><span class="err">&#39;</span>
+</pre></div>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://github.com/yumminhuang"><i
+                            class="fa fa-github fa-lg"></i> github
+                    </a></li>
+                    <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i
+                            class="fa fa-stack-overflow fa-lg"></i> stack-overflow
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i
+                            class="fa fa-linkedin fa-lg"></i> linkedin
+                    </a></li>
+                    <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i
+                            class="fa fa-twitter fa-lg"></i> twitter
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i
+                            class="fa fa-weibo fa-lg"></i> weibo
+                    </a></li>
+                    <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i
+                            class="fa fa-instagram fa-lg"></i> instagram
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/python.html">
+                                Python
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://yumminhuang.github.io/tag/shell.html">
+                                Shell
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/boto.html">
+                                Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://www.northeastern.edu/" target="_blank">
+                NEU
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.jnu.edu.cn/" target="_blank">
+                JNU
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://fionser.github.io/" target="_blank">
+                Fionser's Blog
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Yumminhuang
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://yumminhuang.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://yumminhuang.github.io/theme/js/respond.min.js"></script>
+
+</body>
+</html>
