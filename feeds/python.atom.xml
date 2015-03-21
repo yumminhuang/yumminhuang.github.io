@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yumminhuang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/python.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2014-08-02T19:39:00-04:00</updated><entry><title>在 AWS Auto Scaling Group 中替换 Instance</title><link href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html" rel="alternate"></link><updated>2014-08-02T19:39:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-08-02:zai-aws-auto-scaling-group-zhong-ti-huan-instance.html</id><summary type="html">&lt;p&gt;这两周，我被分配的任务是实现&lt;a href="http://aws.amazon.com/"&gt;AWS&lt;/a&gt;的&lt;a href="http://aws.amazon.com/autoscaling/"&gt;Auto Scaling&lt;/a&gt;功能。多亏有了&lt;a href="https://github.com/boto/boto"&gt;Boto&lt;/a&gt;， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。&lt;/p&gt;
-&lt;p&gt;我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yumminhuang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/python.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2014-08-02T19:39:00-04:00</updated><entry><title>在 AWS Auto Scaling Group 中替换 Instance</title><link href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html" rel="alternate"></link><updated>2014-08-02T19:39:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-08-02:zai-aws-auto-scaling-group-zhong-ti-huan-instance.html</id><summary type="html">&lt;p&gt; 这两周，我被分配的任务是实现 &lt;a href="http://aws.amazon.com/"&gt;AWS&lt;/a&gt; 的 &lt;a href="http://aws.amazon.com/autoscaling/"&gt;Auto Scaling&lt;/a&gt; 功能。多亏有了 &lt;a href="https://github.com/boto/boto"&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。&lt;/p&gt;
+&lt;p&gt; 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;创建并配置（下载新发布的代码）多个新的Instance；&lt;/li&gt;
-&lt;li&gt;依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。&lt;/li&gt;
+&lt;li&gt; 创建并配置（下载新发布的代码）多个新的 Instance；&lt;/li&gt;
+&lt;li&gt; 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。&lt;/p&gt;
-&lt;p&gt;现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。&lt;/p&gt;
-&lt;p&gt;我想到的办法步骤如下：&lt;/p&gt;
+&lt;p&gt; 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。&lt;/p&gt;
+&lt;p&gt; 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 Instance 数目，都会激发 Scaling Policy。比如我想关闭一个旧的 Instance，这样 Auto Scaling Group 当中 Instance 的数量就会小于 Desired Capacity，Auto Scaling Group 就会新创建一个 Instance， 而不是等我激活一个 Instance 去替代。&lt;/p&gt;
+&lt;p&gt; 我想到的办法步骤如下：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;将Auto Scaling Group挂起（避免激发Scaling Policy）；&lt;/li&gt;
-&lt;li&gt;按照以前的方法替换旧的Instance；&lt;/li&gt;
-&lt;li&gt;将新创建的Instance添加到Auto Scaling Group。&lt;/li&gt;
+&lt;li&gt; 将 Auto Scaling Group 挂起（避免激发 Scaling Policy）；&lt;/li&gt;
+&lt;li&gt; 按照以前的方法替换旧的 Instance；&lt;/li&gt;
+&lt;li&gt; 将新创建的 Instance 添加到 Auto Scaling Group。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;因为AWS Auto Scaling的特性（比如Auto Scaling Group被挂起的时候不能够添加Instance，&lt;code&gt;desired_capacity&lt;/code&gt;不能小于&lt;code&gt;min_size&lt;/code&gt;），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：&lt;/p&gt;
+&lt;p&gt; 因为 AWS Auto Scaling 的特性（比如 Auto Scaling Group 被挂起的时候不能够添加 Instance，&lt;code&gt;desired_capacity&lt;/code&gt; 不能小于 &lt;code&gt;min_size&lt;/code&gt;），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;将Auto Scaling Group的&lt;code&gt;desired_capacity&lt;/code&gt;和&lt;code&gt;min_size&lt;/code&gt;分别置为&lt;code&gt;0&lt;/code&gt;（防止恢复Auto Scaling Group的时候自动创建Instance）；&lt;/li&gt;
-&lt;li&gt;恢复Auto Scaling Group（结束挂起状态，然后才可以添加Instance）；&lt;/li&gt;
-&lt;li&gt;添加Instance到Auto Scaling Group里；&lt;/li&gt;
-&lt;li&gt;恢复Auto Scaling Group的&lt;code&gt;min_size&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt; 将 Auto Scaling Group 的 &lt;code&gt;desired_capacity&lt;/code&gt; 和 &lt;code&gt;min_size&lt;/code&gt; 分别置为 &lt;code&gt;0&lt;/code&gt;（防止恢复 Auto Scaling Group 的时候自动创建 Instance）；&lt;/li&gt;
+&lt;li&gt; 恢复 Auto Scaling Group（结束挂起状态，然后才可以添加 Instance）；&lt;/li&gt;
+&lt;li&gt; 添加 Instance 到 Auto Scaling Group 里；&lt;/li&gt;
+&lt;li&gt; 恢复 Auto Scaling Group 的 &lt;code&gt;min_size&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;下面提供一份示例代码以供参考：&lt;/p&gt;
+&lt;p&gt; 下面提供一份示例代码以供参考：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;  1
   2
   3
@@ -264,9 +264,9 @@
     &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="Python"></category><category term="Boto"></category></entry><entry><title>5道不错的Python面试题</title><link href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html" rel="alternate"></link><updated>2014-07-28T21:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-07-28:5dao-bu-cuo-de-pythonmian-shi-ti.html</id><summary type="html">&lt;blockquote&gt;
-&lt;p&gt;注：本文的原文是 &lt;a href="http://www.toptal.com/python/interview-questions"&gt;5 Great Python Interview Questions&lt;/a&gt;。中文翻译和解释转自&lt;a href="http://blog.segmentfault.com/yexiaobai/1190000000618513"&gt;5 个很好的 Python 面试题&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 注：本文的原文是 &lt;a href="http://www.toptal.com/python/interview-questions"&gt;5 Great Python Interview Questions&lt;/a&gt;。中文翻译和解释转自 &lt;a href="http://blog.segmentfault.com/yexiaobai/1190000000618513"&gt;5 个很好的 Python 面试题 &lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3&gt;问题一：以下的代码的输出将是什么? 说出你的答案并解释。&lt;/h3&gt;
+&lt;h3&gt; 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;Parent&lt;/span&gt;(&lt;span class="n"&gt;object&lt;/span&gt;):
     &lt;span class="o"&gt;x&lt;/span&gt; = &lt;span class="mi"&gt;1&lt;/span&gt;
 
@@ -284,20 +284,20 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;以上代码的输出是：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 答案 &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; 以上代码的输出是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;1 1 1
 1 2 1
 3 2 3
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;使你困惑或是惊奇的是关于最后一行的输出是 &lt;code&gt;3 2 3&lt;/code&gt; 而不是 &lt;code&gt;3 2 1&lt;/code&gt;。为什么改变了 &lt;code&gt;Parent.x&lt;/code&gt; 的值还会改变 &lt;code&gt;Child2.x&lt;/code&gt; 的值，但是同时 &lt;code&gt;Child1.x&lt;/code&gt; 值却没有改变？&lt;/p&gt;
-&lt;p&gt;这个答案的关键是，在 Python 中，类变量在内部是作为字典处理的。如果一个变量的名字没有在当前类的字典中发现，将搜索祖先类（比如父类）直到被引用的变量名被找到（如果这个被引用的变量名既没有在自己所在的类又没有在祖先类中找到，会引发一个 &lt;code&gt;AttributeError&lt;/code&gt;异常 ）。&lt;/p&gt;
-&lt;p&gt;因此，在父类中设置 &lt;code&gt;x = 1&lt;/code&gt; 会使得类变量 X 在引用该类和其任何子类中的值为 1。这就是因为第一个 print 语句的输出是 &lt;code&gt;1 1 1&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;随后，如果任何它的子类重写了该值（例如，我们执行语句 &lt;code&gt;Child1.x = 2&lt;/code&gt;），然后，该值仅仅在子类中被改变。这就是为什么第二个 print 语句的输出是 &lt;code&gt;1 2 1&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;最后，如果该值在父类中被改变（例如，我们执行语句 &lt;code&gt;Parent.x = 3&lt;/code&gt;），这个改变会影响到任何未重写该值的子类当中的值（在这个示例中被影响的子类是 Child2）。这就是为什么第三个 print 输出是 &lt;code&gt;3 2 3&lt;/code&gt;。&lt;/p&gt;
-&lt;h3&gt;问题二：以下的代码的输出将是什么? 说出你的答案并解释？&lt;/h3&gt;
+&lt;p&gt; 使你困惑或是惊奇的是关于最后一行的输出是 &lt;code&gt;3 2 3&lt;/code&gt; 而不是 &lt;code&gt;3 2 1&lt;/code&gt;。为什么改变了 &lt;code&gt;Parent.x&lt;/code&gt; 的值还会改变 &lt;code&gt;Child2.x&lt;/code&gt; 的值，但是同时 &lt;code&gt;Child1.x&lt;/code&gt; 值却没有改变？&lt;/p&gt;
+&lt;p&gt; 这个答案的关键是，在 Python 中，类变量在内部是作为字典处理的。如果一个变量的名字没有在当前类的字典中发现，将搜索祖先类（比如父类）直到被引用的变量名被找到（如果这个被引用的变量名既没有在自己所在的类又没有在祖先类中找到，会引发一个 &lt;code&gt;AttributeError&lt;/code&gt; 异常 ）。&lt;/p&gt;
+&lt;p&gt; 因此，在父类中设置 &lt;code&gt;x = 1&lt;/code&gt; 会使得类变量 X 在引用该类和其任何子类中的值为 1。这就是因为第一个 print 语句的输出是 &lt;code&gt;1 1 1&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt; 随后，如果任何它的子类重写了该值（例如，我们执行语句 &lt;code&gt;Child1.x = 2&lt;/code&gt;），然后，该值仅仅在子类中被改变。这就是为什么第二个 print 语句的输出是 &lt;code&gt;1 2 1&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt; 最后，如果该值在父类中被改变（例如，我们执行语句 &lt;code&gt;Parent.x = 3&lt;/code&gt;），这个改变会影响到任何未重写该值的子类当中的值（在这个示例中被影响的子类是 Child2）。这就是为什么第三个 print 输出是 &lt;code&gt;3 2 3&lt;/code&gt;。&lt;/p&gt;
+&lt;h3&gt; 问题二：以下的代码的输出将是什么 ? 说出你的答案并解释？&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;def div1(x,y):
     print(&amp;quot;%s/%s = %s&amp;quot; % (x, y, x/y))
 
@@ -311,9 +311,9 @@ div2(5.,2.)
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这个答案实际依赖于你使用的是 Python 2 还是 Python 3。&lt;/p&gt;
-&lt;p&gt;在 &lt;strong&gt;Python 3&lt;/strong&gt; 中，期望的输出是：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 答案 &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; 这个答案实际依赖于你使用的是 Python 2 还是 Python 3。&lt;/p&gt;
+&lt;p&gt; 在 &lt;strong&gt;Python 3&lt;/strong&gt; 中，期望的输出是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;5/2 = 2.5
 5.0/2 = 2.5
 5//2 = 2
@@ -321,7 +321,7 @@ div2(5.,2.)
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;在 &lt;strong&gt;Python 2&lt;/strong&gt; 中，尽管如此，以上代码的输出将是：&lt;/p&gt;
+&lt;p&gt; 在 &lt;strong&gt;Python 2&lt;/strong&gt; 中，尽管如此，以上代码的输出将是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;5/2 = 2
 5.0/2 = 2.5
 5//2 = 2
@@ -329,22 +329,22 @@ div2(5.,2.)
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;默认，如果两个操作数都是整数，Python 2 自动执行整型计算。结果，&lt;code&gt;5/2&lt;/code&gt; 值为 &lt;code&gt;2&lt;/code&gt;，然而 &lt;code&gt;5./2&lt;/code&gt; 值为 &lt;code&gt;2.5&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;注意，尽管如此，你可以在 Python 2 中重载这一行为（比如达到你想在 Python 3 中的同样结果），通过添加以下导入：&lt;/p&gt;
+&lt;p&gt; 默认，如果两个操作数都是整数，Python 2 自动执行整型计算。结果，&lt;code&gt;5/2&lt;/code&gt; 值为 &lt;code&gt;2&lt;/code&gt;，然而 &lt;code&gt;5./2&lt;/code&gt; 值为 &lt;code&gt;2.5&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt; 注意，尽管如此，你可以在 Python 2 中重载这一行为（比如达到你想在 Python 3 中的同样结果），通过添加以下导入：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;from __future__ import division&lt;/code&gt;
-也需要注意的是“双划线”（//）操作符将一直执行整除，而不管操作数的类型，这就是为什么 &lt;code&gt;5.0//2.0&lt;/code&gt; 值为 &lt;code&gt;2.0&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;注： 在 Python 3 中，/ 操作符是做浮点除法，而 &lt;code&gt;//&lt;/code&gt; 是做整除（即商没有余数，比如 &lt;code&gt;10 // 3&lt;/code&gt; 其结果就为 &lt;code&gt;3&lt;/code&gt;，余数会被截除掉，而 &lt;code&gt;(-7) // 3&lt;/code&gt; 的结果却是 &lt;code&gt;-3&lt;/code&gt;。这个算法与其它很多编程语言不一样，需要注意，它们的整除运算会向0的方向取值。而在 Python 2 中，/ 就是整除，即和 Python 3 中的 // 操作符一样，）&lt;/p&gt;
-&lt;h3&gt;问题三：以下代码将输出什么?&lt;/h3&gt;
+也需要注意的是 “ 双划线 ”（//）操作符将一直执行整除，而不管操作数的类型，这就是为什么 &lt;code&gt;5.0//2.0&lt;/code&gt; 值为 &lt;code&gt;2.0&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt; 注： 在 Python 3 中，/ 操作符是做浮点除法，而 &lt;code&gt;//&lt;/code&gt; 是做整除（即商没有余数，比如 &lt;code&gt;10 // 3&lt;/code&gt; 其结果就为 &lt;code&gt;3&lt;/code&gt;，余数会被截除掉，而 &lt;code&gt;(-7) // 3&lt;/code&gt; 的结果却是 &lt;code&gt;-3&lt;/code&gt;。这个算法与其它很多编程语言不一样，需要注意，它们的整除运算会向 0 的方向取值。而在 Python 2 中，/ 就是整除，即和 Python 3 中的 // 操作符一样，）&lt;/p&gt;
+&lt;h3&gt; 问题三：以下代码将输出什么 ?&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;list = [&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;, &amp;#39;d&amp;#39;, &amp;#39;e&amp;#39;]
 print list[10:]
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;以上代码将输出 &lt;code&gt;[]&lt;/code&gt;，并且不会导致一个 &lt;code&gt;IndexError&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;正如人们所期望的，试图访问一个超过列表索引值的成员将导致 &lt;code&gt;IndexError&lt;/code&gt;（比如访问以上列表的 &lt;code&gt;list[10]&lt;/code&gt;）。尽管如此，试图访问一个列表的以超出列表成员数作为开始索引的切片将不会导致 &lt;code&gt;IndexError&lt;/code&gt;，并且将仅仅返回一个空列表。&lt;/p&gt;
-&lt;p&gt;一个讨厌的小问题是它会导致出现 bug ，并且这个问题是难以追踪的，因为它在运行时不会引发错误。&lt;/p&gt;
-&lt;h3&gt;问题四：以下的代码的输出将是什么? 说出你的答案并解释？&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt; 答案 &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; 以上代码将输出 &lt;code&gt;[]&lt;/code&gt;，并且不会导致一个 &lt;code&gt;IndexError&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt; 正如人们所期望的，试图访问一个超过列表索引值的成员将导致 &lt;code&gt;IndexError&lt;/code&gt;（比如访问以上列表的 &lt;code&gt;list[10]&lt;/code&gt;）。尽管如此，试图访问一个列表的以超出列表成员数作为开始索引的切片将不会导致 &lt;code&gt;IndexError&lt;/code&gt;，并且将仅仅返回一个空列表。&lt;/p&gt;
+&lt;p&gt; 一个讨厌的小问题是它会导致出现 bug ，并且这个问题是难以追踪的，因为它在运行时不会引发错误。&lt;/p&gt;
+&lt;h3&gt; 问题四：以下的代码的输出将是什么 ? 说出你的答案并解释？&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;def multipliers():
     return [lambda x : i * x for i in range(4)]
 
@@ -352,19 +352,19 @@ print [m(2) for m in multipliers()]
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;你将如何修改 multipliers 的定义来产生期望的结果&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;以上代码的输出是 &lt;code&gt;[6, 6, 6, 6]&lt;/code&gt; （而不是 &lt;code&gt;[0, 2, 4, 6]&lt;/code&gt;）。&lt;/p&gt;
-&lt;p&gt;这个的原因是 Python 的闭包的后期绑定导致的 &lt;a href="http://en.wikipedia.org/wiki/Late_binding"&gt;late binding&lt;/a&gt;，这意味着在闭包中的变量是在内部函数被调用的时候被查找。所以结果是，当任何 multipliers() 返回的函数被调用，在那时，i 的值是在它被调用时的周围作用域中查找，到那时，无论哪个返回的函数被调用，for 循环都已经完成了，i 最后的值是 3，因此，每个返回的函数 multiplies 的值都是 3。因此一个等于 2 的值被传递进以上代码，它们将返回一个值 6 （比如： 3 x 2）。&lt;/p&gt;
+&lt;p&gt; 你将如何修改 multipliers 的定义来产生期望的结果 &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 答案 &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; 以上代码的输出是 &lt;code&gt;[6, 6, 6, 6]&lt;/code&gt; （而不是 &lt;code&gt;[0, 2, 4, 6]&lt;/code&gt;）。&lt;/p&gt;
+&lt;p&gt; 这个的原因是 Python 的闭包的后期绑定导致的 &lt;a href="http://en.wikipedia.org/wiki/Late_binding"&gt;late binding&lt;/a&gt;，这意味着在闭包中的变量是在内部函数被调用的时候被查找。所以结果是，当任何 multipliers() 返回的函数被调用，在那时，i 的值是在它被调用时的周围作用域中查找，到那时，无论哪个返回的函数被调用，for 循环都已经完成了，i 最后的值是 3，因此，每个返回的函数 multiplies 的值都是 3。因此一个等于 2 的值被传递进以上代码，它们将返回一个值 6 （比如： 3 x 2）。&lt;/p&gt;
 &lt;p&gt;（顺便说下，正如在 &lt;a href="http://docs.python-guide.org/en/latest/writing/gotchas/"&gt;The Hitchhiker’s Guide to Python&lt;/a&gt; 中指出的，这里有一点普遍的误解，是关于 lambda 表达式的一些东西。一个 lambda 表达式创建的函数不是特殊的，和使用一个普通的 def 创建的函数展示的表现是一样的。）&lt;/p&gt;
-&lt;p&gt;这里有两种方法解决这个问题。&lt;/p&gt;
-&lt;p&gt;最普遍的解决方案是创建一个闭包，通过使用默认参数立即绑定它的参数。例如：&lt;/p&gt;
+&lt;p&gt; 这里有两种方法解决这个问题。&lt;/p&gt;
+&lt;p&gt; 最普遍的解决方案是创建一个闭包，通过使用默认参数立即绑定它的参数。例如：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;def multipliers():
     return [lambda x, i=i : i * x for i in range(4)]
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;另外一个选择是，你可以使用 &lt;code&gt;functools.partial&lt;/code&gt; 函数：&lt;/p&gt;
+&lt;p&gt; 另外一个选择是，你可以使用 &lt;code&gt;functools.partial&lt;/code&gt; 函数：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;functools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;partial&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;operator&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;mul&lt;/span&gt;
 
@@ -373,7 +373,7 @@ print [m(2) for m in multipliers()]
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h3&gt;问题五：以下的代码的输出将是什么? 说出你的答案并解释？&lt;/h3&gt;
+&lt;h3&gt; 问题五：以下的代码的输出将是什么 ? 说出你的答案并解释？&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;def extendList(val, list=[]):
     list.append(val)
     return list
@@ -388,18 +388,18 @@ print &amp;quot;list3 = %s&amp;quot; % list3
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;你将如何修改 &lt;code&gt;extendList&lt;/code&gt; 的定义来产生期望的结果&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;以上代码的输出为：&lt;/p&gt;
+&lt;p&gt; 你将如何修改 &lt;code&gt;extendList&lt;/code&gt; 的定义来产生期望的结果 &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; 答案 &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt; 以上代码的输出为：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;list1 = [10, &amp;#39;a&amp;#39;]
 list2 = [123]
 list3 = [10, &amp;#39;a&amp;#39;]
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;许多人会错误的认为 &lt;code&gt;list1&lt;/code&gt; 应该等于 &lt;code&gt;[10]&lt;/code&gt; 以及 &lt;code&gt;list3&lt;/code&gt; 应该等于 &lt;code&gt;['a']&lt;/code&gt;。认为 &lt;code&gt;list&lt;/code&gt; 的参数会在&lt;code&gt;extendList&lt;/code&gt; 每次被调用的时候会被设置成它的默认值 &lt;code&gt;[]&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;尽管如此，实际发生的事情是，新的默认列表仅仅只在函数被定义时创建一次。随后当 &lt;code&gt;extendList&lt;/code&gt; 没有被指定的列表参数调用的时候，其使用的是同一个列表。这就是为什么当函数被定义的时候，表达式是用默认参数被计算，而不是它被调用的时候。&lt;/p&gt;
-&lt;p&gt;因此，&lt;code&gt;list1&lt;/code&gt; 和 &lt;code&gt;list3&lt;/code&gt; 是操作的相同的列表。而 &lt;code&gt;list2&lt;/code&gt;是操作的它创建的独立的列表（通过传递它自己的空列表作为&lt;code&gt;list&lt;/code&gt; 参数的值）。&lt;/p&gt;
+&lt;p&gt; 许多人会错误的认为 &lt;code&gt;list1&lt;/code&gt; 应该等于 &lt;code&gt;[10]&lt;/code&gt; 以及 &lt;code&gt;list3&lt;/code&gt; 应该等于 &lt;code&gt;['a']&lt;/code&gt;。认为 &lt;code&gt;list&lt;/code&gt; 的参数会在 &lt;code&gt;extendList&lt;/code&gt; 每次被调用的时候会被设置成它的默认值 &lt;code&gt;[]&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt; 尽管如此，实际发生的事情是，新的默认列表仅仅只在函数被定义时创建一次。随后当 &lt;code&gt;extendList&lt;/code&gt; 没有被指定的列表参数调用的时候，其使用的是同一个列表。这就是为什么当函数被定义的时候，表达式是用默认参数被计算，而不是它被调用的时候。&lt;/p&gt;
+&lt;p&gt; 因此，&lt;code&gt;list1&lt;/code&gt; 和 &lt;code&gt;list3&lt;/code&gt; 是操作的相同的列表。而 &lt;code&gt;list2&lt;/code&gt; 是操作的它创建的独立的列表（通过传递它自己的空列表作为 &lt;code&gt;list&lt;/code&gt; 参数的值）。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;extendList&lt;/code&gt; 函数的定义可以做如下修改，但，当没有新的 &lt;code&gt;list&lt;/code&gt; 参数被指定的时候，会总是开始一个新列表，这更加可能是一直期望的行为。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;def extendList(val, list=None):
     if list is None:
@@ -409,7 +409,7 @@ list3 = [10, &amp;#39;a&amp;#39;]
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;使用这个改进的实现，输出将是：&lt;/p&gt;
+&lt;p&gt; 使用这个改进的实现，输出将是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;list1 = [10]
 list2 = [123]
 list3 = [&amp;#39;a&amp;#39;]

@@ -15,7 +15,7 @@
             <meta property="og:type" content="article"/>
             <meta property="og:title" content="5道不错的Python面试题"/>
             <meta property="og:url" content="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html"/>
-            <meta property="og:description" content="注：本文的原文是 5 Great Python Interview Questions。中文翻译和解释转自5 个很好的 Python 面试题 问题一：以下的代码的输出将是什么? 说出你的答案并解释。 class Parent(object): x = 1 class Child1(Parent): pass class Child2(Parent): pass print Parent.x, Child1.x, Child2.x Child1.x = 2 print Parent.x, Child1.x, Child2.x Parent.x = 3 print Parent ..."/>
+            <meta property="og:description" content="注：本文的原文是 5 Great Python Interview Questions。中文翻译和解释转自 5 个很好的 Python 面试题 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。 class Parent(object): x = 1 class Child1(Parent): pass class Child2(Parent): pass print Parent.x, Child1.x, Child2.x Child1.x = 2 print Parent.x, Child1.x, Child2.x Parent.x = 3 print Parent ..."/>
             <meta property="article:published_time" content="2014-07-28" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="Python" />
@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
     <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://yumminhuang.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link href="http://yumminhuang.github.io/theme/css/pygments/vs.css" rel="stylesheet">
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
@@ -106,9 +106,9 @@ Yumminhuang            </a>
 </footer><!-- /.post-info -->                    </div>
                 </div>
                 <blockquote>
-<p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
+<p> 注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自 <a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题 </a></p>
 </blockquote>
-<h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
+<h3> 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。</h3>
 <div class="highlight"><pre><span class="k">class</span> <span class="n">Parent</span>(<span class="n">object</span>):
     <span class="o">x</span> = <span class="mi">1</span>
 
@@ -126,20 +126,20 @@ Yumminhuang            </a>
 </pre></div>
 
 
-<p><strong>答案</strong></p>
-<p>以上代码的输出是：</p>
+<p><strong> 答案 </strong></p>
+<p> 以上代码的输出是：</p>
 <div class="highlight"><pre>1 1 1
 1 2 1
 3 2 3
 </pre></div>
 
 
-<p>使你困惑或是惊奇的是关于最后一行的输出是 <code>3 2 3</code> 而不是 <code>3 2 1</code>。为什么改变了 <code>Parent.x</code> 的值还会改变 <code>Child2.x</code> 的值，但是同时 <code>Child1.x</code> 值却没有改变？</p>
-<p>这个答案的关键是，在 Python 中，类变量在内部是作为字典处理的。如果一个变量的名字没有在当前类的字典中发现，将搜索祖先类（比如父类）直到被引用的变量名被找到（如果这个被引用的变量名既没有在自己所在的类又没有在祖先类中找到，会引发一个 <code>AttributeError</code>异常 ）。</p>
-<p>因此，在父类中设置 <code>x = 1</code> 会使得类变量 X 在引用该类和其任何子类中的值为 1。这就是因为第一个 print 语句的输出是 <code>1 1 1</code>。</p>
-<p>随后，如果任何它的子类重写了该值（例如，我们执行语句 <code>Child1.x = 2</code>），然后，该值仅仅在子类中被改变。这就是为什么第二个 print 语句的输出是 <code>1 2 1</code>。</p>
-<p>最后，如果该值在父类中被改变（例如，我们执行语句 <code>Parent.x = 3</code>），这个改变会影响到任何未重写该值的子类当中的值（在这个示例中被影响的子类是 Child2）。这就是为什么第三个 print 输出是 <code>3 2 3</code>。</p>
-<h3>问题二：以下的代码的输出将是什么? 说出你的答案并解释？</h3>
+<p> 使你困惑或是惊奇的是关于最后一行的输出是 <code>3 2 3</code> 而不是 <code>3 2 1</code>。为什么改变了 <code>Parent.x</code> 的值还会改变 <code>Child2.x</code> 的值，但是同时 <code>Child1.x</code> 值却没有改变？</p>
+<p> 这个答案的关键是，在 Python 中，类变量在内部是作为字典处理的。如果一个变量的名字没有在当前类的字典中发现，将搜索祖先类（比如父类）直到被引用的变量名被找到（如果这个被引用的变量名既没有在自己所在的类又没有在祖先类中找到，会引发一个 <code>AttributeError</code> 异常 ）。</p>
+<p> 因此，在父类中设置 <code>x = 1</code> 会使得类变量 X 在引用该类和其任何子类中的值为 1。这就是因为第一个 print 语句的输出是 <code>1 1 1</code>。</p>
+<p> 随后，如果任何它的子类重写了该值（例如，我们执行语句 <code>Child1.x = 2</code>），然后，该值仅仅在子类中被改变。这就是为什么第二个 print 语句的输出是 <code>1 2 1</code>。</p>
+<p> 最后，如果该值在父类中被改变（例如，我们执行语句 <code>Parent.x = 3</code>），这个改变会影响到任何未重写该值的子类当中的值（在这个示例中被影响的子类是 Child2）。这就是为什么第三个 print 输出是 <code>3 2 3</code>。</p>
+<h3> 问题二：以下的代码的输出将是什么 ? 说出你的答案并解释？</h3>
 <div class="highlight"><pre>def div1(x,y):
     print(&quot;%s/%s = %s&quot; % (x, y, x/y))
 
@@ -153,9 +153,9 @@ div2(5.,2.)
 </pre></div>
 
 
-<p><strong>答案</strong></p>
-<p>这个答案实际依赖于你使用的是 Python 2 还是 Python 3。</p>
-<p>在 <strong>Python 3</strong> 中，期望的输出是：</p>
+<p><strong> 答案 </strong></p>
+<p> 这个答案实际依赖于你使用的是 Python 2 还是 Python 3。</p>
+<p> 在 <strong>Python 3</strong> 中，期望的输出是：</p>
 <div class="highlight"><pre>5/2 = 2.5
 5.0/2 = 2.5
 5//2 = 2
@@ -163,7 +163,7 @@ div2(5.,2.)
 </pre></div>
 
 
-<p>在 <strong>Python 2</strong> 中，尽管如此，以上代码的输出将是：</p>
+<p> 在 <strong>Python 2</strong> 中，尽管如此，以上代码的输出将是：</p>
 <div class="highlight"><pre>5/2 = 2
 5.0/2 = 2.5
 5//2 = 2
@@ -171,22 +171,22 @@ div2(5.,2.)
 </pre></div>
 
 
-<p>默认，如果两个操作数都是整数，Python 2 自动执行整型计算。结果，<code>5/2</code> 值为 <code>2</code>，然而 <code>5./2</code> 值为 <code>2.5</code>。</p>
-<p>注意，尽管如此，你可以在 Python 2 中重载这一行为（比如达到你想在 Python 3 中的同样结果），通过添加以下导入：</p>
+<p> 默认，如果两个操作数都是整数，Python 2 自动执行整型计算。结果，<code>5/2</code> 值为 <code>2</code>，然而 <code>5./2</code> 值为 <code>2.5</code>。</p>
+<p> 注意，尽管如此，你可以在 Python 2 中重载这一行为（比如达到你想在 Python 3 中的同样结果），通过添加以下导入：</p>
 <p><code>from __future__ import division</code>
-也需要注意的是“双划线”（//）操作符将一直执行整除，而不管操作数的类型，这就是为什么 <code>5.0//2.0</code> 值为 <code>2.0</code>。</p>
-<p>注： 在 Python 3 中，/ 操作符是做浮点除法，而 <code>//</code> 是做整除（即商没有余数，比如 <code>10 // 3</code> 其结果就为 <code>3</code>，余数会被截除掉，而 <code>(-7) // 3</code> 的结果却是 <code>-3</code>。这个算法与其它很多编程语言不一样，需要注意，它们的整除运算会向0的方向取值。而在 Python 2 中，/ 就是整除，即和 Python 3 中的 // 操作符一样，）</p>
-<h3>问题三：以下代码将输出什么?</h3>
+也需要注意的是 “ 双划线 ”（//）操作符将一直执行整除，而不管操作数的类型，这就是为什么 <code>5.0//2.0</code> 值为 <code>2.0</code>。</p>
+<p> 注： 在 Python 3 中，/ 操作符是做浮点除法，而 <code>//</code> 是做整除（即商没有余数，比如 <code>10 // 3</code> 其结果就为 <code>3</code>，余数会被截除掉，而 <code>(-7) // 3</code> 的结果却是 <code>-3</code>。这个算法与其它很多编程语言不一样，需要注意，它们的整除运算会向 0 的方向取值。而在 Python 2 中，/ 就是整除，即和 Python 3 中的 // 操作符一样，）</p>
+<h3> 问题三：以下代码将输出什么 ?</h3>
 <div class="highlight"><pre>list = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]
 print list[10:]
 </pre></div>
 
 
-<p><strong>答案</strong></p>
-<p>以上代码将输出 <code>[]</code>，并且不会导致一个 <code>IndexError</code>。</p>
-<p>正如人们所期望的，试图访问一个超过列表索引值的成员将导致 <code>IndexError</code>（比如访问以上列表的 <code>list[10]</code>）。尽管如此，试图访问一个列表的以超出列表成员数作为开始索引的切片将不会导致 <code>IndexError</code>，并且将仅仅返回一个空列表。</p>
-<p>一个讨厌的小问题是它会导致出现 bug ，并且这个问题是难以追踪的，因为它在运行时不会引发错误。</p>
-<h3>问题四：以下的代码的输出将是什么? 说出你的答案并解释？</h3>
+<p><strong> 答案 </strong></p>
+<p> 以上代码将输出 <code>[]</code>，并且不会导致一个 <code>IndexError</code>。</p>
+<p> 正如人们所期望的，试图访问一个超过列表索引值的成员将导致 <code>IndexError</code>（比如访问以上列表的 <code>list[10]</code>）。尽管如此，试图访问一个列表的以超出列表成员数作为开始索引的切片将不会导致 <code>IndexError</code>，并且将仅仅返回一个空列表。</p>
+<p> 一个讨厌的小问题是它会导致出现 bug ，并且这个问题是难以追踪的，因为它在运行时不会引发错误。</p>
+<h3> 问题四：以下的代码的输出将是什么 ? 说出你的答案并解释？</h3>
 <div class="highlight"><pre>def multipliers():
     return [lambda x : i * x for i in range(4)]
 
@@ -194,19 +194,19 @@ print [m(2) for m in multipliers()]
 </pre></div>
 
 
-<p>你将如何修改 multipliers 的定义来产生期望的结果</p>
-<p><strong>答案</strong></p>
-<p>以上代码的输出是 <code>[6, 6, 6, 6]</code> （而不是 <code>[0, 2, 4, 6]</code>）。</p>
-<p>这个的原因是 Python 的闭包的后期绑定导致的 <a href="http://en.wikipedia.org/wiki/Late_binding">late binding</a>，这意味着在闭包中的变量是在内部函数被调用的时候被查找。所以结果是，当任何 multipliers() 返回的函数被调用，在那时，i 的值是在它被调用时的周围作用域中查找，到那时，无论哪个返回的函数被调用，for 循环都已经完成了，i 最后的值是 3，因此，每个返回的函数 multiplies 的值都是 3。因此一个等于 2 的值被传递进以上代码，它们将返回一个值 6 （比如： 3 x 2）。</p>
+<p> 你将如何修改 multipliers 的定义来产生期望的结果 </p>
+<p><strong> 答案 </strong></p>
+<p> 以上代码的输出是 <code>[6, 6, 6, 6]</code> （而不是 <code>[0, 2, 4, 6]</code>）。</p>
+<p> 这个的原因是 Python 的闭包的后期绑定导致的 <a href="http://en.wikipedia.org/wiki/Late_binding">late binding</a>，这意味着在闭包中的变量是在内部函数被调用的时候被查找。所以结果是，当任何 multipliers() 返回的函数被调用，在那时，i 的值是在它被调用时的周围作用域中查找，到那时，无论哪个返回的函数被调用，for 循环都已经完成了，i 最后的值是 3，因此，每个返回的函数 multiplies 的值都是 3。因此一个等于 2 的值被传递进以上代码，它们将返回一个值 6 （比如： 3 x 2）。</p>
 <p>（顺便说下，正如在 <a href="http://docs.python-guide.org/en/latest/writing/gotchas/">The Hitchhiker’s Guide to Python</a> 中指出的，这里有一点普遍的误解，是关于 lambda 表达式的一些东西。一个 lambda 表达式创建的函数不是特殊的，和使用一个普通的 def 创建的函数展示的表现是一样的。）</p>
-<p>这里有两种方法解决这个问题。</p>
-<p>最普遍的解决方案是创建一个闭包，通过使用默认参数立即绑定它的参数。例如：</p>
+<p> 这里有两种方法解决这个问题。</p>
+<p> 最普遍的解决方案是创建一个闭包，通过使用默认参数立即绑定它的参数。例如：</p>
 <div class="highlight"><pre>def multipliers():
     return [lambda x, i=i : i * x for i in range(4)]
 </pre></div>
 
 
-<p>另外一个选择是，你可以使用 <code>functools.partial</code> 函数：</p>
+<p> 另外一个选择是，你可以使用 <code>functools.partial</code> 函数：</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">mul</span>
 
@@ -215,7 +215,7 @@ print [m(2) for m in multipliers()]
 </pre></div>
 
 
-<h3>问题五：以下的代码的输出将是什么? 说出你的答案并解释？</h3>
+<h3> 问题五：以下的代码的输出将是什么 ? 说出你的答案并解释？</h3>
 <div class="highlight"><pre>def extendList(val, list=[]):
     list.append(val)
     return list
@@ -230,18 +230,18 @@ print &quot;list3 = %s&quot; % list3
 </pre></div>
 
 
-<p>你将如何修改 <code>extendList</code> 的定义来产生期望的结果</p>
-<p><strong>答案</strong></p>
-<p>以上代码的输出为：</p>
+<p> 你将如何修改 <code>extendList</code> 的定义来产生期望的结果 </p>
+<p><strong> 答案 </strong></p>
+<p> 以上代码的输出为：</p>
 <div class="highlight"><pre>list1 = [10, &#39;a&#39;]
 list2 = [123]
 list3 = [10, &#39;a&#39;]
 </pre></div>
 
 
-<p>许多人会错误的认为 <code>list1</code> 应该等于 <code>[10]</code> 以及 <code>list3</code> 应该等于 <code>['a']</code>。认为 <code>list</code> 的参数会在<code>extendList</code> 每次被调用的时候会被设置成它的默认值 <code>[]</code>。</p>
-<p>尽管如此，实际发生的事情是，新的默认列表仅仅只在函数被定义时创建一次。随后当 <code>extendList</code> 没有被指定的列表参数调用的时候，其使用的是同一个列表。这就是为什么当函数被定义的时候，表达式是用默认参数被计算，而不是它被调用的时候。</p>
-<p>因此，<code>list1</code> 和 <code>list3</code> 是操作的相同的列表。而 <code>list2</code>是操作的它创建的独立的列表（通过传递它自己的空列表作为<code>list</code> 参数的值）。</p>
+<p> 许多人会错误的认为 <code>list1</code> 应该等于 <code>[10]</code> 以及 <code>list3</code> 应该等于 <code>['a']</code>。认为 <code>list</code> 的参数会在 <code>extendList</code> 每次被调用的时候会被设置成它的默认值 <code>[]</code>。</p>
+<p> 尽管如此，实际发生的事情是，新的默认列表仅仅只在函数被定义时创建一次。随后当 <code>extendList</code> 没有被指定的列表参数调用的时候，其使用的是同一个列表。这就是为什么当函数被定义的时候，表达式是用默认参数被计算，而不是它被调用的时候。</p>
+<p> 因此，<code>list1</code> 和 <code>list3</code> 是操作的相同的列表。而 <code>list2</code> 是操作的它创建的独立的列表（通过传递它自己的空列表作为 <code>list</code> 参数的值）。</p>
 <p><code>extendList</code> 函数的定义可以做如下修改，但，当没有新的 <code>list</code> 参数被指定的时候，会总是开始一个新列表，这更加可能是一直期望的行为。</p>
 <div class="highlight"><pre>def extendList(val, list=None):
     if list is None:
@@ -251,7 +251,7 @@ list3 = [10, &#39;a&#39;]
 </pre></div>
 
 
-<p>使用这个改进的实现，输出将是：</p>
+<p> 使用这个改进的实现，输出将是：</p>
 <div class="highlight"><pre>list1 = [10]
 list2 = [123]
 list3 = [&#39;a&#39;]
@@ -300,18 +300,13 @@ list3 = [&#39;a&#39;]
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://yumminhuang.github.io/tag/shell.html">
-                                Shell
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/ops.html">
-                                Ops
+                        <li class="list-group-item tag-2">
+                            <a href="http://yumminhuang.github.io/tag/shell.html">
+                                Shell
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -322,6 +317,11 @@ list3 = [&#39;a&#39;]
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/objective-c.html">
                                 Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                     </ul>

@@ -15,7 +15,7 @@
             <meta property="og:type" content="article"/>
             <meta property="og:title" content="在 AWS Auto Scaling Group 中替换 Instance"/>
             <meta property="og:url" content="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html"/>
-            <meta property="og:description" content="这两周，我被分配的任务是实现AWS的Auto Scaling功能。多亏有了Boto， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下： 创建并配置（下载新发布的代码）多个新的Instance； 依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。 这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。 现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。 我想到的办法步骤如下： 将Auto Scaling Group挂起（避免激发Scaling Policy ..."/>
+            <meta property="og:description" content="这两周，我被分配的任务是实现 AWS 的 Auto Scaling 功能。多亏有了 Boto， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下： 创建并配置（下载新发布的代码）多个新的 Instance； 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 ..."/>
             <meta property="article:published_time" content="2014-08-02" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="Python" />
@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
     <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://yumminhuang.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link href="http://yumminhuang.github.io/theme/css/pygments/vs.css" rel="stylesheet">
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
@@ -108,28 +108,28 @@ Yumminhuang            </a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>这两周，我被分配的任务是实现<a href="http://aws.amazon.com/">AWS</a>的<a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a>功能。多亏有了<a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
-<p>我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
+                <p> 这两周，我被分配的任务是实现 <a href="http://aws.amazon.com/">AWS</a> 的 <a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a> 功能。多亏有了 <a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
+<p> 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
 <ol>
-<li>创建并配置（下载新发布的代码）多个新的Instance；</li>
-<li>依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。</li>
+<li> 创建并配置（下载新发布的代码）多个新的 Instance；</li>
+<li> 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。</li>
 </ol>
-<p>这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。</p>
-<p>现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。</p>
-<p>我想到的办法步骤如下：</p>
+<p> 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。</p>
+<p> 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 Instance 数目，都会激发 Scaling Policy。比如我想关闭一个旧的 Instance，这样 Auto Scaling Group 当中 Instance 的数量就会小于 Desired Capacity，Auto Scaling Group 就会新创建一个 Instance， 而不是等我激活一个 Instance 去替代。</p>
+<p> 我想到的办法步骤如下：</p>
 <ol>
-<li>将Auto Scaling Group挂起（避免激发Scaling Policy）；</li>
-<li>按照以前的方法替换旧的Instance；</li>
-<li>将新创建的Instance添加到Auto Scaling Group。</li>
+<li> 将 Auto Scaling Group 挂起（避免激发 Scaling Policy）；</li>
+<li> 按照以前的方法替换旧的 Instance；</li>
+<li> 将新创建的 Instance 添加到 Auto Scaling Group。</li>
 </ol>
-<p>因为AWS Auto Scaling的特性（比如Auto Scaling Group被挂起的时候不能够添加Instance，<code>desired_capacity</code>不能小于<code>min_size</code>），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：</p>
+<p> 因为 AWS Auto Scaling 的特性（比如 Auto Scaling Group 被挂起的时候不能够添加 Instance，<code>desired_capacity</code> 不能小于 <code>min_size</code>），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：</p>
 <ol>
-<li>将Auto Scaling Group的<code>desired_capacity</code>和<code>min_size</code>分别置为<code>0</code>（防止恢复Auto Scaling Group的时候自动创建Instance）；</li>
-<li>恢复Auto Scaling Group（结束挂起状态，然后才可以添加Instance）；</li>
-<li>添加Instance到Auto Scaling Group里；</li>
-<li>恢复Auto Scaling Group的<code>min_size</code>。</li>
+<li> 将 Auto Scaling Group 的 <code>desired_capacity</code> 和 <code>min_size</code> 分别置为 <code>0</code>（防止恢复 Auto Scaling Group 的时候自动创建 Instance）；</li>
+<li> 恢复 Auto Scaling Group（结束挂起状态，然后才可以添加 Instance）；</li>
+<li> 添加 Instance 到 Auto Scaling Group 里；</li>
+<li> 恢复 Auto Scaling Group 的 <code>min_size</code>。</li>
 </ol>
-<p>下面提供一份示例代码以供参考：</p>
+<p> 下面提供一份示例代码以供参考：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
   2
   3
@@ -417,18 +417,13 @@ Yumminhuang            </a>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://yumminhuang.github.io/tag/shell.html">
-                                Shell
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/ops.html">
-                                Ops
+                        <li class="list-group-item tag-2">
+                            <a href="http://yumminhuang.github.io/tag/shell.html">
+                                Shell
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -439,6 +434,11 @@ Yumminhuang            </a>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/objective-c.html">
                                 Objective-C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                     </ul>
