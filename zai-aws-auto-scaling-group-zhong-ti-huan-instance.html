@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Replace Instances in AWS Auto Scaling Group - Yumminhuang</title>
+    <title>在 AWS Auto Scaling Group 中替换 Instance - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,8 +13,8 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yumminhuang" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Replace Instances in AWS Auto Scaling Group"/>
-            <meta property="og:url" content="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html"/>
+            <meta property="og:title" content="在 AWS Auto Scaling Group 中替换 Instance"/>
+            <meta property="og:url" content="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html"/>
             <meta property="og:description" content="这两周，我被分配的任务是实现AWS的Auto Scaling功能。多亏有了Boto， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下： 创建并配置（下载新发布的代码）多个新的Instance； 依次关闭旧的Instance，每关闭一个Instance，就激活（运行代码）一个新的Instance来替代被关闭的Instance。 这样可以保证在AWS上运行的Instance依次得到更新，并且服务没有中断。 现在的问题是：使用了Auto Scaling之后，每次尝试改变Auto Scaling Group当中的Instance数目，都会激发Scaling Policy。比如我想关闭一个旧的Instance，这样Auto Scaling Group当中Instance的数量就会小于Desired Capacity，Auto Scaling Group就会新创建一个Instance， 而不是等我激活一个Instance去替代。 我想到的办法步骤如下： 将Auto Scaling Group挂起（避免激发Scaling Policy ..."/>
             <meta property="article:published_time" content="2014-08-02" />
             <meta property="article:section" content="Python" />
@@ -52,6 +52,9 @@ Yumminhuang            </a>
                              About Me
                           </a></li>
                         <li >
+                            <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
+                        </li>
+                        <li >
                             <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
                         </li>
                         <li >
@@ -80,10 +83,10 @@ Yumminhuang            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html"
+                    <a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html"
                        rel="bookmark"
-                       title="Permalink to Replace Instances in AWS Auto Scaling Group">
-                        Replace Instances in AWS Auto Scaling Group
+                       title="Permalink to 在 AWS Auto Scaling Group 中替换 Instance">
+                        在 AWS Auto Scaling Group 中替换 Instance
                     </a>
                 </h1>
             </header>
@@ -418,19 +421,24 @@ Yumminhuang            </a>
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
@@ -465,7 +473,7 @@ Yumminhuang            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Yumminhuang
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>

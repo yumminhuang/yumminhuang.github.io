@@ -48,6 +48,9 @@ Yumminhuang            </a>
                              About Me
                           </a></li>
                         <li >
+                            <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
+                        </li>
+                        <li >
                             <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
                         </li>
                         <li >
@@ -73,6 +76,40 @@ Yumminhuang            </a>
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">在VPS搭建VPN服务器</a></h2>
+                <div class="summary"><h2>简介</h2>
+<blockquote>
+<p>从来就没有什么救世主</p>
+<p>也不靠神仙皇帝</p>
+<p>要创造人类的幸福</p>
+<p>全靠我们自己</p>
+</blockquote>
+<p>为了在 <a href="http://zh.wikipedia.org/wiki/防火长城">GFW</a> 的封锁之下进行正常的上网活动，可以使用 <a href="http://zh.wikipedia.org/wiki/虛擬私人網路">VPN</a>。为什么有各种各样的VPN服务提供商还要自己搭建VPN呢？有以下几方面的考虑：</p>
+<ol>
+<li>安全性：你很难知道一些VPN提供商是否会盗取你的敏感信息，自己搭建VPN则可以避免这个问题；</li>
+<li>稳定：「道高一尺，魔高一丈」，现在很多VPN提供商都是打一枪换一个地方，难以保证稳定的连接；</li>
+<li>价格：自己搭建VPN，一个月的费用大概在$5左右。</li>
+</ol>
+<h2>具体步骤</h2>
+<h4>注册一个VPS账号</h4>
+<p>注册任意一家VPS服务提供商的账号。此步可能需要一张双币信用卡。
+至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
+<h4>新建一个Droplet</h4>
+<p>我新建的Droplet是最低配置，具体配置包括：</p>
+<ul>
+<li>512MB RAM</li>
+<li>20GB SSD</li>
+<li>2TB 流量</li>
+</ul>
+<p>地理位置选的是最近的。</p>
+<p>操作系统开始选择的是Ubuntu14.04，后来用的是Ubuntu12.04（版本应该没有影响）。</p>
+<p>没有选择多余的设置。</p>
+<p>点击新建按钮会收到一份包含登陆密码的邮件 ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://yumminhuang.github.io/yelp-interview-problem.html">Yelp Interview Problem</a></h2>
                 <div class="summary"><p>Today, I had a skype interview with Yelp.</p>
 <h3>Interview</h3>
@@ -91,7 +128,7 @@ Yumminhuang            </a>
             </article>
             <hr/>
             <article>
-                <h2><a href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html">Replace Instances in AWS Auto Scaling Group</a></h2>
+                <h2><a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">在 AWS Auto Scaling Group 中替换 Instance</a></h2>
                 <div class="summary"><p>这两周，我被分配的任务是实现<a href="http://aws.amazon.com/">AWS</a>的<a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a>功能。多亏有了<a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
 <p>我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
 <ol>
@@ -103,43 +140,43 @@ Yumminhuang            </a>
 <p>我想到的办法步骤如下：</p>
 <ol>
 <li>将Auto Scaling Group挂起（避免激发Scaling Policy ...</li></ol>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/replace-instances-in-aws-auto-scaling-group.html">more ...</a>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">more ...</a>
                 </div>
             </article>
             <hr/>
             <article>
-                <h2><a href="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html">How do I remove all .pyc files from a project?</a></h2>
+                <h2><a href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">How to remove all .pyc files from a project?</a></h2>
                 <div class="summary"><p>I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
 <div class="highlight"><pre>find . -name <span class="s2">&quot;*.pyc&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
 </pre></div>
 
 
 <p>I ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html">more ...</a>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">more ...</a>
                 </div>
             </article>
             <hr/>
             <article>
-                <h2><a href="http://yumminhuang.github.io/5-great-python-interview-questions.html">5 Great Python Interview Questions</a></h2>
+                <h2><a href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html">5道不错的Python面试题</a></h2>
                 <div class="summary"><blockquote>
 <p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
 </blockquote>
 <h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
-<div class="highlight"><pre><span class="n">class</span> <span class="n">Parent</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Parent</span>(<span class="n">object</span>):
+    <span class="o">x</span> = <span class="mi">1</span>
 
-<span class="n">class</span> <span class="n">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
+<span class="k">class</span> <span class="n">Child1</span>(<span class="n">Parent</span>):
+    <span class="nb">pass</span>
 
-<span class="n">class</span> <span class="n">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
+<span class="k">class</span> <span class="n">Child2</span>(<span class="n">Parent</span>):
+    <span class="nb">pass</span>
 
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Child1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Parent</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">print</span> <span class="n">Parent ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5-great-python-interview-questions.html">more ...</a>
+<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
+<span class="n">Child1</span>.<span class="o">x</span> = <span class="mi">2</span>
+<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
+<span class="n">Parent</span>.<span class="o">x</span> = <span class="mi">3</span>
+<span class="nb">print</span> <span class="n">Parent ...</span></pre></div>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -220,19 +257,24 @@ Yumminhuang            </a>
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
@@ -267,7 +309,7 @@ Yumminhuang            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Yumminhuang
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>

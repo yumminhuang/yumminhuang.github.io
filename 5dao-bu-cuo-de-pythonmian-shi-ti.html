@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>5 Great Python Interview Questions - Yumminhuang</title>
+    <title>5道不错的Python面试题 - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,8 +13,8 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yumminhuang" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="5 Great Python Interview Questions"/>
-            <meta property="og:url" content="http://yumminhuang.github.io/5-great-python-interview-questions.html"/>
+            <meta property="og:title" content="5道不错的Python面试题"/>
+            <meta property="og:url" content="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html"/>
             <meta property="og:description" content="注：本文的原文是 5 Great Python Interview Questions。中文翻译和解释转自5 个很好的 Python 面试题 问题一：以下的代码的输出将是什么? 说出你的答案并解释。 class Parent(object): x = 1 class Child1(Parent): pass class Child2(Parent): pass print Parent.x, Child1.x, Child2.x Child1.x = 2 print Parent.x, Child1.x, Child2.x Parent.x = 3 print Parent ..."/>
             <meta property="article:published_time" content="2014-07-28" />
             <meta property="article:section" content="Python" />
@@ -51,6 +51,9 @@ Yumminhuang            </a>
                              About Me
                           </a></li>
                         <li >
+                            <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
+                        </li>
+                        <li >
                             <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
                         </li>
                         <li >
@@ -79,10 +82,10 @@ Yumminhuang            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://yumminhuang.github.io/5-great-python-interview-questions.html"
+                    <a href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html"
                        rel="bookmark"
-                       title="Permalink to 5 Great Python Interview Questions">
-                        5 Great Python Interview Questions
+                       title="Permalink to 5道不错的Python面试题">
+                        5道不错的Python面试题
                     </a>
                 </h1>
             </header>
@@ -106,28 +109,28 @@ Yumminhuang            </a>
 <p>注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自<a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题</a></p>
 </blockquote>
 <h3>问题一：以下的代码的输出将是什么? 说出你的答案并解释。</h3>
-<div class="highlight"><pre><span class="n">class</span> <span class="n">Parent</span><span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Parent</span>(<span class="n">object</span>):
+    <span class="o">x</span> = <span class="mi">1</span>
 
-<span class="n">class</span> <span class="n">Child1</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
+<span class="k">class</span> <span class="n">Child1</span>(<span class="n">Parent</span>):
+    <span class="nb">pass</span>
 
-<span class="n">class</span> <span class="n">Child2</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">pass</span>
+<span class="k">class</span> <span class="n">Child2</span>(<span class="n">Parent</span>):
+    <span class="nb">pass</span>
 
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Child1</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
-<span class="n">Parent</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">print</span> <span class="n">Parent</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child1</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">Child2</span><span class="p">.</span><span class="n">x</span>
+<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
+<span class="n">Child1</span>.<span class="o">x</span> = <span class="mi">2</span>
+<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
+<span class="n">Parent</span>.<span class="o">x</span> = <span class="mi">3</span>
+<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
 </pre></div>
 
 
 <p><strong>答案</strong></p>
 <p>以上代码的输出是：</p>
-<div class="highlight"><pre><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
-<span class="mi">1</span> <span class="mi">2</span> <span class="mi">1</span>
-<span class="mi">3</span> <span class="mi">2</span> <span class="mi">3</span>
+<div class="highlight"><pre>1 1 1
+1 2 1
+3 2 3
 </pre></div>
 
 
@@ -137,34 +140,34 @@ Yumminhuang            </a>
 <p>随后，如果任何它的子类重写了该值（例如，我们执行语句 <code>Child1.x = 2</code>），然后，该值仅仅在子类中被改变。这就是为什么第二个 print 语句的输出是 <code>1 2 1</code>。</p>
 <p>最后，如果该值在父类中被改变（例如，我们执行语句 <code>Parent.x = 3</code>），这个改变会影响到任何未重写该值的子类当中的值（在这个示例中被影响的子类是 Child2）。这就是为什么第三个 print 输出是 <code>3 2 3</code>。</p>
 <h3>问题二：以下的代码的输出将是什么? 说出你的答案并解释？</h3>
-<div class="highlight"><pre><span class="n">def</span> <span class="n">div1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">print</span><span class="p">(</span><span class="s">&quot;%s/%s = %s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="o">/</span><span class="n">y</span><span class="p">))</span>
+<div class="highlight"><pre>def div1(x,y):
+    print(&quot;%s/%s = %s&quot; % (x, y, x/y))
 
-<span class="n">def</span> <span class="n">div2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">print</span><span class="p">(</span><span class="s">&quot;%s//%s = %s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="c1">//y))</span>
+def div2(x,y):
+    print(&quot;%s//%s = %s&quot; % (x, y, x//y))
 
-<span class="n">div1</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">div1</span><span class="p">(</span><span class="mf">5.</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">div2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">div2</span><span class="p">(</span><span class="mf">5.</span><span class="p">,</span><span class="mf">2.</span><span class="p">)</span>
+div1(5,2)
+div1(5.,2)
+div2(5,2)
+div2(5.,2.)
 </pre></div>
 
 
 <p><strong>答案</strong></p>
 <p>这个答案实际依赖于你使用的是 Python 2 还是 Python 3。</p>
 <p>在 <strong>Python 3</strong> 中，期望的输出是：</p>
-<div class="highlight"><pre><span class="mi">5</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="mf">2.5</span>
-<span class="mf">5.0</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="mf">2.5</span>
-<span class="mi">5</span><span class="c1">//2 = 2</span>
-<span class="mf">5.0</span><span class="c1">//2.0 = 2.0</span>
+<div class="highlight"><pre>5/2 = 2.5
+5.0/2 = 2.5
+5//2 = 2
+5.0//2.0 = 2.0
 </pre></div>
 
 
 <p>在 <strong>Python 2</strong> 中，尽管如此，以上代码的输出将是：</p>
-<div class="highlight"><pre><span class="mi">5</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="mf">5.0</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="mf">2.5</span>
-<span class="mi">5</span><span class="c1">//2 = 2</span>
-<span class="mf">5.0</span><span class="c1">//2.0 = 2.0</span>
+<div class="highlight"><pre>5/2 = 2
+5.0/2 = 2.5
+5//2 = 2
+5.0//2.0 = 2.0
 </pre></div>
 
 
@@ -174,8 +177,8 @@ Yumminhuang            </a>
 也需要注意的是“双划线”（//）操作符将一直执行整除，而不管操作数的类型，这就是为什么 <code>5.0//2.0</code> 值为 <code>2.0</code>。</p>
 <p>注： 在 Python 3 中，/ 操作符是做浮点除法，而 <code>//</code> 是做整除（即商没有余数，比如 <code>10 // 3</code> 其结果就为 <code>3</code>，余数会被截除掉，而 <code>(-7) // 3</code> 的结果却是 <code>-3</code>。这个算法与其它很多编程语言不一样，需要注意，它们的整除运算会向0的方向取值。而在 Python 2 中，/ 就是整除，即和 Python 3 中的 // 操作符一样，）</p>
 <h3>问题三：以下代码将输出什么?</h3>
-<div class="highlight"><pre><span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">]</span>
-<span class="n">print</span> <span class="n">list</span><span class="p">[</span><span class="mi">10</span><span class="o">:</span><span class="p">]</span>
+<div class="highlight"><pre>list = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]
+print list[10:]
 </pre></div>
 
 
@@ -184,10 +187,10 @@ Yumminhuang            </a>
 <p>正如人们所期望的，试图访问一个超过列表索引值的成员将导致 <code>IndexError</code>（比如访问以上列表的 <code>list[10]</code>）。尽管如此，试图访问一个列表的以超出列表成员数作为开始索引的切片将不会导致 <code>IndexError</code>，并且将仅仅返回一个空列表。</p>
 <p>一个讨厌的小问题是它会导致出现 bug ，并且这个问题是难以追踪的，因为它在运行时不会引发错误。</p>
 <h3>问题四：以下的代码的输出将是什么? 说出你的答案并解释？</h3>
-<div class="highlight"><pre><span class="n">def</span> <span class="n">multipliers</span><span class="p">()</span><span class="o">:</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">lambda</span> <span class="n">x</span> <span class="o">:</span> <span class="n">i</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<div class="highlight"><pre>def multipliers():
+    return [lambda x : i * x for i in range(4)]
 
-<span class="n">print</span> <span class="p">[</span><span class="n">m</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="n">in</span> <span class="n">multipliers</span><span class="p">()]</span>
+print [m(2) for m in multipliers()]
 </pre></div>
 
 
@@ -198,41 +201,41 @@ Yumminhuang            </a>
 <p>（顺便说下，正如在 <a href="http://docs.python-guide.org/en/latest/writing/gotchas/">The Hitchhiker’s Guide to Python</a> 中指出的，这里有一点普遍的误解，是关于 lambda 表达式的一些东西。一个 lambda 表达式创建的函数不是特殊的，和使用一个普通的 def 创建的函数展示的表现是一样的。）</p>
 <p>这里有两种方法解决这个问题。</p>
 <p>最普遍的解决方案是创建一个闭包，通过使用默认参数立即绑定它的参数。例如：</p>
-<div class="highlight"><pre><span class="n">def</span> <span class="n">multipliers</span><span class="p">()</span><span class="o">:</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span> <span class="o">:</span> <span class="n">i</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<div class="highlight"><pre>def multipliers():
+    return [lambda x, i=i : i * x for i in range(4)]
 </pre></div>
 
 
 <p>另外一个选择是，你可以使用 <code>functools.partial</code> 函数：</p>
-<div class="highlight"><pre><span class="n">from</span> <span class="n">functools</span> <span class="n">import</span> <span class="n">partial</span>
-<span class="n">from</span> <span class="n">operator</span> <span class="n">import</span> <span class="n">mul</span>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">mul</span>
 
-<span class="n">def</span> <span class="n">multipliers</span><span class="p">()</span><span class="o">:</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">partial</span><span class="p">(</span><span class="n">mul</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<span class="k">def</span> <span class="nf">multipliers</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">partial</span><span class="p">(</span><span class="n">mul</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 </pre></div>
 
 
 <h3>问题五：以下的代码的输出将是什么? 说出你的答案并解释？</h3>
-<div class="highlight"><pre><span class="n">def</span> <span class="n">extendList</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">list</span><span class="o">=</span><span class="p">[])</span><span class="o">:</span>
-    <span class="n">list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">list</span>
+<div class="highlight"><pre>def extendList(val, list=[]):
+    list.append(val)
+    return list
 
-<span class="n">list1</span> <span class="o">=</span> <span class="n">extendList</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">list2</span> <span class="o">=</span> <span class="n">extendList</span><span class="p">(</span><span class="mi">123</span><span class="p">,[])</span>
-<span class="n">list3</span> <span class="o">=</span> <span class="n">extendList</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">)</span>
+list1 = extendList(10)
+list2 = extendList(123,[])
+list3 = extendList(&#39;a&#39;)
 
-<span class="n">print</span> <span class="s">&quot;list1 = %s&quot;</span> <span class="o">%</span> <span class="n">list1</span>
-<span class="n">print</span> <span class="s">&quot;list2 = %s&quot;</span> <span class="o">%</span> <span class="n">list2</span>
-<span class="n">print</span> <span class="s">&quot;list3 = %s&quot;</span> <span class="o">%</span> <span class="n">list3</span>
+print &quot;list1 = %s&quot; % list1
+print &quot;list2 = %s&quot; % list2
+print &quot;list3 = %s&quot; % list3
 </pre></div>
 
 
 <p>你将如何修改 <code>extendList</code> 的定义来产生期望的结果</p>
 <p><strong>答案</strong></p>
 <p>以上代码的输出为：</p>
-<div class="highlight"><pre><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">]</span>
-<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">123</span><span class="p">]</span>
-<span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">]</span>
+<div class="highlight"><pre>list1 = [10, &#39;a&#39;]
+list2 = [123]
+list3 = [10, &#39;a&#39;]
 </pre></div>
 
 
@@ -240,18 +243,18 @@ Yumminhuang            </a>
 <p>尽管如此，实际发生的事情是，新的默认列表仅仅只在函数被定义时创建一次。随后当 <code>extendList</code> 没有被指定的列表参数调用的时候，其使用的是同一个列表。这就是为什么当函数被定义的时候，表达式是用默认参数被计算，而不是它被调用的时候。</p>
 <p>因此，<code>list1</code> 和 <code>list3</code> 是操作的相同的列表。而 <code>list2</code>是操作的它创建的独立的列表（通过传递它自己的空列表作为<code>list</code> 参数的值）。</p>
 <p><code>extendList</code> 函数的定义可以做如下修改，但，当没有新的 <code>list</code> 参数被指定的时候，会总是开始一个新列表，这更加可能是一直期望的行为。</p>
-<div class="highlight"><pre><span class="n">def</span> <span class="n">extendList</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">list</span><span class="o">=</span><span class="n">None</span><span class="p">)</span><span class="o">:</span>
-    <span class="k">if</span> <span class="n">list</span> <span class="n">is</span> <span class="n">None</span><span class="o">:</span>
-        <span class="n">list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">list</span>
+<div class="highlight"><pre>def extendList(val, list=None):
+    if list is None:
+        list = []
+    list.append(val)
+    return list
 </pre></div>
 
 
 <p>使用这个改进的实现，输出将是：</p>
-<div class="highlight"><pre><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">123</span><span class="p">]</span>
-<span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">]</span>
+<div class="highlight"><pre>list1 = [10]
+list2 = [123]
+list3 = [&#39;a&#39;]
 </pre></div>
             </div>
             <!-- /.entry-content -->
@@ -301,19 +304,24 @@ Yumminhuang            </a>
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
@@ -348,7 +356,7 @@ Yumminhuang            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Yumminhuang
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>

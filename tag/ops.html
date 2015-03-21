@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>How do I remove all .pyc files from a project? - Yumminhuang</title>
+    <title>Ops - Yumminhuang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,13 +12,10 @@
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yumminhuang" />
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="How do I remove all .pyc files from a project?"/>
-            <meta property="og:url" content="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html"/>
-            <meta property="og:description" content="I am a paranoid guy. I like to delete all &#34;useless&#34; files. I want to clean up my project repository today. There are lots of .pyc files. And I found this command, which is very convenient to batch delete files in a directory. find . -name &#34;*.pyc&#34; -exec rm -rf {} \; I ..."/>
-            <meta property="article:published_time" content="2014-07-31" />
-            <meta property="article:section" content="Shell" />
-            <meta property="article:tag" content="Shell" />
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Yumminhuang"/>
+            <meta property="og:url" content="http://yumminhuang.github.io"/>
+            <meta property="og:description" content="Yumminhuang"/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -51,6 +48,9 @@ Yumminhuang            </a>
                              About Me
                           </a></li>
                         <li >
+                            <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
+                        </li>
+                        <li >
                             <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
                         </li>
                         <li >
@@ -59,7 +59,7 @@ Yumminhuang            </a>
                         <li >
                             <a href="http://yumminhuang.github.io/category/python.html">Python</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
                         </li>
             </ul>
@@ -75,57 +75,40 @@ Yumminhuang            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="http://yumminhuang.github.io/how-do-i-remove-all-pyc-files-from-a-project.html"
-                       rel="bookmark"
-                       title="Permalink to How do I remove all .pyc files from a project?">
-                        How do I remove all .pyc files from a project?
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-07-31T19:39:00-04:00"> Thu 31 July 2014</time>
-    </span>
-
-
-
-<span class="label label-default">Tags</span>
-	<a href="http://yumminhuang.github.io/tag/shell.html">Shell</a>
-    
-</footer><!-- /.post-info -->                    </div>
-                </div>
-                <p>I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
-<div class="highlight"><pre>find . -name <span class="s2">&quot;*.pyc&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
-</pre></div>
-
-
-<p>I can also delete all <code>*.class</code> files for Java project and <code>.o</code> files for C project in this way.</p>
-<div class="highlight"><pre>find . -name <span class="s2">&quot;*.class&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
-find . -name <span class="s2">&quot;*.o&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
-</pre></div>
-
-
-<p>Or I can delete all files whose name starts with 'test'.</p>
-<div class="highlight"><pre>find . -name <span class="s2">&quot;test*&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
-</pre></div>
-
-
-<p><strong>Reference:</strong></p>
+            <article>
+                <h2><a href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">在VPS搭建VPN服务器</a></h2>
+                <div class="summary"><h2>简介</h2>
 <blockquote>
-<p><a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project">How do I remove all .pyc files from a project?</a></p>
+<p>从来就没有什么救世主</p>
+<p>也不靠神仙皇帝</p>
+<p>要创造人类的幸福</p>
+<p>全靠我们自己</p>
 </blockquote>
-            </div>
-            <!-- /.entry-content -->
-        </article>
-    </section>
+<p>为了在 <a href="http://zh.wikipedia.org/wiki/防火长城">GFW</a> 的封锁之下进行正常的上网活动，可以使用 <a href="http://zh.wikipedia.org/wiki/虛擬私人網路">VPN</a>。为什么有各种各样的VPN服务提供商还要自己搭建VPN呢？有以下几方面的考虑：</p>
+<ol>
+<li>安全性：你很难知道一些VPN提供商是否会盗取你的敏感信息，自己搭建VPN则可以避免这个问题；</li>
+<li>稳定：「道高一尺，魔高一丈」，现在很多VPN提供商都是打一枪换一个地方，难以保证稳定的连接；</li>
+<li>价格：自己搭建VPN，一个月的费用大概在$5左右。</li>
+</ol>
+<h2>具体步骤</h2>
+<h4>注册一个VPS账号</h4>
+<p>注册任意一家VPS服务提供商的账号。此步可能需要一张双币信用卡。
+至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
+<h4>新建一个Droplet</h4>
+<p>我新建的Droplet是最低配置，具体配置包括：</p>
+<ul>
+<li>512MB RAM</li>
+<li>20GB SSD</li>
+<li>2TB 流量</li>
+</ul>
+<p>地理位置选的是最近的。</p>
+<p>操作系统开始选择的是Ubuntu14.04，后来用的是Ubuntu12.04（版本应该没有影响）。</p>
+<p>没有选择多余的设置。</p>
+<p>点击新建按钮会收到一份包含登陆密码的邮件 ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
         </div>
         <div class="col-sm-3 well well-sm" id="sidebar">
@@ -170,19 +153,24 @@ find . -name <span class="s2">&quot;*.o&quot;</span> -exec rm -rf <span class="o
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
@@ -217,7 +205,7 @@ find . -name <span class="s2">&quot;*.o&quot;</span> -exec rm -rf <span class="o
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Yumminhuang
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>

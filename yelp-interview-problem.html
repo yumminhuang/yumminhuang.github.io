@@ -50,6 +50,9 @@ Yumminhuang            </a>
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
+                        </li>
                         <li class="active">
                             <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
                         </li>
@@ -154,10 +157,10 @@ Yumminhuang            </a>
 
 
 <p>Some guy even found a way to solve this problem using only one line python code.</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="err">&#39;</span><span class="n">abc</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abcde</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">abxyz</span><span class="err">&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">from</span> <span class="n">itertools</span> <span class="n">import</span> <span class="n">takewhile</span><span class="p">,</span> <span class="n">izip</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="err">&#39;&#39;</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="n">in</span> <span class="n">takewhile</span><span class="p">(</span><span class="n">lambda</span> <span class="n">x</span><span class="o">:</span> <span class="n">all</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="n">in</span> <span class="n">x</span><span class="p">),</span> <span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">lst</span><span class="p">)))</span>
-<span class="err">&#39;</span><span class="n">ab</span><span class="err">&#39;</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abcde&#39;</span><span class="p">,</span> <span class="s">&#39;abxyz&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">takewhile</span><span class="p">,</span> <span class="n">izip</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">),</span> <span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">lst</span><span class="p">)))</span>
+<span class="s">&#39;ab&#39;</span>
 </pre></div>
             </div>
             <!-- /.entry-content -->
@@ -207,19 +210,24 @@ Yumminhuang            </a>
                                 Shell
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-2">
                             <a href="http://yumminhuang.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
+                            <a href="http://yumminhuang.github.io/tag/ops.html">
+                                Ops
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://yumminhuang.github.io/tag/boto.html">
                                 Boto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                                Objective-C
                             </a>
                         </li>
                     </ul>
@@ -254,7 +262,7 @@ Yumminhuang            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Yumminhuang
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
