@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'Yaming Huang'
+AUTHOR = u'Yumminhuang'
 SITENAME = u'Yaming Huang'
 SITEURL = ''
 
 PATH = 'content'
 
-TIMEZONE = 'Europe/Paris'
+TIMEZONE = 'America/New_York'
 
 DEFAULT_LANG = u'zh'
 
@@ -20,16 +20,36 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+LINKS =  (('NEU', 'https://www.northeastern.edu/'),
+          ('JNU', 'http://www.jnu.edu.cn/'),
+          ('Fionser\'s Blog', 'http://fionser.github.io/'),)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (('github', 'http://github.com/yumminhuang'),
+          ('stack-overflow',
+            'https://stackoverflow.com/users/2755574/yumminhuang'),
+          ('linkedin', 'http://www.linkedin.com/pub/yaming-huang/5b/932/6a0'),
+          ('twitter', 'http://twitter.com/yumminhuang'),
+          ('weibo', 'http://www.weibo.com/2622511625'),
+          ('instagram', 'http://instagram.com/yumminhuang'),)
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+BOOTSTRAP_NAVBAR_INVERSE = 'True'
+
+# Blog theme
+THEME = './pelican-bootstrap3/'
+# Code block style
+PYGMENTS_STYLE = 'vs'
+# Static path for pages, files, etc
+STATIC_PATHS = ['images']
+
+# Plugins
+PLUGIN_PATHS = ['/Users/yummin/Program/Blog/plugins']
+PLUGINS = ['cjk-auto-spacing']
+
+# License
+CC_LICENSE = 'CC-BY-NC'
