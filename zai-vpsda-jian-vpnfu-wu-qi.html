@@ -1,25 +1,32 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="https://www.facebook.com/2008/fbml">
+<html lang="zh"
+>
 <head>
-    <title>在VPS搭建VPN服务器 - Yumminhuang</title>
+    <title>在VPS搭建VPN服务器 - Yaming Huang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="Yumminhuang" />
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="在VPS搭建VPN服务器"/>
-            <meta property="og:url" content="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html"/>
-            <meta property="og:description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..."/>
-            <meta property="article:published_time" content="2015-03-16" />
+
+
+<link rel="canonical" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">
+
+        <meta name="author" content="Yumminhuang" />
+        <meta name="keywords" content="Ops,Linux" />
+        <meta name="description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..." />
+
+        <meta property="og:site_name" content="Yaming Huang" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="在VPS搭建VPN服务器"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html"/>
+        <meta property="og:description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..."/>
+        <meta property="article:published_time" content="2015-03-16" />
             <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="Ops" />
             <meta property="article:tag" content="Linux" />
+            <meta property="article:author" content="Yumminhuang" />
+
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -29,13 +36,13 @@
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Yumminhuang ATOM Feed"/>
+              title="Yaming Huang ATOM Feed"/>
 
 </head>
 <body>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+	<div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -44,7 +51,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="http://yumminhuang.github.io/" class="navbar-brand">
-Yumminhuang            </a>
+Yaming Huang            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
@@ -68,13 +75,14 @@ Yumminhuang            </a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+              <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>
 </div> <!-- /.navbar -->
-
+<!-- Banner -->
+<!-- End Banner -->
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
@@ -250,70 +258,58 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
     </section>
 
         </div>
-        <div class="col-sm-3 well well-sm" id="sidebar">
+        <div class="col-sm-3" id="sidebar">
+            <aside>
 
-<aside>
-    <section>
-        <ul class="list-group list-group-flush">
-                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-                  <ul class="list-group" id="social">
-                    <li class="list-group-item"><a href="http://github.com/yumminhuang"><i
-                            class="fa fa-github fa-lg"></i> github
-                    </a></li>
-                    <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i
-                            class="fa fa-stack-overflow fa-lg"></i> stack-overflow
-                    </a></li>
-                    <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i
-                            class="fa fa-linkedin fa-lg"></i> linkedin
-                    </a></li>
-                    <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i
-                            class="fa fa-twitter fa-lg"></i> twitter
-                    </a></li>
-                    <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i
-                            class="fa fa-weibo fa-lg"></i> weibo
-                    </a></li>
-                    <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i
-                            class="fa fa-instagram fa-lg"></i> instagram
-                    </a></li>
-                  </ul>
-                </li>
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="http://github.com/yumminhuang"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i class="fa fa-stack-overflow fa-lg"></i> stack-overflow</a></li>
+                <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+                <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+                <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i class="fa fa-weibo fa-lg"></i> weibo</a></li>
+                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram-square fa-lg"></i> instagram</a></li>
+              </ul>
+            </li>
 
 
 
-                <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
-                    <ul class="list-group " id="tags">
-                        <li class="list-group-item tag-1">
-                            <a href="http://yumminhuang.github.io/tag/python.html">
-                                Python
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://yumminhuang.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://yumminhuang.github.io/tag/shell.html">
-                                Shell
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/boto.html">
-                                Boto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/ops.html">
-                                Ops
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+            <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-1">
+                        <a href="http://yumminhuang.github.io/tag/python.html">
+                            Python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/shell.html">
+                            Shell
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/linux.html">
+                            Linux
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/ops.html">
+                            Ops
+                        </a>
+                    </li>
+                </ul>
+            </li>
     <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
       <ul class="list-group" id="links">
         <li class="list-group-item">
@@ -333,11 +329,10 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
         </li>
       </ul>
     </li>
-
-        </ul>
-    </section>
-
-</aside>        </div>
+    </ul>
+</section>
+            </aside>
+        </div>
     </div>
 </div>
 <footer>
@@ -347,7 +342,7 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
          <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
     Content
   licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
 </small></p>
@@ -356,13 +351,14 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
       </div>
    </div>
 </footer>
-<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://yumminhuang.github.io/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://yumminhuang.github.io/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
 <script src="http://yumminhuang.github.io/theme/js/respond.min.js"></script>
+
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yumminhuang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-03-21T18:06:00-04:00</updated><entry><title>在VPS搭建VPN服务器</title><link href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html" rel="alternate"></link><updated>2015-03-21T18:06:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-16:zai-vpsda-jian-vpnfu-wu-qi.html</id><summary type="html">&lt;h2&gt; 简介 &lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yaming Huang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-03-21T18:06:00-04:00</updated><entry><title>在VPS搭建VPN服务器</title><link href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html" rel="alternate"></link><updated>2015-03-21T18:06:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-16:zai-vpsda-jian-vpnfu-wu-qi.html</id><summary type="html">&lt;h2&gt; 简介 &lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt; 从来就没有什么救世主 &lt;/p&gt;
 &lt;p&gt; 也不靠神仙皇帝 &lt;/p&gt;
@@ -194,7 +194,7 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 &lt;p&gt;You task is to determine, given a JSON dataset, how many grandparents have exactely two grandchildren.&lt;/p&gt;
 &lt;p&gt;The JSON data is represenative of a family tree. Each node in the data represents a person. A person in our dataset has a unique id, a name, a spouse, and a list of children.&lt;/p&gt;
 &lt;p&gt;Inspect the file &lt;a href="https://drive.google.com/file/d/0B3Oj9xXsqBUQV2hYdW1Jek1jMms/view?usp=sharing"&gt;tree.json&lt;/a&gt;. It contains a list of objects like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_id&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_name&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Rusty Roop&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_spouseId&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_childrenIds&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;{&amp;quot;_id&amp;quot;:0,&amp;quot;_name&amp;quot;:&amp;quot;Rusty Roop&amp;quot;,&amp;quot;_spouseId&amp;quot;:1,&amp;quot;_childrenIds&amp;quot;:[2,3]}
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -639,62 +639,62 @@ list3 = [&amp;#39;a&amp;#39;]
 &lt;h3&gt;1. 基本语法 &lt;/h3&gt;
 &lt;h4&gt;1.1 创建对象 &lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;MyClass&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;obj = new MyClass();
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h4&gt;1.2 调用方法 &lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;// 没有参数 &lt;/span&gt;
-&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method2&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// 一个参数 &lt;/span&gt;
-&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method3&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// 多个参数 &lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;obj.method1() // 没有参数
+obj.method2(arg1) // 一个参数
+obj.method3(arg1,arg2) // 多个参数
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="n"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 没有参数 &lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="n"&gt;method2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 一个参数 &lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="n"&gt;method3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;arg2&lt;/span&gt; &lt;span class="n"&gt;andArg&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 多个参数 &lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="nl"&gt;method2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 一个参数 &lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="nl"&gt;method3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;arg2&lt;/span&gt; &lt;span class="nl"&gt;andArg&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 多个参数 &lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;2. 类的定义 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;extend&lt;/span&gt; &lt;span class="n"&gt;SuperClass&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;public class MyClass extend SuperClass {
 
-    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;attr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    private int attr1;
 
-    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="p"&gt;...&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+    public void method1() {
+        ...
+    }
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Objectove-C 定义一个类时需要两个文件，分别是负责声明的 Header File 和负责具体实现的 Implementation File。&lt;/p&gt;
 &lt;p&gt;MyClass.h&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;SuperClass&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;SuperClass&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;attr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method2:&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method3:&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt; &lt;span class="n"&gt;andArg&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;classMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// 相当于 Java 中的 static 方法 &lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method2:&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method3:&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt; &lt;span class="nl"&gt;andArg&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;classMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// 相当于 Java 中的 static 方法 &lt;/span&gt;
 &lt;span class="k"&gt;@end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;MyClass.m&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#import&amp;quot;MyClass.h&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt;
-&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method1&lt;/span&gt;
+&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method1&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="p"&gt;...&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
@@ -705,52 +705,52 @@ list3 = [&amp;#39;a&amp;#39;]
 
 &lt;p&gt; 此外，Objective-C 还有一个非常方便的 “ 语法糖 ”——&lt;code&gt;@property&lt;/code&gt; 和 &lt;code&gt;@synthesize&lt;/code&gt; 两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
 在头文件中加上 &lt;code&gt;@property int attr1;&lt;/code&gt; 就等同于声明了两个方法：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;attr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;setAttr1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;newAttr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nt"&gt;attr1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nt"&gt;setAttr1&lt;/span&gt;&lt;span class="o"&gt;:(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nt"&gt;newAttr1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt; 实现文件里加上 &lt;code&gt;@synthesize attr1;&lt;/code&gt; 就等同于定义了两个方法：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;attr1&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;attr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;setAttr1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;newAttr1&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;attr1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;newAttr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;- (int)attr1
+{
+    return attr1;
+}
+-(void)setAttr1:(int)newAttr1
+{
+    attr1 = newAttr1;
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;3. 协议（接口）的定义 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;
 定义接口 &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="n"&gt;MyInterface&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="n"&gt;aInterfaceMethod&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;anotherInterfaceMethod&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;public interface MyInterface {
+    public void aInterfaceMethod();
+    public void anotherInterfaceMethod();
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt; 实现接口 &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;extend&lt;/span&gt; &lt;span class="n"&gt;SuperClass&lt;/span&gt; &lt;span class="n"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;MyInterface&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// method declarations&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;public class MyClass extend SuperClass implements MyInterface {
+    // method declarations
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;
 在 Objective-C 中，用关键字 &lt;code&gt;@protocol&lt;/code&gt; 定义协议，也就是 Java 中的接口。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@protocol&lt;/span&gt; &lt;span class="nc"&gt;MyProtocol&lt;/span&gt;
-&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;aProtocolMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;anotherProcotolMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;aProtocolMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;anotherProcotolMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;@end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt; 当一个类需要实现协议时，&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#import &amp;quot;MyProtocol.h&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;SuperClass&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;MyProtocol&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AnotherProtocol&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;SuperClass&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;MyProtocol&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AnotherProtocol&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
     &lt;span class="c1"&gt;// method declarations&lt;/span&gt;
 &lt;span class="k"&gt;@end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -760,7 +760,7 @@ list3 = [&amp;#39;a&amp;#39;]
 &lt;p&gt; 由于我也是初学 Objective-C，难免有错误和总结不全面的地方，恳请指正。&lt;/p&gt;</summary><category term="Objective-C"></category></entry><entry><title>Execute a Command in the Background on Remote Server using SSH</title><link href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html" rel="alternate"></link><updated>2014-05-04T09:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:execute-a-command-in-the-background-on-remote-server-using-ssh.html</id><summary type="html">&lt;p&gt;In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Since there are several remote servers, I have to run the server program in the background on all remote machines.&lt;/p&gt;
 &lt;p&gt;At first, I simply add the ampersand (&amp;amp;) at the end of the command like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ssh user@host &lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /some/directory; ./program &amp;amp;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh user@host &lt;span class="s2"&gt;&amp;quot;cd /some/directory; ./program &amp;amp;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

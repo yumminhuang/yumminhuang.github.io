@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="https://www.facebook.com/2008/fbml">
+<html lang="zh"
+>
 <head>
-    <title>5道不错的Python面试题 - Yumminhuang</title>
+    <title>5道不错的Python面试题 - Yaming Huang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
 
-    <!-- Open Graph tags -->
-        <meta property="og:site_name" content="Yumminhuang" />
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="5道不错的Python面试题"/>
-            <meta property="og:url" content="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html"/>
-            <meta property="og:description" content="注：本文的原文是 5 Great Python Interview Questions。中文翻译和解释转自 5 个很好的 Python 面试题 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。 class Parent(object): x = 1 class Child1(Parent): pass class Child2(Parent): pass print Parent.x, Child1.x, Child2.x Child1.x = 2 print Parent.x, Child1.x, Child2.x Parent.x = 3 print Parent ..."/>
-            <meta property="article:published_time" content="2014-07-28" />
+
+
+<link rel="canonical" href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html">
+
+        <meta name="author" content="Yumminhuang" />
+        <meta name="keywords" content="Python" />
+        <meta name="description" content="注：本文的原文是 5 Great Python Interview Questions。中文翻译和解释转自 5 个很好的 Python 面试题 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。 class Parent(object): x = 1 class Child1(Parent): pass class Child2(Parent): pass print Parent.x, Child1.x, Child2.x Child1.x = 2 print Parent.x, Child1.x, Child2.x Parent.x = 3 print Parent ..." />
+
+        <meta property="og:site_name" content="Yaming Huang" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="5道不错的Python面试题"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html"/>
+        <meta property="og:description" content="注：本文的原文是 5 Great Python Interview Questions。中文翻译和解释转自 5 个很好的 Python 面试题 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。 class Parent(object): x = 1 class Child1(Parent): pass class Child2(Parent): pass print Parent.x, Child1.x, Child2.x Child1.x = 2 print Parent.x, Child1.x, Child2.x Parent.x = 3 print Parent ..."/>
+        <meta property="article:published_time" content="2014-07-28" />
             <meta property="article:section" content="Python" />
             <meta property="article:tag" content="Python" />
+            <meta property="article:author" content="Yumminhuang" />
+
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -28,13 +35,13 @@
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-              title="Yumminhuang ATOM Feed"/>
+              title="Yaming Huang ATOM Feed"/>
 
 </head>
 <body>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+	<div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -43,7 +50,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="http://yumminhuang.github.io/" class="navbar-brand">
-Yumminhuang            </a>
+Yaming Huang            </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
@@ -67,13 +74,14 @@ Yumminhuang            </a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+              <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>
 </div> <!-- /.navbar -->
-
+<!-- Banner -->
+<!-- End Banner -->
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
@@ -262,70 +270,58 @@ list3 = [&#39;a&#39;]
     </section>
 
         </div>
-        <div class="col-sm-3 well well-sm" id="sidebar">
+        <div class="col-sm-3" id="sidebar">
+            <aside>
 
-<aside>
-    <section>
-        <ul class="list-group list-group-flush">
-                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-                  <ul class="list-group" id="social">
-                    <li class="list-group-item"><a href="http://github.com/yumminhuang"><i
-                            class="fa fa-github fa-lg"></i> github
-                    </a></li>
-                    <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i
-                            class="fa fa-stack-overflow fa-lg"></i> stack-overflow
-                    </a></li>
-                    <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i
-                            class="fa fa-linkedin fa-lg"></i> linkedin
-                    </a></li>
-                    <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i
-                            class="fa fa-twitter fa-lg"></i> twitter
-                    </a></li>
-                    <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i
-                            class="fa fa-weibo fa-lg"></i> weibo
-                    </a></li>
-                    <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i
-                            class="fa fa-instagram fa-lg"></i> instagram
-                    </a></li>
-                  </ul>
-                </li>
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="http://github.com/yumminhuang"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i class="fa fa-stack-overflow fa-lg"></i> stack-overflow</a></li>
+                <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+                <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+                <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i class="fa fa-weibo fa-lg"></i> weibo</a></li>
+                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram-square fa-lg"></i> instagram</a></li>
+              </ul>
+            </li>
 
 
 
-                <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
-                    <ul class="list-group " id="tags">
-                        <li class="list-group-item tag-1">
-                            <a href="http://yumminhuang.github.io/tag/python.html">
-                                Python
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://yumminhuang.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://yumminhuang.github.io/tag/shell.html">
-                                Shell
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/boto.html">
-                                Boto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                Objective-C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://yumminhuang.github.io/tag/ops.html">
-                                Ops
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+            <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-1">
+                        <a href="http://yumminhuang.github.io/tag/python.html">
+                            Python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/shell.html">
+                            Shell
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/linux.html">
+                            Linux
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/ops.html">
+                            Ops
+                        </a>
+                    </li>
+                </ul>
+            </li>
     <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
       <ul class="list-group" id="links">
         <li class="list-group-item">
@@ -345,11 +341,10 @@ list3 = [&#39;a&#39;]
         </li>
       </ul>
     </li>
-
-        </ul>
-    </section>
-
-</aside>        </div>
+    </ul>
+</section>
+            </aside>
+        </div>
     </div>
 </div>
 <footer>
@@ -359,7 +354,7 @@ list3 = [&#39;a&#39;]
          <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
     Content
   licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
 </small></p>
@@ -368,13 +363,14 @@ list3 = [&#39;a&#39;]
       </div>
    </div>
 </footer>
-<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://yumminhuang.github.io/theme/js/jquery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://yumminhuang.github.io/theme/js/bootstrap.min.js"></script>
 
 <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
 <script src="http://yumminhuang.github.io/theme/js/respond.min.js"></script>
+
 
 </body>
 </html>
