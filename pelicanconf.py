@@ -32,6 +32,7 @@ SOCIAL = (('github', 'http://github.com/yumminhuang'),
           ('twitter', 'http://twitter.com/yumminhuang'),
           ('weibo', 'http://www.weibo.com/2622511625'),
           ('instagram', 'http://instagram.com/yumminhuang'),)
+GITHUB_USER = 'yumminhuang'
 
 DEFAULT_PAGINATION = 10
 
