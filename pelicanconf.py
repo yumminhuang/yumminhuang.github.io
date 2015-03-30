@@ -41,14 +41,14 @@ DEFAULT_PAGINATION = 10
 BOOTSTRAP_NAVBAR_INVERSE = 'True'
 
 # Blog theme
-THEME = './pelican-bootstrap3/'
+THEME = 'pelican-bootstrap3'
 # Code block style
 PYGMENTS_STYLE = 'vs'
 # Static path for pages, files, etc
 STATIC_PATHS = ['images']
 
 # Plugins
-PLUGIN_PATHS = ['/Users/yummin/Program/Blog/plugins']
+PLUGIN_PATHS = ['plugins']
 PLUGINS = ['cjk-auto-spacing']
 
 # License
