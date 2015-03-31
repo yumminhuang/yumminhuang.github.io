@@ -23,5 +23,6 @@ cd ../yumminhuang.github.io
 mv ../git ./.git
 
 echo 'Commit and Push'
-git commit -a -m 'Update blog'
+git add .
+git commit -m 'Update blog'
 git push
