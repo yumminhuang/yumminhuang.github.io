@@ -1,8 +1,8 @@
 Title: How to remove all .pyc files from a project?
 Date: 2014-07-31 19:39
 Modified: 2014-07-31 19:39
-Category: Shell
-Tags: Shell
+Category: Linux
+Tags: Linux, Shell
 
 I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of `.pyc` files. And I found this command, which is very convenient to batch delete files in a directory.
 

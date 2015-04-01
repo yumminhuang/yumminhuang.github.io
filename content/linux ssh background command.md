@@ -1,7 +1,7 @@
 Title: Execute a Command in the Background on Remote Server using SSH
 Date: 2014-05-04 9:20
 Modified: 2014-05-04 9:20
-Category: Shell
+Category: Linux
 Tags: Linux, Shell
 
 In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using `scp` and `ssh`.

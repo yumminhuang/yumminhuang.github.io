@@ -1,7 +1,7 @@
 Title: Objective-C语法总结
 Date: 2014-05-04 10:00
 Modified: 2014-05-04 18:15
-Category: Objective-C
+Category: Miscellaneous
 Tags: Objective-C
 
 最近在学习Objective-C。产生学习Objective-C的想法已经很久了，但是以前每次看到Objective-C代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习Objective-C。

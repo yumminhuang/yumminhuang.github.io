@@ -1,7 +1,7 @@
 Title: 在 AWS Auto Scaling Group 中替换 Instance
 Date: 2014-08-02 14:39
 Modified: 2014-08-02 19:39
-Category: Python
+Category: DevOps
 Tags: Python, Boto
 
 这两周，我被分配的任务是实现[AWS](http://aws.amazon.com/)的[Auto Scaling](http://aws.amazon.com/autoscaling/)功能。多亏有了[Boto](https://github.com/boto/boto)， 很快就实现了创建Auto Scaling Group和添加Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。
