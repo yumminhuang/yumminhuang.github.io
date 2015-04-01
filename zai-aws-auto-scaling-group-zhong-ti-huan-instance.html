@@ -22,7 +22,7 @@
         <meta property="og:url" content="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html"/>
         <meta property="og:description" content="这两周，我被分配的任务是实现 AWS 的 Auto Scaling 功能。多亏有了 Boto， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下： 创建并配置（下载新发布的代码）多个新的 Instance； 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 ..."/>
         <meta property="article:published_time" content="2014-08-02" />
-            <meta property="article:section" content="Python" />
+            <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="Python" />
             <meta property="article:tag" content="Boto" />
             <meta property="article:author" content="Yumminhuang" />
@@ -58,7 +58,7 @@ Yaming Huang            </a>
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
                         </li>
                         <li >
@@ -68,13 +68,10 @@ Yaming Huang            </a>
                             <a href="http://yumminhuang.github.io/category/linux.html">Linux</a>
                         </li>
                         <li >
-                            <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
-                        </li>
-                        <li class="active">
-                            <a href="http://yumminhuang.github.io/category/python.html">Python</a>
+                            <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
                         </li>
                         <li >
-                            <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
+                            <a href="http://yumminhuang.github.io/category/python.html">Python</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -426,11 +423,6 @@ Yaming Huang            </a>
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/ops.html">
-                            Ops
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/boto.html">
                             Boto
                         </a>
@@ -438,6 +430,11 @@ Yaming Huang            </a>
                     <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/objective-c.html">
                             Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/devops.html">
+                            DevOps
                         </a>
                     </li>
                 </ul>

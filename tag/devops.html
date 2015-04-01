@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>Yaming Huang</title>
+    <title>DevOps - Yaming Huang</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,8 +10,9 @@
 
 
 
-<link rel="canonical" href="http://yumminhuang.github.io">
-        <meta name="author" content="Yumminhuang" />
+
+    <meta name="author" content="Yumminhuang" />
+    <meta name="keywords" content="DevOps" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Yaming Huang" />
@@ -81,18 +82,6 @@ Yaming Huang            </a>
         <div class="col-sm-9">
 
             <article>
-                <h2><a href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html">i3窗口管理器简介</a></h2>
-                <div class="summary"><p> 在 <a href="http://kernelpanic.fm"> 内核恐慌 </a> 第九期 <a href="http://ipn.li/kernelpanic/9/">「程序员的理想工作环境」</a> 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 <a href="http://awesome.naquadah.org/">Awesome 窗口管理器 </a> 和 i3 窗口管理器。节目中两位主持人的描述恰好符合我的需求，并且实习所用的笔记本操作系统恰好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 <a href="http://www.weibo.com/2622511625/C1N9FgPr5"> 吐槽 </a>。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。</p>
-<h2> 平铺式窗口管理器 </h2>
-<p> 窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。</p>
-<p> 窗口管理器主要有两种 <sup id="fnref:type"><a class="footnote-ref" href="#fn:type" rel="footnote">1</a></sup>：</p>
-<ol>
-<li> 堆叠式窗口管理器（Stacking Window Manager ...</li></ol>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
                 <h2><a href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">在VPS搭建VPN服务器</a></h2>
                 <div class="summary"><h2> 简介 </h2>
 <blockquote>
@@ -113,92 +102,6 @@ Yaming Huang            </a>
 至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
 <h4> 新建一个 ...</h4>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/yelp-interview-problem.html">Yelp Interview Problem</a></h2>
-                <div class="summary"><p>Today, I had a skype interview with Yelp.</p>
-<h3>Interview</h3>
-<p>At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as <em>What will cause access a website slowly?</em>, <em>Difference between thread and process</em>, <em>What is deadlock?</em> or <em>What's your favorite programming language? And ...</em></p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/yelp-interview-problem.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/lineage-interview-problem.html">Lineage Interview Problem</a></h2>
-                <div class="summary"><h3>Problem Description</h3>
-<p>You task is to determine, given a JSON dataset, how many grandparents have exactely two grandchildren.</p>
-<p>The JSON data is represenative of a family tree. Each node in the data represents a person. A person in our dataset has a unique id, a name, a spouse, and a ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/lineage-interview-problem.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">在 AWS Auto Scaling Group 中替换 Instance</a></h2>
-                <div class="summary"><p> 这两周，我被分配的任务是实现 <a href="http://aws.amazon.com/">AWS</a> 的 <a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a> 功能。多亏有了 <a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
-<p> 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
-<ol>
-<li> 创建并配置（下载新发布的代码）多个新的 Instance；</li>
-<li> 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。</li>
-</ol>
-<p> 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。</p>
-<p> 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">How to remove all .pyc files from a project?</a></h2>
-                <div class="summary"><p>I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
-<div class="highlight"><pre>find . -name <span class="s2">&quot;*.pyc&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
-</pre></div>
-
-
-<p>I ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html">5道不错的Python面试题</a></h2>
-                <div class="summary"><blockquote>
-<p> 注：本文的原文是 <a href="http://www.toptal.com/python/interview-questions">5 Great Python Interview Questions</a>。中文翻译和解释转自 <a href="http://blog.segmentfault.com/yexiaobai/1190000000618513">5 个很好的 Python 面试题 </a></p>
-</blockquote>
-<h3> 问题一：以下的代码的输出将是什么 ? 说出你的答案并解释。</h3>
-<div class="highlight"><pre><span class="k">class</span> <span class="n">Parent</span>(<span class="n">object</span>):
-    <span class="o">x</span> = <span class="mi">1</span>
-
-<span class="k">class</span> <span class="n">Child1</span>(<span class="n">Parent</span>):
-    <span class="nb">pass</span>
-
-<span class="k">class</span> <span class="n">Child2</span>(<span class="n">Parent</span>):
-    <span class="nb">pass</span>
-
-<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
-<span class="n">Child1</span>.<span class="o">x</span> = <span class="mi">2</span>
-<span class="nb">print</span> <span class="n">Parent</span>.<span class="o">x</span>, <span class="n">Child1</span>.<span class="o">x</span>, <span class="n">Child2</span>.<span class="o">x</span>
-<span class="n">Parent</span>.<span class="o">x</span> = <span class="mi">3</span>
-<span class="nb">print</span> <span class="n">Parent ...</span></pre></div>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/5dao-bu-cuo-de-pythonmian-shi-ti.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">Objective-C语法总结</a></h2>
-                <div class="summary"><p> 最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。</p>
-<p> 在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 <code>object.method(argument1, argument2...)</code>。然而 Objective-C 的格式却是 <code>[object method: argument1 andArg: argument2...]</code>。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。</p>
-<hr />
-<p> 废话不多说，上干货。下面以 Java ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">Execute a Command in the Background on Remote Server using SSH</a></h2>
-                <div class="summary"><p>In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using <code>scp</code> and <code>ssh</code>.</p>
-<p>Since there are several remote servers, I have to run the server program in the background on all remote machines ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">more ...</a>
                 </div>
             </article>
             <hr/>

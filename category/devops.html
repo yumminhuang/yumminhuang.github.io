@@ -62,13 +62,10 @@ Yaming Huang            </a>
                             <a href="http://yumminhuang.github.io/category/linux.html">Linux</a>
                         </li>
                         <li >
-                            <a href="http://yumminhuang.github.io/category/objective-c.html">Objective-c</a>
+                            <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
                         </li>
                         <li >
                             <a href="http://yumminhuang.github.io/category/python.html">Python</a>
-                        </li>
-                        <li >
-                            <a href="http://yumminhuang.github.io/category/shell.html">Shell</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -105,6 +102,20 @@ Yaming Huang            </a>
 至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
 <h4> 新建一个 ...</h4>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
+                <h2><a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">在 AWS Auto Scaling Group 中替换 Instance</a></h2>
+                <div class="summary"><p> 这两周，我被分配的任务是实现 <a href="http://aws.amazon.com/">AWS</a> 的 <a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a> 功能。多亏有了 <a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
+<p> 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
+<ol>
+<li> 创建并配置（下载新发布的代码）多个新的 Instance；</li>
+<li> 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。</li>
+</ol>
+<p> 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。</p>
+<p> 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -146,11 +157,6 @@ Yaming Huang            </a>
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/ops.html">
-                            Ops
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/boto.html">
                             Boto
                         </a>
@@ -158,6 +164,11 @@ Yaming Huang            </a>
                     <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/objective-c.html">
                             Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/devops.html">
+                            DevOps
                         </a>
                     </li>
                 </ul>

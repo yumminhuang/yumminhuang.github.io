@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yaming Huang</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/miscellaneous.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2014-05-04T18:15:00-04:00</updated><entry><title>Objective-C语法总结</title><link href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html" rel="alternate"></link><updated>2014-05-04T18:15:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:objective-cyu-fa-zong-jie.html</id><summary type="html">&lt;p&gt; 最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。&lt;/p&gt;
+&lt;p&gt; 在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 &lt;code&gt;object.method(argument1, argument2...)&lt;/code&gt;。然而 Objective-C 的格式却是 &lt;code&gt;[object method: argument1 andArg: argument2...]&lt;/code&gt;。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt; 废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。&lt;/p&gt;
+&lt;h3&gt;1. 基本语法 &lt;/h3&gt;
+&lt;h4&gt;1.1 创建对象 &lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;obj = new MyClass();
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;1.2 调用方法 &lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;obj.method1() // 没有参数
+obj.method2(arg1) // 一个参数
+obj.method3(arg1,arg2) // 多个参数
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="n"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 没有参数 &lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="nl"&gt;method2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 一个参数 &lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="nl"&gt;method3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;arg2&lt;/span&gt; &lt;span class="nl"&gt;andArg&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;// 多个参数 &lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;2. 类的定义 &lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;public class MyClass extend SuperClass {
+
+    private int attr1;
+
+    public void method1() {
+        ...
+    }
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Objectove-C 定义一个类时需要两个文件，分别是负责声明的 Header File 和负责具体实现的 Implementation File。&lt;/p&gt;
+&lt;p&gt;MyClass.h&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;SuperClass&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;attr1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method2:&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method3:&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt; &lt;span class="nl"&gt;andArg&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;classMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// 相当于 Java 中的 static 方法 &lt;/span&gt;
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;MyClass.m&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#import&amp;quot;MyClass.h&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;method1&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 此外，Objective-C 还有一个非常方便的 “ 语法糖 ”——&lt;code&gt;@property&lt;/code&gt; 和 &lt;code&gt;@synthesize&lt;/code&gt; 两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
+在头文件中加上 &lt;code&gt;@property int attr1;&lt;/code&gt; 就等同于声明了两个方法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nt"&gt;attr1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;-&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nt"&gt;setAttr1&lt;/span&gt;&lt;span class="o"&gt;:(&lt;/span&gt;&lt;span class="nt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nt"&gt;newAttr1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 实现文件里加上 &lt;code&gt;@synthesize attr1;&lt;/code&gt; 就等同于定义了两个方法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;- (int)attr1
+{
+    return attr1;
+}
+-(void)setAttr1:(int)newAttr1
+{
+    attr1 = newAttr1;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;3. 协议（接口）的定义 &lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;
+定义接口 &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;public interface MyInterface {
+    public void aInterfaceMethod();
+    public void anotherInterfaceMethod();
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 实现接口 &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;public class MyClass extend SuperClass implements MyInterface {
+    // method declarations
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;
+在 Objective-C 中，用关键字 &lt;code&gt;@protocol&lt;/code&gt; 定义协议，也就是 Java 中的接口。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@protocol&lt;/span&gt; &lt;span class="nc"&gt;MyProtocol&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;aProtocolMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nf"&gt;anotherProcotolMethod&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 当一个类需要实现协议时，&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#import &amp;quot;MyProtocol.h&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;SuperClass&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;MyProtocol&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;AnotherProtocol&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="c1"&gt;// method declarations&lt;/span&gt;
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr /&gt;
+&lt;p&gt; 由于我也是初学 Objective-C，难免有错误和总结不全面的地方，恳请指正。&lt;/p&gt;</summary><category term="Objective-C"></category></entry></feed>
