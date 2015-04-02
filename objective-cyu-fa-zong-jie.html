@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
     <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://yumminhuang.github.io/theme/css/pygments/vs.css" rel="stylesheet">
+    <link href="http://yumminhuang.github.io/theme/css/pygments/manni.css" rel="stylesheet">
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
@@ -68,9 +68,6 @@
                         </li>
                         <li class="active">
                             <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
-                        </li>
-                        <li >
-                            <a href="http://yumminhuang.github.io/category/python.html">Python</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -120,7 +117,7 @@
 <h3>1. 基本语法 </h3>
 <h4>1.1 创建对象 </h4>
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre>obj = new MyClass();
+<div class="highlight"><pre><span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyClass</span><span class="o">();</span>
 </pre></div>
 
 
@@ -131,9 +128,9 @@
 
 <h4>1.2 调用方法 </h4>
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre>obj.method1() // 没有参数
-obj.method2(arg1) // 一个参数
-obj.method3(arg1,arg2) // 多个参数
+<div class="highlight"><pre><span class="n">obj</span><span class="o">.</span><span class="na">method1</span><span class="o">()</span> <span class="c1">// 没有参数 </span>
+<span class="n">obj</span><span class="o">.</span><span class="na">method2</span><span class="o">(</span><span class="n">arg1</span><span class="o">)</span> <span class="c1">// 一个参数 </span>
+<span class="n">obj</span><span class="o">.</span><span class="na">method3</span><span class="o">(</span><span class="n">arg1</span><span class="o">,</span><span class="n">arg2</span><span class="o">)</span> <span class="c1">// 多个参数 </span>
 </pre></div>
 
 
@@ -146,14 +143,14 @@ obj.method3(arg1,arg2) // 多个参数
 
 <h3>2. 类的定义 </h3>
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre>public class MyClass extend SuperClass {
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="n">extend</span> <span class="n">SuperClass</span> <span class="o">{</span>
 
-    private int attr1;
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">attr1</span><span class="o">;</span>
 
-    public void method1() {
-        ...
-    }
-}
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method1</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 
 
@@ -186,37 +183,37 @@ obj.method3(arg1,arg2) // 多个参数
 
 <p> 此外，Objective-C 还有一个非常方便的 “ 语法糖 ”——<code>@property</code> 和 <code>@synthesize</code> 两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
 在头文件中加上 <code>@property int attr1;</code> 就等同于声明了两个方法：</p>
-<div class="highlight"><pre><span class="nt">-</span> <span class="o">(</span><span class="nt">int</span><span class="o">)</span><span class="nt">attr1</span><span class="o">;</span>
-<span class="nt">-</span> <span class="o">(</span><span class="nt">void</span><span class="o">)</span><span class="nt">setAttr1</span><span class="o">:(</span><span class="nt">int</span><span class="o">)</span><span class="nt">newAttr1</span><span class="o">;</span>
+<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nf">attr1</span><span class="p">;</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setAttr1:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">newAttr1</span><span class="p">;</span>
 </pre></div>
 
 
 <p> 实现文件里加上 <code>@synthesize attr1;</code> 就等同于定义了两个方法：</p>
-<div class="highlight"><pre>- (int)attr1
-{
-    return attr1;
-}
--(void)setAttr1:(int)newAttr1
-{
-    attr1 = newAttr1;
-}
+<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nf">attr1</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">attr1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">-(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setAttr1:</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="nv">newAttr1</span>
+<span class="p">{</span>
+    <span class="n">attr1</span> <span class="o">=</span> <span class="n">newAttr1</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 
 
 <h3>3. 协议（接口）的定义 </h3>
 <p><strong>Java:</strong>
 定义接口 </p>
-<div class="highlight"><pre>public interface MyInterface {
-    public void aInterfaceMethod();
-    public void anotherInterfaceMethod();
-}
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MyInterface</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">aInterfaceMethod</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherInterfaceMethod</span><span class="o">();</span>
+<span class="o">}</span>
 </pre></div>
 
 
 <p> 实现接口 </p>
-<div class="highlight"><pre>public class MyClass extend SuperClass implements MyInterface {
-    // method declarations
-}
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyClass</span> <span class="n">extend</span> <span class="n">SuperClass</span> <span class="kd">implements</span> <span class="n">MyInterface</span> <span class="o">{</span>
+    <span class="c1">// method declarations</span>
+<span class="o">}</span>
 </pre></div>
 
 
@@ -257,7 +254,7 @@ obj.method3(arg1,arg2) // 多个参数
                 <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
                 <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
                 <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i class="fa fa-weibo fa-lg"></i> weibo</a></li>
-                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram-square fa-lg"></i> instagram</a></li>
+                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram fa-lg"></i> instagram</a></li>
               </ul>
             </li>
 
@@ -265,11 +262,6 @@ obj.method3(arg1,arg2) // 多个参数
 
             <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
-                    <li class="list-group-item tag-1">
-                        <a href="http://yumminhuang.github.io/tag/python.html">
-                            Python
-                        </a>
-                    </li>
                     <li class="list-group-item tag-1">
                         <a href="http://yumminhuang.github.io/tag/linux.html">
                             Linux
@@ -280,14 +272,19 @@ obj.method3(arg1,arg2) // 多个参数
                             Shell
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/devops.html">
-                            DevOps
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/python.html">
+                            Python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/objective-c.html">
                             Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/devops.html">
+                            DevOps
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

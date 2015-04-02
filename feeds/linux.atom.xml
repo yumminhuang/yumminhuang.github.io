@@ -50,7 +50,7 @@
 &lt;h2&gt;i3 窗口管理器的安装和配置 &lt;/h2&gt;
 &lt;h3&gt; 安装 &lt;/h3&gt;
 &lt;p&gt; 以 Ubuntu 为例。首先添加 i3 到源列表。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;echo &amp;quot;deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe&amp;quot; &amp;gt;&amp;gt; /etc/apt/sources.list
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;deb http://debian.sur5r.net/i3/ &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;lsb_release -c -s&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; universe&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; /etc/apt/sources.list
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -93,9 +93,9 @@ find . -name &lt;span class="s2"&gt;&amp;quot;*.o&amp;quot;&lt;/span&gt; -exec r
 
 
 &lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project"&gt;How do I remove all .pyc files from a project?&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry><entry><title>Execute a Command in the Background on Remote Server using SSH</title><link href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html" rel="alternate"></link><updated>2014-05-04T09:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:execute-a-command-in-the-background-on-remote-server-using-ssh.html</id><summary type="html">&lt;p&gt;In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project"&gt;How do I remove all .pyc files from a project?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry><entry><title>Execute a Command in the Background on Remote Server using SSH</title><link href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html" rel="alternate"></link><updated>2014-05-04T09:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:execute-a-command-in-the-background-on-remote-server-using-ssh.html</id><summary type="html">&lt;p&gt;In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Since there are several remote servers, I have to run the server program in the background on all remote machines.&lt;/p&gt;
 &lt;p&gt;At first, I simply add the ampersand (&amp;amp;) at the end of the command like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;ssh user@host &lt;span class="s2"&gt;&amp;quot;cd /some/directory; ./program &amp;amp;&lt;/span&gt;

@@ -67,7 +67,7 @@ test        pptpd   1234            *
 &lt;li&gt; 设置 IP 转发 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt; 打开 IPv4 转发，并重新载入设置。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo sed -i &amp;#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&amp;#39; /etc/sysctl.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo sed -i &lt;span class="s1"&gt;&amp;#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&amp;#39;&lt;/span&gt; /etc/sysctl.conf
 sudo sysctl -p
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -79,12 +79,12 @@ sudo sysctl -p
 
 &lt;p&gt; 也可以直接编辑 &lt;code&gt;/etc/rc.local&lt;/code&gt;，在 &lt;code&gt;exit 0&lt;/code&gt; 之前添加以上内容。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt; 重启 PPTP&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt; 重启 PPTP&lt;/p&gt;
+&lt;p&gt;:::bash
+sudo service pptpd restart&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo service pptpd restart
-&lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt; 这样 PPTP 服务器就搭建完毕了，可以「科学上网」了！&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt; 没有什么能够阻挡 &lt;/p&gt;
@@ -156,127 +156,8 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 &lt;li&gt; 恢复 Auto Scaling Group 的 &lt;code&gt;min_size&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt; 下面提供一份示例代码以供参考：&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!python&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
 
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;boto.ec2.autoscale&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AutoScaleConnection&lt;/span&gt;
@@ -397,5 +278,4 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="Python"></category><category term="Boto"></category></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Python"></category><category term="Boto"></category></entry></feed>

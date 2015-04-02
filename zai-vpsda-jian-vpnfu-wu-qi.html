@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.min.css" type="text/css"/>
     <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
 
-    <link href="http://yumminhuang.github.io/theme/css/pygments/vs.css" rel="stylesheet">
+    <link href="http://yumminhuang.github.io/theme/css/pygments/manni.css" rel="stylesheet">
     <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
@@ -69,9 +69,6 @@
                         </li>
                         <li >
                             <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
-                        </li>
-                        <li >
-                            <a href="http://yumminhuang.github.io/category/python.html">Python</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -184,7 +181,7 @@ test        pptpd   1234            *
 <li> 设置 IP 转发 </li>
 </ul>
 <p> 打开 IPv4 转发，并重新载入设置。</p>
-<div class="highlight"><pre>sudo sed -i &#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39; /etc/sysctl.conf
+<div class="highlight"><pre>sudo sed -i <span class="s1">&#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39;</span> /etc/sysctl.conf
 sudo sysctl -p
 </pre></div>
 
@@ -196,12 +193,12 @@ sudo sysctl -p
 
 <p> 也可以直接编辑 <code>/etc/rc.local</code>，在 <code>exit 0</code> 之前添加以上内容。</p>
 <ul>
-<li> 重启 PPTP</li>
+<li>
+<p> 重启 PPTP</p>
+<p>:::bash
+sudo service pptpd restart</p>
+</li>
 </ul>
-<div class="highlight"><pre>sudo service pptpd restart
-</pre></div>
-
-
 <p> 这样 PPTP 服务器就搭建完毕了，可以「科学上网」了！</p>
 <blockquote>
 <p> 没有什么能够阻挡 </p>
@@ -270,7 +267,7 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
                 <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
                 <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
                 <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i class="fa fa-weibo fa-lg"></i> weibo</a></li>
-                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram-square fa-lg"></i> instagram</a></li>
+                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram fa-lg"></i> instagram</a></li>
               </ul>
             </li>
 
@@ -278,11 +275,6 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 
             <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
-                    <li class="list-group-item tag-1">
-                        <a href="http://yumminhuang.github.io/tag/python.html">
-                            Python
-                        </a>
-                    </li>
                     <li class="list-group-item tag-1">
                         <a href="http://yumminhuang.github.io/tag/linux.html">
                             Linux
@@ -293,14 +285,19 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
                             Shell
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/devops.html">
-                            DevOps
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/python.html">
+                            Python
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/objective-c.html">
                             Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/devops.html">
+                            DevOps
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
