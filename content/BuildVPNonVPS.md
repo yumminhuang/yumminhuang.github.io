@@ -41,9 +41,9 @@ Tags: DevOps, Linux
 其余添加用户、Linux基本设置等内容在此不再赘述。
 #### 安装PPTP
 
-```
-sudo apt-get install pptpd
-```
+	:::bash
+	sudo apt-get install pptpd
+	
 #### 配置
 * 配置IP地址
 
@@ -78,22 +78,22 @@ test		pptpd   1234            *
 
 打开IPv4转发，并重新载入设置。
 
-```
-sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
-sudo sysctl -p
-```
+	:::bash
+	sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+	sudo sysctl -p
+
 为PPTP连接设置NAT，否则不能访问别的网站。
 
-```
-iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-```
+	:::bash
+	iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+	
 也可以直接编辑 `/etc/rc.local`，在 `exit 0` 之前添加以上内容。
 
 * 重启PPTP
 
-```
-sudo service pptpd restart
-```
+	:::bash
+	sudo service pptpd restart
+
 这样PPTP服务器就搭建完毕了，可以「科学上网」了！
 
 > 没有什么能够阻挡

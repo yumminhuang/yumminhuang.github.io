@@ -41,7 +41,7 @@ Software Developer Internship
 Mar. 2012 —-- Apr. 2012
 
 -------
-## Extracurricular Interests
+## Interests
 
 * Photography
 * Travel

@@ -17,21 +17,25 @@ Tags: Objective-C
 
 **Java:**
 
+	:::Java
 	obj = new MyClass();
 
 **Objective-C:**
 
+	:::objective-c
 	MyClass *obj = [[MyClass alloc] init];
 
 #### 1.2 调用方法
 **Java:**
 
+	:::Java
 	obj.method1() //没有参数
 	obj.method2(arg1) //一个参数
 	obj.method3(arg1,arg2) //多个参数
 
 **Objective-C:**
 
+	:::objective-c
 	[obj method1] //没有参数
 	[obj method2:arg1] //一个参数
 	[obj method3:arg2 andArg: arg2] //多个参数
@@ -39,6 +43,7 @@ Tags: Objective-C
 ### 2.类的定义
 **Java:**
 
+	:::Java
 	public class MyClass extend SuperClass {
 
 		private int attr1;
@@ -54,6 +59,7 @@ Objectove-C定义一个类时需要两个文件，分别是负责声明的Header
 
 MyClass.h
 
+	:::objective-c
 	@interface MyClass : SuperClass
 	{
 		int attr1;
@@ -66,6 +72,7 @@ MyClass.h
 
 MyClass.m
 
+	:::objective-c
 	#import"MyClass.h"
 	@implementation MyClass
 	- (void) method1
@@ -78,10 +85,12 @@ MyClass.m
 此外，Objective-C还有一个非常方便的“语法糖”——`@property`和`@synthesize`两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
 在头文件中加上`@property int attr1;`就等同于声明了两个方法：
 
+	:::objective-c
 	- (int)attr1;
 	- (void)setAttr1:(int)newAttr1;
 实现文件里加上`@synthesize attr1;`就等同于定义了两个方法：
 
+	:::objective-c
 	- (int)attr1
 	{
 		return attr1;
@@ -95,6 +104,7 @@ MyClass.m
 **Java:**
 定义接口
 
+	:::Java
 	public interface MyInterface {
 		public void aInterfaceMethod();
 		public void anotherInterfaceMethod();
@@ -102,6 +112,7 @@ MyClass.m
 
 实现接口
 
+	:::Java
 	public class MyClass extend SuperClass implements MyInterface {
 		// method declarations
 	}
@@ -109,6 +120,7 @@ MyClass.m
 **Objective-C:**
 在Objective-C中，用关键字`@protocol`定义协议，也就是Java中的接口。
 
+	:::objective-c
 	@protocol MyProtocol
 	- (void) aProtocolMethod;
 	- (void) anotherProcotolMethod;
@@ -116,6 +128,7 @@ MyClass.m
 
 当一个类需要实现协议时，
 
+	:::objective-c
 	#import "MyProtocol.h"
 	@interface MyClass : SuperClass < MyProtocol, AnotherProtocol >
 		// method declarations

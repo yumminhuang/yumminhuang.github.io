@@ -10,15 +10,15 @@ Since there are several remote servers, I have to run the server program in the 
 
 At first, I simply add the ampersand (&) at the end of the command like this:
 
-```bash
-ssh user@host "cd /some/directory; ./program &
-```
+	:::bash
+	ssh user@host "cd /some/directory; ./program &
+
 
 But my script just hangs after it runs first remote server. After googling this program, I found this command to solve my problem.
 
-```bash
-ssh -n -f user@host "sh -c 'cd /some/directory; nohup ./program > /dev/null 2>&1 &'"
-```
+	:::bash
+	ssh -n -f user@host "sh -c 'cd /some/directory; nohup ./program > /dev/null 2>&1 &'"
+
 	
 This command is quiet complicated. It need to use nohup as well as output redirection. But it works and solved my problem.
 	

@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Yumminhuang'
-SITENAME = u'Yaming Huang'
+SITENAME = u'/dev/null'
 SITEURL = ''
 
 PATH = 'content'
@@ -44,7 +44,7 @@ BOOTSTRAP_NAVBAR_INVERSE = 'True'
 # Blog theme
 THEME = 'pelican-bootstrap3'
 # Code block style
-PYGMENTS_STYLE = 'vs'
+PYGMENTS_STYLE = 'manni'
 # Static path for pages, files, etc
 STATIC_PATHS = ['images']
 

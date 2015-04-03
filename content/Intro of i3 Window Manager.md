@@ -70,16 +70,15 @@ i3窗口管理器有一个很重要的概念就是容器（Container）。每个
 ### 安装
 以Ubuntu为例。首先添加i3到源列表。
 
-```
-echo "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" >> /etc/apt/sources.list
-```
+	:::bash
+	echo "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" >> /etc/apt/sources.list
+
 然后运行以下指令进行安装。
 
-```
-apt-get update
-apt-get --allow-unauthenticated install sur5r-keyring
-apt-get install i3
-```
+	:::bash
+	apt-get update
+	apt-get --allow-unauthenticated install sur5r-keyring
+	apt-get install i3
 
 ### 配置
 我之所以放弃Awesome的一个很重要的原因就是它的配置过于复杂。诚然，Awesome的效果要比i3酷炫很多，但是设置需要用到Lua脚本。很多功能还需要通过安装插件来完成。相反，i3只需要两个设置文件，而且用的是非常易读的语法。
