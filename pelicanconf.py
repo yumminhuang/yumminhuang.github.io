@@ -43,6 +43,8 @@ BOOTSTRAP_NAVBAR_INVERSE = 'True'
 
 # Blog theme
 THEME = 'pelican-bootstrap3'
+BOOTSTRAP_THEME = 'yeti'
+
 # Code block style
 PYGMENTS_STYLE = 'manni'
 # Static path for pages, files, etc
