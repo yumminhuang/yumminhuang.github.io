@@ -78,6 +78,30 @@
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://yumminhuang.github.io/sensujian-jie.html">Sensu简介</a></h2>
+                <div class="summary"><h2>Sensu 简介 </h2>
+<p>Sensu 是一款开源的监控框架。</p>
+<p><img alt="Sensu components" src="http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif" /></p>
+<p>Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。</p>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;client&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;i-424242&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;subscriptions&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;production&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;webserver&quot;</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p> 其中，<code>subscriptions</code> 指定了 Sensu Client ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/sensujian-jie.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://yumminhuang.github.io/3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html">3个月运维工作之总结</a></h2>
                 <div class="summary"><p> 自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。</p>
 <hr />
@@ -127,7 +151,13 @@
                 <h2><a href="http://yumminhuang.github.io/yelp-interview-problem.html">Yelp Interview Problem</a></h2>
                 <div class="summary"><p>Today, I had a skype interview with Yelp.</p>
 <h3>Interview</h3>
-<p>At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as <em>What will cause access a website slowly?</em>, <em>Difference between thread and process</em>, <em>What is deadlock?</em> or <em>What's your favorite programming language? And ...</em></p>
+<p>At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as</p>
+<blockquote>
+<ul>
+<li>What will cause access a website slowly?</li>
+<li>Difference between thread and process, </li>
+<li>What is deadlock?</li>
+<li>What's your favorite programming language? And why ...</li></ul></blockquote>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/yelp-interview-problem.html">more ...</a>
                 </div>
             </article>
@@ -208,6 +238,11 @@
             <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
+                        <a href="http://yumminhuang.github.io/tag/devops.html">
+                            DevOps
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
                         <a href="http://yumminhuang.github.io/tag/linux.html">
                             Linux
                         </a>
@@ -222,9 +257,9 @@
                             Shell
                         </a>
                     </li>
-                    <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/devops.html">
-                            DevOps
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

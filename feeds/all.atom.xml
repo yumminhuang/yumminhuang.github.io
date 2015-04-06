@@ -1,5 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-04-04T11:24:00-04:00</updated><entry><title>3个月运维工作之总结</title><link href="http://yumminhuang.github.io/3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html" rel="alternate"></link><updated>2015-04-04T11:24:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-01:3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html</id><summary type="html">&lt;p&gt; 自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-04-04T11:24:00-04:00</updated><entry><title>Sensu简介</title><link href="http://yumminhuang.github.io/sensujian-jie.html" rel="alternate"></link><updated>2015-03-31T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-04:sensujian-jie.html</id><summary type="html">&lt;h2&gt;Sensu 简介 &lt;/h2&gt;
+&lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Sensu components" src="http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;client&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;i-424242&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;address&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;127.0.0.1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;subscriptions&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;production&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;webserver&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 其中，&lt;code&gt;subscriptions&lt;/code&gt; 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了 &lt;a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern"&gt; 订阅者模式 &lt;/a&gt;，相应地，定义监控项目的时候则需要指定 &lt;code&gt;subscribers&lt;/code&gt;（后文中将会提及）。&lt;/p&gt;
+&lt;h3&gt;Sensu 的优势 &lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt; 纯 Ruby 实现，核心代码不超过 1000 行；&lt;/li&gt;
+&lt;li&gt; 配置简单，配置文件使用 JSON；&lt;/li&gt;
+&lt;li&gt; 结构简单，易扩展，很容易就能够上手编写插件；&lt;/li&gt;
+&lt;li&gt; 丰富的社区支持，&lt;a href="https://github.com/sensu/sensu-community-plugins"&gt;Sensu Community Plugin&lt;/a&gt; 几乎包含了所有常用的监控项目。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Sensu 的结构 &lt;/h3&gt;
+&lt;p&gt; 简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以根据当前的条件调用 Handler 采取相应的行动。&lt;/p&gt;
+&lt;h4&gt;Sensu Check&lt;/h4&gt;
+&lt;p&gt;Sensu Check 用来监控服务和资源。Check 由 Sensu Server 发出执行指令后在 Sensu Client 上运行。本质上，Sensu Check 是一个命令或者脚本，用来把数据输出到 &lt;code&gt;STDOUT&lt;/code&gt; 或者 &lt;code&gt;STDERR&lt;/code&gt;；同时，用返回值（exit status code）来指示状态：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0&lt;/code&gt;： OK&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;1&lt;/code&gt;：WARNING&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2&lt;/code&gt;：CRITICAL&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;3&lt;/code&gt;：UNKNOWN or CUSTOM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt; 因此，只要定义好返回值和输出，很容易就可以写出一个 Sensu Check。下面就是一个用来监测 &lt;code&gt;chef-client&lt;/code&gt; 进程是否在运行的 Ruby 脚本。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;procs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sb"&gt;`ps aux`&lt;/span&gt;
+&lt;span class="n"&gt;running&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kp"&gt;false&lt;/span&gt;
+&lt;span class="n"&gt;procs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;each_line&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nb"&gt;proc&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;running&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kp"&gt;true&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;proc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;include?&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;chef-client&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;running&lt;/span&gt;
+  &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;OK - Chef client daemon is running&amp;#39;&lt;/span&gt;
+  &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+  &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;WARNING - Chef client daemon is NOT running&amp;#39;&lt;/span&gt;
+  &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 写好一个 Check 的脚本，需要在配置文件中添加它。比如下面 ,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;checks&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;chef_client&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;command&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;check-chef-client.rb&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;subscribers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;production&amp;quot;&lt;/span&gt;
+      &lt;span class="p"&gt;],&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;interval&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;handlers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;pagerduty&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;mail&amp;quot;&lt;/span&gt;
+      &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;subscribers&lt;/code&gt; 用来指定订阅者。&lt;code&gt;interval&lt;/code&gt; 定义检查的周期为 &lt;code&gt;60s&lt;/code&gt;，&lt;code&gt;handlers&lt;/code&gt; 则告诉 Sensu 当此 Check 出现异常时使用 &lt;code&gt;pagerduty&lt;/code&gt; 和 &lt;code&gt;mail&lt;/code&gt; 这两个 Handler。&lt;/p&gt;
+&lt;h4&gt;Sensu Handler&lt;/h4&gt;
+&lt;p&gt;Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 &lt;a href="http://graphite.wikidot.com"&gt;Graphite&lt;/a&gt;，等等。 Handler 有不同的类型，有常用的 &lt;code&gt;Pipe&lt;/code&gt;，可以将 Event 传入到 &lt;code&gt;STDIN&lt;/code&gt;（可以理解为 &lt;code&gt;cat event.json | handler&lt;/code&gt;）；有 TCP/UDP，将 Event 传入到 Socket 发送。&lt;/p&gt;
+&lt;p&gt; 下面是一个简单的 Sensu Handler 定义，用来将 Event 的内容发送到指定的邮箱地址。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;handlers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;mail&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;pipe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;command&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mailx -s &amp;#39;sensu event&amp;#39; email@address.com&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt; 基于 Sensu 的安全更新监控工具 &lt;/h2&gt;
+&lt;p&gt; 接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。&lt;/p&gt;
+&lt;h3&gt; 需求 &lt;/h3&gt;
+&lt;p&gt; 我们公司在 AWS 上有大约 350 个实例 &lt;sup id="fnref:Instance"&gt;&lt;a class="footnote-ref" href="#fn:Instance" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt; 更新的软件包名称；&lt;/li&gt;
+&lt;li&gt; 软件包当前的版本；&lt;/li&gt;
+&lt;li&gt; 可供安装的版本。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt; 此外，一个邮件里包含 350 台机器的信息显然不方便阅读。恰好公司的 350 台服务器根据功能分为若干个 &lt;code&gt;subnet&lt;/code&gt;，如 dev，tst，stg 等。所以，最好可以为每一个 subnet 生成一份安全更新的报告。&lt;/p&gt;
+&lt;h3&gt; 实现 &lt;/h3&gt;
+&lt;h4&gt; 安全更新的信息收集 &lt;/h4&gt;
+&lt;p&gt; 使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;17 packages can be updated.
+6 updates are security updates.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 以此为源头，我找到了 Debian 系统内自带的一个 Python 脚本 &lt;code&gt;/usr/lib/update-notifier/apt_check.py&lt;/code&gt;。它可以调用 &lt;a href="https://apt.alioth.debian.org/python-apt-doc/index.html"&gt;python-apt&lt;/a&gt; 库收集系统当前可以安装的安全更新。以此脚本为基础稍加改动就可以得到我们所需要的信息。&lt;/p&gt;
+&lt;p&gt; 我已经把修改过的脚本做成了一个 &lt;a href="https://github.com/sensu/sensu-community-plugins/blob/master/plugins/system/package-updates-metric.py"&gt;Sensu Plugin&lt;/a&gt; 提交到了 Sensu 社区。&lt;/p&gt;
+&lt;h4&gt; 信息的汇集和通知 &lt;/h4&gt;
+&lt;p&gt; 第一步非常顺利，但是还有问题需要解决：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Python 脚本只能收集本地的信息，如何把 350 台服务器的信息汇集在一起？&lt;/li&gt;
+&lt;li&gt; 信息汇集完了需要进行分类、通知。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt; 为了解决这两个问题，就需要用到本文的主角 Sensu 了。&lt;/p&gt;
+&lt;p&gt; 第一个问题是汇集多台机器的检查结果。事实上，通常的 Sensu Check 也只能检查一台机器。为了解决第一个问题，我使用了 &lt;a href="http://sensuapp.org/docs/0.16/api_aggregates"&gt;Sensu Aggregate API&lt;/a&gt;。我们可以把一个 Sensu Check 定义成 &lt;a href="http://sensuapp.org/docs/0.16/checks"&gt;Aggregate Check&lt;/a&gt;，然后通过 API 可以得到所有该 Check 的结果。&lt;/p&gt;
+&lt;p&gt; 因此，整个安全更新监控工具使用了两个 Sensu Check。第一个 Aggregate Check 运行在所有的服务器上，用来收集本地的安全更新。第二个 Check 运行在一台服务器上，它会调用 Aggregate API 读取第一个 Check 的结果，再加以归类、分析。如果有安全更新可以安装，就触发 Handler 发送通知邮件。&lt;/p&gt;
+&lt;p&gt; 第一个 Check 的定义：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;checks&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;apt-check&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;command&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;package-updates-metric.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;subscribers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;production&amp;quot;&lt;/span&gt;
+      &lt;span class="p"&gt;],&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;interval&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;28800&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;aggregate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;handler&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 第二个 Check 的定义：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;checks&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;aggregate_apt_check&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;command&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;package-updates-check.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;subscribers&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;mg102.ops&amp;quot;&lt;/span&gt;
+      &lt;span class="p"&gt;],&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;publish&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;handler&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;package-updates-notify.rb&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 其中，&lt;code&gt;package-updates-check.py&lt;/code&gt; 是另外一个 Python 脚本，主要是访问 API 并且读取结果。如果发现了安全更新就输出结果并返回 &lt;code&gt;1&lt;/code&gt;，这样就可以触发 &lt;code&gt;package-updates-notify.rb&lt;/code&gt;。这是一个 Ruby 脚本，用来读取第二个 Check 的结果，再把结果分成不同的 subnet 发送邮件。
+另外，这里设置了 &lt;code&gt;"publish": false&lt;/code&gt;，所以这个 Check 需要手工启动（因为没有必要定时调用，每天一次足矣），可以通过以下命令来手动请求 Sensu Check。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://api.sensu.example.com:4567/check/request -d &lt;span class="s1"&gt;&amp;#39;{&amp;quot;check&amp;quot;:&amp;quot;aggregate_apt_check&amp;quot;}&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 我添加了一个 Cron job 每天早上定时调用该命令。这样每天早上一到办公室就可以及时获知所有服务器是否需要更新。&lt;/p&gt;
+&lt;p&gt; 整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。&lt;/p&gt;
+&lt;h3&gt; 总结 &lt;/h3&gt;
+&lt;p&gt; 这就是我的第一个 Sensu 项目。学习一门编程语言或一个工具最好的方法就是用它来做一个项目。的确，通过这个项目让我对 Sensu 的功能和特性有了比较清楚的了解。&lt;/p&gt;
+&lt;p&gt; 整个安全更新监控工具的实现描述得很简单，但是从立项到投入实际应用还是用了我一个月的时间，后期还花费了一些时间在修复 Bug 上。因为很多工具都是初次使用，包括第一次接触 Sensu，第一次使用 Ruby 做项目，第一次使用 Chef，实现的过程中边学边做，还是走了不少弯路。&lt;/p&gt;
+&lt;p&gt; 本文里只列出大致的框架，有一些代码没有贴出，贴出的代码也非完全准确。但是思路和意思已经都展现清楚了。&lt;/p&gt;
+&lt;p&gt; 更加详细的内容可以参阅 &lt;a href="http://sensuapp.org/docs/0.16/overview"&gt;Sensu 文档 &lt;/a&gt;。&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn:Instance"&gt;
+&lt;p&gt;「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。&amp;#160;&lt;a class="footnote-backref" href="#fnref:Instance" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</summary><category term="DevOps"></category><category term="Sensu"></category></entry><entry><title>3个月运维工作之总结</title><link href="http://yumminhuang.github.io/3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html" rel="alternate"></link><updated>2015-04-04T11:24:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-01:3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html</id><summary type="html">&lt;p&gt; 自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt; 这次实习并非是我第一次接触运维工作。2014 年夏天，我有一份两个月的暑期实习。当时实习工作的职位是 &lt;em&gt;Backend Software Engineer&lt;/em&gt;，但事实上所完成的绝大部分工作的内容是关于运维，主要有 &lt;a href="http://aws.amazon.com/autoscaling/"&gt;AWS Auto Scaling&lt;/a&gt; 的搭建（关于这部分内容可以参见之前的一篇 &lt;a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html"&gt; 博文 &lt;/a&gt;）和基于 &lt;a href="http://aws.amazon.com/cloudwatch/"&gt;AWS Cloudwatch&lt;/a&gt; 实现一些监测工具。所以也算对运维工作有一些经验。之后在找实习的时候，我也是有意识地找运维相关的职位。&lt;/p&gt;
 &lt;p&gt; 这里也顺便说一下暑期实习的公司。那是一个只有 5、6 个程序员的初创公司。公司所有的服务都搭建在 Amazon Web Service。运维可以说略显「简陋」：服务器的操作全部由 Python 脚本实现；代码的部署也是用 Python 脚本从 svn 下载再进行安装；系统监控全部部署在 Cloudwatch。对于只有十多台服务器的公司来说，这样的运维方法似乎也足够了。&lt;/p&gt;
@@ -20,7 +187,7 @@
 &lt;hr /&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Welcome to Operation team! Every Ops guy has crashed a server.&lt;/p&gt;
-&lt;p&gt;—— 工作近一个月，我第一次弄崩服务器程序之后，同事如是说 &lt;/p&gt;
+&lt;p&gt;-- 工作近一个月，我第一次弄崩服务器程序之后，同事如是说 &lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt; 一个体会是运维工作对知识面要求挺高的。要能够编程、测试，因为很多时候要自己实现工具，这个时候要自己编码，自己测试。而且知识点很繁杂，操作系统、网络、软件工程这些学科的知识都会经常使用。&lt;/p&gt;
 &lt;p&gt; 另一个体会是运维工作不只是管理服务器、部署程序，而是深入到公司开发流程的各个方面。开发人员写的代码需要有工具能够自动运行测试，自动合并到 Master 分支。测试人员做完测试要生成测试覆盖率的报告。还有常规的服务器管理，系统监测，所有这些林林总总的基础设施搭建都需要运维团队来做。就连办公室断了网也是由我们组来处理。&lt;/p&gt;
@@ -254,7 +421,16 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 &lt;li&gt;&lt;a href="https://riobard.com/2011/11/12/pptp-vpn-on-ubuntu/"&gt;Configure PPTP VPN on Ubuntu&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</summary><category term="DevOps"></category><category term="Linux"></category></entry><entry><title>Yelp Interview Problem</title><link href="http://yumminhuang.github.io/yelp-interview-problem.html" rel="alternate"></link><updated>2014-11-18T18:02:00-05:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-11-18:yelp-interview-problem.html</id><summary type="html">&lt;p&gt;Today, I had a skype interview with Yelp.&lt;/p&gt;
 &lt;h3&gt;Interview&lt;/h3&gt;
-&lt;p&gt;At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as &lt;em&gt;What will cause access a website slowly?&lt;/em&gt;, &lt;em&gt;Difference between thread and process&lt;/em&gt;, &lt;em&gt;What is deadlock?&lt;/em&gt; or &lt;em&gt;What's your favorite programming language? And why?&lt;/em&gt;. The last part of the interview is a coding question. The interviewer sent me a link of &lt;a href="http://coderpad.io"&gt;CoderPad&lt;/a&gt; and asked me to write code on it.&lt;/p&gt;
+&lt;p&gt;At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;What will cause access a website slowly?&lt;/li&gt;
+&lt;li&gt;Difference between thread and process, &lt;/li&gt;
+&lt;li&gt;What is deadlock?&lt;/li&gt;
+&lt;li&gt;What's your favorite programming language? And why? &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The last part of the interview is a coding question. The interviewer sent me a link of &lt;a href="http://coderpad.io"&gt;CoderPad&lt;/a&gt; and asked me to write code on it.&lt;/p&gt;
 &lt;h3&gt;Coding Problem Description&lt;/h3&gt;
 &lt;p&gt;The problem is not very difficult. Write a function to &lt;strong&gt;find the longest prefix of a list of string.&lt;/strong&gt; For example,
 &lt;code&gt;['abc', 'abcde', 'abxyz'] =&amp;gt; 'ab'&lt;/code&gt;&lt;/p&gt;
