@@ -8,7 +8,13 @@ Today, I had a skype interview with Yelp.
 
 ### Interview
 
-At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as *What will cause access a website slowly?*, *Difference between thread and process*, *What is deadlock?* or *What's your favorite programming language? And why?*. The last part of the interview is a coding question. The interviewer sent me a link of [CoderPad](http://coderpad.io) and asked me to write code on it.
+At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as
+> * What will cause access a website slowly?
+> * Difference between thread and process, 
+> * What is deadlock?
+> * What's your favorite programming language? And why? 
+
+The last part of the interview is a coding question. The interviewer sent me a link of [CoderPad](http://coderpad.io) and asked me to write code on it.
 
 ### Coding Problem Description
 The problem is not very difficult. Write a function to **find the longest prefix of a list of string.** For example,
