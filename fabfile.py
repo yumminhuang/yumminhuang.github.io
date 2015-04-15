@@ -14,7 +14,7 @@ CSS_FILENAME = 'pelican-bootstrap3/templates/includes/sidebar.html'
 
 
 def commit_and_push():
-    local('git add .')
+    local('git add -A')
     local('git commit -m "Update blog"')
     local('git push')
 
