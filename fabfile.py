@@ -1,73 +1,70 @@
 from fabric.api import *
-import fabric.contrib.project as project
 import os
-import sys
-import SimpleHTTPServer
-import SocketServer
+import shutil
 
+# Run on local machine
+env.hosts = ['localhost']
 # Local path configuration (can be absolute or relative to fabfile)
-env.deploy_path = 'output'
-DEPLOY_PATH = env.deploy_path
+PD = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+DEPLOY_PATH = PD + '/yumminhuang.github.io'
 
-# Remote server configuration
-production = 'root@localhost:22'
-dest_path = '/var/www'
-
-# Rackspace Cloud Files configuration settings
-env.cloudfiles_username = 'my_rackspace_username'
-env.cloudfiles_api_key = 'my_rackspace_api_key'
-env.cloudfiles_container = 'my_cloudfiles_container'
+# pelican-bootstrap3 doesn't support instagram logo.
+# Use a kludge to fix it
+CSS_FILENAME = 'pelican-bootstrap3/templates/includes/sidebar.html'
 
 
+def commit_and_push():
+    local('git add .')
+    local('git commit -m "Update blog"')
+    local('git push')
+
+
+def replace(string, replacement, filename):
+    local("""ruby -i -pe "gsub \\"%s\\", \\"%s\\"" %s""" %
+          (string, replacement, filename))
+
+
+@task
 def clean():
+    """Remove generated files"""
     if os.path.isdir(DEPLOY_PATH):
-        local('rm -rf {deploy_path}'.format(**env))
-        local('mkdir {deploy_path}'.format(**env))
+        shutil.rmtree(DEPLOY_PATH)
+        os.makedirs(DEPLOY_PATH)
 
+
+@task
 def build():
-    local('pelican -s pelicanconf.py')
+    """Build local version of site"""
+    local('pelican -o %s -s pelicanconf.py' % DEPLOY_PATH)
 
-def rebuild():
-    clean()
-    build()
 
+@task
 def regenerate():
-    local('pelican -r -s pelicanconf.py')
+    """Automatically regenerate site upon file modification"""
+    local('pelican -o %s -r -s pelicanconf.py' % DEPLOY_PATH)
 
-def serve():
-    os.chdir(env.deploy_path)
 
-    PORT = 8000
-    class AddressReuseTCPServer(SocketServer.TCPServer):
-        allow_reuse_address = True
-
-    server = AddressReuseTCPServer(('', PORT), SimpleHTTPServer.SimpleHTTPRequestHandler)
-
-    sys.stderr.write('Serving on port {0} ...\n'.format(PORT))
-    server.serve_forever()
-
-def reserve():
-    build()
-    serve()
-
-def preview():
-    local('pelican -s publishconf.py')
-
-def cf_upload():
-    rebuild()
-    local('cd {deploy_path} && '
-          'swift -v -A https://auth.api.rackspacecloud.com/v1.0 '
-          '-U {cloudfiles_username} '
-          '-K {cloudfiles_api_key} '
-          'upload -c {cloudfiles_container} .'.format(**env))
-
-@hosts(production)
+@task
 def publish():
-    local('pelican -s publishconf.py')
-    project.rsync_project(
-        remote_dir=dest_path,
-        exclude=".DS_Store",
-        local_dir=DEPLOY_PATH.rstrip('/') + '/',
-        delete=True,
-        extra_opts='-c',
-    )
+    """generate using production settings"""
+    local('pelican -o %s -s publishconf.py' % DEPLOY_PATH)
+
+
+@task
+def deploy():
+
+    replace("'weibo'", "'weibo', 'instagram'", CSS_FILENAME)
+
+    # Move .git to avoid flushing git config
+    local('mv %s/.git %s/git' % (DEPLOY_PATH, PD))
+
+    print('Publish sites')
+    publish()
+
+    replace("'weibo', 'instagram'", "'weibo'", CSS_FILENAME)
+
+    # Commit changes
+    with lcd(DEPLOY_PATH):
+        local('mv ../git .git')
+        print('Commit and Push')
+        commit_and_push()

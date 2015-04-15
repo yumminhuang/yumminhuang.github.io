@@ -20,18 +20,17 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS =  (('NEU', 'https://www.northeastern.edu/'),
-          ('JNU', 'http://www.jnu.edu.cn/'),
-          ('Fionser\'s Blog', 'http://fionser.github.io/'),)
+LINKS = (('NEU', 'https://www.northeastern.edu/'),
+         ('JNU', 'http://www.jnu.edu.cn/'),
+         ('Fionser\'s Blog', 'http://fionser.github.io/'), )
 
 # Social widget
-SOCIAL = (('github', 'http://github.com/yumminhuang'),
-          ('stack-overflow',
-            'https://stackoverflow.com/users/2755574/yumminhuang'),
-          ('linkedin', 'http://www.linkedin.com/pub/yaming-huang/5b/932/6a0'),
+SOCIAL = (('github', 'http://github.com/yumminhuang'), (
+    'stack-overflow', 'https://stackoverflow.com/users/2755574/yumminhuang'
+), ('linkedin', 'http://www.linkedin.com/pub/yaming-huang/5b/932/6a0'),
           ('twitter', 'http://twitter.com/yumminhuang'),
           ('weibo', 'http://www.weibo.com/2622511625'),
-          ('instagram', 'http://instagram.com/yumminhuang'),)
+          ('instagram', 'http://instagram.com/yumminhuang'), )
 GITHUB_USER = 'yumminhuang'
 
 DEFAULT_PAGINATION = 10
