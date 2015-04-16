@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- #
 from fabric.api import *
 import os
 import shutil
@@ -13,9 +15,9 @@ DEPLOY_PATH = PD + '/yumminhuang.github.io'
 CSS_FILENAME = 'pelican-bootstrap3/templates/includes/sidebar.html'
 
 
-def commit_and_push():
+def commit_and_push(commit_message):
     local('git add -A')
-    local('git commit -m "Update blog"')
+    local('git commit -m "%s"' % commit_message)
     local('git push')
 
 
@@ -53,6 +55,9 @@ def publish():
 @task
 def deploy():
 
+    # print('Commit and Push Website')
+    # commit_and_push('Update blog content')
+
     replace("'weibo'", "'weibo', 'instagram'", CSS_FILENAME)
 
     # Move .git to avoid flushing git config
@@ -66,5 +71,5 @@ def deploy():
     # Commit changes
     with lcd(DEPLOY_PATH):
         local('mv ../git .git')
-        print('Commit and Push')
-        commit_and_push()
+        print('Commit and Push Webpage')
+        commit_and_push('Update blog')
