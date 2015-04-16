@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>DevOps - /dev/null</title>
+    <title>Graphite和Grafana简介 - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,16 +10,23 @@
 
 
 
+<link rel="canonical" href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">
 
-    <meta name="author" content="Yumminhuang" />
-    <meta name="keywords" content="DevOps" />
+        <meta name="author" content="Yumminhuang" />
+        <meta name="keywords" content="DevOps,Graphite,Grafana" />
+        <meta name="description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 观测量 : 观测值 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..." />
 
-    <!-- Open Graph tags -->
         <meta property="og:site_name" content="/dev/null" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="/dev/null"/>
-        <meta property="og:url" content="http://yumminhuang.github.io"/>
-        <meta property="og:description" content="/dev/null"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Graphite和Grafana简介"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"/>
+        <meta property="og:description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 观测量 : 观测值 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..."/>
+        <meta property="article:published_time" content="2015-04-08" />
+            <meta property="article:section" content="DevOps" />
+            <meta property="article:tag" content="DevOps" />
+            <meta property="article:tag" content="Graphite" />
+            <meta property="article:tag" content="Grafana" />
+            <meta property="article:author" content="Yumminhuang" />
 
 
     <!-- Bootstrap -->
@@ -52,7 +59,7 @@
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
                         </li>
                         <li >
@@ -78,9 +85,38 @@
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">Graphite和Grafana简介</a></h2>
-                <div class="summary"><h2>Graphite</h2>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"
+                       rel="bookmark"
+                       title="Permalink to Graphite和Grafana简介">
+                        Graphite和Grafana简介
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-04-08T22:13:00-04:00"> Wed 08 April 2015</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://yumminhuang.github.io/tag/devops.html">DevOps</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/graphite.html">Graphite</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/grafana.html">Grafana</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h2>Graphite</h2>
 <p><a href="http://graphite.wikidot.com/start">Graphite</a> 是一款开源的监控绘图工具。</p>
 <p>Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：</p>
 <ol>
@@ -91,69 +127,77 @@
 <p><img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /></p>
 <h3> 向 Graphite 发送数据 </h3>
 <p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
-<p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/sensujian-jie.html">Sensu简介</a></h2>
-                <div class="summary"><h2>Sensu 简介 </h2>
-<p>Sensu 是一款开源的监控框架。</p>
-<p><img alt="Sensu components" src="http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif" /></p>
-<p>Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。</p>
-<div class="highlight"><pre><span class="p">{</span>
-  <span class="nt">&quot;client&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;i-424242&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;address&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;subscriptions&quot;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&quot;production&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;webserver&quot;</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：</p>
+<div class="highlight"><pre>&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;
 </pre></div>
 
 
-<p> 其中，<code>subscriptions</code> 指定了 Sensu Client ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/sensujian-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html">3个月运维工作之总结</a></h2>
-                <div class="summary"><p> 自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。</p>
-<hr />
-<p> 这次实习并非是我第一次接触运维工作。2014 年夏天，我有一份两个月的暑期实习。当时实习工作的职位是 <em>Backend Software Engineer</em>，但事实上所完成的绝大部分工作的内容是关于运维，主要有 <a href="http://aws.amazon.com/autoscaling/">AWS Auto Scaling</a> 的搭建（关于这部分内容可以参见之前的一篇 <a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html"> 博文 </a>）和基于 <a href="http://aws.amazon.com/cloudwatch/">AWS Cloudwatch</a> 实现一些监测工具。所以也算对运维工作有一些经验。之后在找实习的时候，我也是有意识地找运维相关的职位。</p>
-<p> 这里也顺便说一下暑期实习的公司。那是一个只有 5、6 个程序员的初创公司。公司所有的服务都搭建在 Amazon Web Service。运维可以说略显「简陋」：服务器的操作全部由 Python 脚本实现；代码的部署也是用 ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/3ge-yue-yun-wei-gong-zuo-zhi-zong-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">在VPS搭建VPN服务器</a></h2>
-                <div class="summary"><h2> 简介 </h2>
-<blockquote>
-<p> 从来就没有什么救世主 </p>
-<p> 也不靠神仙皇帝 </p>
-<p> 要创造人类的幸福 </p>
-<p> 全靠我们自己 </p>
-</blockquote>
-<p> 为了在 <a href="http://zh.wikipedia.org/wiki/ 防火长城 ">GFW</a> 的封锁之下进行正常的上网活动，可以使用 <a href="http://zh.wikipedia.org/wiki/ 虛擬私人網路 ">VPN</a>。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：</p>
+<p> 例如，有一个 Metric 叫作 <code>local.metric.random</code>，可以用下面的 Bash 命令发送当前时刻的值 <code>4</code>。</p>
+<div class="highlight"><pre><span class="nv">PORT</span><span class="o">=</span>2003
+<span class="nv">SERVER</span><span class="o">=</span>graphite.your.org
+<span class="nb">echo</span> <span class="s2">&quot;local.metric.random 4 `date +%s`&quot;</span> <span class="p">|</span> nc -q0 <span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PORT</span><span class="si">}</span>
+</pre></div>
+
+
+<p> 类似地，使用其它编程语言时，可以使用 Socket 发送数据。</p>
+<p> 另外，Graphite 的 Metric 名称支持以 <code>.</code> 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。</p>
+<ul>
+<li><code>webserver.system.cpu_usage</code></li>
+<li><code>webserver.system.mem_load</code></li>
+<li><code>webserver.network.input</code></li>
+</ul>
+<p>Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的第一步就是给 Metric 选取一个合适的名称。关于如何组织 Metric 的名称，可以参阅文章 <a href="http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/">Practical Guide to StatsD/Graphite Monitoring</a>。</p>
+<h3>Graphite Event</h3>
+<p> 除了支持简单的键／值数据类型，Graphite 还可以通过 <a href="http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events">Events</a> 来存储更复杂的数据。简而言之，Graphite Events 使用了 <code>tag</code> 和 <code>data</code> 两个键来存储更多的信息。</p>
+<p> 我们可以使用 HTTP POST 向 Graphite 发送一个 Event。</p>
+<div class="highlight"><pre>curl -X POST <span class="s2">&quot;http://graphite.your.org/events&quot;</span> -d <span class="s1">&#39;{&quot;what&quot;: &quot;Deployment&quot;, &quot;tags&quot;: &quot;webserver&quot;, &quot;data&quot;: &quot;Deploy webserver&quot;}&#39;</span>
+</pre></div>
+
+
+<p> 下文将会通过一个具体的实例来介绍 Events 的使用场景。</p>
+<h2>Grafana</h2>
+<p> 鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 <a href="http://grafana.org/">Grafana</a> 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多 <a href="http://grafana.org/features"> 不错的特性 </a>，还可以访问官网提供的 <a href="http://play.grafana.org">Live Demo</a> 来体验 Grafana。</p>
+<p> 设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源。</p>
+<div class="highlight"><pre><span class="nx">datasources</span><span class="o">:</span> <span class="p">{</span>
+  <span class="nx">graphite</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;graphite&#39;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;http://my.graphite.server.com:8080&quot;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</pre></div>
+
+
+<p> 具体的配置教程可以参见 <a href="http://docs.grafana.org/v1.9/installation/"> 官方文档 </a>。</p>
+<h2> 实例 </h2>
+<p> 我实习所在公司使用 <a href="https://jenkins-ci.org">Jenkins</a> 部署代码。在部署完成之后，我添加了一段 <a href="https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin">post-build script</a> 执行下面的脚本。</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+<span class="nv">HOST</span><span class="o">=</span>http://graphite.your.org/events
+
+<span class="nb">echo</span> <span class="s1">&#39;Posting a deployment event to Graphite&#39;</span>
+
+curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&quot;: &quot;Deployment&quot;, &quot;tags&quot;: &quot;webserver,prd&quot;, &quot;data&quot;: \&quot;$BUILD_URL\&quot;}&#39;</span>
+</pre></div>
+
+
+<p> 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，就可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来显示代码部署的 Events。</p>
+<p> 利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。</p>
+<p> 比如，在 <em>Tracking Every Release</em> 一文中，作者使用了该方法将 <code>PHP Warning</code> 和 <code>Code deploy</code> 叠加在一幅图里。</p>
+<p><img alt="Track Release" src="https://codeascraft.com/wp-content/uploads/2010/12/warnings_1hr_deploys3.png" /></p>
+<p> 从图中，我们可以发现第一次代码部署之后导致了大量的警告信息，经过随后的两次 Hotfix 之后，警告信息基本消除。</p>
+<h2> 总结 </h2>
+<p> 本文非常简要地介绍了 Graphite 的 Grafana 的一些特性和使用场景。我也是在实习当中第一次接触到这两个工具，很多具体的细节还在摸索之中。</p>
+<p> 总之，Graphite 是一个易扩展，使用简便的监控绘图工具，在这里推荐给大家使用。</p>
+<h2> 参考文献 </h2>
 <ol>
-<li> 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；</li>
-<li> 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接；</li>
-<li> 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。</li>
+<li><a href="http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events">Graphite Tip - A Better Way to Store Events</a></li>
+<li><a href="https://codeascraft.com/2010/12/08/track-every-release/">Tracking Every Release</a></li>
+<li><a href="http://joshhertz.se/post/making-annotations-in-graphana">Making Annotations in Graphana</a></li>
 </ol>
-<h2> 具体步骤 </h2>
-<h4> 注册一个 VPS 账号 </h4>
-<p> 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
-至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
-<h4> 新建一个 ...</h4>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
         </div>
         <div class="col-sm-3" id="sidebar">

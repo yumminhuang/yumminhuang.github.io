@@ -79,6 +79,24 @@
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">Graphite和Grafana简介</a></h2>
+                <div class="summary"><h2>Graphite</h2>
+<p><a href="http://graphite.wikidot.com/start">Graphite</a> 是一款开源的监控绘图工具。</p>
+<p>Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：</p>
+<ol>
+<li><strong><a href="https://github.com/graphite-project/carbon">carbon</a></strong> —— 基于 <a href="https://twistedmatrix.com/trac/">Twisted</a> 的进程，用来接收数据；</li>
+<li><strong><a href="https://github.com/graphite-project/whisper">whisper</a></strong> —— 专门存储时间序列类型数据的小型数据库；</li>
+<li><strong><a href="https://github.com/graphite-project/graphite-web">graphite webapp</a></strong> —— 基于 Django 的网页应用程序。</li>
+</ol>
+<p><img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /></p>
+<h3> 向 Graphite 发送数据 </h3>
+<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
+<p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://yumminhuang.github.io/sensujian-jie.html">Sensu简介</a></h2>
                 <div class="summary"><h2>Sensu 简介 </h2>
 <p>Sensu 是一款开源的监控框架。</p>
@@ -173,13 +191,13 @@
             <li class="list-group-item"><a href="http://yumminhuang.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
-                        <a href="http://yumminhuang.github.io/tag/devops.html">
-                            DevOps
+                        <a href="http://yumminhuang.github.io/tag/linux.html">
+                            Linux
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="http://yumminhuang.github.io/tag/linux.html">
-                            Linux
+                        <a href="http://yumminhuang.github.io/tag/devops.html">
+                            DevOps
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
@@ -193,18 +211,28 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/objective-c.html">
                             Objective-C
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/grafana.html">
+                            Grafana
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/boto.html">
                             Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
                         </a>
                     </li>
                 </ul>
