@@ -5,4 +5,8 @@ This repositroy includes:
 
 * Markdown files of each article;
 * Pelican configurations;
-* Submodule [pelican-bootstrap3](https://github.com/DandyDev/pelican-bootstrap3)
+* `fabfile` for build and deployment;
+* `requirement.txt` for required python modules;
+* Submodules:
+	* Pelican theme [pelican-bootstrap3](https://github.com/DandyDev/pelican-bootstrap3)
+	* Pelican plugin [cjk-auto-spacing](https://github.com/yuex/cjk-auto-spacing)
