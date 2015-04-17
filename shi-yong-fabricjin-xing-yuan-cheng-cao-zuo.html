@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>在VPS搭建VPN服务器 - /dev/null</title>
+    <title>使用Fabric进行远程操作 - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,21 +10,22 @@
 
 
 
-<link rel="canonical" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">
+<link rel="canonical" href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html">
 
         <meta name="author" content="Yumminhuang" />
-        <meta name="keywords" content="DevOps,Linux" />
-        <meta name="description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..." />
+        <meta name="keywords" content="DevOps,Python,Fabric" />
+        <meta name="description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，操作可以在本地运行。 Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上，代码部署 ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="在VPS搭建VPN服务器"/>
-        <meta property="og:url" content="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html"/>
-        <meta property="og:description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..."/>
-        <meta property="article:published_time" content="2015-03-16" />
+        <meta property="og:title" content="使用Fabric进行远程操作"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"/>
+        <meta property="og:description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，操作可以在本地运行。 Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上，代码部署 ..."/>
+        <meta property="article:published_time" content="2015-04-15" />
             <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="DevOps" />
-            <meta property="article:tag" content="Linux" />
+            <meta property="article:tag" content="Python" />
+            <meta property="article:tag" content="Fabric" />
             <meta property="article:author" content="Yumminhuang" />
 
 
@@ -88,10 +89,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html"
+                    <a href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"
                        rel="bookmark"
-                       title="Permalink to 在VPS搭建VPN服务器">
-                        在VPS搭建VPN服务器
+                       title="Permalink to 使用Fabric进行远程操作">
+                        使用Fabric进行远程操作
                     </a>
                 </h1>
             </header>
@@ -101,11 +102,11 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-03-16T21:39:00-04:00"> Mon 16 March 2015</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-04-15T22:55:00-04:00"> Wed 15 April 2015</time>
     </span>
             <span class="label label-default">Modified</span>
             <span class="modified">
-                <i class="fa fa-calendar"></i><time datetime="2015-03-21T18:06:00-04:00"> Sat 21 March 2015</time>
+                <i class="fa fa-calendar"></i><time datetime="2015-04-16T23:03:00-04:00"> Thu 16 April 2015</time>
             </span>
 
 
@@ -113,145 +114,76 @@
 <span class="label label-default">Tags</span>
 	<a href="http://yumminhuang.github.io/tag/devops.html">DevOps</a>
         /
-	<a href="http://yumminhuang.github.io/tag/linux.html">Linux</a>
+	<a href="http://yumminhuang.github.io/tag/python.html">Python</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/fabric.html">Fabric</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2> 简介 </h2>
-<blockquote>
-<p> 从来就没有什么救世主 </p>
-<p> 也不靠神仙皇帝 </p>
-<p> 要创造人类的幸福 </p>
-<p> 全靠我们自己 </p>
-</blockquote>
-<p> 为了在 <a href="http://zh.wikipedia.org/wiki/ 防火长城 ">GFW</a> 的封锁之下进行正常的上网活动，可以使用 <a href="http://zh.wikipedia.org/wiki/ 虛擬私人網路 ">VPN</a>。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：</p>
+                <h3>Fabric 简介 </h3>
+<p><a href="http://www.fabfile.org">Fabric</a> 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。</p>
+<h4> 使用 Fabric 的好处 </h4>
+<p> 个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
+<p> 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
+<p> 再者，Fabric 避免远程登录，操作可以在本地运行。</p>
+<p>Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
+<p> 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。</p>
+<h3> 常用的 Fabric 函数 </h3>
+<p> 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 <a href="http://docs.fabfile.org/en/latest/index.html"> 官方文档 </a>。</p>
+<h4> 常用操作 </h4>
+<p>Fabric 的常用 <a href="http://docs.fabfile.org/en/latest/api/core/operations.html"> 操作 </a></p>
+<ul>
+<li><code>run</code>：在远程机器上执行 Shell 命令；</li>
+<li><code>sudo</code>：带有 root 权限的 <code>run</code>；</li>
+<li><code>local</code>：执行本地命令；</li>
+<li><code>get</code>：从远程机器下载文件；</li>
+<li><code>put</code>：上传文件到远程机器；</li>
+<li><code>prompt</code>：可以理解为在远程机器上执行 <code>raw_input</code></li>
+<li><code>reboot</code>：重启远程机器。</li>
+</ul>
+<h4> 常用上下文管理器和装饰器 </h4>
+<p> 上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 <a href="http://zh.wikipedia.org/wiki/ 语法糖 ">「语法糖（Syntax sugar）」</a>。Fabric 中常用的 <a href="http://docs.fabfile.org/en/latest/api/core/context_managers.html"> 上下文管理器 </a> 有：</p>
+<ul>
+<li><code>cd</code>：切换目录；</li>
+<li><code>lcd</code>：在本地切换目录，即 <code>local cd</code>；</li>
+<li><code>path</code>：可以添加路径到 <code>PATH</code>;</li>
+<li><code>settings</code>：用来临时修改 <code>env</code> 变量，使变量只作用在一段代码中。</li>
+</ul>
+<p> 常用的 <a href="http://docs.fabfile.org/en/latest/api/core/decorators.html"> 装饰器 </a> 有：</p>
+<ul>
+<li><code>@task</code>：用来把一个函数声明为 <a href="http://docs.fabfile.org/en/latest/usage/tasks.html">Fabric Task</a>；</li>
+<li><code>@hosts</code>：用来制定远程操作的目标机器；</li>
+<li><code>@with_settings</code>：用来临时设定 <code>env</code> 变量，可以等同于 <code>with settings</code>。</li>
+</ul>
+<p>Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 <code>fab task_name</code> 来执行了。</p>
+<h3> 一个例子 </h3>
+<p> 在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。</p>
+<p> 开始，我检查的方式是使用 <code>ssh</code> 登陆之后，再使用 <code>grep</code> 检查日志文件是否包含 <code>ERROR</code>、<code>WARNING</code> 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 <code>ssh</code> 登陆，再运行脚本进行检查。</p>
+<p> 但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 <code>datetime</code>，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">check_log_with_keyword</span><span class="p">(</span><span class="n">log_file</span><span class="p">,</span> <span class="n">keyword</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">settings</span><span class="p">(</span><span class="n">hide</span><span class="p">(</span><span class="s">&#39;warnings&#39;</span><span class="p">,</span> <span class="s">&#39;output&#39;</span><span class="p">),</span>
+                  <span class="n">host_string</span><span class="o">=</span><span class="s">&#39;eb101.ops&#39;</span><span class="p">,</span>
+                  <span class="n">warn_only</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s">&#39;grep </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">return_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li> 使用 <code>with settings()</code> 来临时更改 <code>env</code> 变量；</li>
+<li><code>hide('warnings', 'output')</code> 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 <code>stderr</code> 和 <code>stdout</code>；</li>
+<li><code>host_string='eb101.ops'</code>，设定目标机器，Fabric 可以使用 <code>.ssh/config</code> 的设置；</li>
+<li><code>warn_only=True</code> 用来确保 Fabric 程序不会因为 <code>grep</code> 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；</li>
+<li><code>result = run('grep %s %s' % (keyword, filename))</code>, 运行 <code>grep</code> 指令并得到结果。</li>
+</ul>
+<p> 因为远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。</p>
+<h3> 参考文献 </h3>
 <ol>
-<li> 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；</li>
-<li> 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接；</li>
-<li> 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。</li>
-</ol>
-<h2> 具体步骤 </h2>
-<h4> 注册一个 VPS 账号 </h4>
-<p> 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
-至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
-<h4> 新建一个 Droplet</h4>
-<p> 我新建的 Droplet 是最低配置，具体配置包括：</p>
-<ul>
-<li>512MB RAM</li>
-<li>20GB SSD</li>
-<li>2TB 流量 </li>
-</ul>
-<p> 地理位置选的是最近的。</p>
-<p> 操作系统开始选择的是 Ubuntu14.04，后来用的是 Ubuntu12.04（版本应该没有影响）。</p>
-<p> 没有选择多余的设置。</p>
-<p> 点击新建按钮会收到一份包含登陆密码的邮件。接着就可以通过 ssh 进行登录了。</p>
-<p> 其余添加用户、Linux 基本设置等内容在此不再赘述。</p>
-<h4> 安装 PPTP</h4>
-<div class="highlight"><pre>sudo apt-get install pptpd
-</pre></div>
-
-
-<h4> 配置 </h4>
-<ul>
-<li> 配置 IP 地址 </li>
-</ul>
-<p> 编辑 <code>/etc/pptpd.conf</code>，添加以下内容 ( 基本上默认设置已经完成或者被注释了 )：</p>
-<div class="highlight"><pre>option /etc/ppp/pptpd-options
-localip 192.168.0.1
-remoteip 192.168.0.100-200
-</pre></div>
-
-
-<p> 这里是 PPTP 服务器的 IP 地址设为 <code>192.178.0.1</code> ，把 PPTP 客户端的 IP 地址设置为 <code>192.168.0.100</code> 到 <code>192.168.0.200</code> 的区间内。当然你也可以自己的需要和喜欢进行相应的设置 </p>
-<ul>
-<li> 配置客户端 DNS</li>
-</ul>
-<p> 编辑 <code>/etc/ppp/pptpd-options</code> ，添加 DNS 地址。这里我选择的是 <a href="https://developers.google.com/speed/public-dns/">Google Public DNS</a>。</p>
-<div class="highlight"><pre>ms-dns 8.8.8.8
-ms-dns 8.8.4.4
-</pre></div>
-
-
-<ul>
-<li> 添加用户 </li>
-</ul>
-<p> 编辑 <code>/etc/ppp/chap-secrets</code>，添加账号和密码。其中第一列为账户名，第二列为密码。</p>
-<div class="highlight"><pre># client    server  secret          IP addresses
-test        pptpd   1234            *
-</pre></div>
-
-
-<ul>
-<li> 设置 IP 转发 </li>
-</ul>
-<p> 打开 IPv4 转发，并重新载入设置。</p>
-<div class="highlight"><pre>sudo sed -i <span class="s1">&#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39;</span> /etc/sysctl.conf
-sudo sysctl -p
-</pre></div>
-
-
-<p> 为 PPTP 连接设置 NAT，否则不能访问别的网站。</p>
-<div class="highlight"><pre>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-</pre></div>
-
-
-<p> 也可以直接编辑 <code>/etc/rc.local</code>，在 <code>exit 0</code> 之前添加以上内容。</p>
-<ul>
-<li>
-<p> 重启 PPTP</p>
-<p>:::bash
-sudo service pptpd restart</p>
-</li>
-</ul>
-<p> 这样 PPTP 服务器就搭建完毕了，可以「科学上网」了！</p>
-<blockquote>
-<p> 没有什么能够阻挡 </p>
-<p> 你对自由地向往 </p>
-</blockquote>
-<hr />
-<h3>Trouble Shooting</h3>
-<ul>
-<li>PPTP connection error: GRE: Bad checksum from pppd</li>
-</ul>
-<p> 第一次设置完毕之后尝试连接 VPN，发现连接失败。重新设置之后依然没有解决，以至于让我怀疑是 Ubuntu14.04 的问题。我新建了一个 Droplet，更换成 Ubuntu12.04 之后还是同样的问题。接着尝试用 <code>netstat</code> 检查，发现连接已经建立，但是因为某种原因被断开了。检查 <code>/var/log/syslog</code>，发现了以下内容：</p>
-<div class="highlight"><pre>Mar 21 16:54:23 Server pptpd[1808]: GRE: Bad checksum from pppd.
-Mar 21 16:54:53 Server pppd[1809]: LCP: timeout sending Config-Requests
-Mar 21 16:54:53 Server pppd[1809]: Connection terminated.
-Mar 21 16:54:53 Server pppd[1809]: Modem hangup
-Mar 21 16:54:53 Server pppd[1809]: Exit.
-Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished
-</pre></div>
-
-
-<p> 上网搜索，在 StackOverflow 上找到了 <a href="http://stackoverflow.com/a/21347817"> 答案 </a>。至此，终于定位到无法连接的根本原因 —— 是 TMD 路由器不支持 <code>PPTP Passthrough</code> 功能。我上路由器厂商的官网一看，果然发现了去年 12 月发布了一个固件更新用来修复 VPN 连接的问题。</p>
-<hr />
-<h3>VPS 服务提供商选择 </h3>
-<ul>
-<li>Amazon Web Service<ul>
-<li> 大公司，服务稳定，无须担心亚马逊被封（因为亚马逊非常熟悉中国的那一套，<a href="http://zhuanlan.zhihu.com/riobard/19910423"> 有图 </a> 为证）；</li>
-<li> 高度可定制；</li>
-<li> 丰富的文档、社区支持；</li>
-<li> 按小时收费，新注册用户可以免费使用一年；</li>
-<li> 可以将虚拟机部署在东京，理论上访问速度更快。</li>
-<li> 缺点：<strong> 设置复杂 </strong></li>
-</ul>
-</li>
-<li>DigitalOcean<ul>
-<li> 可选择包月套餐，性价比更高；</li>
-<li> 控制台界面清爽、简洁。</li>
-</ul>
-</li>
-<li>Linode 似乎很多人在用，一个老牌的 VPS 提供商，但是我没有用过。</li>
-</ul>
-<p> 如果你选择 DigitalOcean，点击 <a href="https://www.digitalocean.com/?refcode=ba81ee4b40b2"> 链接 </a> 注册，可以获得 10 美元的优惠。</p>
-<hr />
-<h3> 参考文献：</h3>
-<ol>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp">How To Setup Your Own VPN With PPTP -- DigitalOcean.com</a></li>
-<li><a href="https://riobard.com/2011/11/12/pptp-vpn-on-ubuntu/">Configure PPTP VPN on Ubuntu</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments">How To Use Fabric To Automate Administration Tasks And Deployments</a></li>
 </ol>
             </div>
             <!-- /.entry-content -->

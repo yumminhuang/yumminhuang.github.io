@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>Objective-C - /dev/null</title>
+    <title>Fabric - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
 
 
     <meta name="author" content="Yumminhuang" />
-    <meta name="keywords" content="Objective-C" />
+    <meta name="keywords" content="Fabric" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="/dev/null" />
@@ -79,12 +79,16 @@
         <div class="col-sm-9">
 
             <article>
-                <h2><a href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">Objective-C语法总结</a></h2>
-                <div class="summary"><p> 最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。</p>
-<p> 在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 <code>object.method(argument1, argument2...)</code>。然而 Objective-C 的格式却是 <code>[object method: argument1 andArg: argument2...]</code>。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。</p>
-<hr />
-<p> 废话不多说，上干货。下面以 Java ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">more ...</a>
+                <h2><a href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html">使用Fabric进行远程操作</a></h2>
+                <div class="summary"><h3>Fabric 简介 </h3>
+<p><a href="http://www.fabfile.org">Fabric</a> 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。</p>
+<h4> 使用 Fabric 的好处 </h4>
+<p> 个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
+<p> 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
+<p> 再者，Fabric 避免远程登录，操作可以在本地运行。</p>
+<p>Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
+<p> 基本上，代码部署 ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html">more ...</a>
                 </div>
             </article>
             <hr/>
@@ -197,7 +201,7 @@
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Yumminhuang
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>

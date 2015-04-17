@@ -1,5 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-04-15T20:49:00-04:00</updated><entry><title>Graphite和Grafana简介</title><link href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html" rel="alternate"></link><updated>2015-04-15T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-08:graphitehe-grafanajian-jie.html</id><summary type="html">&lt;h2&gt;Graphite&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-04-17T20:49:00-04:00</updated><entry><title>使用Fabric进行远程操作</title><link href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html" rel="alternate"></link><updated>2015-04-16T23:03:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-15:shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html</id><summary type="html">&lt;h3&gt;Fabric 简介 &lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.fabfile.org"&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。&lt;/p&gt;
+&lt;h4&gt; 使用 Fabric 的好处 &lt;/h4&gt;
+&lt;p&gt; 个人觉得，Fabric 非常适合简单的、重复性的远程操作。&lt;/p&gt;
+&lt;p&gt; 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。&lt;/p&gt;
+&lt;p&gt; 再者，Fabric 避免远程登录，操作可以在本地运行。&lt;/p&gt;
+&lt;p&gt;Fabric 非常简单，只需要编写一个 &lt;code&gt;fabfile.py&lt;/code&gt;（或者像 Python 那样 &lt;a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"&gt; 导入包来添加更多的功能 &lt;/a&gt;），就可以使用 &lt;a href="http://docs.fabfile.org/en/latest/usage/fab.html"&gt;&lt;code&gt;fab&lt;/code&gt; 指令 &lt;/a&gt; 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。&lt;/p&gt;
+&lt;p&gt; 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。&lt;/p&gt;
+&lt;h3&gt; 常用的 Fabric 函数 &lt;/h3&gt;
+&lt;p&gt; 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 &lt;a href="http://docs.fabfile.org/en/latest/index.html"&gt; 官方文档 &lt;/a&gt;。&lt;/p&gt;
+&lt;h4&gt; 常用操作 &lt;/h4&gt;
+&lt;p&gt;Fabric 的常用 &lt;a href="http://docs.fabfile.org/en/latest/api/core/operations.html"&gt; 操作 &lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;run&lt;/code&gt;：在远程机器上执行 Shell 命令；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo&lt;/code&gt;：带有 root 权限的 &lt;code&gt;run&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local&lt;/code&gt;：执行本地命令；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get&lt;/code&gt;：从远程机器下载文件；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;put&lt;/code&gt;：上传文件到远程机器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prompt&lt;/code&gt;：可以理解为在远程机器上执行 &lt;code&gt;raw_input&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;reboot&lt;/code&gt;：重启远程机器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt; 常用上下文管理器和装饰器 &lt;/h4&gt;
+&lt;p&gt; 上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href="http://zh.wikipedia.org/wiki/ 语法糖 "&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的 &lt;a href="http://docs.fabfile.org/en/latest/api/core/context_managers.html"&gt; 上下文管理器 &lt;/a&gt; 有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cd&lt;/code&gt;：切换目录；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lcd&lt;/code&gt;：在本地切换目录，即 &lt;code&gt;local cd&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt;：可以添加路径到 &lt;code&gt;PATH&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;settings&lt;/code&gt;：用来临时修改 &lt;code&gt;env&lt;/code&gt; 变量，使变量只作用在一段代码中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt; 常用的 &lt;a href="http://docs.fabfile.org/en/latest/api/core/decorators.html"&gt; 装饰器 &lt;/a&gt; 有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@task&lt;/code&gt;：用来把一个函数声明为 &lt;a href="http://docs.fabfile.org/en/latest/usage/tasks.html"&gt;Fabric Task&lt;/a&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@hosts&lt;/code&gt;：用来制定远程操作的目标机器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@with_settings&lt;/code&gt;：用来临时设定 &lt;code&gt;env&lt;/code&gt; 变量，可以等同于 &lt;code&gt;with settings&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 &lt;code&gt;fab task_name&lt;/code&gt; 来执行了。&lt;/p&gt;
+&lt;h3&gt; 一个例子 &lt;/h3&gt;
+&lt;p&gt; 在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。&lt;/p&gt;
+&lt;p&gt; 开始，我检查的方式是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆之后，再使用 &lt;code&gt;grep&lt;/code&gt; 检查日志文件是否包含 &lt;code&gt;ERROR&lt;/code&gt;、&lt;code&gt;WARNING&lt;/code&gt; 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆，再运行脚本进行检查。&lt;/p&gt;
+&lt;p&gt; 但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 &lt;code&gt;datetime&lt;/code&gt;，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;check_log_with_keyword&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;log_file&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;settings&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hide&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;warnings&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;output&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+                  &lt;span class="n"&gt;host_string&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;eb101.ops&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                  &lt;span class="n"&gt;warn_only&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;grep &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keyword&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_code&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt; 使用 &lt;code&gt;with settings()&lt;/code&gt; 来临时更改 &lt;code&gt;env&lt;/code&gt; 变量；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hide('warnings', 'output')&lt;/code&gt; 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 &lt;code&gt;stderr&lt;/code&gt; 和 &lt;code&gt;stdout&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;host_string='eb101.ops'&lt;/code&gt;，设定目标机器，Fabric 可以使用 &lt;code&gt;.ssh/config&lt;/code&gt; 的设置；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;warn_only=True&lt;/code&gt; 用来确保 Fabric 程序不会因为 &lt;code&gt;grep&lt;/code&gt; 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;result = run('grep %s %s' % (keyword, filename))&lt;/code&gt;, 运行 &lt;code&gt;grep&lt;/code&gt; 指令并得到结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt; 因为远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
+&lt;h3&gt; 参考文献 &lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments"&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="DevOps"></category><category term="Python"></category><category term="Fabric"></category></entry><entry><title>Graphite和Grafana简介</title><link href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html" rel="alternate"></link><updated>2015-04-15T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-08:graphitehe-grafanajian-jie.html</id><summary type="html">&lt;h2&gt;Graphite&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://graphite.wikidot.com/start"&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;
 &lt;p&gt;Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：&lt;/p&gt;
 &lt;ol&gt;
@@ -284,7 +348,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;p&gt; 运维工作是以成本为中心的。在公司里不能带来实际的收入，我们需要做的是花尽可能少的钱来提高公司的效率，保证服务的稳定。所以在接手一个任务之前，要估算不同解决方案的成本。有时候遇到一个问题，市场上有现成的收费工具可以用。如果不想花钱，自己来实现需要花费多少时间。&lt;/p&gt;
 &lt;p&gt; 刚入职时的一个任务是：检查公司里几百台服务器是否有安全更新需要安装，要有通知功能，能够列出有哪些更新，并且支持一键安装。现成的解决方案有针对 Ubuntu 系统的 &lt;a href="https://landscape.canonical.com/"&gt;Canonical Landscape&lt;/a&gt;。功能齐全，界面美观，但是其价格到了瞠目结舌的地步，每 100 台机器一年要 $75K，难以想象一个 Linux 管理工具卖这么贵会有人用吗这个成本显然是不能接受的。后来又找到一个独立开发者开发的补丁管理工具 &lt;a href="https://sysward.com/"&gt;Sysward&lt;/a&gt;，完全符合我们最初的需求，但是估算了一下，用这个每个月的费用仍然有 $700。最后考虑到这个需求并不是非常着急，而且在公司所使用的开源工具的基础上可以做出来，所以决定自己来做这个工具。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt; 以上就是实习三个月以来，身为一个运维新手的体会和思考，想法或许还有些不成熟、不准确。实习还有四个月时间结束，希望届时能够有更多的体会可以总结。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>i3窗口管理器简介</title><link href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html" rel="alternate"></link><updated>2015-03-31T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-29:i3chuang-kou-guan-li-qi-jian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://kernelpanic.fm"&gt; 内核恐慌 &lt;/a&gt; 第九期 &lt;a href="http://ipn.li/kernelpanic/9/"&gt;「程序员的理想工作环境」&lt;/a&gt; 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href="http://awesome.naquadah.org/"&gt;Awesome 窗口管理器 &lt;/a&gt; 和 i3 窗口管理器。节目中两位主持人的描述恰好符合我的需求，并且实习所用的笔记本操作系统恰好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 &lt;a href="http://www.weibo.com/2622511625/C1N9FgPr5"&gt; 吐槽 &lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
+&lt;p&gt; 以上就是实习三个月以来，身为一个运维新手的体会和思考，想法或许还有些不成熟、不准确。实习还有四个月时间结束，希望届时能够有更多的体会可以总结。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>i3窗口管理器简介</title><link href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html" rel="alternate"></link><updated>2015-04-17T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-29:i3chuang-kou-guan-li-qi-jian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://kernelpanic.fm"&gt; 内核恐慌 &lt;/a&gt; 第九期 &lt;a href="http://ipn.li/kernelpanic/9/"&gt;「程序员的理想工作环境」&lt;/a&gt; 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href="http://awesome.naquadah.org/"&gt;Awesome 窗口管理器 &lt;/a&gt; 和 i3 窗口管理器。节目中两位主持人的描述恰好符合我的需求，并且实习所用的笔记本操作系统恰好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 &lt;a href="http://www.weibo.com/2622511625/C1N9FgPr5"&gt; 吐槽 &lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
 &lt;h2&gt; 平铺式窗口管理器 &lt;/h2&gt;
 &lt;p&gt; 窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。&lt;/p&gt;
 &lt;p&gt; 窗口管理器主要有两种 &lt;sup id="fnref:type"&gt;&lt;a class="footnote-ref" href="#fn:type" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
@@ -302,7 +366,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;li&gt; 稳定。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt; 具体来说。平铺式窗口管理器没有绚丽的界面和复杂的功能，可以让人更加专注于正在做的事情。同时，平铺式管理器非常精简，如 i3 的安装包只有 900 多 KB，相应地，消耗的资源也更少。平铺式管理器多依赖键盘操作，较少使用鼠标，配合应用程序的快捷键，基本上可以避免鼠标操作，从而提升工作效率。平铺式管理器不仅可以实现边框颜色之类的常规设置，还可以根据用户的需求，修改桌面、窗口等。最后，因为平铺式管理器非常精简，较之堆叠式管理器也更加稳定。至少在我使用的两个月里还没有出现过崩溃的情况。&lt;/p&gt;
-&lt;p&gt; 我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候，就像下图中那样，平铺式窗口管理器最能发挥作用。
+&lt;p&gt; 我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候 &lt;sup id="fnref:monitor"&gt;&lt;a class="footnote-ref" href="#fn:monitor" rel="footnote"&gt;2&lt;/a&gt;&lt;/sup&gt;，就像下图中那样，平铺式窗口管理器最能发挥作用。
 &lt;img alt="i3 配合多屏幕 " src="http://awesome.naquadah.org/images/6mon.small.png" /&gt;&lt;/p&gt;
 &lt;p&gt; 比如我工作时有一台 13 寸的笔记本和一台 27 寸的外接显示器。时刻保持打开的窗口包括公司内交流用的即时聊天软件，邮件客户端，编辑器，浏览器和多个终端窗口。使用 i3 之后，我的两个显示器基本是这样分配的：&lt;/p&gt;
 &lt;ul&gt;
@@ -348,7 +412,7 @@ apt-get install i3
 
 &lt;h3&gt; 配置 &lt;/h3&gt;
 &lt;p&gt; 我之所以放弃 Awesome 的一个很重要的原因就是它的配置过于复杂。诚然，Awesome 的效果要比 i3 酷炫很多，但是设置需要用到 Lua 脚本。很多功能还需要通过安装插件来完成。相反，i3 只需要两个设置文件，而且用的是非常易读的语法。&lt;/p&gt;
-&lt;p&gt; 配置文件包括两部分，&lt;code&gt;~/.config/i3/config&lt;/code&gt; 和 &lt;code&gt;~/.config/i3status/config&lt;/code&gt;，分别用来设置 i3 窗口管理器和状态栏 &lt;sup id="fnref:config"&gt;&lt;a class="footnote-ref" href="#fn:config" rel="footnote"&gt;2&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt; 配置文件包括两部分，&lt;code&gt;~/.config/i3/config&lt;/code&gt; 和 &lt;code&gt;~/.config/i3status/config&lt;/code&gt;，分别用来设置 i3 窗口管理器和状态栏 &lt;sup id="fnref:config"&gt;&lt;a class="footnote-ref" href="#fn:config" rel="footnote"&gt;3&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 &lt;p&gt; 在这里贴一下我自己的 &lt;a href="https://github.com/yumminhuang/dotfiles/blob/master/files/i3_config"&gt;i3 配置文件 &lt;/a&gt; 和 &lt;a href="https://github.com/yumminhuang/dotfiles/blob/master/files/i3status_config"&gt;i3 状态栏的配置文件 &lt;/a&gt;，基本上每条设置都做了注释，以供读者参考。&lt;/p&gt;
 &lt;p&gt; 想要了解更加具体的配置方法，可以参阅 i3 的 &lt;a href="http://i3wm.org/docs/"&gt; 官方文档 &lt;/a&gt;。&lt;/p&gt;
 &lt;div class="footnote"&gt;
@@ -357,8 +421,11 @@ apt-get install i3
 &lt;li id="fn:type"&gt;
 &lt;p&gt; 事实上，一些窗口管理器，如 Awesome 和 i3，支持堆叠式和平铺式两种窗口管理器的形式。这样的窗口管理器被称作 &lt;a href="http://en.wikipedia.org/wiki/Dynamic_window_manager"&gt;「动态式窗口管理器」&lt;/a&gt;。因为本文主要介绍 i3 作为平铺的特性，故将其划为平铺式窗口管理器。&amp;#160;&lt;a class="footnote-backref" href="#fnref:type" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
+&lt;li id="fn:monitor"&gt;
+&lt;p&gt; 多台显示器支持可以使用 &lt;code&gt;xrandr&lt;/code&gt; 指令。&amp;#160;&lt;a class="footnote-backref" href="#fnref:monitor" rev="footnote" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;li id="fn:config"&gt;
-&lt;p&gt; 为了方便编辑，我把配置文件放在 &lt;code&gt;~&lt;/code&gt; 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅 &lt;a href="http://i3wm.org/docs/userguide.html#configuring"&gt; 关于 i3 设置的文档 &lt;/a&gt; 和 &lt;a href="http://i3wm.org/i3status/manpage.html#_options"&gt; 关于状态栏设置的文档 &lt;/a&gt;。&amp;#160;&lt;a class="footnote-backref" href="#fnref:config" rev="footnote" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 为了方便编辑，我把配置文件放在 &lt;code&gt;~&lt;/code&gt; 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅 &lt;a href="http://i3wm.org/docs/userguide.html#configuring"&gt; 关于 i3 设置的文档 &lt;/a&gt; 和 &lt;a href="http://i3wm.org/i3status/manpage.html#_options"&gt; 关于状态栏设置的文档 &lt;/a&gt;。&amp;#160;&lt;a class="footnote-backref" href="#fnref:config" rev="footnote" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;</summary><category term="Linux"></category></entry><entry><title>在VPS搭建VPN服务器</title><link href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html" rel="alternate"></link><updated>2015-03-21T18:06:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-16:zai-vpsda-jian-vpnfu-wu-qi.html</id><summary type="html">&lt;h2&gt; 简介 &lt;/h2&gt;
