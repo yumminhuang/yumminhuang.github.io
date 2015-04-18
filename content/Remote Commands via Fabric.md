@@ -1,4 +1,4 @@
-Title: Remote Commands via Fabric
+Title: 使用Fabric进行远程操作
 Date: 2015-04-15 22:55
 Modified: 2015-04-16 23:03
 Category: DevOps
