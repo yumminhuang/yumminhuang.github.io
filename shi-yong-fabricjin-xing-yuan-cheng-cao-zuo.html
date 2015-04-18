@@ -14,13 +14,13 @@
 
         <meta name="author" content="Yumminhuang" />
         <meta name="keywords" content="DevOps,Python,Fabric" />
-        <meta name="description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，操作可以在本地运行。 Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上，代码部署 ..." />
+        <meta name="description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上 ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="使用Fabric进行远程操作"/>
         <meta property="og:url" content="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"/>
-        <meta property="og:description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，操作可以在本地运行。 Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上，代码部署 ..."/>
+        <meta property="og:description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上 ..."/>
         <meta property="article:published_time" content="2015-04-15" />
             <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="DevOps" />
@@ -125,8 +125,8 @@
 <h4> 使用 Fabric 的好处 </h4>
 <p> 个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
 <p> 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
-<p> 再者，Fabric 避免远程登录，操作可以在本地运行。</p>
-<p>Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
+<p> 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。</p>
+<p> 最后，Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
 <p> 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。</p>
 <h3> 常用的 Fabric 函数 </h3>
 <p> 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 <a href="http://docs.fabfile.org/en/latest/index.html"> 官方文档 </a>。</p>
@@ -180,7 +180,7 @@
 <li><code>warn_only=True</code> 用来确保 Fabric 程序不会因为 <code>grep</code> 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；</li>
 <li><code>result = run('grep %s %s' % (keyword, filename))</code>, 运行 <code>grep</code> 指令并得到结果。</li>
 </ul>
-<p> 因为远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。</p>
+<p> 远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。</p>
 <h3> 参考文献 </h3>
 <ol>
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments">How To Use Fabric To Automate Administration Tasks And Deployments</a></li>
@@ -222,38 +222,13 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/shell.html">
-                            Shell
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-2">
                         <a href="http://yumminhuang.github.io/tag/python.html">
                             Python
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/boto.html">
-                            Boto
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/ci.html">
-                            CI
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                            Objective-C
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/shell.html">
+                            Shell
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -262,8 +237,33 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/fabric.html">
                             Fabric
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

@@ -14,13 +14,13 @@
 
         <meta name="author" content="Yumminhuang" />
         <meta name="keywords" content="DevOps,Linux" />
-        <meta name="description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..." />
+        <meta name="description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文将以 DigitalOcean 为例描述具体步骤。 新建一个 ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="在VPS搭建VPN服务器"/>
         <meta property="og:url" content="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html"/>
-        <meta property="og:description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文以 DigitalOcean 为例描述具体步骤。 新建一个 ..."/>
+        <meta property="og:description" content="简介 从来就没有什么救世主 也不靠神仙皇帝 要创造人类的幸福 全靠我们自己 为了在 GFW 的封锁之下进行正常的上网活动，可以使用 VPN。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑： 安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题； 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接； 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。 具体步骤 注册一个 VPS 账号 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。 至于选择哪家服务商，此处按下不表。下文将以 DigitalOcean 为例描述具体步骤。 新建一个 ..."/>
         <meta property="article:published_time" content="2015-03-16" />
             <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="DevOps" />
@@ -126,14 +126,14 @@
 </blockquote>
 <p> 为了在 <a href="http://zh.wikipedia.org/wiki/ 防火长城 ">GFW</a> 的封锁之下进行正常的上网活动，可以使用 <a href="http://zh.wikipedia.org/wiki/ 虛擬私人網路 ">VPN</a>。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：</p>
 <ol>
-<li> 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；</li>
+<li> 安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；</li>
 <li> 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接；</li>
 <li> 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。</li>
 </ol>
 <h2> 具体步骤 </h2>
 <h4> 注册一个 VPS 账号 </h4>
 <p> 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
-至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
+至于选择哪家服务商，此处按下不表。下文将以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
 <h4> 新建一个 Droplet</h4>
 <p> 我新建的 Droplet 是最低配置，具体配置包括：</p>
 <ul>
@@ -290,38 +290,13 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/shell.html">
-                            Shell
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-2">
                         <a href="http://yumminhuang.github.io/tag/python.html">
                             Python
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/boto.html">
-                            Boto
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/ci.html">
-                            CI
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                            Objective-C
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/shell.html">
+                            Shell
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -330,8 +305,33 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/fabric.html">
                             Fabric
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

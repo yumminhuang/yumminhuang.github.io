@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-04-17T20:49:00-04:00</updated><entry><title>i3窗口管理器简介</title><link href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html" rel="alternate"></link><updated>2015-04-17T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-29:i3chuang-kou-guan-li-qi-jian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://kernelpanic.fm"&gt; 内核恐慌 &lt;/a&gt; 第九期 &lt;a href="http://ipn.li/kernelpanic/9/"&gt;「程序员的理想工作环境」&lt;/a&gt; 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href="http://awesome.naquadah.org/"&gt;Awesome 窗口管理器 &lt;/a&gt; 和 i3 窗口管理器。节目中两位主持人的描述恰好符合我的需求，并且实习所用的笔记本操作系统恰好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 &lt;a href="http://www.weibo.com/2622511625/C1N9FgPr5"&gt; 吐槽 &lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-04-17T20:49:00-04:00</updated><entry><title>i3窗口管理器简介</title><link href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html" rel="alternate"></link><updated>2015-04-17T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-29:i3chuang-kou-guan-li-qi-jian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://kernelpanic.fm"&gt; 内核恐慌 &lt;/a&gt; 第九期 &lt;a href="http://ipn.li/kernelpanic/9/"&gt;「程序员的理想工作环境」&lt;/a&gt; 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href="http://awesome.naquadah.org/"&gt;Awesome 窗口管理器 &lt;/a&gt; 和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 &lt;a href="http://www.weibo.com/2622511625/C1N9FgPr5"&gt; 吐槽 &lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
 &lt;h2&gt; 平铺式窗口管理器 &lt;/h2&gt;
 &lt;p&gt; 窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。&lt;/p&gt;
 &lt;p&gt; 窗口管理器主要有两种 &lt;sup id="fnref:type"&gt;&lt;a class="footnote-ref" href="#fn:type" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
@@ -79,8 +79,10 @@ apt-get install i3
 &lt;p&gt; 为了方便编辑，我把配置文件放在 &lt;code&gt;~&lt;/code&gt; 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅 &lt;a href="http://i3wm.org/docs/userguide.html#configuring"&gt; 关于 i3 设置的文档 &lt;/a&gt; 和 &lt;a href="http://i3wm.org/i3status/manpage.html#_options"&gt; 关于状态栏设置的文档 &lt;/a&gt;。&amp;#160;&lt;a class="footnote-backref" href="#fnref:config" rev="footnote" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</summary><category term="Linux"></category></entry><entry><title>How to remove all .pyc files from a project?</title><link href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html" rel="alternate"></link><updated>2014-07-31T19:39:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-07-31:how-to-remove-all-pyc-files-from-a-project.html</id><summary type="html">&lt;p&gt;I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of &lt;code&gt;.pyc&lt;/code&gt; files. And I found this command, which is very convenient to batch delete files in a directory.&lt;/p&gt;
+&lt;/div&gt;</summary><category term="Linux"></category></entry><entry><title>How to remove all .pyc files from a project?</title><link href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html" rel="alternate"></link><updated>2014-07-31T19:39:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-07-31:how-to-remove-all-pyc-files-from-a-project.html</id><summary type="html">&lt;p&gt;I am a paranoid guy. I like to delete all "useless" files. Today, I want to clean up my project repository. There are lots of &lt;code&gt;.pyc&lt;/code&gt; files. And I found this command, which is very convenient to batch delete files in a directory.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;find . -name &lt;span class="s2"&gt;&amp;quot;*.pyc&amp;quot;&lt;/span&gt; -exec rm -rf &lt;span class="o"&gt;{}&lt;/span&gt; &lt;span class="se"&gt;\;&lt;/span&gt;
+OR
+find . -name &lt;span class="s2"&gt;&amp;quot;*.pyc&amp;quot;&lt;/span&gt; -delete&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -98,25 +100,20 @@ find . -name &lt;span class="s2"&gt;&amp;quot;*.o&amp;quot;&lt;/span&gt; -exec r
 &lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project"&gt;How do I remove all .pyc files from a project?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry><entry><title>Execute a Command in the Background on Remote Server using SSH</title><link href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html" rel="alternate"></link><updated>2014-05-04T09:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:execute-a-command-in-the-background-on-remote-server-using-ssh.html</id><summary type="html">&lt;p&gt;In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry><entry><title>Execute a Command in the Background on Remote Server using SSH</title><link href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html" rel="alternate"></link><updated>2014-05-04T09:20:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2014-05-04:execute-a-command-in-the-background-on-remote-server-using-ssh.html</id><summary type="html">&lt;p&gt;In a project, I have to deploy a simple server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Since there are several remote servers, I have to run the server program in the background on all remote machines.&lt;/p&gt;
 &lt;p&gt;At first, I simply add the ampersand (&amp;amp;) at the end of the command like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;ssh user@host &lt;span class="s2"&gt;&amp;quot;cd /some/directory; ./program &amp;amp;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh user@host &lt;span class="s2"&gt;&amp;quot;cd /some/directory; ./program &amp;amp;&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;But my script just hangs after it runs first remote server. After googling this program, I found this command to solve my problem.&lt;/p&gt;
+&lt;p&gt;But my script just hangs after it runs first remote server. After googling this problem, I found this command to solve it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;ssh -n -f user@host &lt;span class="s2"&gt;&amp;quot;sh -c &amp;#39;cd /some/directory; nohup ./program &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 &amp;amp;&amp;#39;&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;This command is quiet complicated. It need to use nohup as well as output redirection. But it works and solved my problem.&lt;/p&gt;
+&lt;p&gt;This command is quiet complicated. It need to use &lt;a href="http://en.wikipedia.org/wiki/Nohup"&gt;&lt;code&gt;nohup&lt;/code&gt;&lt;/a&gt; as well as output redirection. But it works and solved my problem.&lt;/p&gt;
 &lt;h3&gt;Reference&lt;/h3&gt;
 &lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine"&gt;Stackoverflow&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Nohup"&gt;nohup&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine"&gt;Stackoverflow&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry></feed>

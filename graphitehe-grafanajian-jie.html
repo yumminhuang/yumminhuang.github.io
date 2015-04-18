@@ -14,13 +14,13 @@
 
         <meta name="author" content="Yumminhuang" />
         <meta name="keywords" content="DevOps,Graphite,Grafana" />
-        <meta name="description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 观测量 : 观测值 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..." />
+        <meta name="description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 观测量 : 观测值 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
         <meta property="og:title" content="Graphite和Grafana简介"/>
         <meta property="og:url" content="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"/>
-        <meta property="og:description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 观测量 : 观测值 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..."/>
+        <meta property="og:description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 观测量 : 观测值 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..."/>
         <meta property="article:published_time" content="2015-04-08" />
             <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="DevOps" />
@@ -130,7 +130,7 @@
 </ol>
 <p><img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /></p>
 <h3> 向 Graphite 发送数据 </h3>
-<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
+<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
 <p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：</p>
 <div class="highlight"><pre>&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;
 </pre></div>
@@ -184,7 +184,7 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
 </pre></div>
 
 
-<p> 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，就可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来显示代码部署的 Events。</p>
+<p> 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来绘制一幅图显示代码部署的 Events。</p>
 <p> 利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。</p>
 <p> 比如，在 <em>Tracking Every Release</em> 一文中，作者使用了该方法将 <code>PHP Warning</code> 和 <code>Code deploy</code> 叠加在一幅图里。</p>
 <p><img alt="Track Release" src="https://codeascraft.com/wp-content/uploads/2010/12/warnings_1hr_deploys3.png" /></p>
@@ -235,38 +235,13 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/shell.html">
-                            Shell
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-2">
                         <a href="http://yumminhuang.github.io/tag/python.html">
                             Python
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/boto.html">
-                            Boto
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/ci.html">
-                            CI
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                            Objective-C
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/shell.html">
+                            Shell
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -275,8 +250,33 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/fabric.html">
                             Fabric
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

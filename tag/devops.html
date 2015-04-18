@@ -87,13 +87,13 @@
 </blockquote>
 <p> 本文介绍该项目的大致流程，共分为两部分：</p>
 <ol>
-<li> 介绍 <em>Automated python unit testing, code coverage and code quality analysis with Jenkins</em>（<a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html">part1</a>, <a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html">part2</a>, <a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html">part3</a>）中使用 Jenkins 实现自动化测试和得到代码覆盖率的方法。</li>
-<li> 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到 Bitbucket 代码库当中。</li>
+<li> 介绍 <em>Automated python unit testing, code coverage and code quality analysis with Jenkins</em>（<a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html">part1</a>, <a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html">part2</a>, <a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html">part3</a>）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。</li>
+<li> 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。</li>
 </ol>
 <h3> 基于 Jenkins 的 Python 自动化测试工具 </h3>
 <p> 使用到的 Python 模块：</p>
 <ul>
-<li>coverage：用来生成代码覆盖率的数据 ...</li></ul>
+<li><a href="http://nedbatchelder.com/code/coverage/">coverage ...</a></li></ul>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html">more ...</a>
                 </div>
             </article>
@@ -105,9 +105,9 @@
 <h4> 使用 Fabric 的好处 </h4>
 <p> 个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
 <p> 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
-<p> 再者，Fabric 避免远程登录，操作可以在本地运行。</p>
-<p>Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
-<p> 基本上，代码部署 ...</p>
+<p> 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。</p>
+<p> 最后，Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
+<p> 基本上 ...</p>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html">more ...</a>
                 </div>
             </article>
@@ -124,7 +124,7 @@
 </ol>
 <p><img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /></p>
 <h3> 向 Graphite 发送数据 </h3>
-<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
+<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
 <p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ...</p>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">more ...</a>
                 </div>
@@ -135,7 +135,7 @@
                 <div class="summary"><h2>Sensu 简介 </h2>
 <p>Sensu 是一款开源的监控框架。</p>
 <p><img alt="Sensu components" src="http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif" /></p>
-<p>Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。</p>
+<p>Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。例如：</p>
 <div class="highlight"><pre><span class="p">{</span>
   <span class="nt">&quot;client&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;i-424242&quot;</span><span class="p">,</span>
@@ -149,7 +149,7 @@
 </pre></div>
 
 
-<p> 其中，<code>subscriptions</code> 指定了 Sensu Client ...</p>
+<p> 其中，<code>subscriptions</code> 指定了 Sensu ...</p>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/sensujian-jie.html">more ...</a>
                 </div>
             </article>
@@ -175,14 +175,14 @@
 </blockquote>
 <p> 为了在 <a href="http://zh.wikipedia.org/wiki/ 防火长城 ">GFW</a> 的封锁之下进行正常的上网活动，可以使用 <a href="http://zh.wikipedia.org/wiki/ 虛擬私人網路 ">VPN</a>。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：</p>
 <ol>
-<li> 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；</li>
+<li> 安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；</li>
 <li> 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接；</li>
 <li> 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。</li>
 </ol>
 <h2> 具体步骤 </h2>
 <h4> 注册一个 VPS 账号 </h4>
 <p> 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
-至于选择哪家服务商，此处按下不表。下文以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
+至于选择哪家服务商，此处按下不表。下文将以 <strong>DigitalOcean</strong> 为例描述具体步骤。</p>
 <h4> 新建一个 ...</h4>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html">more ...</a>
                 </div>
@@ -221,38 +221,13 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/shell.html">
-                            Shell
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-2">
                         <a href="http://yumminhuang.github.io/tag/python.html">
                             Python
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/boto.html">
-                            Boto
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/ci.html">
-                            CI
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                            Objective-C
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
+                    <li class="list-group-item tag-2">
+                        <a href="http://yumminhuang.github.io/tag/shell.html">
+                            Shell
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -261,8 +236,33 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/fabric.html">
                             Fabric
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/ci.html">
+                            CI
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
                         </a>
                     </li>
                     <li class="list-group-item tag-4">

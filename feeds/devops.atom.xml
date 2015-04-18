@@ -6,15 +6,15 @@
 &lt;/blockquote&gt;
 &lt;p&gt; 本文介绍该项目的大致流程，共分为两部分：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt; 介绍 &lt;em&gt;Automated python unit testing, code coverage and code quality analysis with Jenkins&lt;/em&gt;（&lt;a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html"&gt;part1&lt;/a&gt;, &lt;a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html"&gt;part2&lt;/a&gt;, &lt;a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html"&gt;part3&lt;/a&gt;）中使用 Jenkins 实现自动化测试和得到代码覆盖率的方法。&lt;/li&gt;
-&lt;li&gt; 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到 Bitbucket 代码库当中。&lt;/li&gt;
+&lt;li&gt; 介绍 &lt;em&gt;Automated python unit testing, code coverage and code quality analysis with Jenkins&lt;/em&gt;（&lt;a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html"&gt;part1&lt;/a&gt;, &lt;a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html"&gt;part2&lt;/a&gt;, &lt;a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html"&gt;part3&lt;/a&gt;）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。&lt;/li&gt;
+&lt;li&gt; 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt; 基于 Jenkins 的 Python 自动化测试工具 &lt;/h3&gt;
 &lt;p&gt; 使用到的 Python 模块：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;coverage：用来生成代码覆盖率的数据；&lt;/li&gt;
-&lt;li&gt;nose: 用来运行单元测试；&lt;/li&gt;
-&lt;li&gt;pylint：用来得到 Python 代码质量的数据。&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://nedbatchelder.com/code/coverage/"&gt;coverage&lt;/a&gt;：用来生成代码覆盖率的数据；&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://nose.readthedocs.org/en/latest/"&gt;nose&lt;/a&gt;: 用来运行单元测试；&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.pylint.org"&gt;pylint&lt;/a&gt;：用来得到 Python 代码质量的数据。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt; 使用到的 Jenkins 插件：&lt;/p&gt;
 &lt;ul&gt;
@@ -22,13 +22,13 @@
 &lt;li&gt;&lt;a href="https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin"&gt;GIT plugin&lt;/a&gt;：用来获取最新的代码；&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://wiki.jenkins-ci.org/display/JENKINS/Violations"&gt;Violations plugin&lt;/a&gt;：用来显示 pylint 的结果。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt; 安装需要的 Jenkins 插件之后，在 Jenkins 当中新建一个作业（Job）。&lt;/p&gt;
+&lt;p&gt; 安装需要的 Jenkins 插件之后，在 Jenkins 当中新建一个作业（Job）接下来进行设置。&lt;/p&gt;
 &lt;h4&gt; 从哪里得到代码 &lt;/h4&gt;
 &lt;p&gt; 如下图所以，在 Jenkins 的 &lt;strong&gt;Source Code Management&lt;/strong&gt; 当中可以添加 Git Repository。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="SCM" src="http://2.bp.blogspot.com/-hDwb_sbJZHk/T5lzDbCT76I/AAAAAAAAADg/adELp3TAeV8/s1600/Source+code.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Jenkins 同样支持 subversion 等 CVS 工具。&lt;/p&gt;
 &lt;h4&gt; 什么时候运行作业 &lt;/h4&gt;
-&lt;p&gt; 在 Jenkins 中可以将 &lt;strong&gt;Build Triggers&lt;/strong&gt; 设置为 &lt;strong&gt;Poll SCM&lt;/strong&gt; 对代码库进行轮询。如下图，&lt;strong&gt;Schedule&lt;/strong&gt; 设为 &lt;code&gt;* * * * *&lt;/code&gt;（含义和 Cron 一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行作业。&lt;/p&gt;
+&lt;p&gt; 在 Jenkins 中可以将 &lt;strong&gt;Build Triggers&lt;/strong&gt; 设置为 &lt;strong&gt;Poll SCM&lt;/strong&gt; 对代码库进行轮询。如下图，&lt;strong&gt;Schedule&lt;/strong&gt; 设为 &lt;code&gt;* * * * *&lt;/code&gt;（含义和 Cron 一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行 &lt;strong&gt;Build&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Poll SCM" src="http://3.bp.blogspot.com/-DewpmzsyWZo/T5lzXqPVOlI/AAAAAAAAADo/OA2Fxd1YTzY/s1600/Build+triggers.png" /&gt;&lt;/p&gt;
 &lt;p&gt; 当然，也可以使用 &lt;a href="http://git-scm.com/book/zh/v2/Customizing-Git-Git-Hooks"&gt;Git Hook&lt;/a&gt;，从而避免轮询消耗过多的资源。&lt;/p&gt;
 &lt;h4&gt; 运行什么 &lt;/h4&gt;
@@ -58,11 +58,11 @@ pylint -f parseable -d I0011,R0801 project1 &lt;span class="p"&gt;|&lt;/span&gt;
 &lt;p&gt; 最终，运行一次作业之后，Jenkins 将可以得到下图显示的测试报告。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Jenkins Output" src="http://4.bp.blogspot.com/-f_YtJcTOQ64/T5qnlOiE35I/AAAAAAAAAF8/l5Nl_YvRSuM/s1600/jenkins+after+logout+added.png" /&gt;&lt;/p&gt;
 &lt;h3&gt; 持续整合！&lt;/h3&gt;
-&lt;p&gt; 我们持续整合的大致流程是这样的。再代码库中有一个 Master 分支。开发人员添加新功能，修复 Bug 都需要在新建的分支里进行。每新建一个到 Master 的 Pull Request 时，Jenkins 可以自动运行测试。测试通过则在 Bitbucket 的 Pull Request 页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。&lt;/p&gt;
+&lt;p&gt; 我们持续整合的大致流程是这样的。在代码库中有一个 Master 分支，开发人员添加新功能，修复 Bug 都需要在新建的分支里进行。每新建一个合并到到 Master 的 Pull Request 时，Jenkins 可以自动运行测试。测试通过则在 Bitbucket 的 Pull Request 页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。&lt;/p&gt;
 &lt;p&gt; 我们按照 &lt;em&gt;Automated python unit testing, code coverage and code quality analysis with Jenkins&lt;/em&gt; 一文的思路实现了测试覆盖率的部分，区别是我们的代码库里包括 Java 和 Python 两种语言的代码，需要同时处理两份数据。经过一段时间的攻关之后，我们终于可以得到代码覆盖的数据。&lt;/p&gt;
 &lt;p&gt; 相较于测试覆盖率的具体数值，我们更关心覆盖率的变化值。我们希望知道合并一个分支之后，测试覆盖率是增加了还是减少了。因此，现在我们需要得到测试覆盖率的变化值（Coverage diff）。&lt;/p&gt;
-&lt;p&gt; 没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 &lt;a href="https://github.com/SurveyMonkey/pycobertura"&gt;Pycobertura&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Pycobertura 可以直接比较两个 xml 文件得到覆盖率的变化值 &lt;/p&gt;
+&lt;p&gt; 没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 &lt;a href="https://github.com/SurveyMonkey/pycobertura"&gt;Pycobertura&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pycobertura&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Cobertura&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pycobertura&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TextReporterDelta&lt;/span&gt;
 
@@ -73,7 +73,7 @@ pylint -f parseable -d I0011,R0801 project1 &lt;span class="p"&gt;|&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt; 于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 &lt;strong&gt;Post build script&lt;/strong&gt; 来运行 Fabric，于是就可以得到如下的结果：&lt;/p&gt;
+&lt;p&gt; 于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 &lt;strong&gt;Post build script&lt;/strong&gt; 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;Coverage Diff for Java code:
 No coverage diff can be found.
 Coverage Diff for Python code:
@@ -94,8 +94,8 @@ TOTAL         +2       -2      +50.00%
 &lt;h4&gt; 使用 Fabric 的好处 &lt;/h4&gt;
 &lt;p&gt; 个人觉得，Fabric 非常适合简单的、重复性的远程操作。&lt;/p&gt;
 &lt;p&gt; 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。&lt;/p&gt;
-&lt;p&gt; 再者，Fabric 避免远程登录，操作可以在本地运行。&lt;/p&gt;
-&lt;p&gt;Fabric 非常简单，只需要编写一个 &lt;code&gt;fabfile.py&lt;/code&gt;（或者像 Python 那样 &lt;a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"&gt; 导入包来添加更多的功能 &lt;/a&gt;），就可以使用 &lt;a href="http://docs.fabfile.org/en/latest/usage/fab.html"&gt;&lt;code&gt;fab&lt;/code&gt; 指令 &lt;/a&gt; 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。&lt;/p&gt;
+&lt;p&gt; 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。&lt;/p&gt;
+&lt;p&gt; 最后，Fabric 非常简单，只需要编写一个 &lt;code&gt;fabfile.py&lt;/code&gt;（或者像 Python 那样 &lt;a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"&gt; 导入包来添加更多的功能 &lt;/a&gt;），就可以使用 &lt;a href="http://docs.fabfile.org/en/latest/usage/fab.html"&gt;&lt;code&gt;fab&lt;/code&gt; 指令 &lt;/a&gt; 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。&lt;/p&gt;
 &lt;p&gt; 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。&lt;/p&gt;
 &lt;h3&gt; 常用的 Fabric 函数 &lt;/h3&gt;
 &lt;p&gt; 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 &lt;a href="http://docs.fabfile.org/en/latest/index.html"&gt; 官方文档 &lt;/a&gt;。&lt;/p&gt;
@@ -149,7 +149,7 @@ TOTAL         +2       -2      +50.00%
 &lt;li&gt;&lt;code&gt;warn_only=True&lt;/code&gt; 用来确保 Fabric 程序不会因为 &lt;code&gt;grep&lt;/code&gt; 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;result = run('grep %s %s' % (keyword, filename))&lt;/code&gt;, 运行 &lt;code&gt;grep&lt;/code&gt; 指令并得到结果。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt; 因为远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
+&lt;p&gt; 远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
 &lt;h3&gt; 参考文献 &lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments"&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
@@ -163,7 +163,7 @@ TOTAL         +2       -2      +50.00%
 &lt;/ol&gt;
 &lt;p&gt;&lt;img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /&gt;&lt;/p&gt;
 &lt;h3&gt; 向 Graphite 发送数据 &lt;/h3&gt;
-&lt;p&gt;Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 采用键／值的数据类型。只要不断发送 &lt;code&gt; 观测量 : 观测值 &lt;/code&gt; 键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。&lt;/p&gt;
+&lt;p&gt;Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 &lt;code&gt; 观测量 : 观测值 &lt;/code&gt; 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。&lt;/p&gt;
 &lt;p&gt; 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&amp;lt;metric name&amp;gt; &amp;lt;metric value&amp;gt; &amp;lt;metric timestamp&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -217,7 +217,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt; 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，就可以在 Graphite 里添加 &lt;code&gt;drawAsInfinite(events('prd'))&lt;/code&gt; 或者在 Grafana 里使用 &lt;a href="http://grafana.org/docs/features/annotations/"&gt;Annotations Page&lt;/a&gt; 来显示代码部署的 Events。&lt;/p&gt;
+&lt;p&gt; 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 &lt;code&gt;drawAsInfinite(events('prd'))&lt;/code&gt; 或者在 Grafana 里使用 &lt;a href="http://grafana.org/docs/features/annotations/"&gt;Annotations Page&lt;/a&gt; 来绘制一幅图显示代码部署的 Events。&lt;/p&gt;
 &lt;p&gt; 利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。&lt;/p&gt;
 &lt;p&gt; 比如，在 &lt;em&gt;Tracking Every Release&lt;/em&gt; 一文中，作者使用了该方法将 &lt;code&gt;PHP Warning&lt;/code&gt; 和 &lt;code&gt;Code deploy&lt;/code&gt; 叠加在一幅图里。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Track Release" src="https://codeascraft.com/wp-content/uploads/2010/12/warnings_1hr_deploys3.png" /&gt;&lt;/p&gt;
@@ -233,7 +233,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;/ol&gt;</summary><category term="DevOps"></category><category term="Graphite"></category><category term="Grafana"></category></entry><entry><title>Sensu简介</title><link href="http://yumminhuang.github.io/sensujian-jie.html" rel="alternate"></link><updated>2015-03-31T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-04:sensujian-jie.html</id><summary type="html">&lt;h2&gt;Sensu 简介 &lt;/h2&gt;
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Sensu components" src="http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif" /&gt;&lt;/p&gt;
-&lt;p&gt;Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。&lt;/p&gt;
+&lt;p&gt;Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。例如：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="nt"&gt;&amp;quot;client&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;i-424242&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -256,7 +256,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;li&gt; 丰富的社区支持，&lt;a href="https://github.com/sensu/sensu-community-plugins"&gt;Sensu Community Plugin&lt;/a&gt; 几乎包含了所有常用的监控项目。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;Sensu 的结构 &lt;/h3&gt;
-&lt;p&gt; 简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以根据当前的条件调用 Handler 采取相应的行动。&lt;/p&gt;
+&lt;p&gt; 简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以设置 Handler 根据当前的条件采取相应的行动。&lt;/p&gt;
 &lt;h4&gt;Sensu Check&lt;/h4&gt;
 &lt;p&gt;Sensu Check 用来监控服务和资源。Check 由 Sensu Server 发出执行指令后在 Sensu Client 上运行。本质上，Sensu Check 是一个命令或者脚本，用来把数据输出到 &lt;code&gt;STDOUT&lt;/code&gt; 或者 &lt;code&gt;STDERR&lt;/code&gt;；同时，用返回值（exit status code）来指示状态：&lt;/p&gt;
 &lt;ul&gt;
@@ -339,7 +339,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;p&gt; 第一步非常顺利，但是还有问题需要解决：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Python 脚本只能收集本地的信息，如何把 350 台服务器的信息汇集在一起？&lt;/li&gt;
-&lt;li&gt; 信息汇集完了需要进行分类、通知。&lt;/li&gt;
+&lt;li&gt; 信息汇集完了如何进行分类、通知？&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt; 为了解决这两个问题，就需要用到本文的主角 Sensu 了。&lt;/p&gt;
 &lt;p&gt; 第一个问题是汇集多台机器的检查结果。事实上，通常的 Sensu Check 也只能检查一台机器。为了解决第一个问题，我使用了 &lt;a href="http://sensuapp.org/docs/0.16/api_aggregates"&gt;Sensu Aggregate API&lt;/a&gt;。我们可以把一个 Sensu Check 定义成 &lt;a href="http://sensuapp.org/docs/0.16/checks"&gt;Aggregate Check&lt;/a&gt;，然后通过 API 可以得到所有该 Check 的结果。&lt;/p&gt;
@@ -438,7 +438,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;p&gt; 运维工作是以成本为中心的。在公司里不能带来实际的收入，我们需要做的是花尽可能少的钱来提高公司的效率，保证服务的稳定。所以在接手一个任务之前，要估算不同解决方案的成本。有时候遇到一个问题，市场上有现成的收费工具可以用。如果不想花钱，自己来实现需要花费多少时间。&lt;/p&gt;
 &lt;p&gt; 刚入职时的一个任务是：检查公司里几百台服务器是否有安全更新需要安装，要有通知功能，能够列出有哪些更新，并且支持一键安装。现成的解决方案有针对 Ubuntu 系统的 &lt;a href="https://landscape.canonical.com/"&gt;Canonical Landscape&lt;/a&gt;。功能齐全，界面美观，但是其价格到了瞠目结舌的地步，每 100 台机器一年要 $75K，难以想象一个 Linux 管理工具卖这么贵会有人用吗这个成本显然是不能接受的。后来又找到一个独立开发者开发的补丁管理工具 &lt;a href="https://sysward.com/"&gt;Sysward&lt;/a&gt;，完全符合我们最初的需求，但是估算了一下，用这个每个月的费用仍然有 $700。最后考虑到这个需求并不是非常着急，而且在公司所使用的开源工具的基础上可以做出来，所以决定自己来做这个工具。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt; 以上就是实习三个月以来，身为一个运维新手的体会和思考，想法或许还有些不成熟、不准确。实习还有四个月时间结束，希望届时能够有更多的体会可以总结。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>在VPS搭建VPN服务器</title><link href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html" rel="alternate"></link><updated>2015-03-21T18:06:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-16:zai-vpsda-jian-vpnfu-wu-qi.html</id><summary type="html">&lt;h2&gt; 简介 &lt;/h2&gt;
+&lt;p&gt; 以上就是实习三个月以来，身为一个运维新人的体会和思考，想法或许还有些不成熟、不准确。实习还有四个月时间结束，希望届时能够有更多的体会可以总结。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>在VPS搭建VPN服务器</title><link href="http://yumminhuang.github.io/zai-vpsda-jian-vpnfu-wu-qi.html" rel="alternate"></link><updated>2015-03-21T18:06:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-16:zai-vpsda-jian-vpnfu-wu-qi.html</id><summary type="html">&lt;h2&gt; 简介 &lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt; 从来就没有什么救世主 &lt;/p&gt;
 &lt;p&gt; 也不靠神仙皇帝 &lt;/p&gt;
@@ -447,14 +447,14 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;/blockquote&gt;
 &lt;p&gt; 为了在 &lt;a href="http://zh.wikipedia.org/wiki/ 防火长城 "&gt;GFW&lt;/a&gt; 的封锁之下进行正常的上网活动，可以使用 &lt;a href="http://zh.wikipedia.org/wiki/ 虛擬私人網路 "&gt;VPN&lt;/a&gt;。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt; 安全性：你很难知道一些 VPN 提供商是否会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；&lt;/li&gt;
+&lt;li&gt; 安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；&lt;/li&gt;
 &lt;li&gt; 稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接；&lt;/li&gt;
 &lt;li&gt; 价格：自己搭建 VPN，一个月的费用大概在 $5 左右。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt; 具体步骤 &lt;/h2&gt;
 &lt;h4&gt; 注册一个 VPS 账号 &lt;/h4&gt;
 &lt;p&gt; 注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
-至于选择哪家服务商，此处按下不表。下文以 &lt;strong&gt;DigitalOcean&lt;/strong&gt; 为例描述具体步骤。&lt;/p&gt;
+至于选择哪家服务商，此处按下不表。下文将以 &lt;strong&gt;DigitalOcean&lt;/strong&gt; 为例描述具体步骤。&lt;/p&gt;
 &lt;h4&gt; 新建一个 Droplet&lt;/h4&gt;
 &lt;p&gt; 我新建的 Droplet 是最低配置，具体配置包括：&lt;/p&gt;
 &lt;ul&gt;
