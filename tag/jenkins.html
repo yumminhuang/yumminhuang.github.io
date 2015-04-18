@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>/dev/null</title>
+    <title>Jenkins - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,8 +10,9 @@
 
 
 
-<link rel="canonical" href="http://yumminhuang.github.io">
-        <meta name="author" content="Yumminhuang" />
+
+    <meta name="author" content="Yumminhuang" />
+    <meta name="keywords" content="Jenkins" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="/dev/null" />
@@ -78,45 +79,26 @@
         <div class="col-sm-9">
 
             <article>
-                <h2><a href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">How to remove all .pyc files from a project?</a></h2>
-                <div class="summary"><p>I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
-<div class="highlight"><pre>find . -name <span class="s2">&quot;*.pyc&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
-</pre></div>
-
-
-<p>I ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">Objective-C语法总结</a></h2>
-                <div class="summary"><p> 最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。</p>
-<p> 在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 <code>object.method(argument1, argument2...)</code>。然而 Objective-C 的格式却是 <code>[object method: argument1 andArg: argument2...]</code>。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。</p>
-<hr />
-<p> 废话不多说，上干货。下面以 Java ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/objective-cyu-fa-zong-jie.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">Execute a Command in the Background on Remote Server using SSH</a></h2>
-                <div class="summary"><p>In a project, I have to deploy a server program on several remote servers. So I wrote a shell script to deploy and run the program using <code>scp</code> and <code>ssh</code>.</p>
-<p>Since there are several remote servers, I have to run the server program in the background on all remote machines ...</p>
-                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/execute-a-command-in-the-background-on-remote-server-using-ssh.html">more ...</a>
+                <h2><a href="http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html">基于Jenkins的Python代码集成整合</a></h2>
+                <div class="summary"><p> 实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。</p>
+<blockquote>
+<p>This project uses Java and XML. How it could be good?</p>
+<p>—— 组里的同事如此评价本项目 </p>
+</blockquote>
+<p> 本文介绍该项目的大致流程，共分为两部分：</p>
+<ol>
+<li> 介绍 <em>Automated python unit testing, code coverage and code quality analysis with Jenkins</em>（<a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html">part1</a>, <a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html">part2</a>, <a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html">part3</a>）中使用 Jenkins 实现自动化测试和得到代码覆盖率的方法。</li>
+<li> 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到 Bitbucket 代码库当中。</li>
+</ol>
+<h3> 基于 Jenkins 的 Python 自动化测试工具 </h3>
+<p> 使用到的 Python 模块：</p>
+<ul>
+<li>coverage：用来生成代码覆盖率的数据 ...</li></ul>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html">more ...</a>
                 </div>
             </article>
             <hr/>
 
-        <ul class="pagination">
-                <li class="prev"><a href="http://yumminhuang.github.io/index.html">&laquo;</a>
-                </li>
-                    <li class=""><a
-                            href="http://yumminhuang.github.io/index.html">1</a></li>
-                    <li class="active"><a
-                            href="http://yumminhuang.github.io/index2.html">2</a></li>
-                <li class="next disabled"><a href="#">&raquo;</a></li>
-        </ul>
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
