@@ -4,10 +4,12 @@ Modified: 2014-07-31 19:39
 Category: Linux
 Tags: Linux, Shell
 
-I am a paranoid guy. I like to delete all "useless" files. I want to clean up my project repository today. There are lots of `.pyc` files. And I found this command, which is very convenient to batch delete files in a directory.
+I am a paranoid guy. I like to delete all "useless" files. Today, I want to clean up my project repository. There are lots of `.pyc` files. And I found this command, which is very convenient to batch delete files in a directory.
 
 	:::bash
 	find . -name "*.pyc" -exec rm -rf {} \;
+	OR
+	find . -name "*.pyc" -delete;
 
 I can also delete all `*.class` files for Java project and `.o` files for C project in this way.
 

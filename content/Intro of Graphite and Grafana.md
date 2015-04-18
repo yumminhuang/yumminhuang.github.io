@@ -18,7 +18,7 @@ Graphite可以实时收集、存储、显示时间序列类型的数据（time s
 
 ### 向Graphite发送数据
 
-Graphite的使用非常简单。我们可以定义一个被观测量（Metric）。Metric采用键／值的数据类型。只要不断发送`观测量: 观测值`键值组合，就可以得到以时间为X轴，观测值为Y轴的图。
+Graphite的使用非常简单。我们可以定义一个被观测量（Metric）。Metric使用键／值的数据类型。只要不断发送`观测量: 观测值`这一键值组合，就可以得到以时间为X轴，观测值为Y轴的图。
 
 当我们使用诸如collectd、Sensu之类的工具收集到数据之后，只需要向Graphite的服务器发送以下格式的TCP报文即可：
 
@@ -84,7 +84,7 @@ Graphite将以树型结构展示这三个Metric。因此，使用Graphite的第�
 	curl -X POST $HOST -d '{"what": "Deployment", "tags": "webserver,prd", "data": \"$BUILD_URL\"}'
 
 
-这样，每次部署完成之后都会发送一个Deployment Event到Graphite。接着，就可以在Graphite里添加`drawAsInfinite(events('prd'))`或者在Grafana里使用[Annotations Page](http://grafana.org/docs/features/annotations/)来显示代码部署的Events。
+这样，每次部署完成之后都会发送一个Deployment Event到Graphite。接着，可以在Graphite里添加`drawAsInfinite(events('prd'))`或者在Grafana里使用[Annotations Page](http://grafana.org/docs/features/annotations/)来绘制一幅图显示代码部署的Events。
 
 利用Graphite Events和Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。
 

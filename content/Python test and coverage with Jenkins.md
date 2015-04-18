@@ -12,16 +12,16 @@ Tags: DevOps, CI, Jenkins
 
 本文介绍该项目的大致流程，共分为两部分：
 
-1. 介绍*Automated python unit testing, code coverage and code quality analysis with Jenkins*（[part1](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html), [part2](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html), [part3](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html)）中使用Jenkins实现自动化测试和得到代码覆盖率的方法。
-2. 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到Bitbucket代码库当中。
+1. 介绍*Automated python unit testing, code coverage and code quality analysis with Jenkins*（[part1](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html), [part2](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html), [part3](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html)）中使用Jenkins实现自动化测试、得到代码覆盖率和代码质量的方法。
+2. 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的Bitbucket代码库当中。
 
 ### 基于Jenkins的Python自动化测试工具
 
 使用到的Python模块：
 
-* coverage：用来生成代码覆盖率的数据；
-* nose: 用来运行单元测试；
-* pylint：用来得到Python代码质量的数据。
+* [coverage](http://nedbatchelder.com/code/coverage/)：用来生成代码覆盖率的数据；
+* [nose](https://nose.readthedocs.org/en/latest/): 用来运行单元测试；
+* [pylint](http://www.pylint.org)：用来得到Python代码质量的数据。
 
 使用到的Jenkins插件：
 
@@ -29,7 +29,7 @@ Tags: DevOps, CI, Jenkins
 * [GIT plugin](https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin)：用来获取最新的代码；
 * [Violations plugin](https://wiki.jenkins-ci.org/display/JENKINS/Violations)：用来显示pylint的结果。
 
-安装需要的Jenkins插件之后，在Jenkins当中新建一个作业（Job）。
+安装需要的Jenkins插件之后，在Jenkins当中新建一个作业（Job）接下来进行设置。
 
 #### 从哪里得到代码
 
@@ -41,7 +41,7 @@ Jenkins同样支持subversion等CVS工具。
 
 #### 什么时候运行作业
 
-在Jenkins中可以将**Build Triggers**设置为**Poll SCM**对代码库进行轮询。如下图，**Schedule**设为`* * * * *`（含义和Cron一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行作业。
+在Jenkins中可以将**Build Triggers**设置为**Poll SCM**对代码库进行轮询。如下图，**Schedule**设为`* * * * *`（含义和Cron一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行**Build**。
 
 ![Poll SCM](http://3.bp.blogspot.com/-DewpmzsyWZo/T5lzXqPVOlI/AAAAAAAAADo/OA2Fxd1YTzY/s1600/Build+triggers.png)
 
@@ -81,15 +81,15 @@ Jenkins同样支持subversion等CVS工具。
 
 ### 持续整合！
 
-我们持续整合的大致流程是这样的。再代码库中有一个Master分支。开发人员添加新功能，修复Bug都需要在新建的分支里进行。每新建一个到Master的Pull Request时，Jenkins可以自动运行测试。测试通过则在Bitbucket的Pull Request页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。
+我们持续整合的大致流程是这样的。在代码库中有一个Master分支，开发人员添加新功能，修复Bug都需要在新建的分支里进行。每新建一个合并到到Master的Pull Request时，Jenkins可以自动运行测试。测试通过则在Bitbucket的Pull Request页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。
 
 我们按照*Automated python unit testing, code coverage and code quality analysis with Jenkins*一文的思路实现了测试覆盖率的部分，区别是我们的代码库里包括Java和Python两种语言的代码，需要同时处理两份数据。经过一段时间的攻关之后，我们终于可以得到代码覆盖的数据。
 
 相较于测试覆盖率的具体数值，我们更关心覆盖率的变化值。我们希望知道合并一个分支之后，测试覆盖率是增加了还是减少了。因此，现在我们需要得到测试覆盖率的变化值（Coverage diff）。
 
-没想到Python连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是[Pycobertura](https://github.com/SurveyMonkey/pycobertura)
+没想到Python连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是[Pycobertura](https://github.com/SurveyMonkey/pycobertura)。
 
-Pycobertura可以直接比较两个xml文件得到覆盖率的变化值
+Pycobertura可以直接比较两个Cobertura格式的xml文件，从而得到覆盖率的变化值。
 
 	:::Python
 	from pycobertura import Cobertura
@@ -100,7 +100,7 @@ Pycobertura可以直接比较两个xml文件得到覆盖率的变化值
 	delta = TextReporterDelta(coverage1, coverage2)
 	delta.generate()
 
-于是，我创建了一个Fabric Task，调用Pycobertura分析测试生成的xml文件和Master branch的xml文件。在Jenkins里添加一段**Post build script**来运行Fabric，于是就可以得到如下的结果：
+于是，我创建了一个Fabric Task，调用Pycobertura分析测试生成的xml文件和Master branch的xml文件。在Jenkins里添加一段**Post build script**来运行Fabric，这样Build完成之后就可以运行Fabric程序得到类似下面的输出结果：
 
 ```
 Coverage Diff for Java code:

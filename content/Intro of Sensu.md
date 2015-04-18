@@ -9,7 +9,7 @@ Sensu是一款开源的监控框架。
 
 ![Sensu components](http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif)
 
-Sensu采用C/S结构，有用来发送指令、存储数据的Sensu Server和被监控的对象Sensu Client。Sensu Server和Sensu Client之间使用RabbitMQ进行通信，Server端使用Redis存储数据。每一个Sensu Client使用JSON进行设置。
+Sensu采用C/S结构，有用来发送指令、存储数据的Sensu Server和被监控的对象Sensu Client。Sensu Server和Sensu Client之间使用RabbitMQ进行通信，Server端使用Redis存储数据。每一个Sensu Client使用JSON进行设置。例如：
 
 	:::JSON
 	{
@@ -33,7 +33,7 @@ Sensu采用C/S结构，有用来发送指令、存储数据的Sensu Server和被
 * 丰富的社区支持，[Sensu Community Plugin](https://github.com/sensu/sensu-community-plugins)几乎包含了所有常用的监控项目。
 
 ### Sensu 的结构
-简单来说，Sensu分为Check和Handler两个部分。Sensu经常被描述为「monitoring router」，因为它不仅可以用Check监控系统，还可以根据当前的条件调用Handler采取相应的行动。
+简单来说，Sensu分为Check和Handler两个部分。Sensu经常被描述为「monitoring router」，因为它不仅可以用Check监控系统，还可以设置Handler根据当前的条件采取相应的行动。
 
 #### Sensu Check
 Sensu Check用来监控服务和资源。Check由Sensu Server发出执行指令后在Sensu Client上运行。本质上，Sensu Check是一个命令或者脚本，用来把数据输出到`STDOUT`或者`STDERR`；同时，用返回值（exit status code）来指示状态：
@@ -123,7 +123,7 @@ Sensu Handler用来处理Sensu Check产生的Event，例如发送邮件通知，
 第一步非常顺利，但是还有问题需要解决：
 
 1. Python脚本只能收集本地的信息，如何把350台服务器的信息汇集在一起？
-2. 信息汇集完了需要进行分类、通知。
+2. 信息汇集完了如何进行分类、通知？
 
 为了解决这两个问题，就需要用到本文的主角Sensu了。
 

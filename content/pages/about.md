@@ -1,7 +1,7 @@
 Title: About Me
-Date: 2014-03-26
+Date: 2015-04-18
 
-Thanks for visiting! I am a masters student in computer science at Northeastern University. You can find more infomation about me on my [**Online Resume**](http://yumminhuang.digitcv.com/#/resume)
+Thanks for visiting! I am a masters student in computer science at Northeastern University.
 
 This site will aggregate my scattered online presence and hopefully provide a place for recording what I learn. 
 
@@ -49,7 +49,6 @@ Mar. 2012 —-- Apr. 2012
 * Digital Technologies
 
 -------
-
 **Contact me**
 
 Email:

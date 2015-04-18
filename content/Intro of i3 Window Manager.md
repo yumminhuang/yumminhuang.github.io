@@ -4,7 +4,7 @@ Modified: 2015-04-17 20:49
 Category: Linux
 Tags: Linux
 
-在[内核恐慌](http://kernelpanic.fm)第九期[「程序员的理想工作环境」](http://ipn.li/kernelpanic/9/)中，主持人Rio和吴涛谈及了Tiling Window Manager，并且介绍了[Awesome窗口管理器](http://awesome.naquadah.org/)和i3窗口管理器。节目中两位主持人的描述恰好符合我的需求，并且实习所用的笔记本操作系统恰好是Ubuntu，所以听完节目后，我也试着在办公电脑上安装了Awesome。然而体验并不愉快，我为此在微博上[吐槽](http://www.weibo.com/2622511625/C1N9FgPr5)。之后在Rio的建议下，我安装了i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下i3窗口管理器，并且推荐大家使用。
+在[内核恐慌](http://kernelpanic.fm)第九期[「程序员的理想工作环境」](http://ipn.li/kernelpanic/9/)中，主持人Rio和吴涛谈及了Tiling Window Manager，并且介绍了[Awesome窗口管理器](http://awesome.naquadah.org/)和i3窗口管理器。节目中两位主持人的对描述Tiling Window Manager恰好符合我的需求，并且实习所用的笔记本操作系统刚好是Ubuntu，所以听完节目后，我也试着在办公电脑上安装了Awesome。然而体验并不愉快，我为此在微博上[吐槽](http://www.weibo.com/2622511625/C1N9FgPr5)。之后在Rio的建议下，我安装了i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下i3窗口管理器，并且推荐大家使用。
 
 ##平铺式窗口管理器
 

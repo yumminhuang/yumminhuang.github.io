@@ -14,9 +14,9 @@ Tags: DevOps,Python,Fabric
 
 首先，Fabric可以使用Python，比Shell要强大、灵活。
 
-再者，Fabric避免远程登录，操作可以在本地运行。
+再者，Fabric避免远程登录，可以把远程操作放在本地运行。
 
-Fabric非常简单，只需要编写一个`fabfile.py`（或者像Python那样[导入包来添加更多的功能](http://docs.fabfile.org/en/latest/usage/fabfiles.html)），就可以使用[`fab`指令](http://docs.fabfile.org/en/latest/usage/fab.html)运行了。这比Salt、Chef等工具轻量，更加容易上手。
+最后，Fabric非常简单，只需要编写一个`fabfile.py`（或者像Python那样[导入包来添加更多的功能](http://docs.fabfile.org/en/latest/usage/fabfiles.html)），就可以使用[`fab`指令](http://docs.fabfile.org/en/latest/usage/fab.html)运行了。这比Salt、Chef等工具轻量，更加容易上手。
 
 基本上，代码部署，文件修改，远程执行等操作都可以使用Fabric。
 
@@ -78,7 +78,7 @@ Fabric Task是我个人非常喜欢的功能。定义一个Task之后就可以�
 * `warn_only=True`用来确保Fabric程序不会因为`grep`指令出错而退出（grep没找到匹配内容时，返回值是1）；
 * `result = run('grep %s %s' % (keyword, filename))`,运行`grep`指令并得到结果。
 
-因为远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用Fabric。
+远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用Fabric。
 
 ### 参考文献
 
