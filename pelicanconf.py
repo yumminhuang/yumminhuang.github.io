@@ -43,14 +43,18 @@ SHOW_DATE_MODIFIED = 'True'
 
 BOOTSTRAP_NAVBAR_INVERSE = 'True'
 
+# Enable TYPOGRIFY
+# TYPOGRIFY = 'True'
+
 # Blog theme
 THEME = 'pelican-bootstrap3'
 BOOTSTRAP_THEME = 'yeti'
-
 # Code block style
 PYGMENTS_STYLE = 'manni'
 # Static path for pages, files, etc
-STATIC_PATHS = ['images']
+# CUSTOM_CSS = 'theme/css/han.min.css'
+STATIC_PATHS = ['images', 'static/han.min.css', ]
+EXTRA_PATH_METADATA = {'static/han.min.css': {'path': 'theme/css/han.min.css'}}
 
 # Plugins
 PLUGIN_PATHS = ['plugins']
