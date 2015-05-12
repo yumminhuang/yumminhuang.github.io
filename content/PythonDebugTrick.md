@@ -7,8 +7,8 @@ I just learned one trick for debugging Python script from my colleague. It's not
 
 I only need to add single line at the position I want to break.
 
-:::Python
-import code; code.interact(local=locals())
+    :::Python
+    import code; code.interact(local=locals())
 
 After that, run Python script as usual. Python Interpreter will stop at your break point and launch a <ruby>REPL<rt>Read–eval–print loop</rt></ruby> console. You can print out variables to debug.
 
