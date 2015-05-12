@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>Yelp Interview Problem - /dev/null</title>
+    <title>One Trick for Debugging Python - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,19 +10,19 @@
 
 
 
-<link rel="canonical" href="http://yumminhuang.github.io/yelp-interview-problem.html">
+<link rel="canonical" href="http://yumminhuang.github.io/one-trick-for-debugging-python.html">
 
         <meta name="author" content="Yumminhuang" />
         <meta name="keywords" content="Python" />
-        <meta name="description" content="Today, I had a skype interview with Yelp. Interview At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as What will cause access a website slowly? Difference between thread and process, What is deadlock? What&#39;s your favorite programming language? And why ..." />
+        <meta name="description" content="I just learned one trick for debugging Python script from my colleague. It&#39;s not such magical(maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script. I only need to add single line at the position I want to ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Yelp Interview Problem"/>
-        <meta property="og:url" content="http://yumminhuang.github.io/yelp-interview-problem.html"/>
-        <meta property="og:description" content="Today, I had a skype interview with Yelp. Interview At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as What will cause access a website slowly? Difference between thread and process, What is deadlock? What&#39;s your favorite programming language? And why ..."/>
-        <meta property="article:published_time" content="2014-11-18" />
-            <meta property="article:section" content="Interview" />
+        <meta property="og:title" content="One Trick for Debugging Python"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/one-trick-for-debugging-python.html"/>
+        <meta property="og:description" content="I just learned one trick for debugging Python script from my colleague. It&#39;s not such magical(maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script. I only need to add single line at the position I want to ..."/>
+        <meta property="article:published_time" content="2015-05-11" />
+            <meta property="article:section" content="Miscellaneous" />
             <meta property="article:tag" content="Python" />
             <meta property="article:author" content="Yumminhuang" />
 
@@ -60,13 +60,13 @@
                         <li >
                             <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
                         </li>
                         <li >
                             <a href="http://yumminhuang.github.io/category/linux.html">Linux</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
                         </li>
             </ul>
@@ -87,10 +87,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://yumminhuang.github.io/yelp-interview-problem.html"
+                    <a href="http://yumminhuang.github.io/one-trick-for-debugging-python.html"
                        rel="bookmark"
-                       title="Permalink to Yelp Interview Problem">
-                        Yelp Interview Problem
+                       title="Permalink to One Trick for Debugging Python">
+                        One Trick for Debugging Python
                     </a>
                 </h1>
             </header>
@@ -100,12 +100,8 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-11-18T18:02:00-05:00"> Tue 18 November 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-05-11T20:18:00-04:00"> Mon 11 May 2015</time>
     </span>
-            <span class="label label-default">Modified</span>
-            <span class="modified">
-                <i class="fa fa-calendar"></i><time datetime="2014-11-18T18:02:00-05:00"> Tue 18 November 2014</time>
-            </span>
 
 
 
@@ -114,72 +110,13 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>Today, I had a skype interview with Yelp.</p>
-<h3>Interview</h3>
-<p>At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as</p>
-<blockquote>
-<ul>
-<li>What will cause access a website slowly?</li>
-<li>Difference between thread and process, </li>
-<li>What is deadlock?</li>
-<li>What's your favorite programming language? And why? </li>
-</ul>
-</blockquote>
-<p>The last part of the interview is a coding question. The interviewer sent me a link of <a href="http://coderpad.io">CoderPad</a> and asked me to write code on it.</p>
-<h3>Coding Problem Description</h3>
-<p>The problem is not very difficult. Write a function to <strong>find the longest prefix of a list of string.</strong> For example,
-<code>['abc', 'abcde', 'abxyz'] =&gt; 'ab'</code></p>
-<h3>Solutions</h3>
-<p>During the interview, I spent some time to finish it due to the pressure from time and the interviewer. He asked me to review the code after I finished by walking through each step in my function. This process did help me complete the task, cause I found some bugs in my code and fixed them in time. He also asked me the time complexity of my solution. Here is my solution.</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">longest_prefix</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">))):</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">tmp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-</pre></div>
-
-
-<p>Obviously, my solution is not good. My function does not work when input is a empty list. The return of my function is a list instead of a string. It would be better if modify my solution like this way:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">longest_prefix</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">lst</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;&#39;</span>
-    <span class="n">prefix</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">))):</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">prefix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">prefix</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="k">return</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">prefix</span><span class="p">))</span>
-</pre></div>
-
-
-<h3>Better solutions</h3>
-<p>After the interview, I searched this problem and tried to find some better solutions. I want to code like a <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html"><em>pythonista</em></a>. Here are <a href="http://stackoverflow.com/questions/6718196/python-determine-prefix-from-a-set-of-similar-strings">some good solutions</a>.</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">commonprefix</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the longest prefix of all list elements.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#39;&#39;</span>
-    <span class="n">s1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    <span class="n">s2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">s1</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">s1</span>
-</pre></div>
-
-
-<p>Some guy even found a way to solve this problem using only one line python code.</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="s">&#39;abcde&#39;</span><span class="p">,</span> <span class="s">&#39;abxyz&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">takewhile</span><span class="p">,</span> <span class="n">izip</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">),</span> <span class="n">izip</span><span class="p">(</span><span class="o">*</span><span class="n">lst</span><span class="p">)))</span>
-<span class="s">&#39;ab&#39;</span>
-</pre></div>
+                <p>I just learned one trick for debugging Python script from my colleague. It's not such magical(maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script.</p>
+<p>I only need to add single line at the position I want to break.</p>
+<p>:::Python
+import code; code.interact(local=locals())</p>
+<p>After that, run Python script as usual. Python Interpreter will stop at your break point and launch a <ruby>REPL<rt>Read–eval–print loop</rt></ruby> console. You can print out variables to debug.</p>
+<hr />
+<p>In Ruby, we can use <a href="https://github.com/pry/pry">Pry</a> as the same way to debug Ruby script.</p>
             </div>
             <!-- /.entry-content -->
         </article>

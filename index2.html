@@ -78,6 +78,20 @@
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">在 AWS Auto Scaling Group 中替换 Instance</a></h2>
+                <div class="summary"><p> 这两周，我被分配的任务是实现 <a href="http://aws.amazon.com/">AWS</a> 的 <a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a> 功能。多亏有了 <a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。</p>
+<p> 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
+<ol>
+<li> 创建并配置（下载新发布的代码）多个新的 Instance；</li>
+<li> 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。</li>
+</ol>
+<p> 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。</p>
+<p> 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 ...</p>
+                    <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://yumminhuang.github.io/how-to-remove-all-pyc-files-from-a-project.html">How to remove all .pyc files from a project?</a></h2>
                 <div class="summary"><p>I am a paranoid guy. I like to delete all "useless" files. Today, I want to clean up my project repository. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.</p>
 <div class="highlight"><pre>find . -name <span class="s2">&quot;*.pyc&quot;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
@@ -141,13 +155,13 @@ OR ...</pre></div>
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="http://yumminhuang.github.io/tag/linux.html">
-                            Linux
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-2">
                         <a href="http://yumminhuang.github.io/tag/python.html">
                             Python
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-1">
+                        <a href="http://yumminhuang.github.io/tag/linux.html">
+                            Linux
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
@@ -156,8 +170,13 @@ OR ...</pre></div>
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/fabric.html">
-                            Fabric
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/boto.html">
+                            Boto
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -166,23 +185,8 @@ OR ...</pre></div>
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
                         <a href="http://yumminhuang.github.io/tag/objective-c.html">
                             Objective-C
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/jenkins.html">
-                            Jenkins
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -191,8 +195,18 @@ OR ...</pre></div>
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/boto.html">
-                            Boto
+                        <a href="http://yumminhuang.github.io/tag/fabric.html">
+                            Fabric
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/jenkins.html">
+                            Jenkins
                         </a>
                     </li>
                 </ul>
