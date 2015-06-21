@@ -2,7 +2,7 @@
 <html lang="zh"
 >
 <head>
-    <title>Graphite和Grafana简介 - /dev/null</title>
+    <title>Travis CI - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,22 +10,21 @@
 
 
 
-<link rel="canonical" href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">
+<link rel="canonical" href="http://yumminhuang.github.io/travis-ci.html">
 
         <meta name="author" content="Yumminhuang" />
-        <meta name="keywords" content="DevOps,Graphite,Grafana" />
-        <meta name="description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 观测量 : 观测值 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..." />
+        <meta name="keywords" content="DevOps,CI" />
+        <meta name="description" content="本文将主要介绍如何使用 Travis CI 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 Coveralls 来监测测试覆盖率。 Travis CI Travis CI 是一款 Web 端的 持续 Continuous 集成 Integration 工具。 Travis CI 对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。 Coveralls Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。 Coveralls 和 Travis ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Graphite和Grafana简介"/>
-        <meta property="og:url" content="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"/>
-        <meta property="og:description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 观测量 : 观测值 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..."/>
-        <meta property="article:published_time" content="2015-04-08" />
+        <meta property="og:title" content="Travis CI"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/travis-ci.html"/>
+        <meta property="og:description" content="本文将主要介绍如何使用 Travis CI 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 Coveralls 来监测测试覆盖率。 Travis CI Travis CI 是一款 Web 端的 持续 Continuous 集成 Integration 工具。 Travis CI 对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。 Coveralls Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。 Coveralls 和 Travis ..."/>
+        <meta property="article:published_time" content="2015-06-20" />
             <meta property="article:section" content="DevOps" />
             <meta property="article:tag" content="DevOps" />
-            <meta property="article:tag" content="Graphite" />
-            <meta property="article:tag" content="Grafana" />
+            <meta property="article:tag" content="CI" />
             <meta property="article:author" content="Yumminhuang" />
 
 
@@ -89,10 +88,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"
+                    <a href="http://yumminhuang.github.io/travis-ci.html"
                        rel="bookmark"
-                       title="Permalink to Graphite和Grafana简介">
-                        Graphite和Grafana简介
+                       title="Permalink to Travis CI">
+                        Travis CI
                     </a>
                 </h1>
             </header>
@@ -102,102 +101,79 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-04-08T22:13:00-04:00"> Wed 08 April 2015</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-06-20T21:10:00-04:00"> Sat 20 June 2015</time>
     </span>
-            <span class="label label-default">Modified</span>
-            <span class="modified">
-                <i class="fa fa-calendar"></i><time datetime="2015-04-15T20:49:00-04:00"> Wed 15 April 2015</time>
-            </span>
 
 
 
 <span class="label label-default">Tags</span>
 	<a href="http://yumminhuang.github.io/tag/devops.html">DevOps</a>
         /
-	<a href="http://yumminhuang.github.io/tag/graphite.html">Graphite</a>
-        /
-	<a href="http://yumminhuang.github.io/tag/grafana.html">Grafana</a>
+	<a href="http://yumminhuang.github.io/tag/ci.html">CI</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>Graphite</h2>
-<p><a href="http://graphite.wikidot.com/start">Graphite</a> 是一款开源的监控绘图工具。</p>
-<p>Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：</p>
+                <p> 本文将主要介绍如何使用 <a href="https://travis-ci.org">Travis CI</a> 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 <a href="https://coveralls.io/">Coveralls</a> 来监测测试覆盖率。</p>
+<h2>Travis CI</h2>
+<p>Travis CI 是一款 Web 端的 <ruby> 持续 <rt>Continuous</rt></ruby> <ruby> 集成 <rt>Integration</rt></ruby> 工具。</p>
+<p>Travis CI 对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。</p>
+<p> 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。</p>
+<h2>Coveralls</h2>
+<p>Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。</p>
+<p>Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Coveralls 支持包括 Travis CI、Jenkins 在内的绝大多数持续集成工具。</p>
+<h2> 样例 </h2>
+<p> 接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls<sup id="fnref:src"><a class="footnote-ref" href="#fn:src" rel="footnote">1</a></sup>。</p>
+<h3> 依赖管理和虚拟环境 </h3>
+<p> 我喜欢为每个项目新建一个 <ruby>virtualenv<rt> 虚拟环境 </rt></ruby>，这样可以确保每个项目的开发环境相互独立，避免发生冲突。<a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a> 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。</p>
+<p> 我一般会在项目中添加一个 <code>requirements.txt</code>，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行 </p>
+<div class="highlight"><pre>pip install -r requirements.txt
+</pre></div>
+
+
+<p> 就可以安装所有的库。</p>
+<h3> 单元测试和测试覆盖 </h3>
+<p> 对于 Python 项目，我喜欢使用 <a href="https://nose.readthedocs.org/en/latest/">nose</a> 来进行单元测试。此外，我还会使用 <a href="http://nedbatchelder.com/code/coverage/">coverage.py</a> 来测量代码的测试覆盖率。</p>
+<p>nose 对 coverage.py 的支持非常好，可以在 <code>nosetests</code> 命令后添加一系列选项来生成覆盖率。</p>
+<div class="highlight"><pre>nosetests --with-coverage
+</pre></div>
+
+
+<p> 就可以直接得到测试覆盖率的数据。</p>
+<p> 详细的使用方法可以参见 <a href="https://nose.readthedocs.org/en/latest/">nose 的官方文档 </a> 和 <a href="http://nedbatchelder.com/code/coverage/cmd.html">coverage.py 的官方文档 </a>。</p>
+<h3> 持续集成 </h3>
+<p> 在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 <code>.travis.yml</code>。Travis CI 的配置使用的是非常易读的 YAML 文件。</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
+<span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">2.6</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">2.7</span>
+<span class="c1"># command to install dependencies</span>
+<span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r requirements.txt</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install coveralls</span>
+<span class="c1"># command to run tests</span>
+<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">nosetests --cover-package=project --with-coverage</span>
+<span class="c1"># coveralls</span>
+<span class="l-Scalar-Plain">after_success</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">coveralls</span>
+</pre></div>
+
+
+<p> 同样地，也需要在 Coveralls 上开启相应的项目。</p>
+<p> 这样，Github 的代码库在每次收到 <code>Push</code> 和 <code>Pull Request</code> 的时候，Travis CI 都会按照配置文件上的步骤自动运行测试（或者部署，本样例只有测试。），并且把测试覆盖率的数据发布到 Coveralls。</p>
+<p> 详细的配置说明可以参见 <a href="http://docs.travis-ci.com/">Travis CI 的官方文档 </a> 和 <a href="https://coveralls.zendesk.com/hc/en-us">Coveralls 的官方文档 </a>。</p>
+<h3> 其它 </h3>
+<p>Travis CI 和 Coveralls 都可以生成 <ruby> 图章 <rt>Badge</rt></ruby>，用来显示 <ruby> 构建 <rt>Build</rt></ruby> 的结果，或者测试覆盖率。</p>
+<p><a href="https://travis-ci.org/yumminhuang/turbo-octo-meme"><img alt="Build Status" src="https://travis-ci.org/yumminhuang/turbo-octo-meme.svg?branch=master" /></a></p>
+<p> 可以将这些图章（如果已经发布到 PyPi，还可以加上版本号、下载量的图章。）放在项目的 <em>README</em> 文件里。</p>
+<div class="footnote">
+<hr />
 <ol>
-<li><strong><a href="https://github.com/graphite-project/carbon">carbon</a></strong> —— 基于 <a href="https://twistedmatrix.com/trac/">Twisted</a> 的进程，用来接收数据；</li>
-<li><strong><a href="https://github.com/graphite-project/whisper">whisper</a></strong> —— 专门存储时间序列类型数据的小型数据库；</li>
-<li><strong><a href="https://github.com/graphite-project/graphite-web">graphite webapp</a></strong> —— 基于 Django 的网页应用程序。</li>
+<li id="fn:src">
+<p> 详细代码可参见 <a href="https://github.com/yumminhuang/turbo-octo-meme">turbo-octo-meme</a>。&#160;<a class="footnote-backref" href="#fnref:src" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
 </ol>
-<p><img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /></p>
-<h3> 向 Graphite 发送数据 </h3>
-<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
-<p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：</p>
-<div class="highlight"><pre>&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;
-</pre></div>
-
-
-<p> 例如，有一个 Metric 叫作 <code>local.metric.random</code>，可以用下面的 Bash 命令发送当前时刻的值 <code>4</code>。</p>
-<div class="highlight"><pre><span class="nv">PORT</span><span class="o">=</span>2003
-<span class="nv">SERVER</span><span class="o">=</span>graphite.your.org
-<span class="nb">echo</span> <span class="s2">&quot;local.metric.random 4 `date +%s`&quot;</span> <span class="p">|</span> nc -q0 <span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PORT</span><span class="si">}</span>
-</pre></div>
-
-
-<p> 类似地，使用其它编程语言时，可以使用 Socket 发送数据。</p>
-<p> 另外，Graphite 的 Metric 名称支持以 <code>.</code> 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。</p>
-<ul>
-<li><code>webserver.system.cpu_usage</code></li>
-<li><code>webserver.system.mem_load</code></li>
-<li><code>webserver.network.input</code></li>
-</ul>
-<p>Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的第一步就是给 Metric 选取一个合适的名称。关于如何组织 Metric 的名称，可以参阅文章 <a href="http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/">Practical Guide to StatsD/Graphite Monitoring</a>。</p>
-<h3>Graphite Event</h3>
-<p> 除了支持简单的键／值数据类型，Graphite 还可以通过 <a href="http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events">Events</a> 来存储更复杂的数据。简而言之，Graphite Events 使用了 <code>tag</code> 和 <code>data</code> 两个键来存储更多的信息。</p>
-<p> 我们可以使用 HTTP POST 向 Graphite 发送一个 Event。</p>
-<div class="highlight"><pre>curl -X POST <span class="s2">&quot;http://graphite.your.org/events&quot;</span> -d <span class="s1">&#39;{&quot;what&quot;: &quot;Deployment&quot;, &quot;tags&quot;: &quot;webserver&quot;, &quot;data&quot;: &quot;Deploy webserver&quot;}&#39;</span>
-</pre></div>
-
-
-<p> 下文将会通过一个具体的实例来介绍 Events 的使用场景。</p>
-<h2>Grafana</h2>
-<p> 鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 <a href="http://grafana.org/">Grafana</a> 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多 <a href="http://grafana.org/features"> 不错的特性 </a>，还可以访问官网提供的 <a href="http://play.grafana.org">Live Demo</a> 来体验 Grafana。</p>
-<p> 设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源。</p>
-<div class="highlight"><pre><span class="nx">datasources</span><span class="o">:</span> <span class="p">{</span>
-  <span class="nx">graphite</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;graphite&#39;</span><span class="p">,</span>
-    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;http://my.graphite.server.com:8080&quot;</span><span class="p">,</span>
-  <span class="p">}</span>
-<span class="p">},</span>
-</pre></div>
-
-
-<p> 具体的配置教程可以参见 <a href="http://docs.grafana.org/v1.9/installation/"> 官方文档 </a>。</p>
-<h2> 实例 </h2>
-<p> 我实习所在公司使用 <a href="https://jenkins-ci.org">Jenkins</a> 部署代码。在部署完成之后，我添加了一段 <a href="https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin">post-build script</a> 执行下面的脚本。</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="nv">HOST</span><span class="o">=</span>http://graphite.your.org/events
-
-<span class="nb">echo</span> <span class="s1">&#39;Posting a deployment event to Graphite&#39;</span>
-
-curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&quot;: &quot;Deployment&quot;, &quot;tags&quot;: &quot;webserver,prd&quot;, &quot;data&quot;: \&quot;$BUILD_URL\&quot;}&#39;</span>
-</pre></div>
-
-
-<p> 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来绘制一幅图显示代码部署的 Events。</p>
-<p> 利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。</p>
-<p> 比如，在 <em>Tracking Every Release</em> 一文中，作者使用了该方法将 <code>PHP Warning</code> 和 <code>Code deploy</code> 叠加在一幅图里。</p>
-<p><img alt="Track Release" src="https://codeascraft.com/wp-content/uploads/2010/12/warnings_1hr_deploys3.png" /></p>
-<p> 从图中，我们可以发现第一次代码部署之后导致了大量的警告信息，经过随后的两次 Hotfix 之后，警告信息基本消除。</p>
-<h2> 总结 </h2>
-<p> 本文非常简要地介绍了 Graphite 的 Grafana 的一些特性和使用场景。我也是在实习当中第一次接触到这两个工具，很多具体的细节还在摸索之中。</p>
-<p> 总之，Graphite 是一个易扩展，使用简便的监控绘图工具，在这里推荐给大家使用。</p>
-<h2> 参考文献 </h2>
-<ol>
-<li><a href="http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events">Graphite Tip - A Better Way to Store Events</a></li>
-<li><a href="https://codeascraft.com/2010/12/08/track-every-release/">Tracking Every Release</a></li>
-<li><a href="http://joshhertz.se/post/making-annotations-in-graphana">Making Annotations in Graphana</a></li>
-</ol>
+</div>
             </div>
             <!-- /.entry-content -->
         </article>

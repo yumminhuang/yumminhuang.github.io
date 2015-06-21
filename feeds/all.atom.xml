@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-06-02T17:10:00-04:00</updated><entry><title>Jenkins简介</title><link href="http://yumminhuang.github.io/jenkinsjian-jie.html" rel="alternate"></link><updated>2015-06-02T17:10:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-06-02:jenkinsjian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html"&gt; 之前的一篇文章中 &lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/all.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-06-20T21:10:00-04:00</updated><entry><title>Travis CI</title><link href="http://yumminhuang.github.io/travis-ci.html" rel="alternate"></link><updated>2015-06-20T21:10:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-06-20:travis-ci.html</id><summary type="html">&lt;p&gt; 本文将主要介绍如何使用 &lt;a href="https://travis-ci.org"&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href="https://coveralls.io/"&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。&lt;/p&gt;
+&lt;h2&gt;Travis CI&lt;/h2&gt;
+&lt;p&gt;Travis CI 是一款 Web 端的 &lt;ruby&gt; 持续 &lt;rt&gt;Continuous&lt;/rt&gt;&lt;/ruby&gt; &lt;ruby&gt; 集成 &lt;rt&gt;Integration&lt;/rt&gt;&lt;/ruby&gt; 工具。&lt;/p&gt;
+&lt;p&gt;Travis CI 对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。&lt;/p&gt;
+&lt;p&gt; 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。&lt;/p&gt;
+&lt;h2&gt;Coveralls&lt;/h2&gt;
+&lt;p&gt;Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。&lt;/p&gt;
+&lt;p&gt;Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Coveralls 支持包括 Travis CI、Jenkins 在内的绝大多数持续集成工具。&lt;/p&gt;
+&lt;h2&gt; 样例 &lt;/h2&gt;
+&lt;p&gt; 接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls&lt;sup id="fnref:src"&gt;&lt;a class="footnote-ref" href="#fn:src" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;h3&gt; 依赖管理和虚拟环境 &lt;/h3&gt;
+&lt;p&gt; 我喜欢为每个项目新建一个 &lt;ruby&gt;virtualenv&lt;rt&gt; 虚拟环境 &lt;/rt&gt;&lt;/ruby&gt;，这样可以确保每个项目的开发环境相互独立，避免发生冲突。&lt;a href="https://virtualenvwrapper.readthedocs.org/en/latest/"&gt;virtualenvwrapper&lt;/a&gt; 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。&lt;/p&gt;
+&lt;p&gt; 我一般会在项目中添加一个 &lt;code&gt;requirements.txt&lt;/code&gt;，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行 &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install -r requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 就可以安装所有的库。&lt;/p&gt;
+&lt;h3&gt; 单元测试和测试覆盖 &lt;/h3&gt;
+&lt;p&gt; 对于 Python 项目，我喜欢使用 &lt;a href="https://nose.readthedocs.org/en/latest/"&gt;nose&lt;/a&gt; 来进行单元测试。此外，我还会使用 &lt;a href="http://nedbatchelder.com/code/coverage/"&gt;coverage.py&lt;/a&gt; 来测量代码的测试覆盖率。&lt;/p&gt;
+&lt;p&gt;nose 对 coverage.py 的支持非常好，可以在 &lt;code&gt;nosetests&lt;/code&gt; 命令后添加一系列选项来生成覆盖率。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;nosetests --with-coverage
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 就可以直接得到测试覆盖率的数据。&lt;/p&gt;
+&lt;p&gt; 详细的使用方法可以参见 &lt;a href="https://nose.readthedocs.org/en/latest/"&gt;nose 的官方文档 &lt;/a&gt; 和 &lt;a href="http://nedbatchelder.com/code/coverage/cmd.html"&gt;coverage.py 的官方文档 &lt;/a&gt;。&lt;/p&gt;
+&lt;h3&gt; 持续集成 &lt;/h3&gt;
+&lt;p&gt; 在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 &lt;code&gt;.travis.yml&lt;/code&gt;。Travis CI 的配置使用的是非常易读的 YAML 文件。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;language&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;2.6&lt;/span&gt;
+    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;2.7&lt;/span&gt;
+&lt;span class="c1"&gt;# command to install dependencies&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;install&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;pip install -r requirements.txt&lt;/span&gt;
+    &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;pip install coveralls&lt;/span&gt;
+&lt;span class="c1"&gt;# command to run tests&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l-Scalar-Plain"&gt;nosetests --cover-package=project --with-coverage&lt;/span&gt;
+&lt;span class="c1"&gt;# coveralls&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;after_success&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="l-Scalar-Plain"&gt;coveralls&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt; 同样地，也需要在 Coveralls 上开启相应的项目。&lt;/p&gt;
+&lt;p&gt; 这样，Github 的代码库在每次收到 &lt;code&gt;Push&lt;/code&gt; 和 &lt;code&gt;Pull Request&lt;/code&gt; 的时候，Travis CI 都会按照配置文件上的步骤自动运行测试（或者部署，本样例只有测试。），并且把测试覆盖率的数据发布到 Coveralls。&lt;/p&gt;
+&lt;p&gt; 详细的配置说明可以参见 &lt;a href="http://docs.travis-ci.com/"&gt;Travis CI 的官方文档 &lt;/a&gt; 和 &lt;a href="https://coveralls.zendesk.com/hc/en-us"&gt;Coveralls 的官方文档 &lt;/a&gt;。&lt;/p&gt;
+&lt;h3&gt; 其它 &lt;/h3&gt;
+&lt;p&gt;Travis CI 和 Coveralls 都可以生成 &lt;ruby&gt; 图章 &lt;rt&gt;Badge&lt;/rt&gt;&lt;/ruby&gt;，用来显示 &lt;ruby&gt; 构建 &lt;rt&gt;Build&lt;/rt&gt;&lt;/ruby&gt; 的结果，或者测试覆盖率。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://travis-ci.org/yumminhuang/turbo-octo-meme"&gt;&lt;img alt="Build Status" src="https://travis-ci.org/yumminhuang/turbo-octo-meme.svg?branch=master" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 可以将这些图章（如果已经发布到 PyPi，还可以加上版本号、下载量的图章。）放在项目的 &lt;em&gt;README&lt;/em&gt; 文件里。&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn:src"&gt;
+&lt;p&gt; 详细代码可参见 &lt;a href="https://github.com/yumminhuang/turbo-octo-meme"&gt;turbo-octo-meme&lt;/a&gt;。&amp;#160;&lt;a class="footnote-backref" href="#fnref:src" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</summary><category term="DevOps"></category><category term="CI"></category></entry><entry><title>Jenkins简介</title><link href="http://yumminhuang.github.io/jenkinsjian-jie.html" rel="alternate"></link><updated>2015-06-02T17:10:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-06-02:jenkinsjian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html"&gt; 之前的一篇文章中 &lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
 &lt;p&gt; 然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习 Jenkins 使用的教程。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h3&gt;Jenkins 是什么 &lt;/h3&gt;
@@ -36,7 +96,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt; 自动化一些复杂的流程，如数据库的迁移、备份，系统更新的安装等等 &lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt; 有一些常用，但是流程很复杂的过程，可以在 Jenkins 里通过 Job 来完成。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>One Trick for Debugging Python</title><link href="http://yumminhuang.github.io/one-trick-for-debugging-python.html" rel="alternate"></link><updated>2015-05-11T20:18:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-05-11:one-trick-for-debugging-python.html</id><summary type="html">&lt;p&gt;I just learned one trick for debugging Python script from my colleague. It's not such magical  maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script.&lt;/p&gt;
+&lt;p&gt; 有一些常用，但是流程很复杂的过程，可以在 Jenkins 里通过 Job 来完成。&lt;/p&gt;</summary><category term="DevOps"></category><category term="Jenkins"></category><category term="CI"></category></entry><entry><title>One Trick for Debugging Python</title><link href="http://yumminhuang.github.io/one-trick-for-debugging-python.html" rel="alternate"></link><updated>2015-05-11T20:18:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-05-11:one-trick-for-debugging-python.html</id><summary type="html">&lt;p&gt;I just learned one trick for debugging Python script from my colleague. It's not such magical  maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script.&lt;/p&gt;
 &lt;p&gt;I only need to add single line at the position I want to break.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;code&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;interact&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;locals&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -483,7 +543,7 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;p&gt; 运维工作是以成本为中心的。在公司里不能带来实际的收入，我们需要做的是花尽可能少的钱来提高公司的效率，保证服务的稳定。所以在接手一个任务之前，要估算不同解决方案的成本。有时候遇到一个问题，市场上有现成的收费工具可以用。如果不想花钱，自己来实现需要花费多少时间。&lt;/p&gt;
 &lt;p&gt; 刚入职时的一个任务是：检查公司里几百台服务器是否有安全更新需要安装，要有通知功能，能够列出有哪些更新，并且支持一键安装。现成的解决方案有针对 Ubuntu 系统的 &lt;a href="https://landscape.canonical.com/"&gt;Canonical Landscape&lt;/a&gt;。功能齐全，界面美观，但是其价格到了瞠目结舌的地步，每 100 台机器一年要 $75K，难以想象一个 Linux 管理工具卖这么贵会有人用吗这个成本显然是不能接受的。后来又找到一个独立开发者开发的补丁管理工具 &lt;a href="https://sysward.com/"&gt;Sysward&lt;/a&gt;，完全符合我们最初的需求，但是估算了一下，用这个每个月的费用仍然有 $700。最后考虑到这个需求并不是非常着急，而且在公司所使用的开源工具的基础上可以做出来，所以决定自己来做这个工具。&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt; 以上就是实习三个月以来，身为一个运维新人的体会和思考，想法或许还有些不成熟、不准确。实习还有四个月时间结束，希望届时能够有更多的体会可以总结。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>i3窗口管理器简介</title><link href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html" rel="alternate"></link><updated>2015-04-17T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-29:i3chuang-kou-guan-li-qi-jian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://kernelpanic.fm"&gt; 内核恐慌 &lt;/a&gt; 第九期 &lt;a href="http://ipn.li/kernelpanic/9/"&gt;「程序员的理想工作环境」&lt;/a&gt; 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href="http://awesome.naquadah.org/"&gt;Awesome 窗口管理器 &lt;/a&gt; 和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 &lt;a href="http://www.weibo.com/2622511625/C1N9FgPr5"&gt; 吐槽 &lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
+&lt;p&gt; 以上就是实习三个月以来，身为一个运维新人的体会和思考，想法或许还有些不成熟、不准确。实习还有四个月时间结束，希望届时能够有更多的体会可以总结。&lt;/p&gt;</summary><category term="DevOps"></category></entry><entry><title>i3窗口管理器简介</title><link href="http://yumminhuang.github.io/i3chuang-kou-guan-li-qi-jian-jie.html" rel="alternate"></link><updated>2015-06-03T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-03-29:i3chuang-kou-guan-li-qi-jian-jie.html</id><summary type="html">&lt;p&gt; 在 &lt;a href="http://kernelpanic.fm"&gt; 内核恐慌 &lt;/a&gt; 第九期 &lt;a href="http://ipn.li/kernelpanic/9/"&gt;「程序员的理想工作环境」&lt;/a&gt; 中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href="http://awesome.naquadah.org/"&gt;Awesome 窗口管理器 &lt;/a&gt; 和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上 &lt;a href="http://www.weibo.com/2622511625/C1N9FgPr5"&gt; 吐槽 &lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
 &lt;h2&gt; 平铺式窗口管理器 &lt;/h2&gt;
 &lt;p&gt; 窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。&lt;/p&gt;
 &lt;p&gt; 窗口管理器主要有两种 &lt;sup id="fnref:type"&gt;&lt;a class="footnote-ref" href="#fn:type" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
@@ -501,8 +561,8 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;li&gt; 稳定。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt; 具体来说。平铺式窗口管理器没有绚丽的界面和复杂的功能，可以让人更加专注于正在做的事情。同时，平铺式管理器非常精简，如 i3 的安装包只有 900 多 KB，相应地，消耗的资源也更少。平铺式管理器多依赖键盘操作，较少使用鼠标，配合应用程序的快捷键，基本上可以避免鼠标操作，从而提升工作效率。平铺式管理器不仅可以实现边框颜色之类的常规设置，还可以根据用户的需求，修改桌面、窗口等。最后，因为平铺式管理器非常精简，较之堆叠式管理器也更加稳定。至少在我使用的两个月里还没有出现过崩溃的情况。&lt;/p&gt;
-&lt;p&gt; 我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候 &lt;sup id="fnref:monitor"&gt;&lt;a class="footnote-ref" href="#fn:monitor" rel="footnote"&gt;2&lt;/a&gt;&lt;/sup&gt;，就像下图中那样，平铺式窗口管理器最能发挥作用。
-&lt;img alt="i3 配合多屏幕 " src="http://awesome.naquadah.org/images/6mon.small.png" /&gt;&lt;/p&gt;
+&lt;p&gt; 我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候 &lt;sup id="fnref:monitor"&gt;&lt;a class="footnote-ref" href="#fn:monitor" rel="footnote"&gt;2&lt;/a&gt;&lt;/sup&gt;，就像下图中那样，平铺式窗口管理器最能发挥作用。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="i3 配合多屏幕 " src="http://awesome.naquadah.org/images/6mon.small.png" /&gt;&lt;/p&gt;
 &lt;p&gt; 比如我工作时有一台 13 寸的笔记本和一台 27 寸的外接显示器。时刻保持打开的窗口包括公司内交流用的即时聊天软件，邮件客户端，编辑器，浏览器和多个终端窗口。使用 i3 之后，我的两个显示器基本是这样分配的：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt; 笔记本显示器左右分割为两栏，分别显示聊天软件和邮件客户端；&lt;/li&gt;
