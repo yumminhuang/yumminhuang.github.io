@@ -2,7 +2,7 @@ Title: Jenkins简介
 Date: 2015-06-02 17:10
 Modified: 2015-06-02 17:10
 Category: DevOps
-Tags: DevOps
+Tags: DevOps, Jenkins, CI
 
 在[之前的一篇文章中](http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html)，曾经提及过Jenkins。在本次实习中，Jenkins是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了Jenkins的使用，并且体会到其带来的方便。因此，希望总结一下Jenkins的使用。
 
