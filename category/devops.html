@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh"
->
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
     <title>DevOps - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
@@ -31,6 +30,11 @@
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="/dev/null ATOM Feed"/>
+
+
+
+        <link href="http://yumminhuang.github.io/feeds/devops.atom.xml" type="application/atom+xml" rel="alternate"
+              title="/dev/null DevOps ATOM Feed"/>
 
 </head>
 <body>
@@ -77,17 +81,15 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-
             <article>
                 <h2><a href="http://yumminhuang.github.io/travis-ci.html">Travis CI</a></h2>
                 <div class="summary"><p> 本文将主要介绍如何使用 <a href="https://travis-ci.org">Travis CI</a> 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 <a href="https://coveralls.io/">Coveralls</a> 来监测测试覆盖率。</p>
 <h2>Travis CI</h2>
 <p>Travis CI 是一款 Web 端的 <ruby> 持续 <rt>Continuous</rt></ruby> <ruby> 集成 <rt>Integration</rt></ruby> 工具。</p>
-<p>Travis CI 对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。</p>
+<p>Travis CI 采用 <a href="https://en.wikipedia.org/wiki/Freemium">「Freemium」</a> 的模式：对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。</p>
 <p> 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。</p>
 <h2>Coveralls</h2>
-<p>Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。</p>
-<p>Coveralls 和 Travis ...</p>
+<p>Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量 ...</p>
                     <a class="btn btn-default btn-xs" href="http://yumminhuang.github.io/travis-ci.html">more ...</a>
                 </div>
             </article>
@@ -256,8 +258,8 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/linux.html">
-                            Linux
+                        <a href="http://yumminhuang.github.io/tag/python.html">
+                            Python
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
@@ -266,13 +268,8 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/python.html">
-                            Python
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-3">
-                        <a href="http://yumminhuang.github.io/tag/jenkins.html">
-                            Jenkins
+                        <a href="http://yumminhuang.github.io/tag/linux.html">
+                            Linux
                         </a>
                     </li>
                     <li class="list-group-item tag-3">
@@ -280,19 +277,14 @@
                             Shell
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/fabric.html">
-                            Fabric
+                    <li class="list-group-item tag-3">
+                        <a href="http://yumminhuang.github.io/tag/jenkins.html">
+                            Jenkins
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                            Objective-C
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -306,12 +298,24 @@
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/fabric.html">
+                            Fabric
                         </a>
                     </li>
                 </ul>
             </li>
+
+
 
     <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
         <div id="gh_repos">
@@ -352,7 +356,7 @@
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
     Content
-  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
 </small></p>
          </div>
          <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>

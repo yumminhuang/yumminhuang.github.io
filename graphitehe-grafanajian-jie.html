@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh"
->
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
     <title>Graphite和Grafana简介 - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
@@ -38,6 +37,11 @@
 
         <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
               title="/dev/null ATOM Feed"/>
+
+
+
+        <link href="http://yumminhuang.github.io/feeds/devops.atom.xml" type="application/atom+xml" rel="alternate"
+              title="/dev/null DevOps ATOM Feed"/>
 
 </head>
 <body>
@@ -84,7 +88,6 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-
     <section id="content">
         <article>
             <header class="page-header">
@@ -106,8 +109,10 @@
     </span>
             <span class="label label-default">Modified</span>
             <span class="modified">
-                <i class="fa fa-calendar"></i><time datetime="2015-04-15T20:49:00-04:00"> Wed 15 April 2015</time>
+                <i class="fa fa-calendar"></i><time datetime="2015-06-20T22:35:00-04:00"> Sat 20 June 2015</time>
             </span>
+
+
 
 
 
@@ -161,7 +166,7 @@
 <p> 下文将会通过一个具体的实例来介绍 Events 的使用场景。</p>
 <h2>Grafana</h2>
 <p> 鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 <a href="http://grafana.org/">Grafana</a> 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多 <a href="http://grafana.org/features"> 不错的特性 </a>，还可以访问官网提供的 <a href="http://play.grafana.org">Live Demo</a> 来体验 Grafana。</p>
-<p> 设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源。</p>
+<p> 设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源 <sup id="fnref:update"><a class="footnote-ref" href="#fn:update" rel="footnote">1</a></sup>。</p>
 <div class="highlight"><pre><span class="nx">datasources</span><span class="o">:</span> <span class="p">{</span>
   <span class="nx">graphite</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;graphite&#39;</span><span class="p">,</span>
@@ -198,6 +203,14 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
 <li><a href="https://codeascraft.com/2010/12/08/track-every-release/">Tracking Every Release</a></li>
 <li><a href="http://joshhertz.se/post/making-annotations-in-graphana">Making Annotations in Graphana</a></li>
 </ol>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:update">
+<p>Grafana 最新的 2.0 较 1.9 有较大的变化，不再使用 <code>config.js</code> 来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。&#160;<a class="footnote-backref" href="#fnref:update" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
             </div>
             <!-- /.entry-content -->
         </article>
@@ -230,8 +243,8 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/linux.html">
-                            Linux
+                        <a href="http://yumminhuang.github.io/tag/python.html">
+                            Python
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
@@ -240,13 +253,8 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
-                        <a href="http://yumminhuang.github.io/tag/python.html">
-                            Python
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-3">
-                        <a href="http://yumminhuang.github.io/tag/jenkins.html">
-                            Jenkins
+                        <a href="http://yumminhuang.github.io/tag/linux.html">
+                            Linux
                         </a>
                     </li>
                     <li class="list-group-item tag-3">
@@ -254,19 +262,14 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
                             Shell
                         </a>
                     </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/fabric.html">
-                            Fabric
+                    <li class="list-group-item tag-3">
+                        <a href="http://yumminhuang.github.io/tag/jenkins.html">
+                            Jenkins
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/sensu.html">
-                            Sensu
-                        </a>
-                    </li>
-                    <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                            Objective-C
+                        <a href="http://yumminhuang.github.io/tag/graphite.html">
+                            Graphite
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -280,12 +283,24 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://yumminhuang.github.io/tag/graphite.html">
-                            Graphite
+                        <a href="http://yumminhuang.github.io/tag/objective-c.html">
+                            Objective-C
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/sensu.html">
+                            Sensu
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://yumminhuang.github.io/tag/fabric.html">
+                            Fabric
                         </a>
                     </li>
                 </ul>
             </li>
+
+
 
     <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
         <div id="gh_repos">
@@ -326,7 +341,7 @@ curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
     Content
-  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
 </small></p>
          </div>
          <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>

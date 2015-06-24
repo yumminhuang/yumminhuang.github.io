@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/devops.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-06-20T21:10:00-04:00</updated><entry><title>Travis CI</title><link href="http://yumminhuang.github.io/travis-ci.html" rel="alternate"></link><updated>2015-06-20T21:10:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-06-20:travis-ci.html</id><summary type="html">&lt;p&gt; 本文将主要介绍如何使用 &lt;a href="https://travis-ci.org"&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href="https://coveralls.io/"&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>/dev/null</title><link href="http://yumminhuang.github.io/" rel="alternate"></link><link href="http://yumminhuang.github.io/feeds/devops.atom.xml" rel="self"></link><id>http://yumminhuang.github.io/</id><updated>2015-06-20T22:35:00-04:00</updated><entry><title>Travis CI</title><link href="http://yumminhuang.github.io/travis-ci.html" rel="alternate"></link><updated>2015-06-20T21:10:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-06-20:travis-ci.html</id><summary type="html">&lt;p&gt; 本文将主要介绍如何使用 &lt;a href="https://travis-ci.org"&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href="https://coveralls.io/"&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。&lt;/p&gt;
 &lt;h2&gt;Travis CI&lt;/h2&gt;
 &lt;p&gt;Travis CI 是一款 Web 端的 &lt;ruby&gt; 持续 &lt;rt&gt;Continuous&lt;/rt&gt;&lt;/ruby&gt; &lt;ruby&gt; 集成 &lt;rt&gt;Integration&lt;/rt&gt;&lt;/ruby&gt; 工具。&lt;/p&gt;
-&lt;p&gt;Travis CI 对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。&lt;/p&gt;
+&lt;p&gt;Travis CI 采用 &lt;a href="https://en.wikipedia.org/wiki/Freemium"&gt;「Freemium」&lt;/a&gt; 的模式：对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。&lt;/p&gt;
 &lt;p&gt; 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。&lt;/p&gt;
 &lt;h2&gt;Coveralls&lt;/h2&gt;
 &lt;p&gt;Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。&lt;/p&gt;
@@ -250,7 +250,7 @@ TOTAL         +2       -2      +50.00%
 &lt;h3&gt; 参考文献 &lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments"&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="DevOps"></category><category term="Python"></category><category term="Fabric"></category></entry><entry><title>Graphite和Grafana简介</title><link href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html" rel="alternate"></link><updated>2015-04-15T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-08:graphitehe-grafanajian-jie.html</id><summary type="html">&lt;h2&gt;Graphite&lt;/h2&gt;
+&lt;/ol&gt;</summary><category term="DevOps"></category><category term="Python"></category><category term="Fabric"></category></entry><entry><title>Graphite和Grafana简介</title><link href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html" rel="alternate"></link><updated>2015-06-20T22:35:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-08:graphitehe-grafanajian-jie.html</id><summary type="html">&lt;h2&gt;Graphite&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://graphite.wikidot.com/start"&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;
 &lt;p&gt;Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：&lt;/p&gt;
 &lt;ol&gt;
@@ -291,7 +291,7 @@ TOTAL         +2       -2      +50.00%
 &lt;p&gt; 下文将会通过一个具体的实例来介绍 Events 的使用场景。&lt;/p&gt;
 &lt;h2&gt;Grafana&lt;/h2&gt;
 &lt;p&gt; 鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 &lt;a href="http://grafana.org/"&gt;Grafana&lt;/a&gt; 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多 &lt;a href="http://grafana.org/features"&gt; 不错的特性 &lt;/a&gt;，还可以访问官网提供的 &lt;a href="http://play.grafana.org"&gt;Live Demo&lt;/a&gt; 来体验 Grafana。&lt;/p&gt;
-&lt;p&gt; 设置 Grafana，只需编辑 &lt;code&gt;config.js&lt;/code&gt; 设置数据来源。&lt;/p&gt;
+&lt;p&gt; 设置 Grafana，只需编辑 &lt;code&gt;config.js&lt;/code&gt; 设置数据来源 &lt;sup id="fnref:update"&gt;&lt;a class="footnote-ref" href="#fn:update" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;datasources&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="nx"&gt;graphite&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;graphite&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -327,7 +327,15 @@ curl -X POST &lt;span class="nv"&gt;$HOST&lt;/span&gt; -d &lt;span class="s1"&gt
 &lt;li&gt;&lt;a href="http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events"&gt;Graphite Tip - A Better Way to Store Events&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://codeascraft.com/2010/12/08/track-every-release/"&gt;Tracking Every Release&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://joshhertz.se/post/making-annotations-in-graphana"&gt;Making Annotations in Graphana&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="DevOps"></category><category term="Graphite"></category><category term="Grafana"></category></entry><entry><title>Sensu简介</title><link href="http://yumminhuang.github.io/sensujian-jie.html" rel="alternate"></link><updated>2015-03-31T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-04:sensujian-jie.html</id><summary type="html">&lt;h2&gt;Sensu 简介 &lt;/h2&gt;
+&lt;/ol&gt;
+&lt;div class="footnote"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn:update"&gt;
+&lt;p&gt;Grafana 最新的 2.0 较 1.9 有较大的变化，不再使用 &lt;code&gt;config.js&lt;/code&gt; 来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。&amp;#160;&lt;a class="footnote-backref" href="#fnref:update" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</summary><category term="DevOps"></category><category term="Graphite"></category><category term="Grafana"></category></entry><entry><title>Sensu简介</title><link href="http://yumminhuang.github.io/sensujian-jie.html" rel="alternate"></link><updated>2015-03-31T20:49:00-04:00</updated><author><name>Yumminhuang</name></author><id>tag:yumminhuang.github.io,2015-04-04:sensujian-jie.html</id><summary type="html">&lt;h2&gt;Sensu 简介 &lt;/h2&gt;
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Sensu components" src="http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif" /&gt;&lt;/p&gt;
 &lt;p&gt;Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。例如：&lt;/p&gt;
