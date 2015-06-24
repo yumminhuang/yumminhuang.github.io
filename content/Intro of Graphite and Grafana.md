@@ -1,6 +1,6 @@
 Title: Graphite和Grafana简介
 Date: 2015-04-08 22:13
-Modified: 2015-04-15 20:49
+Modified: 2015-06-20 22:35
 Category: DevOps
 Tags: DevOps, Graphite, Grafana
 
@@ -58,7 +58,7 @@ Graphite将以树型结构展示这三个Metric。因此，使用Graphite的第�
 
 鉴于Graphite的界面过于简单，功能比较单一，可以使用[Grafana](http://grafana.org/)作为Graphite的控制台。 Grafana是一款开源的图形控制台，有很多[不错的特性](http://grafana.org/features)，还可以访问官网提供的[Live Demo](http://play.grafana.org)来体验Grafana。
 
-设置Grafana，只需编辑`config.js`设置数据来源。
+设置Grafana，只需编辑`config.js`设置数据来源[^update]。
 
 	:::Javascript
 	datasources: {
@@ -103,3 +103,5 @@ Graphite将以树型结构展示这三个Metric。因此，使用Graphite的第�
 1. [Graphite Tip - A Better Way to Store Events](http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events)
 2. [Tracking Every Release](https://codeascraft.com/2010/12/08/track-every-release/)
 3. [Making Annotations in Graphana](http://joshhertz.se/post/making-annotations-in-graphana)
+
+[^update]: Grafana最新的2.0较1.9有较大的变化，不再使用`config.js`来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。

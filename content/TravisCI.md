@@ -9,7 +9,7 @@ Tags: DevOps, CI
 
 Travis CI是一款Web端的<ruby>持续<rt>Continuous</rt></ruby> <ruby>集成<rt>Integration</rt></ruby>工具。
 
-Travis CI对Github上的开源项目免费，付费的话则可以托管私有项目。Github上很多知名的开源项目都适用Travis CI来进行自动化测试。
+Travis CI采用[「Freemium」](https://en.wikipedia.org/wiki/Freemium)的模式：对Github上的开源项目免费，付费的话则可以托管私有项目。Github上很多知名的开源项目都适用Travis CI来进行自动化测试。
 
 和Jenkins相比，Travis CI要轻量很多。但是已经足以完成简单的自动化测试、部署。
 
