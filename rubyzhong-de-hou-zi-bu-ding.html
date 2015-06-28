@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Graphite和Grafana简介 - /dev/null</title>
+    <title>Ruby中的猴子补丁 - /dev/null</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,22 +9,20 @@
 
 
 
-<link rel="canonical" href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html">
+<link rel="canonical" href="http://yumminhuang.github.io/rubyzhong-de-hou-zi-bu-ding.html">
 
         <meta name="author" content="Yumminhuang" />
-        <meta name="keywords" content="DevOps,Graphite,Grafana" />
-        <meta name="description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 观测量 : 观测值 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..." />
+        <meta name="keywords" content="Ruby" />
+        <meta name="description" content="之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。 猴子补丁 猴子补丁（Monkey Patch）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。 词源 Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。 使用场景 以我的理解，Monkey patch 有两种使用场景： 紧急的安全性补丁，即 Hotfix； 修改或扩展库中的属性和方法。 在 Ruby 中使用 ..." />
 
         <meta property="og:site_name" content="/dev/null" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Graphite和Grafana简介"/>
-        <meta property="og:url" content="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"/>
-        <meta property="og:description" content="Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向 Graphite 发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 观测量 : 观测值 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 ..."/>
-        <meta property="article:published_time" content="2015-04-08" />
-            <meta property="article:section" content="DevOps" />
-            <meta property="article:tag" content="DevOps" />
-            <meta property="article:tag" content="Graphite" />
-            <meta property="article:tag" content="Grafana" />
+        <meta property="og:title" content="Ruby中的猴子补丁"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/rubyzhong-de-hou-zi-bu-ding.html"/>
+        <meta property="og:description" content="之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。 猴子补丁 猴子补丁（Monkey Patch）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。 词源 Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。 使用场景 以我的理解，Monkey patch 有两种使用场景： 紧急的安全性补丁，即 Hotfix； 修改或扩展库中的属性和方法。 在 Ruby 中使用 ..."/>
+        <meta property="article:published_time" content="2015-06-27" />
+            <meta property="article:section" content="Miscellaneous" />
+            <meta property="article:tag" content="Ruby" />
             <meta property="article:author" content="Yumminhuang" />
 
 
@@ -40,8 +38,8 @@
 
 
 
-        <link href="http://yumminhuang.github.io/feeds/devops.atom.xml" type="application/atom+xml" rel="alternate"
-              title="/dev/null DevOps ATOM Feed"/>
+        <link href="http://yumminhuang.github.io/feeds/miscellaneous.atom.xml" type="application/atom+xml" rel="alternate"
+              title="/dev/null Miscellaneous ATOM Feed"/>
 
 </head>
 <body>
@@ -63,7 +61,7 @@
                          <li><a href="http://yumminhuang.github.io/pages/about-me.html">
                              About Me
                           </a></li>
-                        <li class="active">
+                        <li >
                             <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
                         </li>
                         <li >
@@ -72,7 +70,7 @@
                         <li >
                             <a href="http://yumminhuang.github.io/category/linux.html">Linux</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
                         </li>
             </ul>
@@ -92,10 +90,10 @@
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://yumminhuang.github.io/graphitehe-grafanajian-jie.html"
+                    <a href="http://yumminhuang.github.io/rubyzhong-de-hou-zi-bu-ding.html"
                        rel="bookmark"
-                       title="Permalink to Graphite和Grafana简介">
-                        Graphite和Grafana简介
+                       title="Permalink to Ruby中的猴子补丁">
+                        Ruby中的猴子补丁
                     </a>
                 </h1>
             </header>
@@ -105,112 +103,89 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-04-08T22:13:00-04:00"> Wed 08 April 2015</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-06-27T17:10:00-04:00"> Sat 27 June 2015</time>
     </span>
-            <span class="label label-default">Modified</span>
-            <span class="modified">
-                <i class="fa fa-calendar"></i><time datetime="2015-06-20T22:35:00-04:00"> Sat 20 June 2015</time>
-            </span>
 
 
 
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://yumminhuang.github.io/tag/devops.html">DevOps</a>
-        /
-	<a href="http://yumminhuang.github.io/tag/graphite.html">Graphite</a>
-        /
-	<a href="http://yumminhuang.github.io/tag/grafana.html">Grafana</a>
+	<a href="http://yumminhuang.github.io/tag/ruby.html">Ruby</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>Graphite</h2>
-<p><a href="http://graphite.wikidot.com/start">Graphite</a> 是一款开源的监控绘图工具。</p>
-<p>Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：</p>
+                <p> 之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。</p>
+<h2> 猴子补丁 </h2>
+<p> 猴子补丁（<a href="https://en.wikipedia.org/wiki/Monkey_patch">Monkey Patch</a>）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。</p>
+<h3> 词源 </h3>
+<p>Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。</p>
+<h3> 使用场景 </h3>
+<p> 以我的理解，Monkey patch 有两种使用场景：</p>
 <ol>
-<li><strong><a href="https://github.com/graphite-project/carbon">carbon</a></strong> —— 基于 <a href="https://twistedmatrix.com/trac/">Twisted</a> 的进程，用来接收数据；</li>
-<li><strong><a href="https://github.com/graphite-project/whisper">whisper</a></strong> —— 专门存储时间序列类型数据的小型数据库；</li>
-<li><strong><a href="https://github.com/graphite-project/graphite-web">graphite webapp</a></strong> —— 基于 Django 的网页应用程序。</li>
+<li> 紧急的安全性补丁，即 Hotfix；</li>
+<li> 修改或扩展库中的属性和方法。</li>
 </ol>
-<p><img alt="Graphite Overview" src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" /></p>
-<h3> 向 Graphite 发送数据 </h3>
-<p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送 <code> 观测量 : 观测值 </code> 这一键值组合，就可以得到以时间为 X 轴，观测值为 Y 轴的图。</p>
-<p> 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：</p>
-<div class="highlight"><pre>&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;
+<h2> 在 Ruby 中使用 Monkey Patch</h2>
+<p> 我当时遇到的场景是这样的：</p>
+<p> 我司使用第三方库 <a href="http://fog.io/">fog</a> 进行 EC2 的操作。创建实例等很多命令都需要设置实例类型这个参数。在 fog 里，EC2 的所有类型都定义在 <code>fog/aws/models/compute/flavors.rb</code> 的 <code>FLAVORS</code> 数组里。如果设置的类型不在 <code>FLAVORS</code> 数组里，fog 都会视作是无效的参数而报错。</p>
+<p> 后来，亚马逊发布了新的实例类型 <code>D2</code>。虽然 Ruby 的第三方社区非常活跃，但是 fog 的开发社区还是没有及时添加 D2 到 <code>flavors.rb</code> 里；而我司的工作又迫切需要使用 D2 类型的实例。</p>
+<p> 背景交待完毕，接下来看看有什么样的解决方法。</p>
+<p><strong> 方法一 </strong>：我们可以向 fog 提交一个 Pull Request 来添加新类型。</p>
+<p> 但是这个方法行不通。我们使用的 <a href="https://github.com/chef/knife-ec2">knife-ec2</a> 对 fog 的版本依赖必须是 <code>1.25.*</code>，但是 fog 已经更新到了 <code>1.31.0</code>，而且 fog 从 <code>1.27.0</code> 开始结构上有很大的变化。显然，我们不可能再等 knife-ec2 升级支持新版本的 fog，所以我们提交 Pull Request 更新 fog 不能解决问题。</p>
+<p><strong> 方法二 </strong>：手动更新旧版 fog
+既然不能使用最新版的 fog，我们可以手动编辑 <code>1.25</code> 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。</p>
+<p> 最后，在同事的指点下，我采用了第三种方法，即 <strong>Monkey Patch</strong>。我在我司的 Ruby 项目里添加了一个文件 <code>lib/PROJECT_NAME/monkey_patches/flavors.rb</code>，接着在文件中添加以下代码来修改 <code>fog/aws/models/compute/flavors</code>：</p>
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;fog/aws/models/compute/flavors&#39;</span>
+
+<span class="k">class</span> <span class="nc">Object</span>
+
+  <span class="k">def</span> <span class="nf">redef_without_warning</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="no">Module</span><span class="p">)</span> <span class="p">?</span> <span class="nb">self</span> <span class="p">:</span> <span class="nb">self</span><span class="o">.</span><span class="n">class</span>
+    <span class="n">mod</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:remove_const</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span> <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="n">const_defined?</span><span class="p">(</span><span class="n">const</span><span class="p">)</span>
+    <span class="n">mod</span><span class="o">.</span><span class="n">const_set</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nn">Fog</span>
+  <span class="k">module</span> <span class="nn">Compute</span>
+    <span class="k">class</span> <span class="nc">AWS</span>
+      <span class="no">NEW_FLAVORS</span> <span class="o">=</span> <span class="no">FLAVORS</span> <span class="o">+</span> <span class="o">[</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&quot;d2.xlarge&quot;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&quot;d2.2xlarge&quot;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&quot;d2.4xlarge&quot;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&quot;d2.8xlarge&quot;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">}</span>
+      <span class="o">]</span>
+
+      <span class="n">redef_without_warning</span> <span class="ss">:FLAVORS</span><span class="p">,</span> <span class="no">NEW_FLAVORS</span>
+
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
 
 
-<p> 例如，有一个 Metric 叫作 <code>local.metric.random</code>，可以用下面的 Bash 命令发送当前时刻的值 <code>4</code>。</p>
-<div class="highlight"><pre><span class="nv">PORT</span><span class="o">=</span>2003
-<span class="nv">SERVER</span><span class="o">=</span>graphite.your.org
-<span class="nb">echo</span> <span class="s2">&quot;local.metric.random 4 `date +%s`&quot;</span> <span class="p">|</span> nc -q0 <span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PORT</span><span class="si">}</span>
-</pre></div>
-
-
-<p> 类似地，使用其它编程语言时，可以使用 Socket 发送数据。</p>
-<p> 另外，Graphite 的 Metric 名称支持以 <code>.</code> 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。</p>
-<ul>
-<li><code>webserver.system.cpu_usage</code></li>
-<li><code>webserver.system.mem_load</code></li>
-<li><code>webserver.network.input</code></li>
-</ul>
-<p>Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的第一步就是给 Metric 选取一个合适的名称。关于如何组织 Metric 的名称，可以参阅文章 <a href="http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/">Practical Guide to StatsD/Graphite Monitoring</a>。</p>
-<h3>Graphite Event</h3>
-<p> 除了支持简单的键／值数据类型，Graphite 还可以通过 <a href="http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events">Events</a> 来存储更复杂的数据。简而言之，Graphite Events 使用了 <code>tag</code> 和 <code>data</code> 两个键来存储更多的信息。</p>
-<p> 我们可以使用 HTTP POST 向 Graphite 发送一个 Event。</p>
-<div class="highlight"><pre>curl -X POST <span class="s2">&quot;http://graphite.your.org/events&quot;</span> -d <span class="s1">&#39;{&quot;what&quot;: &quot;Deployment&quot;, &quot;tags&quot;: &quot;webserver&quot;, &quot;data&quot;: &quot;Deploy webserver&quot;}&#39;</span>
-</pre></div>
-
-
-<p> 下文将会通过一个具体的实例来介绍 Events 的使用场景。</p>
-<h2>Grafana</h2>
-<p> 鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 <a href="http://grafana.org/">Grafana</a> 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多 <a href="http://grafana.org/features"> 不错的特性 </a>，还可以访问官网提供的 <a href="http://play.grafana.org">Live Demo</a> 来体验 Grafana。</p>
-<p> 设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源 <sup id="fnref:update"><a class="footnote-ref" href="#fn:update" rel="footnote">1</a></sup>。</p>
-<div class="highlight"><pre><span class="nx">datasources</span><span class="o">:</span> <span class="p">{</span>
-  <span class="nx">graphite</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;graphite&#39;</span><span class="p">,</span>
-    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;http://my.graphite.server.com:8080&quot;</span><span class="p">,</span>
-  <span class="p">}</span>
-<span class="p">},</span>
-</pre></div>
-
-
-<p> 具体的配置教程可以参见 <a href="http://docs.grafana.org/v1.9/installation/"> 官方文档 </a>。</p>
-<h2> 实例 </h2>
-<p> 我实习所在公司使用 <a href="https://jenkins-ci.org">Jenkins</a> 部署代码。在部署完成之后，我添加了一段 <a href="https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin">post-build script</a> 执行下面的脚本。</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="nv">HOST</span><span class="o">=</span>http://graphite.your.org/events
-
-<span class="nb">echo</span> <span class="s1">&#39;Posting a deployment event to Graphite&#39;</span>
-
-curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&quot;what&quot;: &quot;Deployment&quot;, &quot;tags&quot;: &quot;webserver,prd&quot;, &quot;data&quot;: \&quot;$BUILD_URL\&quot;}&#39;</span>
-</pre></div>
-
-
-<p> 这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来绘制一幅图显示代码部署的 Events。</p>
-<p> 利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。</p>
-<p> 比如，在 <em>Tracking Every Release</em> 一文中，作者使用了该方法将 <code>PHP Warning</code> 和 <code>Code deploy</code> 叠加在一幅图里。</p>
-<p><img alt="Track Release" src="https://codeascraft.com/wp-content/uploads/2010/12/warnings_1hr_deploys3.png" /></p>
-<p> 从图中，我们可以发现第一次代码部署之后导致了大量的警告信息，经过随后的两次 Hotfix 之后，警告信息基本消除。</p>
 <h2> 总结 </h2>
-<p> 本文非常简要地介绍了 Graphite 的 Grafana 的一些特性和使用场景。我也是在实习当中第一次接触到这两个工具，很多具体的细节还在摸索之中。</p>
-<p> 总之，Graphite 是一个易扩展，使用简便的监控绘图工具，在这里推荐给大家使用。</p>
-<h2> 参考文献 </h2>
-<ol>
-<li><a href="http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events">Graphite Tip - A Better Way to Store Events</a></li>
-<li><a href="https://codeascraft.com/2010/12/08/track-every-release/">Tracking Every Release</a></li>
-<li><a href="http://joshhertz.se/post/making-annotations-in-graphana">Making Annotations in Graphana</a></li>
-</ol>
-<div class="footnote">
+<p> 通过在自己的代码中添加一个 Monkey patch，我们成功地实现了向 fog 中动态添加新实例类型。我司终于可以使用 fog 创建 D2 类型的机器了；而且这个方法改动的代码量最小，也更加容易维护。</p>
+<p>Monkey Patch 并非是完美的解决方法，它会引入一些 <a href="https://en.wikipedia.org/wiki/Monkey_patch#Pitfalls"> 陷阱 </a>。所以这个技巧在软件工程领域还有一些争议。不过，我还是觉得 Monkey Patch 是一个不错的零时性解决方法。</p>
 <hr />
-<ol>
-<li id="fn:update">
-<p>Grafana 最新的 2.0 较 1.9 有较大的变化，不再使用 <code>config.js</code> 来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。&#160;<a class="footnote-backref" href="#fnref:update" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+<h3> 参考文章 </h3>
+<ul>
+<li><a href="http://www.justinweiss.com/blog/2015/01/20/3-ways-to-monkey-patch-without-making-a-mess/">3 Ways to Monkey-patch Without Making a Mess</a></li>
+<li><a href="http://devblog.avdi.org/2008/02/23/why-monkeypatching-is-destroying-ruby/">Monkeypatching is Destroying Ruby</a></li>
+</ul>
             </div>
             <!-- /.entry-content -->
         </article>
