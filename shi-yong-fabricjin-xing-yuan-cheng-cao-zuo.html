@@ -1,157 +1,171 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" class="han-init" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
-   <head>
-      <title>使用Fabric进行远程操作 - /dev/null</title>
-      <!-- Using the latest rendering mode for IE -->
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="canonical" href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html">
-      <meta name="author" content="Yumminhuang" />
-      <meta name="keywords" content="DevOps,Python,Fabric" />
-      <meta name="description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上 ..." />
-      <meta property="og:site_name" content="/dev/null" />
-      <meta property="og:type" content="article"/>
-      <meta property="og:title" content="使用Fabric进行远程操作"/>
-      <meta property="og:url" content="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"/>
-      <meta property="og:description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上 ..."/>
-      <meta property="article:published_time" content="2015-04-15" />
-      <meta property="article:section" content="DevOps" />
-      <meta property="article:tag" content="DevOps" />
-      <meta property="article:tag" content="Python" />
-      <meta property="article:tag" content="Fabric" />
-      <meta property="article:author" content="Yumminhuang" />
-      <!-- Bootstrap -->
-      <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.yeti.min.css" type="text/css"/>
-      <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
-      <link href="http://yumminhuang.github.io/theme/css/pygments/manni.css" rel="stylesheet">
-      <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
-      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.5/han.min.css">
-      <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
-         title="/dev/null ATOM Feed"/>
-      <link href="http://yumminhuang.github.io/feeds/devops.atom.xml" type="application/atom+xml" rel="alternate"
-         title="/dev/null DevOps ATOM Feed"/>
-   </head>
-   <body>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-         <div class="container">
-            <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-               <span class="sr-only">Toggle navigation</span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               </button>
-               <a href="http://yumminhuang.github.io/" class="navbar-brand">
-               /dev/null            </a>
-            </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-               <ul class="nav navbar-nav">
-                  <li><a href="http://yumminhuang.github.io/pages/about-me.html">
-                     About Me
-                     </a>
-                  </li>
-                  <li class="active">
-                     <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
-                  </li>
-                  <li >
-                     <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
-                  </li>
-                  <li >
-                     <a href="http://yumminhuang.github.io/category/linux.html">Linux</a>
-                  </li>
-                  <li >
-                     <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
-                  </li>
-               </ul>
-               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
-               </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-         </div>
-      </div>
-      <!-- /.navbar -->
-      <!-- Banner -->
-      <!-- End Banner -->
-      <div class="container">
-         <div class="row">
-            <div class="col-sm-9">
-               <section id="content">
-                  <article>
-                     <header class="page-header">
-                        <h1>
-                           <a href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"
-                              rel="bookmark"
-                              title="Permalink to 使用Fabric进行远程操作">
-                           使用Fabric进行远程操作
-                           </a>
-                        </h1>
-                     </header>
-                     <div class="entry-content">
-                        <div class="panel">
-                           <div class="panel-body">
-                              <footer class="post-info">
-                                 <span class="label label-default">Date</span>
-                                 <span class="published">
-                                 <i class="fa fa-calendar"></i><time datetime="2015-04-15T22:55:00-04:00"> Wed 15 April 2015</time>
-                                 </span>
-                                 <span class="label label-default">Modified</span>
-                                 <span class="modified">
-                                 <i class="fa fa-calendar"></i><time datetime="2015-04-16T23:03:00-04:00"> Thu 16 April 2015</time>
-                                 </span>
-                                 <span class="label label-default">Tags</span>
-                                 <a href="http://yumminhuang.github.io/tag/devops.html">DevOps</a>
-                                 /
-                                 <a href="http://yumminhuang.github.io/tag/python.html">Python</a>
-                                 /
-                                 <a href="http://yumminhuang.github.io/tag/fabric.html">Fabric</a>
-                              </footer>
-                              <!-- /.post-info -->
-                           </div>
-                        </div>
-                        <h3>Fabric 简介 </h3>
-                        <p><a href="http://www.fabfile.org">Fabric</a> 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。</p>
-                        <h4> 使用 Fabric 的好处 </h4>
-                        <p> 个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
-                        <p> 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
-                        <p> 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。</p>
-                        <p> 最后，Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
-                        <p> 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。</p>
-                        <h3> 常用的 Fabric 函数 </h3>
-                        <p> 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 <a href="http://docs.fabfile.org/en/latest/index.html"> 官方文档 </a>。</p>
-                        <h4> 常用操作 </h4>
-                        <p>Fabric 的常用 <a href="http://docs.fabfile.org/en/latest/api/core/operations.html"> 操作 </a></p>
-                        <ul>
-                           <li><code>run</code>：在远程机器上执行 Shell 命令；</li>
-                           <li><code>sudo</code>：带有 root 权限的 <code>run</code>；</li>
-                           <li><code>local</code>：执行本地命令；</li>
-                           <li><code>get</code>：从远程机器下载文件；</li>
-                           <li><code>put</code>：上传文件到远程机器；</li>
-                           <li><code>prompt</code>：可以理解为在远程机器上执行 <code>raw_input</code></li>
-                           <li><code>reboot</code>：重启远程机器。</li>
-                        </ul>
-                        <h4> 常用上下文管理器和装饰器 </h4>
-                        <p> 上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 <a href="http://zh.wikipedia.org/wiki/ 语法糖 ">「语法糖（Syntax sugar）」</a>。Fabric 中常用的 <a href="http://docs.fabfile.org/en/latest/api/core/context_managers.html"> 上下文管理器 </a> 有：</p>
-                        <ul>
-                           <li><code>cd</code>：切换目录；</li>
-                           <li><code>lcd</code>：在本地切换目录，即 <code>local cd</code>；</li>
-                           <li><code>path</code>：可以添加路径到 <code>PATH</code>;</li>
-                           <li><code>settings</code>：用来临时修改 <code>env</code> 变量，使变量只作用在一段代码中。</li>
-                        </ul>
-                        <p> 常用的 <a href="http://docs.fabfile.org/en/latest/api/core/decorators.html"> 装饰器 </a> 有：</p>
-                        <ul>
-                           <li><code>@task</code>：用来把一个函数声明为 <a href="http://docs.fabfile.org/en/latest/usage/tasks.html">Fabric Task</a>；</li>
-                           <li><code>@hosts</code>：用来制定远程操作的目标机器；</li>
-                           <li><code>@with_settings</code>：用来临时设定 <code>env</code> 变量，可以等同于 <code>with settings</code>。</li>
-                        </ul>
-                        <p>Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 <code>fab task_name</code> 来执行了。</p>
-                        <h3> 一个例子 </h3>
-                        <p> 在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。</p>
-                        <p> 开始，我检查的方式是使用 <code>ssh</code> 登陆之后，再使用 <code>grep</code> 检查日志文件是否包含 <code>ERROR</code>、<code>WARNING</code> 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 <code>ssh</code> 登陆，再运行脚本进行检查。</p>
-                        <p> 但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 <code>datetime</code>，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。</p>
-                        <div class="highlight">
-                           <pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>使用Fabric进行远程操作 - /dev/null</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html">
+
+        <meta name="author" content="Yumminhuang" />
+        <meta name="keywords" content="DevOps,Python,Fabric" />
+        <meta name="description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上 ..." />
+
+        <meta property="og:site_name" content="/dev/null" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="使用Fabric进行远程操作"/>
+        <meta property="og:url" content="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"/>
+        <meta property="og:description" content="Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能 ），就可以使用 fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上 ..."/>
+        <meta property="article:published_time" content="2015-04-15" />
+            <meta property="article:section" content="DevOps" />
+            <meta property="article:tag" content="DevOps" />
+            <meta property="article:tag" content="Python" />
+            <meta property="article:tag" content="Fabric" />
+            <meta property="article:author" content="Yumminhuang" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/bootstrap.yeti.min.css" type="text/css"/>
+    <link href="http://yumminhuang.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://yumminhuang.github.io/theme/css/pygments/manni.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yumminhuang.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://yumminhuang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="/dev/null ATOM Feed"/>
+
+
+
+        <link href="http://yumminhuang.github.io/feeds/devops.atom.xml" type="application/atom+xml" rel="alternate"
+              title="/dev/null DevOps ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://yumminhuang.github.io/" class="navbar-brand">
+/dev/null            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="http://yumminhuang.github.io/pages/about-me.html">
+                             About Me
+                          </a></li>
+                        <li class="active">
+                            <a href="http://yumminhuang.github.io/category/devops.html">Devops</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/interview.html">Interview</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://yumminhuang.github.io/category/miscellaneous.html">Miscellaneous</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://yumminhuang.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://yumminhuang.github.io/shi-yong-fabricjin-xing-yuan-cheng-cao-zuo.html"
+                       rel="bookmark"
+                       title="Permalink to 使用Fabric进行远程操作">
+                        使用Fabric进行远程操作
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-04-15T22:55:00-04:00"> Wed 15 April 2015</time>
+    </span>
+            <span class="label label-default">Modified</span>
+            <span class="modified">
+                <i class="fa fa-calendar"></i><time datetime="2015-04-16T23:03:00-04:00"> Thu 16 April 2015</time>
+            </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://yumminhuang.github.io/tag/devops.html">DevOps</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/python.html">Python</a>
+        /
+	<a href="http://yumminhuang.github.io/tag/fabric.html">Fabric</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h3>Fabric 简介 </h3>
+<p><a href="http://www.fabfile.org">Fabric</a> 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。</p>
+<h4> 使用 Fabric 的好处 </h4>
+<p> 个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
+<p> 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
+<p> 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。</p>
+<p> 最后，Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html"> 导入包来添加更多的功能 </a>），就可以使用 <a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令 </a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
+<p> 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。</p>
+<h3> 常用的 Fabric 函数 </h3>
+<p> 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 <a href="http://docs.fabfile.org/en/latest/index.html"> 官方文档 </a>。</p>
+<h4> 常用操作 </h4>
+<p>Fabric 的常用 <a href="http://docs.fabfile.org/en/latest/api/core/operations.html"> 操作 </a></p>
+<ul>
+<li><code>run</code>：在远程机器上执行 Shell 命令；</li>
+<li><code>sudo</code>：带有 root 权限的 <code>run</code>；</li>
+<li><code>local</code>：执行本地命令；</li>
+<li><code>get</code>：从远程机器下载文件；</li>
+<li><code>put</code>：上传文件到远程机器；</li>
+<li><code>prompt</code>：可以理解为在远程机器上执行 <code>raw_input</code></li>
+<li><code>reboot</code>：重启远程机器。</li>
+</ul>
+<h4> 常用上下文管理器和装饰器 </h4>
+<p> 上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 <a href="http://zh.wikipedia.org/wiki/ 语法糖 ">「语法糖（Syntax sugar）」</a>。Fabric 中常用的 <a href="http://docs.fabfile.org/en/latest/api/core/context_managers.html"> 上下文管理器 </a> 有：</p>
+<ul>
+<li><code>cd</code>：切换目录；</li>
+<li><code>lcd</code>：在本地切换目录，即 <code>local cd</code>；</li>
+<li><code>path</code>：可以添加路径到 <code>PATH</code>;</li>
+<li><code>settings</code>：用来临时修改 <code>env</code> 变量，使变量只作用在一段代码中。</li>
+</ul>
+<p> 常用的 <a href="http://docs.fabfile.org/en/latest/api/core/decorators.html"> 装饰器 </a> 有：</p>
+<ul>
+<li><code>@task</code>：用来把一个函数声明为 <a href="http://docs.fabfile.org/en/latest/usage/tasks.html">Fabric Task</a>；</li>
+<li><code>@hosts</code>：用来制定远程操作的目标机器；</li>
+<li><code>@with_settings</code>：用来临时设定 <code>env</code> 变量，可以等同于 <code>with settings</code>。</li>
+</ul>
+<p>Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 <code>fab task_name</code> 来执行了。</p>
+<h3> 一个例子 </h3>
+<p> 在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。</p>
+<p> 开始，我检查的方式是使用 <code>ssh</code> 登陆之后，再使用 <code>grep</code> 检查日志文件是否包含 <code>ERROR</code>、<code>WARNING</code> 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 <code>ssh</code> 登陆，再运行脚本进行检查。</p>
+<p> 但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 <code>datetime</code>，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="k">def</span> <span class="nf">check_log_with_keyword</span><span class="p">(</span><span class="n">log_file</span><span class="p">,</span> <span class="n">keyword</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">settings</span><span class="p">(</span><span class="n">hide</span><span class="p">(</span><span class="s">&#39;warnings&#39;</span><span class="p">,</span> <span class="s">&#39;output&#39;</span><span class="p">),</span>
@@ -161,191 +175,123 @@
 
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">return_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</pre>
-                        </div>
-                        <ul>
-                           <li> 使用 <code>with settings()</code> 来临时更改 <code>env</code> 变量；</li>
-                           <li><code>hide('warnings', 'output')</code> 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 <code>stderr</code> 和 <code>stdout</code>；</li>
-                           <li><code>host_string='eb101.ops'</code>，设定目标机器，Fabric 可以使用 <code>.ssh/config</code> 的设置；</li>
-                           <li><code>warn_only=True</code> 用来确保 Fabric 程序不会因为 <code>grep</code> 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；</li>
-                           <li><code>result = run('grep %s %s' % (keyword, filename))</code>, 运行 <code>grep</code> 指令并得到结果。</li>
-                        </ul>
-                        <p> 远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。</p>
-                        <h3> 参考文献 </h3>
-                        <ol>
-                           <li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments">How To Use Fabric To Automate Administration Tasks And Deployments</a></li>
-                        </ol>
-                     </div>
-                     <!-- /.entry-content -->
-                  </article>
-               </section>
-            </div>
-            <div class="col-sm-3" id="sidebar">
-               <aside>
-                  <section class="well well-sm">
-                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                           <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
-                           <ul class="list-group" id="social">
-                              <li class="list-group-item"><a href="http://github.com/yumminhuang"><i class="fa fa-github-square fa-lg"></i> github</a></li>
-                              <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i class="fa fa-stack-overflow fa-lg"></i> stack-overflow</a></li>
-                              <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
-                              <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
-                              <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i class="fa fa-weibo fa-lg"></i> weibo</a></li>
-                              <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram fa-lg"></i> instagram</a></li>
-                           </ul>
-                        </li>
-                        <li class="list-group-item">
-                           <a href="http://yumminhuang.github.io/">
-                              <h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4>
-                           </a>
-                           <ul class="list-group " id="tags">
-                              <li class="list-group-item tag-1">
-                                 <a href="http://yumminhuang.github.io/tag/devops.html">
-                                 DevOps
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-2">
-                                 <a href="http://yumminhuang.github.io/tag/ci.html">
-                                 CI
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-2">
-                                 <a href="http://yumminhuang.github.io/tag/python.html">
-                                 Python
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-2">
-                                 <a href="http://yumminhuang.github.io/tag/linux.html">
-                                 Linux
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-3">
-                                 <a href="http://yumminhuang.github.io/tag/shell.html">
-                                 Shell
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-3">
-                                 <a href="http://yumminhuang.github.io/tag/jenkins.html">
-                                 Jenkins
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/sensu.html">
-                                 Sensu
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/boto.html">
-                                 Boto
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/graphite.html">
-                                 Graphite
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/grafana.html">
-                                 Grafana
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/fabric.html">
-                                 Fabric
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/objective-c.html">
-                                 Objective-C
-                                 </a>
-                              </li>
-                              <li class="list-group-item tag-4">
-                                 <a href="http://yumminhuang.github.io/tag/ruby.html">
-                                 Ruby
-                                 </a>
-                              </li>
-                           </ul>
-                        </li>
-                        <li class="list-group-item">
-                           <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
-                           <div id="gh_repos">
-                              <p class="list-group-item">Status updating...</p>
-                           </div>
-                        </li>
-                        <li class="list-group-item">
-                           <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
-                           <ul class="list-group" id="links">
-                              <li class="list-group-item">
-                                 <a href="https://www.northeastern.edu/" target="_blank">
-                                 NEU
-                                 </a>
-                              </li>
-                              <li class="list-group-item">
-                                 <a href="http://www.jnu.edu.cn/" target="_blank">
-                                 JNU
-                                 </a>
-                              </li>
-                              <li class="list-group-item">
-                                 <a href="http://fionser.github.io/" target="_blank">
-                                 Fionser's Blog
-                                 </a>
-                              </li>
-                           </ul>
-                        </li>
-                     </ul>
-                  </section>
-               </aside>
-            </div>
-         </div>
-      </div>
-      <footer>
-         <div class="container">
-            <hr>
-            <div class="row">
-               <div class="col-xs-10">
-                  &copy; 2015 Yumminhuang
-                  &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
-                  <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-                  <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>
-                  <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
-                     Content
-                     licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
-                     </small>
-                  </p>
-               </div>
-               <div class="col-xs-2">
-                  <p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p>
-               </div>
-            </div>
-         </div>
-      </footer>
-      <script src="http://yumminhuang.github.io/theme/js/jquery.min.js"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="http://yumminhuang.github.io/theme/js/bootstrap.min.js"></script>
-      <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-      <script src="http://yumminhuang.github.io/theme/js/respond.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.5/han.min.js"></script>
-      <!-- GitHub JS -->
-      <script type="text/javascript">
-         $(document).ready(function () {
-             if (!window.jXHR) {
-                 var jxhr = document.createElement('script');
-                 jxhr.type = 'text/javascript';
-                 jxhr.src = 'http://yumminhuang.github.io/theme/js/jXHR.js';
-                 var s = document.getElementsByTagName('script')[0];
-                 s.parentNode.insertBefore(jxhr, s);
-             }
+</pre></div>
 
-             github.showRepos({
-                 user: 'yumminhuang',
-                 count: 5,
-                 skip_forks: false,
-                 target: '#gh_repos'
-             });
-         });
-      </script>
-      <script src="http://yumminhuang.github.io/theme/js/github.js" type="text/javascript"></script>
-      <!-- End GitHub JS Code -->
-   </body>
+
+<ul>
+<li> 使用 <code>with settings()</code> 来临时更改 <code>env</code> 变量；</li>
+<li><code>hide('warnings', 'output')</code> 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 <code>stderr</code> 和 <code>stdout</code>；</li>
+<li><code>host_string='eb101.ops'</code>，设定目标机器，Fabric 可以使用 <code>.ssh/config</code> 的设置；</li>
+<li><code>warn_only=True</code> 用来确保 Fabric 程序不会因为 <code>grep</code> 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；</li>
+<li><code>result = run('grep %s %s' % (keyword, filename))</code>, 运行 <code>grep</code> 指令并得到结果。</li>
+</ul>
+<p> 远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。</p>
+<h3> 参考文献 </h3>
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments">How To Use Fabric To Automate Administration Tasks And Deployments</a></li>
+</ol>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="http://github.com/yumminhuang"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://stackoverflow.com/users/2755574/yumminhuang"><i class="fa fa-stack-overflow fa-lg"></i> stack-overflow</a></li>
+                <li class="list-group-item"><a href="http://www.linkedin.com/pub/yaming-huang/5b/932/6a0"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+                <li class="list-group-item"><a href="http://twitter.com/yumminhuang"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+                <li class="list-group-item"><a href="http://www.weibo.com/2622511625"><i class="fa fa-weibo fa-lg"></i> weibo</a></li>
+                <li class="list-group-item"><a href="http://instagram.com/yumminhuang"><i class="fa fa-instagram fa-lg"></i> instagram</a></li>
+              </ul>
+            </li>
+
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://www.northeastern.edu/" target="_blank">
+                NEU
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://www.jnu.edu.cn/" target="_blank">
+                JNU
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://fionser.github.io/" target="_blank">
+                Fionser's Blog
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Yumminhuang
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://yumminhuang.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://yumminhuang.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://yumminhuang.github.io/theme/js/respond.min.js"></script>
+
+    <!-- GitHub JS -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://yumminhuang.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'yumminhuang',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://yumminhuang.github.io/theme/js/github.js" type="text/javascript"></script>
+    <!-- End GitHub JS Code -->
+
+</body>
 </html>
