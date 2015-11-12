@@ -1,0 +1,53 @@
+baseurl     = "http://yumminhuang.github.io"  # the baseurl for your website
+title       = "临水轩志"     # blog title
+paginate    = 10            # the number of posts on a page
+theme       = "hugo-multi-bootswatch"
+
+[permalinks]
+    # Optional. Change the permalink format for the 'post' content type.
+    # The format shown here is the same one Jekyll/Octopress uses by default.
+    post = "/blog/:year/:month/:day/:title/"
+
+[params]
+    # name of the site author; used in header meta information
+    author = "Yaming Huang"
+    copyright = "2015 ~ Yaming Huang"
+
+    use_summaries = true
+
+    # social links, used in footer, these must be full URLs.
+    twitter = "https://twitter.com/yumminhuang"
+    github = "https://github.com/yumminhuang"
+    linkedin = "https://www.linkedin.com/in/yaming-huang-6a09325b"
+    weibo = "http://weibo.com/yumminhuang"
+    instagram = "https://instagram.com/yumminhuang/"
+
+# naming of the elements in your blog/site
+[params.strings]
+    # name of the link to the homepage
+    home_navbar_link = "首页"
+
+    # name of the link to the blog page
+    blog_navbar_link = "技术笔记"
+
+    # name of the header used in the post list page
+    posts_list_header = "列表"
+
+
+[params.theme]
+    inverse = true     # indicating if the theme should use inversed colors
+    name = "yeti"   # name of the theme to use
+
+
+[[menu.main]]
+    name = "关于"
+    weight = -100
+    url = "/page/about/"
+[[menu.main]]
+    name = "随笔"
+    weight = -100
+    url = "/zhpost/"
+[[menu.main]]
+    name = "TechNote"
+    weight = -100
+    url = "/note/"
