@@ -5,11 +5,11 @@ tags        = ["DevOps", "Python", "Fabric"]
 date        = "2015-04-16"
 +++
 
-###Fabric 简介
+## Fabric 简介
 
 [Fabric](http://www.fabfile.org) 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。
 
-####使用 Fabric 的好处
+### 使用 Fabric 的好处
 
 个人觉得，Fabric 非常适合简单的、重复性的远程操作。
 
@@ -21,11 +21,11 @@ date        = "2015-04-16"
 
 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。
 
-###常用的 Fabric 函数
+## 常用的 Fabric 函数
 
 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 [官方文档](http://docs.fabfile.org/en/latest/index.html)。
 
-####常用操作
+## 常用操作
 
 Fabric 的常用 [操作](http://docs.fabfile.org/en/latest/api/core/operations.html)
 
@@ -37,7 +37,7 @@ Fabric 的常用 [操作](http://docs.fabfile.org/en/latest/api/core/operations.
 * `prompt`：可以理解为在远程机器上执行 `raw_input`
 * `reboot`：重启远程机器。
 
-####常用上下文管理器和装饰器
+### 常用上下文管理器和装饰器
 上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 [「语法糖（Syntax sugar）」](http://zh.wikipedia.org/wiki / 语法糖)。Fabric 中常用的[上下文管理器](http://docs.fabfile.org/en/latest/api/core/context_managers.html) 有：
 
 * `cd`：切换目录；
@@ -53,7 +53,7 @@ Fabric 的常用 [操作](http://docs.fabfile.org/en/latest/api/core/operations.
 
 Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 `fab task_name` 来执行了。
 
-###一个例子
+## 一个例子
 
 在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。
 
@@ -82,6 +82,6 @@ def check_log_with_keyword(log_file, keyword):
 
 远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。
 
-###参考文献
+### 参考文献
 
 1. [How To Use Fabric To Automate Administration Tasks And Deployments](https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments)
