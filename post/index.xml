@@ -443,11 +443,13 @@ TOTAL         +2       -2      +50.00%
             <pubDate>Thu, 16 Apr 2015 00:00:00 +0000</pubDate>
             
             <guid>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
-            <description>&lt;p&gt;###Fabric 简介&lt;/p&gt;
+            <description>
+
+&lt;h2 id=&#34;fabric-简介:900de048502f7d5abcf000aa59dbd264&#34;&gt;Fabric 简介&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。&lt;/p&gt;
 
-&lt;p&gt;####使用 Fabric 的好处&lt;/p&gt;
+&lt;h3 id=&#34;使用-fabric-的好处:900de048502f7d5abcf000aa59dbd264&#34;&gt;使用 Fabric 的好处&lt;/h3&gt;
 
 &lt;p&gt;个人觉得，Fabric 非常适合简单的、重复性的远程操作。&lt;/p&gt;
 
@@ -459,11 +461,11 @@ TOTAL         +2       -2      +50.00%
 
 &lt;p&gt;基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。&lt;/p&gt;
 
-&lt;p&gt;###常用的 Fabric 函数&lt;/p&gt;
+&lt;h2 id=&#34;常用的-fabric-函数:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用的 Fabric 函数&lt;/h2&gt;
 
 &lt;p&gt;这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 &lt;a href=&#34;http://docs.fabfile.org/en/latest/index.html&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;####常用操作&lt;/p&gt;
+&lt;h2 id=&#34;常用操作:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用操作&lt;/h2&gt;
 
 &lt;p&gt;Fabric 的常用 &lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/operations.html&#34;&gt;操作&lt;/a&gt;&lt;/p&gt;
 
@@ -477,8 +479,9 @@ TOTAL         +2       -2      +50.00%
 &lt;li&gt;&lt;code&gt;reboot&lt;/code&gt;：重启远程机器。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;####常用上下文管理器和装饰器
-上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href=&#34;http://zh.wikipedia.org/wiki / 语法糖&#34;&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的&lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/context_managers.html&#34;&gt;上下文管理器&lt;/a&gt; 有：&lt;/p&gt;
+&lt;h3 id=&#34;常用上下文管理器和装饰器:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用上下文管理器和装饰器&lt;/h3&gt;
+
+&lt;p&gt;上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href=&#34;http://zh.wikipedia.org/wiki / 语法糖&#34;&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的&lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/context_managers.html&#34;&gt;上下文管理器&lt;/a&gt; 有：&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;cd&lt;/code&gt;：切换目录；&lt;/li&gt;
@@ -497,7 +500,7 @@ TOTAL         +2       -2      +50.00%
 
 &lt;p&gt;Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 &lt;code&gt;fab task_name&lt;/code&gt; 来执行了。&lt;/p&gt;
 
-&lt;p&gt;###一个例子&lt;/p&gt;
+&lt;h2 id=&#34;一个例子:900de048502f7d5abcf000aa59dbd264&#34;&gt;一个例子&lt;/h2&gt;
 
 &lt;p&gt;在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。&lt;/p&gt;
 
@@ -527,7 +530,7 @@ def check_log_with_keyword(log_file, keyword):
 
 &lt;p&gt;远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
 
-&lt;p&gt;###参考文献&lt;/p&gt;
+&lt;h3 id=&#34;参考文献:900de048502f7d5abcf000aa59dbd264&#34;&gt;参考文献&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments&#34;&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
@@ -855,8 +858,9 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。&lt;/p&gt;
 
-&lt;p&gt;###总结
-这就是我的第一个 Sensu 项目。学习一门编程语言或一个工具最好的方法就是用它来做一个项目。的确，通过这个项目让我对 Sensu 的功能和特性有了比较清楚的了解。&lt;/p&gt;
+&lt;h3 id=&#34;总结:b6bdba0566435a1fdf738209881f4749&#34;&gt;总结&lt;/h3&gt;
+
+&lt;p&gt;这就是我的第一个 Sensu 项目。学习一门编程语言或一个工具最好的方法就是用它来做一个项目。的确，通过这个项目让我对 Sensu 的功能和特性有了比较清楚的了解。&lt;/p&gt;
 
 &lt;p&gt;整个安全更新监控工具的实现描述得很简单，但是从立项到投入实际应用还是用了我一个月的时间，后期还花费了一些时间在修复 Bug 上。因为很多工具都是初次使用，包括第一次接触 Sensu，第一次使用 Ruby 做项目，第一次使用 Chef，实现的过程中边学边做，还是走了不少弯路。&lt;/p&gt;
 
@@ -971,7 +975,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
 
-&lt;p&gt;##平铺式窗口管理器&lt;/p&gt;
+&lt;h2 id=&#34;平铺式窗口管理器:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;平铺式窗口管理器&lt;/h2&gt;
 
 &lt;p&gt;窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。&lt;/p&gt;
 
@@ -1015,7 +1019,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;虽然需要同时打开了很多软件，但是因为窗口是平铺的，每次要切换软件时，只需要将屏幕的焦点切换到相应的窗口即可，而不需要像堆叠式管理器那样在凌乱的桌面上找到要用的窗口。&lt;/p&gt;
 
-&lt;p&gt;##i3 窗口管理器的基本操作&lt;/p&gt;
+&lt;h2 id=&#34;i3-窗口管理器的基本操作:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;i3 窗口管理器的基本操作&lt;/h2&gt;
 
 &lt;h3 id=&#34;按键:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;按键&lt;/h3&gt;
 
@@ -1032,18 +1036,22 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;按下 &lt;code&gt;MOD+Shift&lt;/code&gt; 键时对应的指令&lt;/p&gt;
 
-&lt;p&gt;###容器
-i3 窗口管理器有一个很重要的概念就是容器（Container）。每个容器内可以存放一个应用程序的窗口。一个桌面（或者说 Workspace）就是一个容器。容器可以嵌套形成树型的结构，所以我们可以将容器水平或者垂直地分割成多个容器，从而充分利用桌面的空间。详细解释请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#_tree&#34;&gt;文档&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;容器:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;容器&lt;/h3&gt;
 
-&lt;p&gt;###常用的指令
-* &lt;code&gt;MOD + H, J, K, L&lt;/code&gt;：移动屏幕焦点；
-* &lt;code&gt;MOD + Shift + H, J, K, L&lt;/code&gt;：移动容器；
-* &lt;code&gt;MOD + V&lt;/code&gt;：垂直分割容器；
-* &lt;code&gt;MOD + H&lt;/code&gt;：水平分割容器；
-* &lt;code&gt;MOD + D&lt;/code&gt;：打开应用程序启动器Dmenu；
-* &lt;code&gt;MOD + Enter&lt;/code&gt;：打开终端。&lt;/p&gt;
+&lt;p&gt;i3 窗口管理器有一个很重要的概念就是容器（Container）。每个容器内可以存放一个应用程序的窗口。一个桌面（或者说 Workspace）就是一个容器。容器可以嵌套形成树型的结构，所以我们可以将容器水平或者垂直地分割成多个容器，从而充分利用桌面的空间。详细解释请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#_tree&#34;&gt;文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;##i3窗口管理器的安装和配置&lt;/p&gt;
+&lt;h3 id=&#34;常用的指令:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;常用的指令&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MOD + H, J, K, L&lt;/code&gt;：移动屏幕焦点；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + Shift + H, J, K, L&lt;/code&gt;：移动容器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + V&lt;/code&gt;：垂直分割容器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + H&lt;/code&gt;：水平分割容器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + D&lt;/code&gt;：打开应用程序启动器Dmenu；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + Enter&lt;/code&gt;：打开终端。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;i3窗口管理器的安装和配置:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;i3窗口管理器的安装和配置&lt;/h2&gt;
 
 &lt;h3 id=&#34;安装:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;安装&lt;/h3&gt;
 

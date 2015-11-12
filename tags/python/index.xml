@@ -18,11 +18,13 @@
             <pubDate>Thu, 16 Apr 2015 00:00:00 +0000</pubDate>
             
             <guid>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
-            <description>&lt;p&gt;###Fabric 简介&lt;/p&gt;
+            <description>
+
+&lt;h2 id=&#34;fabric-简介:900de048502f7d5abcf000aa59dbd264&#34;&gt;Fabric 简介&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。&lt;/p&gt;
 
-&lt;p&gt;####使用 Fabric 的好处&lt;/p&gt;
+&lt;h3 id=&#34;使用-fabric-的好处:900de048502f7d5abcf000aa59dbd264&#34;&gt;使用 Fabric 的好处&lt;/h3&gt;
 
 &lt;p&gt;个人觉得，Fabric 非常适合简单的、重复性的远程操作。&lt;/p&gt;
 
@@ -34,11 +36,11 @@
 
 &lt;p&gt;基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。&lt;/p&gt;
 
-&lt;p&gt;###常用的 Fabric 函数&lt;/p&gt;
+&lt;h2 id=&#34;常用的-fabric-函数:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用的 Fabric 函数&lt;/h2&gt;
 
 &lt;p&gt;这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 &lt;a href=&#34;http://docs.fabfile.org/en/latest/index.html&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;####常用操作&lt;/p&gt;
+&lt;h2 id=&#34;常用操作:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用操作&lt;/h2&gt;
 
 &lt;p&gt;Fabric 的常用 &lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/operations.html&#34;&gt;操作&lt;/a&gt;&lt;/p&gt;
 
@@ -52,8 +54,9 @@
 &lt;li&gt;&lt;code&gt;reboot&lt;/code&gt;：重启远程机器。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;####常用上下文管理器和装饰器
-上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href=&#34;http://zh.wikipedia.org/wiki / 语法糖&#34;&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的&lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/context_managers.html&#34;&gt;上下文管理器&lt;/a&gt; 有：&lt;/p&gt;
+&lt;h3 id=&#34;常用上下文管理器和装饰器:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用上下文管理器和装饰器&lt;/h3&gt;
+
+&lt;p&gt;上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href=&#34;http://zh.wikipedia.org/wiki / 语法糖&#34;&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的&lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/context_managers.html&#34;&gt;上下文管理器&lt;/a&gt; 有：&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;cd&lt;/code&gt;：切换目录；&lt;/li&gt;
@@ -72,7 +75,7 @@
 
 &lt;p&gt;Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 &lt;code&gt;fab task_name&lt;/code&gt; 来执行了。&lt;/p&gt;
 
-&lt;p&gt;###一个例子&lt;/p&gt;
+&lt;h2 id=&#34;一个例子:900de048502f7d5abcf000aa59dbd264&#34;&gt;一个例子&lt;/h2&gt;
 
 &lt;p&gt;在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。&lt;/p&gt;
 
@@ -102,7 +105,7 @@ def check_log_with_keyword(log_file, keyword):
 
 &lt;p&gt;远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
 
-&lt;p&gt;###参考文献&lt;/p&gt;
+&lt;h3 id=&#34;参考文献:900de048502f7d5abcf000aa59dbd264&#34;&gt;参考文献&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments&#34;&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;

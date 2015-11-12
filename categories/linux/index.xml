@@ -20,7 +20,7 @@
 
 &lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
 
-&lt;p&gt;##平铺式窗口管理器&lt;/p&gt;
+&lt;h2 id=&#34;平铺式窗口管理器:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;平铺式窗口管理器&lt;/h2&gt;
 
 &lt;p&gt;窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。&lt;/p&gt;
 
@@ -64,7 +64,7 @@
 
 &lt;p&gt;虽然需要同时打开了很多软件，但是因为窗口是平铺的，每次要切换软件时，只需要将屏幕的焦点切换到相应的窗口即可，而不需要像堆叠式管理器那样在凌乱的桌面上找到要用的窗口。&lt;/p&gt;
 
-&lt;p&gt;##i3 窗口管理器的基本操作&lt;/p&gt;
+&lt;h2 id=&#34;i3-窗口管理器的基本操作:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;i3 窗口管理器的基本操作&lt;/h2&gt;
 
 &lt;h3 id=&#34;按键:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;按键&lt;/h3&gt;
 
@@ -81,18 +81,22 @@
 
 &lt;p&gt;按下 &lt;code&gt;MOD+Shift&lt;/code&gt; 键时对应的指令&lt;/p&gt;
 
-&lt;p&gt;###容器
-i3 窗口管理器有一个很重要的概念就是容器（Container）。每个容器内可以存放一个应用程序的窗口。一个桌面（或者说 Workspace）就是一个容器。容器可以嵌套形成树型的结构，所以我们可以将容器水平或者垂直地分割成多个容器，从而充分利用桌面的空间。详细解释请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#_tree&#34;&gt;文档&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;容器:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;容器&lt;/h3&gt;
 
-&lt;p&gt;###常用的指令
-* &lt;code&gt;MOD + H, J, K, L&lt;/code&gt;：移动屏幕焦点；
-* &lt;code&gt;MOD + Shift + H, J, K, L&lt;/code&gt;：移动容器；
-* &lt;code&gt;MOD + V&lt;/code&gt;：垂直分割容器；
-* &lt;code&gt;MOD + H&lt;/code&gt;：水平分割容器；
-* &lt;code&gt;MOD + D&lt;/code&gt;：打开应用程序启动器Dmenu；
-* &lt;code&gt;MOD + Enter&lt;/code&gt;：打开终端。&lt;/p&gt;
+&lt;p&gt;i3 窗口管理器有一个很重要的概念就是容器（Container）。每个容器内可以存放一个应用程序的窗口。一个桌面（或者说 Workspace）就是一个容器。容器可以嵌套形成树型的结构，所以我们可以将容器水平或者垂直地分割成多个容器，从而充分利用桌面的空间。详细解释请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#_tree&#34;&gt;文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;##i3窗口管理器的安装和配置&lt;/p&gt;
+&lt;h3 id=&#34;常用的指令:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;常用的指令&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MOD + H, J, K, L&lt;/code&gt;：移动屏幕焦点；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + Shift + H, J, K, L&lt;/code&gt;：移动容器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + V&lt;/code&gt;：垂直分割容器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + H&lt;/code&gt;：水平分割容器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + D&lt;/code&gt;：打开应用程序启动器Dmenu；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MOD + Enter&lt;/code&gt;：打开终端。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;i3窗口管理器的安装和配置:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;i3窗口管理器的安装和配置&lt;/h2&gt;
 
 &lt;h3 id=&#34;安装:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;安装&lt;/h3&gt;
 
