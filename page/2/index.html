@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="临水轩志">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <title>临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="http://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="http://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="http://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+
+
+    
+    <script src="http://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="http://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="http://yumminhuang.github.io/index.xml" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://yumminhuang.github.io">首页</a></li>
+                    <li><a href="http://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="container">
+        
+        
+                
+        
+            <div class="row">
+                
+                <div class="col-md-offset-1 col-md-10">
+                    <h3><a href="http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/">在 AWS AutoScaling Group 中替换 Instance</a></h3>
+                        <small><span class="label label-primary">
+                            
+                                Sat, Aug 2, 2014
+                            </span>&nbsp;in
+                            
+                                
+                                <a href="/categories/devops">DevOps</a>
+                             using tags
+                            
+                                
+                            <a href="/tags/devops">DevOps</a>
+                        
+                                 , 
+                            <a href="/tags/python">Python</a>
+                        
+                                 , 
+                            <a href="/tags/boto">Boto</a>
+                        
+                                 , 
+                            <a href="/tags/aws">AWS</a>
+                        
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <br>
+                    
+                        
+                            这两周，我被分配的任务是实现 AWS 的 Auto Scaling功能。多亏有了 Boto， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下： 创建并配置（下载新发布的代码）多个新的 Instance； 依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。 这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。 现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 Instance 数目，都会激发 Scaling Policy。比如我想关闭一个旧的 Instance，这样 Auto Scaling Group 当中 Instance 的数量就会小于 Desired Capacity，Auto Scaling Group 就会新创建一个 Instance， 而不是等我激活一个 Instance 去替代。 我想到的办法步骤如下： 将 Auto Scaling Group 挂起（避免激发 Scaling Policy）； 按照以前的方法替换旧的 Instance； 将新创建的 Instance 添加到 Auto Scaling Group。 因为 AWS Auto Scaling 的特性（比如 Auto Scaling Group 被挂起的时候不能够添加 Instance，desired_capacity 不能小于 min_size），实现第三步并不容易。具体来说第三步又要分成下面几个步骤： 将 Auto Scaling Group 的 desired_capacity 和 min_size 分别置为 0（防止恢复 Auto Scaling Group 的时候自动创建 Instance）； 恢复 Auto Scaling Group（结束挂起状态，然后才可以添加 Instance）； 添加 Instance 到 Auto Scaling Group 里； 恢复 Auto Scaling Group 的 min_size。 下面提供一份示例代码以供参考： #!python import sys import time from boto.ec2.autoscale import AutoScaleConnection from boto.ec2.connection import EC2Connection AUTO_SCALING_GROUP = &quot;test_auto_scaling_group&quot; NEW_INSTANCES = [&quot;i-4acb0666&quot;, &quot;i-4acbqa9&quot;] CHECK_INTERVAL = 5 def suspend(as_conn): &quot;&quot;&quot; Suspend auto scaling group &quot;&quot;&quot; as_conn.suspend_processes(AUTO_SCALING_GROUP) print &quot;Suspend Done\n&quot; def resume(as_conn): &quot;&quot;&quot; Resume auto scaling group &quot;&quot;&quot; as_conn.resume_processes(AUTO_SCALING_GROUP) print &quot;Resume Done\n&quot; def get_instance_by_id(ec2conn, inst_id): &quot;&quot;&quot; Get instance by its id &quot;&quot;&quot; ...
+                            <br>
+                            <a href="http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/">
+                            
+                                Read more
+                            </a>
+                        
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+        
+    
+
+        
+                
+        
+            <div class="row">
+                
+                <div class="col-md-offset-1 col-md-10">
+                    <h3><a href="http://yumminhuang.github.io/blog/2014/05/04/objective-c-%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/">Objective-C 语法总结</a></h3>
+                        <small><span class="label label-primary">
+                            
+                                Sun, May 4, 2014
+                            </span>&nbsp;in
+                            
+                                
+                                <a href="/categories/miscellaneous">Miscellaneous</a>
+                             using tags
+                            
+                                
+                            <a href="/tags/objective-c">Objective-C</a>
+                        
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <br>
+                    
+                        
+                            最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。 在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 object.method(argument1, argument2...)。然而 Objective-C 的格式却是 [object method: argument1 andArg: argument2...]。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。 废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。 1. 基本语法 1.1 创建对象 Java: obj = new MyClass(); Objective-C: MyClass *obj = [[MyClass alloc] init]; 1.2 调用方法 Java: obj.method1() // 没有参数 obj.method2(arg1) // 一个参数 obj.method3(arg1,arg2) // 多个参数 Objective-C: [obj method1] // 没有参数 [obj method2:arg1] // 一个参数 [obj method3:arg2 andArg: arg2] // 多个参数 2.
+                            <br>
+                            <a href="http://yumminhuang.github.io/blog/2014/05/04/objective-c-%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/">
+                            
+                                Read more
+                            </a>
+                        
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+        
+    
+
+        
+	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    
+    
+    <ul class="pagination">
+        
+        <li>
+            <a href="/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+        </li>
+        
+        <li
+        >
+        <a href="/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        </li>
+        
+        <li
+        ><a href="/">1</a></li>
+        
+        <li
+        class="active"><a href="/page/2/">2</a></li>
+        
+        <li
+        class="disabled">
+        <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+        </li>
+        
+        <li>
+            <a href="/page/2/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        </li>
+        
+    </ul>
+    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2015 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="http://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a href="http://yumminhuang.github.io/index.xml" target="_blank">
+                        <i class="fa fa-rss-square fa-2x"></i></a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

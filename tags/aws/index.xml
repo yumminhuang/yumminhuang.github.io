@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aws on 临水轩志</title>
+    <link>http://yumminhuang.github.io/tags/aws/</link>
+    <description>Recent content in Aws on 临水轩志</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 02 Aug 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://yumminhuang.github.io/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+      
+        
+          <item>
+            <title>在 AWS AutoScaling Group 中替换 Instance</title>
+            <link>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</link>
+            <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
+            
+            <guid>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</guid>
+            <description>&lt;p&gt;这两周，我被分配的任务是实现 &lt;a href=&#34;http://aws.amazon.com/&#34;&gt;AWS&lt;/a&gt; 的 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;Auto Scaling&lt;/a&gt;功能。多亏有了 &lt;a href=&#34;https://github.com/boto/boto&#34;&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。&lt;/p&gt;
+
+&lt;p&gt;我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;创建并配置（下载新发布的代码）多个新的 Instance；&lt;/li&gt;
+&lt;li&gt;依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。&lt;/p&gt;
+
+&lt;p&gt;现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 Instance 数目，都会激发 Scaling Policy。比如我想关闭一个旧的 Instance，这样 Auto Scaling Group 当中 Instance 的数量就会小于 Desired Capacity，Auto Scaling Group 就会新创建一个 Instance， 而不是等我激活一个 Instance 去替代。&lt;/p&gt;
+
+&lt;p&gt;我想到的办法步骤如下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;将 Auto Scaling Group 挂起（避免激发 Scaling Policy）；&lt;/li&gt;
+&lt;li&gt;按照以前的方法替换旧的 Instance；&lt;/li&gt;
+&lt;li&gt;将新创建的 Instance 添加到 Auto Scaling Group。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;因为 AWS Auto Scaling 的特性（比如 Auto Scaling Group 被挂起的时候不能够添加 Instance，&lt;code&gt;desired_capacity&lt;/code&gt; 不能小于 &lt;code&gt;min_size&lt;/code&gt;），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;将 Auto Scaling Group 的 &lt;code&gt;desired_capacity&lt;/code&gt; 和 &lt;code&gt;min_size&lt;/code&gt; 分别置为 &lt;code&gt;0&lt;/code&gt;（防止恢复 Auto Scaling Group 的时候自动创建 Instance）；&lt;/li&gt;
+&lt;li&gt;恢复 Auto Scaling Group（结束挂起状态，然后才可以添加 Instance）；&lt;/li&gt;
+&lt;li&gt;添加 Instance 到 Auto Scaling Group 里；&lt;/li&gt;
+&lt;li&gt;恢复 Auto Scaling Group 的 &lt;code&gt;min_size&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;下面提供一份示例代码以供参考：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!python
+import sys
+import time
+
+from boto.ec2.autoscale import AutoScaleConnection
+from boto.ec2.connection import EC2Connection
+
+AUTO_SCALING_GROUP = &amp;quot;test_auto_scaling_group&amp;quot;
+NEW_INSTANCES = [&amp;quot;i-4acb0666&amp;quot;, &amp;quot;i-4acbqa9&amp;quot;]
+CHECK_INTERVAL = 5
+
+
+def suspend(as_conn):
+    &amp;quot;&amp;quot;&amp;quot;
+    Suspend auto scaling group
+    &amp;quot;&amp;quot;&amp;quot;
+    as_conn.suspend_processes(AUTO_SCALING_GROUP)
+    print &amp;quot;Suspend Done\n&amp;quot;
+
+
+def resume(as_conn):
+    &amp;quot;&amp;quot;&amp;quot;
+    Resume auto scaling group
+    &amp;quot;&amp;quot;&amp;quot;
+    as_conn.resume_processes(AUTO_SCALING_GROUP)
+    print &amp;quot;Resume Done\n&amp;quot;
+
+
+def get_instance_by_id(ec2conn, inst_id):
+    &amp;quot;&amp;quot;&amp;quot;
+    Get instance by its id
+    &amp;quot;&amp;quot;&amp;quot;
+    ...
+    pass
+
+def deactivate_instance(inst):
+    &amp;quot;&amp;quot;&amp;quot;
+    Deactivate instance
+    &amp;quot;&amp;quot;&amp;quot;
+    ...
+    pass
+
+
+def delete_instances(as_conn, ec2conn):
+    &amp;quot;&amp;quot;&amp;quot;
+    Delete instances in auto scaling group
+    &amp;quot;&amp;quot;&amp;quot;
+    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+    instances = [get_instance_by_id(ec2conn, i.instance_id) for i in as_group.instances]
+    for instance in instances:
+        if instance.state != &amp;quot;terminated&amp;quot;:
+            print &amp;quot;*** Terminate Instance %s&amp;quot; % instance.id
+            deactivate_instance(instance)
+    # All instances should be terminated
+    while any([inst.update() != &amp;quot;terminated&amp;quot; for inst in instances]):
+        sys.stdout.write(&amp;quot;.&amp;quot;)
+        sys.stdout.flush()
+        time.sleep(CHECK_INTERVAL)
+    print &amp;quot;.\nDelete Done\n&amp;quot;
+
+
+def attach_instances(as_conn):
+    &amp;quot;&amp;quot;&amp;quot;
+    Attach instances into auto scaling group
+    &amp;quot;&amp;quot;&amp;quot;
+    while True and NEW_INSTANCES:
+        as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+        if len(as_group.instances) == 0:
+            as_conn.attach_instances(AUTO_SCALING_GROUP, NEW_INSTANCES)
+            print &amp;quot;Attach Done\n&amp;quot;
+            return
+        else:
+            print &amp;quot;There are instances still in the group&amp;quot;
+            time.sleep(CHECK_INTERVAL)
+
+
+def set_capacity(as_conn):
+    &amp;quot;&amp;quot;&amp;quot;
+    Set desired capacity and minimum size as 0
+    &amp;quot;&amp;quot;&amp;quot;
+    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+    as_group.min_size = 0
+    as_group.desired_capacity = 0
+    as_group.update()
+    print &amp;quot;Set Capacity Done\n&amp;quot;
+
+
+def resume_capacity(as_conn):
+    &amp;quot;&amp;quot;&amp;quot;
+    Resume minimum size as the original value
+    &amp;quot;&amp;quot;&amp;quot;
+    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+    setattr(as_group,&amp;quot;min_size&amp;quot;, 1)
+    as_group.update()
+    print &amp;quot;Resume Capacity Done\n&amp;quot;
+
+
+def main():
+    as_conn = AutoScaleConnection()
+    ec2conn = EC2Connection()
+
+    print &amp;quot;Suspend Auto Scaling Group&amp;quot;
+    suspend(as_conn)
+
+    print &amp;quot;Delete Instances&amp;quot;
+    delete_instances(as_conn, ec2conn)
+
+    print &amp;quot;Set Capacity&amp;quot;
+    set_capacity(as_conn)
+
+    print &amp;quot;Resume Auto Scaling Group&amp;quot;
+    resume(as_conn)
+
+    print &amp;quot;Attach Instances&amp;quot;
+    attach_instances(as_conn)
+
+    print &amp;quot;Resume Capacity&amp;quot;
+    resume_capacity(as_conn)
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+          </item>
+        
+      
+    
+  </channel>
+</rss>

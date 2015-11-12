@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fabric on 临水轩志</title>
+    <link>http://yumminhuang.github.io/tags/fabric/</link>
+    <description>Recent content in Fabric on 临水轩志</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 16 Apr 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://yumminhuang.github.io/tags/fabric/index.xml" rel="self" type="application/rss+xml" />
+    
+      
+        
+          <item>
+            <title>使用 Fabric 进行远程操作</title>
+            <link>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</link>
+            <pubDate>Thu, 16 Apr 2015 00:00:00 +0000</pubDate>
+            
+            <guid>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
+            <description>&lt;p&gt;###Fabric 简介&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。&lt;/p&gt;
+
+&lt;p&gt;####使用 Fabric 的好处&lt;/p&gt;
+
+&lt;p&gt;个人觉得，Fabric 非常适合简单的、重复性的远程操作。&lt;/p&gt;
+
+&lt;p&gt;首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。&lt;/p&gt;
+
+&lt;p&gt;再者，Fabric 避免远程登录，可以把远程操作放在本地运行。&lt;/p&gt;
+
+&lt;p&gt;最后，Fabric 非常简单，只需要编写一个 &lt;code&gt;fabfile.py&lt;/code&gt;（或者像 Python 那样 &lt;a href=&#34;http://docs.fabfile.org/en/latest/usage/fabfiles.html&#34;&gt;导入包来添加更多的功能&lt;/a&gt;），就可以使用&lt;a href=&#34;http://docs.fabfile.org/en/latest/usage/fab.html&#34;&gt;&lt;code&gt;fab&lt;/code&gt; 指令&lt;/a&gt; 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。&lt;/p&gt;
+
+&lt;p&gt;基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。&lt;/p&gt;
+
+&lt;p&gt;###常用的 Fabric 函数&lt;/p&gt;
+
+&lt;p&gt;这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 &lt;a href=&#34;http://docs.fabfile.org/en/latest/index.html&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;####常用操作&lt;/p&gt;
+
+&lt;p&gt;Fabric 的常用 &lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/operations.html&#34;&gt;操作&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;run&lt;/code&gt;：在远程机器上执行 Shell 命令；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo&lt;/code&gt;：带有 root 权限的 &lt;code&gt;run&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;local&lt;/code&gt;：执行本地命令；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;get&lt;/code&gt;：从远程机器下载文件；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;put&lt;/code&gt;：上传文件到远程机器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;prompt&lt;/code&gt;：可以理解为在远程机器上执行 &lt;code&gt;raw_input&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;reboot&lt;/code&gt;：重启远程机器。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;####常用上下文管理器和装饰器
+上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href=&#34;http://zh.wikipedia.org/wiki / 语法糖&#34;&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的&lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/context_managers.html&#34;&gt;上下文管理器&lt;/a&gt; 有：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cd&lt;/code&gt;：切换目录；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;lcd&lt;/code&gt;：在本地切换目录，即 &lt;code&gt;local cd&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt;：可以添加路径到 &lt;code&gt;PATH&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;settings&lt;/code&gt;：用来临时修改 &lt;code&gt;env&lt;/code&gt; 变量，使变量只作用在一段代码中。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;常用的 &lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/decorators.html&#34;&gt;装饰器&lt;/a&gt; 有：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@task&lt;/code&gt;：用来把一个函数声明为 &lt;a href=&#34;http://docs.fabfile.org/en/latest/usage/tasks.html&#34;&gt;Fabric Task&lt;/a&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@hosts&lt;/code&gt;：用来制定远程操作的目标机器；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;@with_settings&lt;/code&gt;：用来临时设定 &lt;code&gt;env&lt;/code&gt; 变量，可以等同于 &lt;code&gt;with settings&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 &lt;code&gt;fab task_name&lt;/code&gt; 来执行了。&lt;/p&gt;
+
+&lt;p&gt;###一个例子&lt;/p&gt;
+
+&lt;p&gt;在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。&lt;/p&gt;
+
+&lt;p&gt;开始，我检查的方式是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆之后，再使用 &lt;code&gt;grep&lt;/code&gt; 检查日志文件是否包含 &lt;code&gt;ERROR&lt;/code&gt;、&lt;code&gt;WARNING&lt;/code&gt; 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆，再运行脚本进行检查。&lt;/p&gt;
+
+&lt;p&gt;但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 &lt;code&gt;datetime&lt;/code&gt;，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;from fabric.api import *
+
+def check_log_with_keyword(log_file, keyword):
+    with settings(hide(&#39;warnings&#39;,&#39;output&#39;),
+                  host_string=&#39;eb101.ops&#39;,
+                  warn_only=True):
+        result = run(&#39;grep %s %s&#39; % (keyword, filename))
+
+        if result.return_code == 0:
+            print(result)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;使用 &lt;code&gt;with settings()&lt;/code&gt; 来临时更改 &lt;code&gt;env&lt;/code&gt; 变量；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hide(&#39;warnings&#39;, &#39;output&#39;)&lt;/code&gt; 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 &lt;code&gt;stderr&lt;/code&gt; 和 &lt;code&gt;stdout&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;host_string=&#39;eb101.ops&#39;&lt;/code&gt;，设定目标机器，Fabric 可以使用 &lt;code&gt;.ssh/config&lt;/code&gt; 的设置；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;warn_only=True&lt;/code&gt; 用来确保 Fabric 程序不会因为 &lt;code&gt;grep&lt;/code&gt; 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;result = run(&#39;grep %s %s&#39; % (keyword, filename))&lt;/code&gt;, 运行 &lt;code&gt;grep&lt;/code&gt; 指令并得到结果。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
+
+&lt;p&gt;###参考文献&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments&#34;&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+          </item>
+        
+      
+    
+  </channel>
+</rss>

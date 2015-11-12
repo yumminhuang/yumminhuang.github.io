@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="i3 窗口管理器简介">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <title>i3 窗口管理器简介 &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="http://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="http://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="http://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+
+
+    
+    <script src="http://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="http://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://yumminhuang.github.io">首页</a></li>
+                    <li><a href="http://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>i3 窗口管理器简介</h3>
+				<span class="label label-primary">Sun, Mar 29, 2015</span> in 
+				
+					
+					<a href="/categories/linux">Linux</a>
+				 using tags
+				
+					
+					<a href="/tags/linux">Linux</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			
+
+<p>在<a href="http://kernelpanic.fm">内核恐慌</a>第九期<a href="http://ipn.li/kernelpanic/9/">「程序员的理想工作环境」</a>中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 <a href="http://awesome.naquadah.org/">Awesome 窗口管理器</a>和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上<a href="http://www.weibo.com/2622511625/C1N9FgPr5">吐槽</a>。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。</p>
+
+<p>##平铺式窗口管理器</p>
+
+<p>窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。</p>
+
+<p>窗口管理器主要有两种<sup class="footnote-ref" id="fnref:0e9ce4b3aef4da2b8e28b127787defb4:type"><a rel="footnote" href="#fn:0e9ce4b3aef4da2b8e28b127787defb4:type">1</a></sup>：</p>
+
+<ol>
+<li>堆叠式窗口管理器（Stacking Window Manager）；</li>
+<li>平铺式窗口管理器（Tiling Window Manager）。</li>
+</ol>
+
+<p>在<a href="http://en.wikipedia.org/wiki/Stacking_window_manager">堆叠式管理器</a>（也称作悬浮式窗口管理器，Floating Window Manager）中，不同窗口可以像桌子上随意摆放的白纸一样相互重叠。常见的窗口管理器多为堆叠式，如 Windows 的 Explorer，Mac OS X 的 Finder，以及 Ubuntu 的 Unity 等等。</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Tiling_window_manager">平铺式</a>（或直译为瓦片式）窗口管理器，其中的窗口不能够重叠，而是像瓦片一样挨个摆放。常用的平铺式管理器有 Awesome 和i3。</p>
+
+<p>根据我个人的使用体验，平铺式窗口管理器（主要指的是 i3 ）有以下几个优点：</p>
+
+<ol>
+<li>简单轻巧；</li>
+<li>多依赖键盘操作，较少使用鼠标；</li>
+<li>高度可定制化；</li>
+<li>稳定。</li>
+</ol>
+
+<p>具体来说。平铺式窗口管理器没有绚丽的界面和复杂的功能，可以让人更加专注于正在做的事情。同时，平铺式管理器非常精简，如 i3 的安装包只有 900 多 KB，相应地，消耗的资源也更少。平铺式管理器多依赖键盘操作，较少使用鼠标，配合应用程序的快捷键，基本上可以避免鼠标操作，从而提升工作效率。平铺式管理器不仅可以实现边框颜色之类的常规设置，还可以根据用户的需求，修改桌面、窗口等。最后，因为平铺式管理器非常精简，较之堆叠式管理器也更加稳定。至少在我使用的两个月里还没有出现过崩溃的情况。</p>
+
+<p>我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候<sup class="footnote-ref" id="fnref:0e9ce4b3aef4da2b8e28b127787defb4:monitor"><a rel="footnote" href="#fn:0e9ce4b3aef4da2b8e28b127787defb4:monitor">2</a></sup>，就像下图中那样，平铺式窗口管理器最能发挥作用。</p>
+
+<p><img src="http://awesome.naquadah.org/images/6mon.small.png" alt="i3 配合多屏幕" /></p>
+
+<p>比如我工作时有一台 13 寸的笔记本和一台 27 寸的外接显示器。时刻保持打开的窗口包括公司内交流用的即时聊天软件，邮件客户端，编辑器，浏览器和多个终端窗口。使用 i3 之后，我的两个显示器基本是这样分配的：</p>
+
+<ul>
+<li>笔记本显示器左右分割为两栏，分别显示聊天软件和邮件客户端；</li>
+<li>外接显示器分为两栏；
+
+<ul>
+<li>第一栏又分两列，分别给编辑器和调试、运行用的终端；</li>
+<li>第二栏也分两列，分别给浏览器和其它用的终端（常用的是远程登录、监控系统）。</li>
+</ul></li>
+</ul>
+
+<p>虽然需要同时打开了很多软件，但是因为窗口是平铺的，每次要切换软件时，只需要将屏幕的焦点切换到相应的窗口即可，而不需要像堆叠式管理器那样在凌乱的桌面上找到要用的窗口。</p>
+
+<p>##i3 窗口管理器的基本操作</p>
+
+<h3 id="按键:0e9ce4b3aef4da2b8e28b127787defb4">按键</h3>
+
+<p>i3 窗口管理器操作中非常不同的是需要设置一个 <code>MOD</code> 键，用来执行指令。
+我用的是一般 PC 键盘上没什么用的 Windows 键 (Mod4)。为此，我特意把<a href="http://instagram.com/p/0N9WKCBDZt/">办公室的键盘</a>的 Windows 键换成了醒目的红色。</p>
+
+<p>具体按键对应的指令参见下面两幅图：</p>
+
+<p><img src="http://i3wm.org/docs/keyboard-layer1.png" width="600"/></p>
+
+<p>按下 <code>MOD</code> 键时对应的指令</p>
+
+<p><img src="http://i3wm.org/docs/keyboard-layer2.png" width="600"/></p>
+
+<p>按下 <code>MOD+Shift</code> 键时对应的指令</p>
+
+<p>###容器
+i3 窗口管理器有一个很重要的概念就是容器（Container）。每个容器内可以存放一个应用程序的窗口。一个桌面（或者说 Workspace）就是一个容器。容器可以嵌套形成树型的结构，所以我们可以将容器水平或者垂直地分割成多个容器，从而充分利用桌面的空间。详细解释请参阅<a href="http://i3wm.org/docs/userguide.html#_tree">文档</a>。</p>
+
+<p>###常用的指令
+* <code>MOD + H, J, K, L</code>：移动屏幕焦点；
+* <code>MOD + Shift + H, J, K, L</code>：移动容器；
+* <code>MOD + V</code>：垂直分割容器；
+* <code>MOD + H</code>：水平分割容器；
+* <code>MOD + D</code>：打开应用程序启动器Dmenu；
+* <code>MOD + Enter</code>：打开终端。</p>
+
+<p>##i3窗口管理器的安装和配置</p>
+
+<h3 id="安装:0e9ce4b3aef4da2b8e28b127787defb4">安装</h3>
+
+<p>以Ubuntu为例。首先添加i3到源列表。</p>
+
+<pre><code>echo &quot;deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe&quot; &gt;&gt; /etc/apt/sources.list
+</code></pre>
+
+<p>然后运行以下指令进行安装。</p>
+
+<pre><code>apt-get update
+apt-get --allow-unauthenticated install sur5r-keyring
+apt-get install i3
+</code></pre>
+
+<h3 id="配置:0e9ce4b3aef4da2b8e28b127787defb4">配置</h3>
+
+<p>我之所以放弃 Awesome 的一个很重要的原因就是它的配置过于复杂。诚然，Awesome 的效果要比 i3 酷炫很多，但是设置需要用到 Lua 脚本。很多功能还需要通过安装插件来完成。相反，i3 只需要两个设置文件，而且用的是非常易读的语法。</p>
+
+<p>配置文件包括两部分，<code>~/.config/i3/config</code> 和 <code>~/.config/i3status/config</code>，分别用来设置 i3 窗口管理器和状态栏<sup class="footnote-ref" id="fnref:0e9ce4b3aef4da2b8e28b127787defb4:config"><a rel="footnote" href="#fn:0e9ce4b3aef4da2b8e28b127787defb4:config">3</a></sup>。</p>
+
+<p>在这里贴一下我自己的<a href="https://github.com/yumminhuang/dotfiles/blob/master/files/i3_config"> i3 配置文件</a>和<a href="https://github.com/yumminhuang/dotfiles/blob/master/files/i3status_config"> i3 状态栏的配置文件</a>，基本上每条设置都做了注释，以供读者参考。</p>
+
+<p>想要了解更加具体的配置方法，可以参阅 i3 的<a href="http://i3wm.org/docs/">官方文档</a>。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:0e9ce4b3aef4da2b8e28b127787defb4:type">事实上，一些窗口管理器，如 Awesome 和 i3，支持堆叠式和平铺式两种窗口管理器的形式。这样的窗口管理器被称作<a href="http://en.wikipedia.org/wiki/Dynamic_window_manager">「动态式窗口管理器」</a>。因为本文主要介绍 i3 作为平铺的特性，故将其划为平铺式窗口管理器。
+ <a class="footnote-return" href="#fnref:0e9ce4b3aef4da2b8e28b127787defb4:type"><sup>[return]</sup></a></li>
+<li id="fn:0e9ce4b3aef4da2b8e28b127787defb4:monitor">多台显示器支持可以使用 <code>xrandr</code> 指令。
+ <a class="footnote-return" href="#fnref:0e9ce4b3aef4da2b8e28b127787defb4:monitor"><sup>[return]</sup></a></li>
+<li id="fn:0e9ce4b3aef4da2b8e28b127787defb4:config">为了方便编辑，我把配置文件放在 <code>~</code> 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅<a href="http://i3wm.org/docs/userguide.html#configuring">关于 i3 设置的文档</a>和<a href="http://i3wm.org/i3status/manpage.html#_options">关于状态栏设置的文档</a>。
+ <a class="footnote-return" href="#fnref:0e9ce4b3aef4da2b8e28b127787defb4:config"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2015 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="http://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a href="" target="_blank">
+                        <i class="fa fa-rss-square fa-2x"></i></a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+
