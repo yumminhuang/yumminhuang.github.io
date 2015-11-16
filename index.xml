@@ -5,8 +5,66 @@
     <link>http://yumminhuang.github.io/</link>
     <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 10 Nov 2015 22:29:59 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2015 10:19:57 -0500</lastBuildDate>
     <atom:link href="http://yumminhuang.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+      
+    
+      
+    
+      
+        
+          <item>
+            <title>将博客由 Pelican 迁移到 Hugo</title>
+            <link>http://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</link>
+            <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
+            
+            <guid>http://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</guid>
+            <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
+Pelican 是一个优秀的静态博客生成器。当初选用 Pelican 的主要是因为它是用 Python 开发的，而我又对 Python 比较熟悉。而且 Pelican 有很多由第三方开发者制作的插件提供了更多的功能。但是长期使用的过程中还是有一些小小的麻烦。当初，我想给博客里的中文文章添加&lt;a href=&#34;https://css.hanzi.co/&#34;&gt;「汉字标准格式」&lt;/a&gt; 这个框架，需要向模版里添加一段引入 CSS 和 JS 代码。但是 Pelican 的模版不易更改，我需要为了修改一两行 HTML 文件 Fork 之前的模版，方法既不优雅，维护成本又很高。另外，Pelican 的模版似乎是全局性的，所有的页面都使用相同的模版。&lt;/p&gt;
+
+&lt;p&gt;后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到  &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo 官网&lt;/a&gt;的首页的时候，看上去非常漂亮，令人印象深刻。&lt;/p&gt;
+
+&lt;p&gt;使用 &lt;code&gt;hugo new site SITE_DIR&lt;/code&gt; 新建一个 Hugo 之后，生成以下路径：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.
+├── archetypes/
+├── config.toml
+├── content/
+├── data/
+├── layouts/
+└── static/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;config.toml&lt;/code&gt; 用来存放设置。&lt;code&gt;content/&lt;/code&gt; 里存放的是文章，&lt;code&gt;data/&lt;/code&gt; 用来存放一些数据。 &lt;code&gt;static/&lt;/code&gt; 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 &lt;code&gt;themes/&lt;/code&gt; 里并在&lt;code&gt;config.toml&lt;/code&gt; 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。&lt;/p&gt;
+
+&lt;p&gt;加下来着重介绍的是 &lt;code&gt;layouts/&lt;/code&gt;，这里定义了博客的模版，是自定义 Hugo 最重要的部分。和 Pelican 有很大不同的地方是，Hugo 可以自定义文章的类型（ Type ）。不同的类型可以使用不同的模版。比如，除了第三方主题提供的文章类型，我还想为中文文章新建一个类型 &lt;code&gt;zhpost&lt;/code&gt;。只需要在 &lt;code&gt;layouts/&lt;/code&gt; 下新建一个 &lt;code&gt;zhpost/&lt;/code&gt;。接着，我可以设置中文文章的样式，只需新建一个 &lt;code&gt;single.html&lt;/code&gt; 就可以了。我也因此可以在&lt;code&gt;layouts/zhpost/single.html&lt;/code&gt; 里引入「汉字标准格式」的 CSS 和 JS。另外，对于第三方主题的模版不满意的话还可以按照相同的路径重写一个。Hugo 会优先读取根目录下 &lt;code&gt;layouts/&lt;/code&gt; 里的设置。具体来说，&lt;code&gt;layouts/post/single.html&lt;/code&gt; 可以覆盖 &lt;code&gt;themes/THEME/layouts/post/single.html&lt;/code&gt;。这样我就可以很容易的替换不满意的模版了。&lt;/p&gt;
+
+&lt;p&gt;Hugo 的可定制性非常高，从 404 页面，到文章列表的页面都可以修改，而且可以做到不同类型的文章使用不一样的样式。具体的配置需要参考&lt;a href=&#34;http://themes.gohugo.io/&#34;&gt;第三方的主题&lt;/a&gt;的设置和 Hugo 的文档。&lt;/p&gt;
+
+&lt;p&gt;值得一提的是，Go 的模版语言可读性很高，几乎不需要花额外的时间学习。我对照着别人开发的主题照葫芦画瓢就完成了模版的定义和修改。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;archetypes/&lt;/code&gt;，用来存放定义的「原型」。原型的作用是自动添加文字的元数据。比如，我想每次创建 &lt;code&gt;post&lt;/code&gt; 类文章的时候都自动添加元数据，只需要在 &lt;code&gt;archetypes/&lt;/code&gt; 里添加一个 &lt;code&gt;post.md&lt;/code&gt;，并加入以下内容：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+++
+title = &amp;quot;my new post&amp;quot;
+date = &amp;quot;2015-01-12T19:20:04-07:00&amp;quot;
+tags = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
+categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
++++
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样每次运行 &lt;code&gt;hugo new post/ARTICLE.md&lt;/code&gt; 的时候都可以自动添加上面的元数据。&lt;/p&gt;
+
+&lt;p&gt;Hugo 另外的一个优点是生成博客的速度非常快，生成一个网页的速度可以达到毫秒级别。如果博客的内容很多，Hugo 要比 Pelican、Jekyll 等由动态语言写成的博客生成器有很大的优势。&lt;/p&gt;
+
+&lt;p&gt;当然，Hugo 也有不足。比如，Hugo 默认是不支持代码高亮的，需要额外设置。此外，在 Pelican 里，可以通过 &lt;a href=&#34;https://github.com/yuex/cjk-auto-spacing&#34;&gt;cjk-auto-spacing&lt;/a&gt; 插件来自动在英文单词和汉字之间插入空格，这对于有大量中英文混排的技术笔记来说非常方便。但是，目前我还没有找到 Hugo 有类似的解决方法，暂时只能在写文章的时候手工加入空格。&lt;/p&gt;
+
+&lt;p&gt;刚开始使用 Hugo，有一些诸如 Taxonomies，Section 之类的功能还没有仔细研究。这篇文章也是草草完成，不慎严谨，俟后完善。&lt;/p&gt;
+</description>
+          </item>
+        
+      
     
       
     
@@ -1287,178 +1345,6 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 </description>
           </item>
         
-      
-    
-      
-    
-      
-        
-          <item>
-            <title>在 AWS AutoScaling Group 中替换 Instance</title>
-            <link>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</link>
-            <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
-            
-            <guid>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</guid>
-            <description>&lt;p&gt;这两周，我被分配的任务是实现 &lt;a href=&#34;http://aws.amazon.com/&#34;&gt;AWS&lt;/a&gt; 的 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;Auto Scaling&lt;/a&gt;功能。多亏有了 &lt;a href=&#34;https://github.com/boto/boto&#34;&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。&lt;/p&gt;
-
-&lt;p&gt;我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;创建并配置（下载新发布的代码）多个新的 Instance；&lt;/li&gt;
-&lt;li&gt;依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。&lt;/p&gt;
-
-&lt;p&gt;现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 Instance 数目，都会激发 Scaling Policy。比如我想关闭一个旧的 Instance，这样 Auto Scaling Group 当中 Instance 的数量就会小于 Desired Capacity，Auto Scaling Group 就会新创建一个 Instance， 而不是等我激活一个 Instance 去替代。&lt;/p&gt;
-
-&lt;p&gt;我想到的办法步骤如下：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;将 Auto Scaling Group 挂起（避免激发 Scaling Policy）；&lt;/li&gt;
-&lt;li&gt;按照以前的方法替换旧的 Instance；&lt;/li&gt;
-&lt;li&gt;将新创建的 Instance 添加到 Auto Scaling Group。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;因为 AWS Auto Scaling 的特性（比如 Auto Scaling Group 被挂起的时候不能够添加 Instance，&lt;code&gt;desired_capacity&lt;/code&gt; 不能小于 &lt;code&gt;min_size&lt;/code&gt;），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;将 Auto Scaling Group 的 &lt;code&gt;desired_capacity&lt;/code&gt; 和 &lt;code&gt;min_size&lt;/code&gt; 分别置为 &lt;code&gt;0&lt;/code&gt;（防止恢复 Auto Scaling Group 的时候自动创建 Instance）；&lt;/li&gt;
-&lt;li&gt;恢复 Auto Scaling Group（结束挂起状态，然后才可以添加 Instance）；&lt;/li&gt;
-&lt;li&gt;添加 Instance 到 Auto Scaling Group 里；&lt;/li&gt;
-&lt;li&gt;恢复 Auto Scaling Group 的 &lt;code&gt;min_size&lt;/code&gt;。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;下面提供一份示例代码以供参考：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#!python
-import sys
-import time
-
-from boto.ec2.autoscale import AutoScaleConnection
-from boto.ec2.connection import EC2Connection
-
-AUTO_SCALING_GROUP = &amp;quot;test_auto_scaling_group&amp;quot;
-NEW_INSTANCES = [&amp;quot;i-4acb0666&amp;quot;, &amp;quot;i-4acbqa9&amp;quot;]
-CHECK_INTERVAL = 5
-
-
-def suspend(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Suspend auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    as_conn.suspend_processes(AUTO_SCALING_GROUP)
-    print &amp;quot;Suspend Done\n&amp;quot;
-
-
-def resume(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Resume auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    as_conn.resume_processes(AUTO_SCALING_GROUP)
-    print &amp;quot;Resume Done\n&amp;quot;
-
-
-def get_instance_by_id(ec2conn, inst_id):
-    &amp;quot;&amp;quot;&amp;quot;
-    Get instance by its id
-    &amp;quot;&amp;quot;&amp;quot;
-    ...
-    pass
-
-def deactivate_instance(inst):
-    &amp;quot;&amp;quot;&amp;quot;
-    Deactivate instance
-    &amp;quot;&amp;quot;&amp;quot;
-    ...
-    pass
-
-
-def delete_instances(as_conn, ec2conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Delete instances in auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-    instances = [get_instance_by_id(ec2conn, i.instance_id) for i in as_group.instances]
-    for instance in instances:
-        if instance.state != &amp;quot;terminated&amp;quot;:
-            print &amp;quot;*** Terminate Instance %s&amp;quot; % instance.id
-            deactivate_instance(instance)
-    # All instances should be terminated
-    while any([inst.update() != &amp;quot;terminated&amp;quot; for inst in instances]):
-        sys.stdout.write(&amp;quot;.&amp;quot;)
-        sys.stdout.flush()
-        time.sleep(CHECK_INTERVAL)
-    print &amp;quot;.\nDelete Done\n&amp;quot;
-
-
-def attach_instances(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Attach instances into auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    while True and NEW_INSTANCES:
-        as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-        if len(as_group.instances) == 0:
-            as_conn.attach_instances(AUTO_SCALING_GROUP, NEW_INSTANCES)
-            print &amp;quot;Attach Done\n&amp;quot;
-            return
-        else:
-            print &amp;quot;There are instances still in the group&amp;quot;
-            time.sleep(CHECK_INTERVAL)
-
-
-def set_capacity(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Set desired capacity and minimum size as 0
-    &amp;quot;&amp;quot;&amp;quot;
-    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-    as_group.min_size = 0
-    as_group.desired_capacity = 0
-    as_group.update()
-    print &amp;quot;Set Capacity Done\n&amp;quot;
-
-
-def resume_capacity(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Resume minimum size as the original value
-    &amp;quot;&amp;quot;&amp;quot;
-    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-    setattr(as_group,&amp;quot;min_size&amp;quot;, 1)
-    as_group.update()
-    print &amp;quot;Resume Capacity Done\n&amp;quot;
-
-
-def main():
-    as_conn = AutoScaleConnection()
-    ec2conn = EC2Connection()
-
-    print &amp;quot;Suspend Auto Scaling Group&amp;quot;
-    suspend(as_conn)
-
-    print &amp;quot;Delete Instances&amp;quot;
-    delete_instances(as_conn, ec2conn)
-
-    print &amp;quot;Set Capacity&amp;quot;
-    set_capacity(as_conn)
-
-    print &amp;quot;Resume Auto Scaling Group&amp;quot;
-    resume(as_conn)
-
-    print &amp;quot;Attach Instances&amp;quot;
-    attach_instances(as_conn)
-
-    print &amp;quot;Resume Capacity&amp;quot;
-    resume_capacity(as_conn)
-
-
-if __name__ == &amp;quot;__main__&amp;quot;:
-    main()
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-          </item>
-        
-      
-    
       
     
   </channel>

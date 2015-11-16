@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Miscellaneous on 临水轩志</title>
-    <link>http://yumminhuang.github.io/categories/miscellaneous/</link>
-    <description>Recent content in Miscellaneous on 临水轩志</description>
+    <title>Go on 临水轩志</title>
+    <link>http://yumminhuang.github.io/tags/go/</link>
+    <description>Recent content in Go on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 13 Nov 2015 09:38:53 -0500</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/categories/miscellaneous/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://yumminhuang.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
       
         
@@ -57,163 +57,6 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 &lt;p&gt;当然，Hugo 也有不足。比如，Hugo 默认是不支持代码高亮的，需要额外设置。此外，在 Pelican 里，可以通过 &lt;a href=&#34;https://github.com/yuex/cjk-auto-spacing&#34;&gt;cjk-auto-spacing&lt;/a&gt; 插件来自动在英文单词和汉字之间插入空格，这对于有大量中英文混排的技术笔记来说非常方便。但是，目前我还没有找到 Hugo 有类似的解决方法，暂时只能在写文章的时候手工加入空格。&lt;/p&gt;
 
 &lt;p&gt;刚开始使用 Hugo，有一些诸如 Taxonomies，Section 之类的功能还没有仔细研究。这篇文章也是草草完成，不慎严谨，俟后完善。&lt;/p&gt;
-</description>
-          </item>
-        
-      
-    
-      
-    
-      
-    
-      
-        
-          <item>
-            <title>Objective-C 语法总结</title>
-            <link>http://yumminhuang.github.io/blog/2014/05/04/objective-c-%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-            <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
-            
-            <guid>http://yumminhuang.github.io/blog/2014/05/04/objective-c-%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
-            <description>
-
-&lt;p&gt;最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。&lt;/p&gt;
-
-&lt;p&gt;在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 &lt;code&gt;object.method(argument1, argument2...)&lt;/code&gt;。然而 Objective-C 的格式却是 &lt;code&gt;[object method: argument1 andArg: argument2...]&lt;/code&gt;。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。&lt;/p&gt;
-
-&lt;h3 id=&#34;1-基本语法:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1. 基本语法&lt;/h3&gt;
-
-&lt;h4 id=&#34;1-1-创建对象:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1.1 创建对象&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;obj = new MyClass();
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;MyClass *obj = [[MyClass alloc] init];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;1-2-调用方法:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1.2 调用方法&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;obj.method1() // 没有参数
-obj.method2(arg1) // 一个参数
-obj.method3(arg1,arg2) // 多个参数
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[obj method1] // 没有参数
-[obj method2:arg1] // 一个参数
-[obj method3:arg2 andArg: arg2] // 多个参数
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;2-类的定义:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;2. 类的定义&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;public class MyClass extend SuperClass {
-
-    private int attr1;
-
-    public void method1() {
-        ...
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Objectove-C 定义一个类时需要两个文件，分别是负责声明的 Header File 和负责具体实现的 Implementation File。&lt;/p&gt;
-
-&lt;p&gt;MyClass.h&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@interface MyClass : SuperClass
-{
-    int attr1;
-}
-- (void) method1;
-- (void) method2: int arg1;
-- (void) method3: int arg1 andArg: (NSString *) arg2;
-+ (void) classMethod; // 相当于 Java 中的 static 方法
-@end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;MyClass.m&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#import&amp;quot;MyClass.h&amp;quot;
-@implementation MyClass
-- (void) method1
-{
-    ...
-}
-...
-@end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;此外，Objective-C 还有一个非常方便的 “语法糖”——&lt;code&gt;@property&lt;/code&gt; 和 &lt;code&gt;@synthesize&lt;/code&gt; 两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
-在头文件中加上 &lt;code&gt;@property int attr1;&lt;/code&gt; 就等同于声明了两个方法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;	- (int)attr1;
-	- (void)setAttr1:(int)newAttr1;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;实现文件里加上 &lt;code&gt;@synthesize attr1;&lt;/code&gt; 就等同于定义了两个方法：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;- (int)attr1
-{
-	return attr1;
-}
--(void)setAttr1:(int)newAttr1
-{
-   	attr1 = newAttr1;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;3-协议-接口-的定义:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;3. 协议（接口）的定义&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;
-定义接口&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;public interface MyInterface {
-	public void aInterfaceMethod();
-	public void anotherInterfaceMethod();
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;实现接口&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;public class MyClass extend SuperClass implements MyInterface {
-	// method declarations
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;
-在 Objective-C 中，用关键字 &lt;code&gt;@protocol&lt;/code&gt; 定义协议，也就是 Java 中的接口。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@protocol MyProtocol
-- (void) aProtocolMethod;
-- (void) anotherProcotolMethod;
-@end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;当一个类需要实现协议时，&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#import &amp;quot;MyProtocol.h&amp;quot;
-@interface MyClass : SuperClass &amp;lt;MyProtocol, AnotherProtocol&amp;gt;
-	// method declarations
-@end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;由于我也是初学 Objective-C，难免有错误和总结不全面的地方，恳请指正。&lt;/p&gt;
 </description>
           </item>
         
