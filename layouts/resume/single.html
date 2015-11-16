@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ if .Site.Params.languageCode }}{{ .Site.Params.languageCode }}{{ else }}en-us{{end}}" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>{{ .Title }}</title>
+    <meta name="description" content="{{ .Site.Params.author }}'s Résumé">
+    <meta name="author" content="{{ .Site.Params.author }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/base.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/skeleton.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/layout.css">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+</head>
+<body>
+<div class="container">
+    <header class="three columns">
+        <h1>{{ .Site.Params.author }}</h1>
+        <address>
+            <a href="https://www.google.com/maps/place/Botson">
+                Boston<br/>
+                US
+            </a>
+        </address>
+        <p>
+            <a href="mailto:yumminhuang@gmail.com"><i class="fa fa-envelope"></i> Email</a><br/>
+            <a href="{{ .Site.Params.github }}"><i class="fa fa-github-alt"></i> Github</a> /
+            <a href="{{ .Site.Params.twitter }}"><i class="fa fa-twitter"></i> Twitter</a>
+        </p>
+    </header>
+    <div class="thirteen columns clearfix">
+
+        {{ .Content }}
+
+{{ partial "footer.html" . }}

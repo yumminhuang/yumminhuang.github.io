@@ -14,8 +14,8 @@ This site will aggregate my scattered online presence and hopefully provide a pl
 
 我目前是东北大学计算机与信息科学学院的在读硕士研究生。
 
-* [简历]()
-* [Resume]()
+* [简历](/resume/resume_zh/)
+* [Resume](/resume/resume/)
 
 ### 凡例
 
