@@ -1,6 +1,6 @@
 +++
 title 		= "Execute a Command in the Background on Remote Server using SSH"
-tags 		= ["tag1", "Shell"]
+tags 		= ["Shell"]
 categories	= ["Linux"]
 date		= "2014-05-04"
 +++
