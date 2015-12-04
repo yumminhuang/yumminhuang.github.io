@@ -6,6 +6,7 @@ date        = "2015-04-17"
 +++
 
 实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。
+<!--more-->
 
 > This project uses Java and XML. How it could be good?
 >
@@ -13,7 +14,7 @@ date        = "2015-04-17"
 
 本文介绍该项目的大致流程，共分为两部分：
 
-1. 介绍 * Automated python unit testing, code coverage and code quality analysis with Jenkins*（[part1](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html), [part2](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html), [part3](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html)）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。
+1. 介绍 *Automated python unit testing, code coverage and code quality analysis with Jenkins*（[part1](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html), [part2](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html), [part3](http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html)）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。
 2. 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。
 
 ### 基于 Jenkins 的 Python 自动化测试工具

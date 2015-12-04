@@ -6,6 +6,7 @@ date        = "2015-06-20"
 +++
 
 本文将主要介绍如何使用 [Travis CI](https://travis-ci.org) 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 [Coveralls](https://coveralls.io/) 来监测测试覆盖率。
+<!--more-->
 
 ## Travis CI
 
@@ -31,8 +32,9 @@ Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Covera
 
 我一般会在项目中添加一个 `requirements.txt`，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行
 
-	:::bash
-	pip install -r requirements.txt
+```
+pip install -r requirements.txt
+```
 
 就可以安装所有的库。
 
@@ -42,8 +44,9 @@ Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Covera
 
 nose 对 coverage.py 的支持非常好，可以在 `nosetests` 命令后添加一系列选项来生成覆盖率。
 
-	:::bash
-	nosetests --with-coverage
+```
+nosetests --with-coverage
+```
 
 就可以直接得到测试覆盖率的数据。
 
@@ -52,21 +55,23 @@ nose 对 coverage.py 的支持非常好，可以在 `nosetests` 命令后添加�
 ### 持续集成
 在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 `.travis.yml`。Travis CI 的配置使用的是非常易读的 YAML 文件。
 
-	:::yaml
-	language: python
-	python:
-	    - 2.6
-	    - 2.7
-	# command to install dependencies
-	install:
-	    - pip install -r requirements.txt
-	    - pip install coveralls
-	# command to run tests
-	script:
-	    nosetests --cover-package=project --with-coverage
-	# coveralls
-	after_success:
-	    coveralls
+```
+language: python
+python:
+    - 2.6
+    - 2.7
+# command to install dependencies
+install:
+    - pip install -r requirements.txt
+    - pip install coveralls
+# command to run tests
+script:
+    nosetests --cover-package=project --with-coverage
+# coveralls
+after_success:
+    coveralls
+
+```
 
 同样地，也需要在 Coveralls 上开启相应的项目。
 

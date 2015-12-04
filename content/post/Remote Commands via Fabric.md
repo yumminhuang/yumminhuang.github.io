@@ -8,6 +8,8 @@ date        = "2015-04-16"
 ## Fabric 简介
 
 [Fabric](http://www.fabfile.org) 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。
+<!--more-->
+
 
 ### 使用 Fabric 的好处
 

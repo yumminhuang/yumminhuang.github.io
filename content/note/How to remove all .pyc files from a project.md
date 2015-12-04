@@ -6,6 +6,7 @@ date		= "2014-07-31"
 +++
 
 I am a paranoid guy. I like to delete all "useless" files. Today, I want to clean up my project repository. There are lots of `.pyc` files. And I found this command, which is very convenient to batch delete files in a directory.
+<!--more-->
 
 ```
 find . -name "*.pyc" -exec rm -rf {} \;
@@ -28,7 +29,7 @@ Or I can delete all files whose name starts with 'test'.
 ```
 find . -name "test*" -exec rm -rf {} \;
 ```
-	
+
 **Reference:**
 
 * [How do I remove all .pyc files from a project?](http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project)

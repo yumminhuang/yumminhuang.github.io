@@ -8,6 +8,7 @@ date        = "2014-05-04"
 最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。
 
 在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 `object.method(argument1, argument2...)`。然而 Objective-C 的格式却是 `[object method: argument1 andArg: argument2...]`。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。
+<!--more-->
 
 ----
 废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。

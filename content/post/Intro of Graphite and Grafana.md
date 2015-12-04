@@ -10,6 +10,7 @@ date        = "2015-04-08"
 [Graphite](http://graphite.wikidot.com/start) 是一款开源的监控绘图工具。
 
 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：
+<!--more-->
 
 1. **[carbon](https://github.com/graphite-project/carbon)** —— 基于 [Twisted](https://twistedmatrix.com/trac/) 的进程，用来接收数据；
 2. **[whisper](https://github.com/graphite-project/whisper)** —— 专门存储时间序列类型数据的小型数据库；

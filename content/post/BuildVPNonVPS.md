@@ -14,6 +14,8 @@ date        = "2015-03-16"
 >
 > 全靠我们自己
 
+<!--more-->
+
 为了在 [GFW](http://zh.wikipedia.org/wiki/防火长城) 的封锁之下进行正常的上网活动，可以使用 [VPN](http://zh.wikipedia.org/wiki/虛擬私人網路)。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：
 
 1. 安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；
@@ -45,7 +47,7 @@ date        = "2015-03-16"
 ```
 sudo apt-get install pptpd
 ```
-	
+
 #### 配置
 * 配置 IP 地址
 
@@ -90,7 +92,7 @@ sudo sysctl -p
 ```
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 ```
-	
+
 也可以直接编辑 `/etc/rc.local`，在 `exit 0` 之前添加以上内容。
 
 * 重启 PPTP

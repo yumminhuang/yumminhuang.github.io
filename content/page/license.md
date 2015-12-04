@@ -1,6 +1,6 @@
 +++
 date = "2015-11-10T22:40:22-05:00"
-title = "license"
+title = "License"
 +++
 
 ![知识共享许可协议](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)

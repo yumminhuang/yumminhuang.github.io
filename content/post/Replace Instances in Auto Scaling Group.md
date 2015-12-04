@@ -6,6 +6,8 @@ date       = "2014-08-02"
 +++
 
 这两周，我被分配的任务是实现 [AWS](http://aws.amazon.com/) 的 [Auto Scaling](http://aws.amazon.com/autoscaling/)功能。多亏有了 [Boto](https://github.com/boto/boto)， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。
+<!--more-->
+
 
 我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：
 

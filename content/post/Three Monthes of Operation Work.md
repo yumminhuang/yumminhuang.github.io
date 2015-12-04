@@ -6,6 +6,7 @@ date        = "2015-04-01"
 +++
 
 自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。
+<!--more-->
 
 ---
 这次实习并非是我第一次接触运维工作。2014 年夏天，我有一份两个月的暑期实习。当时实习工作的职位是 *Backend Software Engineer*，但事实上所完成的绝大部分工作的内容是关于运维，主要有 [AWS Auto Scaling](http://aws.amazon.com/autoscaling/) 的搭建（关于这部分内容可以参见之前的一篇 [博文](http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html)）和基于 [AWS Cloudwatch](http://aws.amazon.com/cloudwatch/) 实现一些监测工具。所以也算对运维工作有一些经验。之后在找实习的时候，我也是有意识地找运维相关的职位。

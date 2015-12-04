@@ -6,6 +6,7 @@ date        = "2015-03-29"
 +++
 
 在[内核恐慌](http://kernelpanic.fm)第九期[「程序员的理想工作环境」](http://ipn.li/kernelpanic/9/)中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 [Awesome 窗口管理器](http://awesome.naquadah.org/)和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上[吐槽](http://www.weibo.com/2622511625/C1N9FgPr5)。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。
+<!--more-->
 
 ## 平铺式窗口管理器
 

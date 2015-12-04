@@ -8,6 +8,7 @@ date		= "2014-05-04"
 In a project, I have to deploy a simple server program on several remote servers. So I wrote a shell script to deploy and run the program using `scp` and `ssh`.
 
 Since there are several remote servers, I have to run the server program in the background on all remote machines.
+<!--more-->
 
 At first, I simply add the ampersand (&) at the end of the command like this:
 

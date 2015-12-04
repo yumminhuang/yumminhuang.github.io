@@ -6,14 +6,15 @@ date		= "2014-11-18"
 +++
 
 Today, I had a skype interview with Yelp.
+<!--more-->
 
 ### Interview
 
 At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as
 > * What will cause access a website slowly?
-> * Difference between thread and process, 
+> * Difference between thread and process,
 > * What is deadlock?
-> * What's your favorite programming language? And why? 
+> * What's your favorite programming language? And why?
 
 The last part of the interview is a coding question. The interviewer sent me a link of [CoderPad](http://coderpad.io) and asked me to write code on it.
 

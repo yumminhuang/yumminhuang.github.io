@@ -6,6 +6,8 @@ title = "将博客由 Pelican 迁移到 Hugo"
 +++
 
 前两天花了一些时间研究了一下 [Hugo 的文档](https://gohugo.io/overview/introduction/)，并且把博客从 [Pelican](http://blog.getpelican.com/) 迁移到 Hugo。
+<!--more-->
+
 Pelican 是一个优秀的静态博客生成器。当初选用 Pelican 的主要是因为它是用 Python 开发的，而我又对 Python 比较熟悉。而且 Pelican 有很多由第三方开发者制作的插件提供了更多的功能。但是长期使用的过程中还是有一些小小的麻烦。当初，我想给博客里的中文文章添加[「汉字标准格式」](https://css.hanzi.co/) 这个框架，需要向模版里添加一段引入 CSS 和 JS 代码。但是 Pelican 的模版不易更改，我需要为了修改一两行 HTML 文件 Fork 之前的模版，方法既不优雅，维护成本又很高。另外，Pelican 的模版似乎是全局性的，所有的页面都使用相同的模版。
 
 后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到  [Hugo 官网](https://gohugo.io/)的首页的时候，看上去非常漂亮，令人印象深刻。
