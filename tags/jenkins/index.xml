@@ -29,7 +29,7 @@
 &lt;p&gt;本文介绍该项目的大致流程，共分为两部分：&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;介绍 * Automated python unit testing, code coverage and code quality analysis with Jenkins*（&lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html&#34;&gt;part1&lt;/a&gt;, &lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html&#34;&gt;part2&lt;/a&gt;, &lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html&#34;&gt;part3&lt;/a&gt;）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。&lt;/li&gt;
+&lt;li&gt;介绍 *Automated python unit testing, code coverage and code quality analysis with Jenkins*（&lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code.html&#34;&gt;part1&lt;/a&gt;, &lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_20.html&#34;&gt;part2&lt;/a&gt;, &lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html&#34;&gt;part3&lt;/a&gt;）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。&lt;/li&gt;
 &lt;li&gt;简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。&lt;/li&gt;
 &lt;/ol&gt;
 

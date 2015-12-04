@@ -110,8 +110,7 @@
 
 <p>我一般会在项目中添加一个 <code>requirements.txt</code>，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行</p>
 
-<pre><code>:::bash
-pip install -r requirements.txt
+<pre><code>pip install -r requirements.txt
 </code></pre>
 
 <p>就可以安装所有的库。</p>
@@ -122,8 +121,7 @@ pip install -r requirements.txt
 
 <p>nose 对 coverage.py 的支持非常好，可以在 <code>nosetests</code> 命令后添加一系列选项来生成覆盖率。</p>
 
-<pre><code>:::bash
-nosetests --with-coverage
+<pre><code>nosetests --with-coverage
 </code></pre>
 
 <p>就可以直接得到测试覆盖率的数据。</p>
@@ -134,8 +132,7 @@ nosetests --with-coverage
 
 <p>在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 <code>.travis.yml</code>。Travis CI 的配置使用的是非常易读的 YAML 文件。</p>
 
-<pre><code>:::yaml
-language: python
+<pre><code>language: python
 python:
     - 2.6
     - 2.7
@@ -149,6 +146,7 @@ script:
 # coveralls
 after_success:
     coveralls
+
 </code></pre>
 
 <p>同样地，也需要在 Coveralls 上开启相应的项目。</p>

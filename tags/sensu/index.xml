@@ -77,7 +77,7 @@
   else
     puts &#39;WARNING - Chef client daemon is NOT running&#39;
     exit 1
-  end 
+  end
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;写好一个Check的脚本，需要在配置文件中添加它。比如下面,&lt;/p&gt;

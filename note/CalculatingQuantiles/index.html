@@ -163,7 +163,7 @@ for line in lines[2:]:
     v, c = line.rstrip().split()
     input.append([int(v), int(c)])
 
-# Sort by number 
+# Sort by number
 array = sorted(input, key=lambda pair: pair[0])
 
 # Re-organize array by changing count in each pair to value's last index

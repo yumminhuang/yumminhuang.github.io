@@ -92,7 +92,8 @@
                     <br>
                     
                         
-                            前两天花了一些时间研究了一下 Hugo 的文档，并且把博客从 Pelican 迁移到 Hugo。 Pelican 是一个优秀的静态博客生成器。当初选用 Pelican 的主要是因为它是用 Python 开发的，而我又对 Python 比较熟悉。而且 Pelican 有很多由第三方开发者制作的插件提供了更多的功能。但是长期使用的过程中还是有一些小小的麻烦。当初，我想给博客里的中文文章添加「汉字标准格式」 这个框架，需要向模版里添加一段引入 CSS 和 JS 代码。但是 Pelican 的模版不易更改，我需要为了修改一两行 HTML 文件 Fork 之前的模版，方法既不优雅，维护成本又很高。另外，Pelican 的模版似乎是全局性的，所有的页面都使用相同的模版。 后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到 Hugo 官网的首页的时候，看上去非常漂亮，令人印象深刻。 使用 hugo new site SITE_DIR 新建一个 Hugo 之后，生成以下路径： . ├── archetypes/ ├── config.toml ├── content/ ├── data/ ├── layouts/ └── static/ config.toml 用来存放设置。content/ 里存放的是文章，data/ 用来存放一些数据。 static/ 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 themes/ 里并在config.toml 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。 加下来着重介绍的是
+                            <p>前两天花了一些时间研究了一下 <a href="https://gohugo.io/overview/introduction/">Hugo 的文档</a>，并且把博客从 <a href="http://blog.getpelican.com/">Pelican</a> 迁移到 Hugo。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/">
                             
@@ -137,7 +138,8 @@
                     <br>
                     
                         
-                            之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。 猴子补丁 猴子补丁（Monkey Patch）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。 词源 Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。 使用场景 以我的理解，Monkey patch 有两种使用场景： 紧急的安全性补丁，即 Hotfix； 修改或扩展库中的属性和方法。 在 Ruby 中使用 Monkey Patch 我当时遇到的场景是这样的： 我司使用第三方库 fog 进行 EC2 的操作。创建实例等很多命令都需要设置实例类型这个参数。在 fog 里，EC2 的所有类型都定义在 fog/aws/models/compute/flavors.rb 的 FLAVORS 数组里。如果设置的类型不在 FLAVORS 数组里，fog 都会视作是无效的参数而报错。 后来，亚马逊发布了新的实例类型 D2。虽然 Ruby 的第三方社区非常活跃，但是 fog 的开发社区还是没有及时添加 D2 到 flavors.rb 里；而我司的工作又迫切需要使用 D2 类型的实例。 背景交待完毕，接下来看看有什么样的解决方法。 方法一：我们可以向 fog 提交一个 Pull Request 来添加新类型。 但是这个方法行不通。我们使用的 knife-ec2 对 fog 的版本依赖必须是 1.25.*，但是 fog 已经更新到了 1.31.0，而且 fog 从 1.27.0 开始结构上有很大的变化。显然，我们不可能再等 knife-ec2 升级支持新版本的 fog，所以我们提交 Pull Request 更新 fog 不能解决问题。 方法二：手动更新旧版 fog 既然不能使用最新版的 fog，我们可以手动编辑 1.25 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。 最后，在同事的指点下，我采用了第三种方法，即 Monkey Patch。我在我司的 Ruby 项目里添加了一个文件 lib/PROJECT_NAME/monkey_patches/flavors.rb，接着在文件中添加以下代码来修改 fog/aws/models/compute/flavors： require 'fog/aws/models/compute/flavors' class Object def redef_without_warning(const, value) mod = self.is_a?(Module) ?
+                            <p>之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/">
                             
@@ -185,7 +187,8 @@
                     <br>
                     
                         
-                            本文将主要介绍如何使用 Travis CI 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 Coveralls 来监测测试覆盖率。 Travis CI Travis CI 是一款 Web 端的 持续 Continuous 集成 Integration 工具。 Travis CI 采用 「Freemium」 的模式：对 Github 上的开源项目免费，付费的话则可以托管私有项目。Github 上很多知名的开源项目都适用 Travis CI 来进行自动化测试。 和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。 Coveralls Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。 Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Coveralls 支持包括 Travis CI、Jenkins 在内的绝大多数持续集成工具。 样例 接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls1。 依赖管理和虚拟环境 我喜欢为每个项目新建一个 virtualenv 虚拟环境 ，这样可以确保每个项目的开发环境相互独立，避免发生冲突。virtualenvwrapper 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。 我一般会在项目中添加一个
+                            <p>本文将主要介绍如何使用 <a href="https://travis-ci.org">Travis CI</a> 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 <a href="https://coveralls.io/">Coveralls</a> 来监测测试覆盖率。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/06/20/travis-ci/">
                             
@@ -239,7 +242,10 @@
                     <br>
                     
                         
-                            在之前的一篇文章中，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。 然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。 Jenkins是什么 Jenkins 是一个用 Java 编写的开源的持续Continuous 集成Integration工具。 Jenkins 是用 Java 开发的（界面和 Eclipse一样，带着一股浓浓的 SWT 的味道，好在界面并不太影响使用。），对 Java 程序开发有天然的良好支持，如 JUnit/TestNG 测试，Maven、Ant 等 Java 开发中常用的工具都包含在 Jenkins 里。当然，Jenkins 也可以通过插件来实现其它语言的开发。 Jenkins的特性 在使用的过程中，我体会比较深刻的特性有： 项目易于配置 在 Jenkins 当中，我们可以新建 Job。在 Job 里，可以设置添加构建脚本Build Script。构建脚本支持 Bash、Ant、Makefile；Job 的参数、元Meta数据可以作为环境变量在脚本里直接使用，因此设置起来非常方便。 种类繁多的插件（这点也和 Eclipse 也颇为相似） Jenkins 的开发者社区非常活跃，第三方插件很多，从而可以帮助我们实现很多常用的功能。 比如，Hipchat 插件可以在 Job 运行结束后把结果发送到 Hipchat 的聊天室里；Cobertura 插件可以显示测试覆盖率的数据。 Jenkins的使用场景 在我们公司，Jenkins 主要被用来用于： 构建Build、测试Test、部署Deploy代码； 我们可以通过一个 Job 实现以下流程： 使用 Git 插件，从代码库下载任一版本或分支的源代码； 编译代码； 运行测试。 或者是：
+                            <p>在<a href="http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html">之前的一篇文章中</a>，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。</p>
+
+<p>然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/">
                             
@@ -290,7 +296,8 @@
                     <br>
                     
                         
-                            实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。 This project uses Java and XML. How it could be good? ——组里的同事如此评价本项目 本文介绍该项目的大致流程，共分为两部分： 介绍 * Automated python unit testing, code coverage and code quality analysis with Jenkins*（part1, part2, part3）中使用 Jenkins 实现自动化测试、得到代码覆盖率和代码质量的方法。 简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。 基于 Jenkins 的 Python 自动化测试工具 使用到的 Python 模块： coverage：用来生成代码覆盖率的数据； nose: 用来运行单元测试； pylint：用来得到 Python 代码质量的数据。 使用到的 Jenkins 插件： Cobertura plugin：用来显示代码覆盖率； GIT plugin：用来获取最新的代码； Violations plugin：用来显示 pylint 的结果。 安装需要的 Jenkins 插件之后，在 Jenkins 当中新建一个作业（Job）接下来进行设置。 从哪里得到代码 如下图所以，在 Jenkins 的 Source Code Management 当中可以添加 Git Repository。 Jenkins 同样支持 subversion 等 CVS 工具。 什么时候运行作业 在 Jenkins 中可以将 Build Triggers 设置为 Poll SCM 对代码库进行轮询。如下图，Schedule 设为 * * * * *（含义和 Cron 一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行 Build。 当然，也可以使用 Git Hook，从而避免轮询消耗过多的资源。 运行什么 添加一段 Build Script: PYTHONPATH='' nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package=project1 --cover-inclusive python -m coverage xml --include=project1* pylint -f parseable -d I0011,R0801 project1 | tee pylint.out 这段 Shell 脚本中的三个命令： nosetests 命令运行单元测试； 运行 coverage，将覆盖率数据输出为 xml 文件； 运行 pylint 得到代码的质量数据。 具体参数的含义可以参阅原文的第一、第二部分。 显示结果 上一步的 Build Script 有三个输出文件： nosetests.xml coverage.xml pylint.out 接着，在 Jenkins 当中，在 Publish JUnit test result report 添加 nosetests.xml 显示单元测试的结果。在 Cobertura 插件 Publish Cobertura Coverage Report 里添加 coverage.xml 显示测试代码覆盖率。在 Report Violations 里添加 pylint.out 显示代码质量报告。 最终，运行一次作业之后，Jenkins 将可以得到下图显示的测试报告。 持续整合！ 我们持续整合的大致流程是这样的。在代码库中有一个 Master 分支，开发人员添加新功能，修复 Bug 都需要在新建的分支里进行。每新建一个合并到到 Master 的 Pull Request 时，Jenkins 可以自动运行测试。测试通过则在 Bitbucket 的 Pull Request 页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。 我们按照 Automated python unit testing, code coverage and code quality analysis with Jenkins 一文的思路实现了测试覆盖率的部分，区别是我们的代码库里包括 Java 和 Python 两种语言的代码，需要同时处理两份数据。经过一段时间的攻关之后，我们终于可以得到代码覆盖的数据。 相较于测试覆盖率的具体数值，我们更关心覆盖率的变化值。我们希望知道合并一个分支之后，测试覆盖率是增加了还是减少了。因此，现在我们需要得到测试覆盖率的变化值（Coverage diff）。 没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 Pycobertura。 Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。 from pycobertura import Cobertura from pycobertura import TextReporterDelta coverage1 = Cobertura('coverage1.xml') coverage2 = Cobertura('coverage2.xml') delta = TextReporterDelta(coverage1, coverage2) delta.generate() 于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 Post build script 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果： Coverage Diff for Java code: No coverage diff can be found.
+                            <p>实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/">
                             
@@ -341,7 +348,10 @@
                     <br>
                     
                         
-                            Fabric 简介 Fabric 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。 使用 Fabric 的好处 个人觉得，Fabric 非常适合简单的、重复性的远程操作。 首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。 再者，Fabric 避免远程登录，可以把远程操作放在本地运行。 最后，Fabric 非常简单，只需要编写一个 fabfile.py（或者像 Python 那样 导入包来添加更多的功能），就可以使用fab 指令 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。 基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。 常用的 Fabric 函数 这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 官方文档。 常用操作 Fabric 的常用 操作 run：在远程机器上执行 Shell 命令； sudo：带有 root 权限的 run； local：执行本地命令； get：从远程机器下载文件； put：上传文件到远程机器； prompt：可以理解为在远程机器上执行 raw_input reboot：重启远程机器。 常用上下文管理器和装饰器 上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 「语法糖（Syntax sugar）」。Fabric 中常用的上下文管理器 有： cd：切换目录； lcd：在本地切换目录，即 local cd；
+                            <h2 id="fabric-简介:900de048502f7d5abcf000aa59dbd264">Fabric 简介</h2>
+
+<p><a href="http://www.fabfile.org">Fabric</a> 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/">
                             
@@ -392,7 +402,12 @@
                     <br>
                     
                         
-                            Graphite Graphite 是一款开源的监控绘图工具。 Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成： carbon —— 基于 Twisted 的进程，用来接收数据； whisper —— 专门存储时间序列类型数据的小型数据库； graphite webapp —— 基于 Django 的网页应用程序。 向Graphite发送数据 Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送观测量: 观测值这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。 当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可： &lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt; 例如，有一个 Metric 叫作 local.metric.random，可以用下面的 Bash 命令发送当前时刻的值 4。 PORT=2003 SERVER=graphite.your.org echo &quot;local.metric.random 4 `date +%s`&quot; | nc -q0 ${SERVER} ${PORT} 类似地，使用其它编程语言时，可以使用 Socket 发送数据。 另外，Graphite 的 Metric 名称支持以 . 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。
+                            <h2 id="graphite:b7837abce316965fc5b3c43248c541ea">Graphite</h2>
+
+<p><a href="http://graphite.wikidot.com/start">Graphite</a> 是一款开源的监控绘图工具。</p>
+
+<p>Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/04/08/graphite-%E5%92%8C-grafana-%E7%AE%80%E4%BB%8B/">
                             
@@ -440,7 +455,10 @@
                     <br>
                     
                         
-                            Sensu 简介 Sensu 是一款开源的监控框架。 Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。例如： { &quot;client&quot;: { &quot;name&quot;: &quot;i-424242&quot;, &quot;address&quot;: &quot;127.0.0.1&quot;, &quot;subscriptions&quot;: [ &quot;production&quot;, &quot;webserver&quot; ] } } 其中，subscriptions 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了订阅者模式，相应地，定义监控项目的时候则需要指定 subscribers（后文中将会提及）。 Sensu 的优势 纯 Ruby 实现，核心代码不超过 1000 行； 配置简单，配置文件使用 JSON； 结构简单，易扩展，很容易就能够上手编写插件； 丰富的社区支持，Sensu Community Plugin 几乎包含了所有常用的监控项目。 Sensu 的结构 简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以设置 Handler 根据当前的条件采取相应的行动。 Sensu Check Sensu Check 用来监控服务和资源。Check 由 Sensu Server 发出执行指令后在 Sensu Client 上运行。本质上，Sensu Check 是一个命令或者脚本，用来把数据输出到 STDOUT 或者 STDERR；同时，用返回值（exit status code）来指示状态： 0： OK 1：WARNING 2：CRITICAL &gt;3：UNKNOWN or CUSTOM 因此，只要定义好返回值和输出，很容易就可以写出一个 Sensu Check。下面就是一个用来监测 chef-client 进程是否在运行的 Ruby 脚本。 procs = `ps aux` running = false procs.each_line do |proc| running = true if proc.include?('chef-client') end if running puts 'OK - Chef client daemon is running' exit 0 else puts 'WARNING - Chef client daemon is NOT running' exit 1 end 写好一个Check的脚本，需要在配置文件中添加它。比如下面, { &quot;checks&quot;: { &quot;chef_client&quot;: { &quot;command&quot;: &quot;check-chef-client.rb&quot;, &quot;subscribers&quot;: [ &quot;production&quot; ], &quot;interval&quot;: 60, &quot;handlers&quot;: [ &quot;pagerduty&quot;, &quot;mail&quot; ] } } } subscribers 用来指定订阅者。interval 定义检查的周期为 60s，handlers 则告诉 Sensu 当此 Check 出现异常时使用 pagerduty 和 mail 这两个 Handler。 Sensu Handler Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 Graphite，等等。 Handler 有不同的类型，有常用的 Pipe，可以将 Event 传入到 STDIN（可以理解为 cat event.json | handler）；有 TCP/UDP，将 Event 传入到 Socket 发送。 下面是一个简单的 Sensu Handler 定义，用来将 Event 的内容发送到指定的邮箱地址。 { &quot;handlers&quot;: { &quot;mail&quot;: { &quot;type&quot;: &quot;pipe&quot;, &quot;command&quot;: &quot;mailx -s 'sensu event' email@address.com&quot; } } } 基于 Sensu 的安全更新监控工具 接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。 需求 我们公司在 AWS 上有大约350个实例1，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息： 更新的软件包名称； 软件包当前的版本； 可供安装的版本。 此外，一个邮件里包含 350 台机器的信息显然不方便阅读。恰好公司的 350 台服务器根据功能分为若干个 subnet，如 dev，tst，stg 等。所以，最好可以为每一个 subnet 生成一份安全更新的报告。 实现 安全更新的信息收集 使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息： 17 packages can be updated.
+                            <h2 id="sensu-简介:b6bdba0566435a1fdf738209881f4749">Sensu 简介</h2>
+
+<p>Sensu 是一款开源的监控框架。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/">
                             
@@ -485,7 +503,8 @@
                     <br>
                     
                         
-                            自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。 这次实习并非是我第一次接触运维工作。2014 年夏天，我有一份两个月的暑期实习。当时实习工作的职位是 *Backend Software Engineer*，但事实上所完成的绝大部分工作的内容是关于运维，主要有 AWS Auto Scaling 的搭建（关于这部分内容可以参见之前的一篇 博文）和基于 AWS Cloudwatch 实现一些监测工具。所以也算对运维工作有一些经验。之后在找实习的时候，我也是有意识地找运维相关的职位。 这里也顺便说一下暑期实习的公司。那是一个只有 5、6 个程序员的初创公司。公司所有的服务都搭建在 Amazon Web Service。运维可以说略显「简陋」：服务器的操作全部由 Python 脚本实现；代码的部署也是用 Python 脚本从 svn 下载再进行安装；系统监控全部部署在 Cloudwatch。对于只有十多台服务器的公司来说，这样的运维方法似乎也足够了。 所以在这次实习之前，我对运维工作的印象还是停留在启动、监控、维护服务器，写一些脚本来实现自动化，最多在服务器出问题的时候做一下 Hotfix。 但是当服务器数量到达几百台的时候，显然之前实习中所用的方法是不够的。这次实习所在公司的规模要比之前大得多，在 AWS 上大约有 350 台实例。因此接触到了更加专业的运维工具、工作方法和流程，对运维工作也有了更加深刻的认识。 先说工具的使用。和开发、测试不同的是，运维工作会接触到各种工具，最近几个月接触到的工具包括： 自动化部署工具 Chef 持续集成（CI） 工具 Jenkins 监控框架 Sensu 数据绘图工具 Graphite 代码质量管理系统 SonarQube 最让我印象深刻的应该是 Jenkins，第一次见识到自动化 CI 的感觉大概就和当年用了一学期 Turbo C 后第一次见到 Eclipse 一样。 每一个工具都自成体系，组合在一起又成为了相当复杂的运维系统。争取未来一段时间内，写一些文章来总结这些工具。 Welcome to Operation team! Every Ops guy has crashed a server.
+                            <p>自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/04/01/3-%E4%B8%AA%E6%9C%88%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C%E4%B9%8B%E6%80%BB%E7%BB%93/">
                             
@@ -530,7 +549,8 @@
                     <br>
                     
                         
-                            在内核恐慌第九期「程序员的理想工作环境」中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 Awesome 窗口管理器和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上吐槽。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。 平铺式窗口管理器 窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。 窗口管理器主要有两种1： 堆叠式窗口管理器（Stacking Window Manager）； 平铺式窗口管理器（Tiling Window Manager）。 在堆叠式管理器（也称作悬浮式窗口管理器，Floating Window Manager）中，不同窗口可以像桌子上随意摆放的白纸一样相互重叠。常见的窗口管理器多为堆叠式，如 Windows 的 Explorer，Mac OS X 的 Finder，以及 Ubuntu 的 Unity 等等。 平铺式（或直译为瓦片式）窗口管理器，其中的窗口不能够重叠，而是像瓦片一样挨个摆放。常用的平铺式管理器有 Awesome 和i3。 根据我个人的使用体验，平铺式窗口管理器（主要指的是 i3 ）有以下几个优点： 简单轻巧； 多依赖键盘操作，较少使用鼠标； 高度可定制化； 稳定。 具体来说。平铺式窗口管理器没有绚丽的界面和复杂的功能，可以让人更加专注于正在做的事情。同时，平铺式管理器非常精简，如 i3 的安装包只有 900 多 KB，相应地，消耗的资源也更少。平铺式管理器多依赖键盘操作，较少使用鼠标，配合应用程序的快捷键，基本上可以避免鼠标操作，从而提升工作效率。平铺式管理器不仅可以实现边框颜色之类的常规设置，还可以根据用户的需求，修改桌面、窗口等。最后，因为平铺式管理器非常精简，较之堆叠式管理器也更加稳定。至少在我使用的两个月里还没有出现过崩溃的情况。 我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候2，就像下图中那样，平铺式窗口管理器最能发挥作用。 比如我工作时有一台 13 寸的笔记本和一台 27 寸的外接显示器。时刻保持打开的窗口包括公司内交流用的即时聊天软件，邮件客户端，编辑器，浏览器和多个终端窗口。使用 i3 之后，我的两个显示器基本是这样分配的： 笔记本显示器左右分割为两栏，分别显示聊天软件和邮件客户端；
+                            <p>在<a href="http://kernelpanic.fm">内核恐慌</a>第九期<a href="http://ipn.li/kernelpanic/9/">「程序员的理想工作环境」</a>中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 <a href="http://awesome.naquadah.org/">Awesome 窗口管理器</a>和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上<a href="http://www.weibo.com/2622511625/C1N9FgPr5">吐槽</a>。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。</p>
+
                             <br>
                             <a href="http://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/">
                             
