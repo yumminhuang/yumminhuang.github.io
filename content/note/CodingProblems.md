@@ -1,7 +1,8 @@
 +++
 date = "2015-12-18T16:53:33-05:00"
 title = "Two Coding Problems"
-
+tags        = ["Python", "Interview"]
+categories  = ["Miscellaneous"]
 +++
 
 Two coding problems I encountered in a recent interview.
