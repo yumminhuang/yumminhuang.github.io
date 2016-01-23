@@ -10,7 +10,7 @@ title = "简历"
         <h1>东北大学 <span class="address">波士顿，美国</span></h1>
          <span>计算机科学硕士学位</span>
          <span>
-            <address>GPA：3.83/4.00</address>
+            <address>GPA：3.875/4.00</address>
             <time>2009 年 9 月 --- 2013 年 7 月</time>
          </span>
       </header>

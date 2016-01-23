@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html class="han-init" lang="zh-Hans" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<html lang="zh-Hans" class="han-init">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="description" content="{{ .Title }}">
     <meta name="author" content="{{ .Site.Params.author }}">
-
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="/favicon.ico">
 
@@ -18,18 +16,14 @@
     {{ else}}
         <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/theme/default.css">
     {{ end }}
-
     <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/font-awesome.min.css">
-
    	<!-- include custom css -->
    	<link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.css">
 
-
     <!-- javascript -->
     <script src="{{ .Site.BaseURL }}/js/jquery.min-2.1.4.js"></script>
     <script src="{{ .Site.BaseURL }}/js/bootstrap.min-3.3.5.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script>
 
     <!-- rss -->
     <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />

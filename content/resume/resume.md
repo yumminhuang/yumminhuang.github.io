@@ -10,7 +10,7 @@ title = "Resume"
         <h1>Northeasetern University <span class="address">Boston, MA</span></h1>
          <span>Master of Science in Computer Science</span>
          <span>
-            <address>GPA: 3.83/4.00</address>
+            <address>GPA: 3.875/4.00</address>
             <time>Sept. 2013 -- Dec. 2015</time>
          </span>
       </header>
