@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zhposts on 临水轩志</title>
+    <link>http://yumminhuang.github.io/zhpost/</link>
+    <description>Recent content in Zhposts on 临水轩志</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 22 Jan 2016 14:45:31 -0500</lastBuildDate>
+    <atom:link href="http://yumminhuang.github.io/zhpost/index.xml" rel="self" type="application/rss+xml" />
+    
+      
+    
+  </channel>
+</rss>
