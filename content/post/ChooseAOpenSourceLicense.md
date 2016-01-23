@@ -14,15 +14,18 @@ categories  = ["Miscellaneous"]
 
 关于开源的代码，可以依次回答以下的问题来确定开源证书。
 
-* 是否允许他人闭源使用你的代码？
+1. 是否允许他人闭源使用你的代码？
+  *	 是：继续回答问题2
   *	 否：[GPL](http://www.gnu.org/licenses/gpl-3.0.en.html) (The GNU General Public License)[^1]
-  *	 是：如果他人修改了你的代码，是否需要了解修改？
-     * 是：[EPL](https://www.eclipse.org/legal/epl-v10.html) (Eclipse Public License)
-     * 否：是否打算为代码注册专利？
-         * 是：Apache License
-         * 否：他人发布时是否需要显式地附带你的证书？
-             * 是：BSD License
-             * 否：MIT License
+2. 如果他人修改了你的代码，是否需要了解修改？
+  * 是：[EPL](https://www.eclipse.org/legal/epl-v10.html) (Eclipse Public License)
+  * 否：继续回答问题3
+3. 是否打算为代码注册专利？
+   * 是：Apache License
+   * 否：继续回答问题4
+4. 他人发布时是否需要显式地附带你的证书？
+   * 是：BSD License
+   * 否：MIT License
 
 我没有研究各个开源证书的条文，以上内容也只是我的个人理解，难免有错误之处。所以，为一个正式的项目选择开源证书之前，最好还是仔细确认一遍。
 
