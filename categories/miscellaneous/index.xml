@@ -11,6 +11,61 @@
       
     
       
+        
+          <item>
+            <title>如何选择开源项目的证书</title>
+            <link>http://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</link>
+            <pubDate>Fri, 18 Dec 2015 10:27:50 -0500</pubDate>
+            
+            <guid>http://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</guid>
+            <description>&lt;p&gt;世界上的开源许可证有很多。除了常见的 &lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache&lt;/a&gt;，&lt;a href=&#34;http://en.wikipedia.org/wiki/BSD_licenses&#34;&gt;BSD&lt;/a&gt;， &lt;a href=&#34;https://en.wikipedia.org/wiki/MIT_License&#34;&gt;MIT&lt;/a&gt; 等之外，还有一些奇特的证书，比如 &lt;a href=&#34;http://www.wtfpl.net/&#34;&gt;WTFPL (Do What the Fuck You Want to Public License)&lt;/a&gt;。Github 还专门做了一个&lt;a href=&#34;http://choosealicense.com/&#34;&gt;网站&lt;/a&gt; 介绍了常见的开源证书。&lt;/p&gt;
+
+&lt;p&gt;然而开源证书虽多，却很少有人会仔细研究证书上的法律条文，搞清楚它们的区别。我最近看了 Github 的网站，又看了一些网上的文章，稍稍研究了几个常用证书的区别，以及如何为开源项目选择证书。故撰此文以供参考。&lt;/p&gt;
+
+&lt;p&gt;如果开源的内容不是代码，可以选择&lt;a href=&#34;http://creativecommons.org/&#34;&gt;知识共享许可协议&lt;/a&gt;。针对是否需要署名使用，是否可以商用等问题，知识共享许可协议有许多不同的版本，可以访问&lt;a href=&#34;http://creativecommons.org/choose/&#34;&gt;链接&lt;/a&gt;来选择一个合适的知识共享许可协议。&lt;/p&gt;
+
+&lt;p&gt;关于开源的代码，可以依次回答以下的问题来确定开源证书。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;是否允许他人闭源使用你的代码？
+
+&lt;ul&gt;
+&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;是：如果他人修改了你的代码，是否需要了解修改？
+
+&lt;ul&gt;
+&lt;li&gt;是：&lt;a href=&#34;https://www.eclipse.org/legal/epl-v10.html&#34;&gt;EPL&lt;/a&gt; (Eclipse Public License)&lt;/li&gt;
+&lt;li&gt;否：是否打算为代码注册专利？
+
+&lt;ul&gt;
+&lt;li&gt;是：Apache License&lt;/li&gt;
+&lt;li&gt;否：他人发布时是否需要显式地附带你的证书？
+
+&lt;ul&gt;
+&lt;li&gt;是：BSD License&lt;/li&gt;
+&lt;li&gt;否：MIT License&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我没有研究各个开源证书的条文，以上内容也只是我的个人理解，难免有错误之处。所以，为一个正式的项目选择开源证书之前，最好还是仔细确认一遍。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+          </item>
+        
+      
+    
+      
     
       
     
