@@ -37,7 +37,7 @@ Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提�
 2. 代码审查；
 3. 持续集成（[Continuous integration](http://martinfowler.com/articles/continuousIntegration.html)）。
 
-首先，缺陷追踪是非常有必要的。Issue 列表不仅可以帮助整个团队及时了解当前存在的问题和未来需要增加的功能，也可以用来帮助在每个 sprint 前制定 [product backlog](https://en.wikipedia.org/wiki/Scrum_(software_development)#Product_backlog)。而且现在市面上大部分的缺陷追踪系统，比如 [JIRA](https://www.atlassian.com/software/jira)、[Github Issue](https://guides.github.com/features/issues/)， 都整合了 Git，可以通过 Issue 编号相互链接。
+首先，缺陷追踪是非常有必要的。Issue 列表不仅可以帮助整个团队及时了解当前存在的问题和未来需要增加的功能，也可以用来帮助在每个 sprint 前制定 [product backlog](https://en.wikipedia.org/wiki/Scrum_\(software_development\)#Product_backlog)。而且现在市面上大部分的缺陷追踪系统，比如 [JIRA](https://www.atlassian.com/software/jira)、[Github Issue](https://guides.github.com/features/issues/)， 都整合了 Git，可以通过 Issue 编号相互链接。
 
 代码审查的重要性不必赘述，在开发过程中，团队成员之间互相检查对于保证代码质量是非常关键的。
 
