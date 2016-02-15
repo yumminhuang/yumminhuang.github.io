@@ -54,7 +54,7 @@
 &lt;li&gt;持续集成（&lt;a href=&#34;http://martinfowler.com/articles/continuousIntegration.html&#34;&gt;Continuous integration&lt;/a&gt;）。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;首先，缺陷追踪是非常有必要的。Issue 列表不仅可以帮助整个团队及时了解当前存在的问题和未来需要增加的功能，也可以用来帮助在每个 sprint 前制定 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development&#34;&gt;product backlog&lt;/a&gt;#Product_backlog)。而且现在市面上大部分的缺陷追踪系统，比如 &lt;a href=&#34;https://www.atlassian.com/software/jira&#34;&gt;JIRA&lt;/a&gt;、&lt;a href=&#34;https://guides.github.com/features/issues/&#34;&gt;Github Issue&lt;/a&gt;， 都整合了 Git，可以通过 Issue 编号相互链接。&lt;/p&gt;
+&lt;p&gt;首先，缺陷追踪是非常有必要的。Issue 列表不仅可以帮助整个团队及时了解当前存在的问题和未来需要增加的功能，也可以用来帮助在每个 sprint 前制定 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development)#Product_backlog&#34;&gt;product backlog&lt;/a&gt;。而且现在市面上大部分的缺陷追踪系统，比如 &lt;a href=&#34;https://www.atlassian.com/software/jira&#34;&gt;JIRA&lt;/a&gt;、&lt;a href=&#34;https://guides.github.com/features/issues/&#34;&gt;Github Issue&lt;/a&gt;， 都整合了 Git，可以通过 Issue 编号相互链接。&lt;/p&gt;
 
 &lt;p&gt;代码审查的重要性不必赘述，在开发过程中，团队成员之间互相检查对于保证代码质量是非常关键的。&lt;/p&gt;
 
