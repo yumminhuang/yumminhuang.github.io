@@ -114,11 +114,9 @@ title = "Resume"
    <article>
       <dl>
         <dt>Languages</dt>
-        <dd>Python, Ruby, Java, Shell, SQL, UML, Racket</dd>
-        <dt>Platforms</dt>
-        <dd>AWS, Linux, Windows</dd>
+        <dd>Python, Java, Ruby, Shell, Racket</dd>
         <dt>Tools</dt>
-        <dd>Chef, Jenkins, Docker, Git, Svn, Jira</dd>
+        <dd>Chef, Dokcer, Git, Jenkins, Jira, SQL, UML</dd>
         <dt>Frameworks</dt>
         <dd>Hadoop, Django</dd>
         <dt>Methodologies</dt>

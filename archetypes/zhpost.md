@@ -6,4 +6,4 @@ tags        = ["标签1", "标签2"]
 draft = true
 +++
 
-Content of the file goes here
+<!--more-->

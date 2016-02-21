@@ -31,7 +31,7 @@ Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提�
 另外，Gitlab flow 还强调代码的任何修改都应该开始于一个目标明确的Issue。因此，为一个 Issue 创建新分支时，这个分支的名字应该以 Issue 的编号开始，比如 `15-require-a-password-to-change-it`。Commit 的信息或 Merge Request 的描述里应关联相关的 Issue，如`fixes #14` 或 `closes #67`，这样合并到 `master` 的时候可以自动关闭相应的 Issue。
 
 ### Git 工作流的需求
-在实际开发的过程中，有各种各样的需要。鉴于诸如 [Scrum](https://en.wikipedia.org/wiki/Scrum_(software_development)) 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：
+在实际开发的过程中，有各种各样的需要。鉴于诸如 [Scrum](https://en.wikipedia.org/wiki/Scrum_\(software_development\)) 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：
 
 1. 缺陷追踪（[Issue tracking](https://en.wikipedia.org/wiki/Issue_tracking_system)）；
 2. 代码审查；
