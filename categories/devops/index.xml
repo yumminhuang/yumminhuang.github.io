@@ -46,7 +46,7 @@
 
 &lt;h3 id=&#34;git-工作流的需求:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git 工作流的需求&lt;/h3&gt;
 
-&lt;p&gt;在实际开发的过程中，有各种各样的需要。鉴于诸如 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development&#34;&gt;Scrum&lt;/a&gt;) 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：&lt;/p&gt;
+&lt;p&gt;在实际开发的过程中，有各种各样的需要。鉴于诸如 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development)&#34;&gt;Scrum&lt;/a&gt; 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;缺陷追踪（&lt;a href=&#34;https://en.wikipedia.org/wiki/Issue_tracking_system&#34;&gt;Issue tracking&lt;/a&gt;）；&lt;/li&gt;
