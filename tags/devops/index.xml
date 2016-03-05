@@ -5,8 +5,45 @@
     <link>http://yumminhuang.github.io/tags/devops/</link>
     <description>Recent content in Devops on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 20 Jun 2015 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 05 Mar 2016 17:29:12 -0500</lastBuildDate>
     <atom:link href="http://yumminhuang.github.io/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    
+      
+        
+          <item>
+            <title>持续集成交付部署</title>
+            <link>http://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</link>
+            <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
+            
+            <guid>http://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</guid>
+            <description>
+
+&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
+文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
+
+&lt;h3 id=&#34;持续集成:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续集成&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image1.png&#34; alt=&#34;Continuous Integration&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;持续集成强调开发人员提交了新代码之后，立刻进行构建、（单元）测试、打包等步骤。根据反馈的测试结果，我们可以知道新代码和原有代码能否正确地集成在一起。&lt;/p&gt;
+
+&lt;h3 id=&#34;持续交付:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续交付&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image4-manual.png&#34; alt=&#34;Continuous Delivery&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;持续交付在持续集成的基础上，将集成后的代码部署到更贴近真实运行环境的「类生产环境（ &lt;em&gt;production-like environments&lt;/em&gt; ）」中。比如，我们完成单元测试后，可以把代码部署到连接数据库的 Staging 环境中进行更多的测试。如果代码没有问题，接下来就可以继续&lt;strong&gt;手动部署&lt;/strong&gt;到生产环境中。&lt;/p&gt;
+
+&lt;h3 id=&#34;持续部署:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续部署&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image3-auto.png&#34; alt=&#34;Continuous Deployment&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;持续部署则是在持续交付的基础上，把部署到生产环境的过程自动化。&lt;/p&gt;
+
+&lt;p&gt;我个人觉得持续集成、持续交付、持续部署非常值得推广。开发过程中最怕集成时遇到问题导致返工，而持续集成、持续交付、持续部署恰恰可以做到问题早发现早解决，从而可以避免这样的麻烦。另外，持续集成、持续交付、持续部署的流程高度依赖自动化工具，所以这种开发方法也可以大大提高开发人员的工作效率。&lt;/p&gt;
+</description>
+          </item>
+        
+      
     
       
         
