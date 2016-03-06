@@ -3,130 +3,59 @@ date = "2015-11-13T10:19:57-05:00"
 title = "Resume"
 +++
 
-<section class="thirteen columns">
-   <h1>ACADEMIC EXPERIENCE</h1>
-   <article>
-      <header>
-        <h1>Northeasetern University <span class="address">Boston, MA</span></h1>
-         <span>Master of Science in Computer Science</span>
-         <span>
-            <address>GPA: 3.875/4.00</address>
-            <time>Sept. 2013 -- Dec. 2015</time>
-         </span>
-      </header>
-      <p> Projects
-      <ul style="list-style-type:disc">
-          <li>MapReduce Project
-            <ul style="list-style-type:circle">
-              <li>Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm;</li>
-              <li>Run Hadoop programs on AWS EMR.</li>
-            </ul>
-          </li>
-          <li>Computer Networking Projects
-            <ul style="list-style-type:circle">
-              <li>Row Sockets ---  Built TCP/IP stack using Python raw sockets;</li>
-              <li>Roll Your Own CDN --- Built a simplified <a href="https://en.wikipedia.org/wiki/Content_delivery_network">Content Delivery Network</a> using Amazon EC2.</li>
-            </ul>
-          </li>
-          <li>Database Project
-            <ul style="list-style-type:circle">
-              <li>Built <a href="http://www.odata.org/">OData</a> service (RESTful APIs for accessing database) over MySQL using JPA.</li>
-            </ul>
-          </li>
-      </ul>
-      </p>
-   </article>
-   <article>
-      <header>
-         <h1>Jinan University <span class="address">Guangzhou, China</span></h1>
-         <span>Bachelor of Engineering in Software Engineering</span>
-         <span>
-            <address>GPA: 84.6/100</address>
-            <time>Sept. 2009 -— July 2013</time>
-         </span>
-      </header>
-      <p> Thesis
-        <ul style="list-style-type:disc">
-          <li><i>Visual Fault Localization Tool for Java Multi-threaded Program</i>
-            <ul style="list-style-type:circle">
-              <li>Dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs;</li>
-              <li>Using <a href="http://sable.github.io/soot/">Soot</a> to analyze Java byte code and instrument Java programs.</li>
-            </ul>
-          </li>
-        </ul>
-      </p>
-   </article>
-</section>
-<section class="thirteen columns">
-   <h1>PROFESSIONAL EXPERIENCE</h1>
-   <article>
-      <header>
-         <h1>BitSight <span class="address">Cambridge, MA</span></h1>
-         <span>
-            <address>Operation Engineer Co-Op</address>
-            <time>Jan. —- Aug. 2015</time>
-         </span>
-      </header>
-      <p>
-        <ul style="list-style-type:disc">
-          <li>Architected and built a Security Updates Management Tool for Ubuntu Cluster using Sensu to report and leveraging Jenkins to build;</li>
-          <li>Contributed to CI automation by grabbing test results from Jenkins builds and posting to BitBucket;</li>
-          <li>Added improvements to open source tools and APIs (automated-ebs-snapshots tool, BitBucket API);</li>
-          <li>Automated workflows for dumping/restoring test minified database based on Jenkins and Fabric;</li>
-          <li>Implemented and rolled out proof of concepts for logging management(ELK, Logentries, Sumologic)</li>
-        </ul>
-      </p>
-   </article>
-   <article>
-      <header>
-         <h1>Locately <span class="address">Boston, MA</span></h1>
-         <span>
-            <address>Back-end Software Engineer Intern</address>
-            <time>July -— Aug. 2014</time>
-         </span>
-      </header>
-      <p>
-        <ul style="list-style-type:disc">
-          <li>Implemented <a href="https://aws.amazon.com/cn/autoscaling/">Auto Scaling</a>on AWS, a feature reducing operations costs by $3000/year;</li>
-          <li>Wrote Apache access log monitor in EC2 instances to collect access statistics to AWS CloudWatch;</li>
-          <li>Rewrote test code allowing parallel testing to speed up API test execution by 17%.</li>
-        </ul>
-      </p>
-   </article>
-   <article>
-      <header>
-         <h1>Aston University <span class="address">Birmingham, United Kingdom</span></h1>
-         <span>
-            <address>Software Developer Intern</address>
-            <time>Mar. —- Apr. 2012</time>
-         </span>
-      </header>
-      <p>
-        <ul style="list-style-type:disc">
-          <li>Developed an Eclipse plug-in called Scenario Capture which can automatically generate JUnit test cases in GUI;</li>
-          <li>Tested code by JUnit.</li>
-        </ul>
-      </p>
-   </article>
-</section>
-<section class="thirteen columns">
-   <h1>TECHNICAL KNOWLEDGE</h1>
-   <article>
-      <dl>
-        <dt>Languages</dt>
-        <dd>Python, Java, Ruby, Shell, Racket</dd>
-        <dt>Tools</dt>
-        <dd>Chef, Dokcer, Git, Jenkins, Jira, SQL, UML</dd>
-        <dt>Frameworks</dt>
-        <dd>Hadoop, Django</dd>
-        <dt>Methodologies</dt>
-        <dd>Agile, Scrum</dd>
-      </dl>
-   </article>
-</section>
-<section class="thirteen columns">
-   <h1>Hobbies</h1>
-   <article>
-      <p>Football, Travel, Photography</p>
-   </article>
-</section>
+#### ACADEMIC EXPERIENCE
+
+**Northeasetern University**, Boston, MA, Sept. 2013 -- Dec. 2015
+
+Master of Science in Computer Science
+
+GPA: 3.875/4.00
+
+**Projects**
+
+* MapReduce Project
+	*  Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
+	*  Run Hadoop programs on AWS EMR
+*  Computer Networking Projects
+	* *Row Sockets* ---  Built TCP/IP stack using Python raw sockets
+	* *Roll Your Own CDN* --- Built a simplified [Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network) using Amazon EC2.
+* Database Project
+	*  Built [OData](http://www.odata.org/) service (RESTful APIs for accessing database) over MySQL using JPA.
+
+**Jinan University**, Guangzhou, CHINA, Sept. 2009 — July 2013 
+
+Bachelor of Engineering in Software Engineering 
+
+GPA: 84.6/100
+
+**Thesis*** *Visual Fault Localization Tool for Java Multi-threaded Program*
+	* Dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs	* Using [Soot](https://sable.github.io/soot/) to analyze Java byte code and instrument Java programs
+
+----
+#### PROFESSIONAL EXPERIENCE
+**BitSight**, Cambridge, MA, Jan. — Aug. 2015 
+
+*Operation Engineer Co-Op*
+* Architected and built a Security Updates Management Tool for Ubuntu Cluster using Sensu to report and leveraging Jenkins to build
+* Contributed to CI automation by grabbing test results from Jenkins builds and posting to BitBucket
+* Added improvements to open source projects ([automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-plugin](https://github.com/sensu/sensu-community-plugins), etc)
+* Automated workflows for dumping/restoring test minified database based on Jenkins and Fabric
+* Implemented and rolled out proof of concepts for logging management(ELK, Logentries, Sumologic)**Locately**, Boston, MA, July — Aug. 2014 
+
+*Back-end Software Engineer Intern*
+* Implemented *Auto Scaling* on AWS, a feature reducing operations costs by $3000/year
+*  Wrote Apache access log monitor in EC2 instances to collect access statistics to AWS CloudWatch
+*  Rewrote test code allowing parallel testing to speed up API test execution by 17%
+**Aston University**, Birmingham, United Kingdom Mar. — Apr. 2012 
+
+*Software Developer Intern*
+* Developed an Eclipse plug-in called *Scenario Capture* which can automatically generate JUnit test cases in GUI* Tested code by JUnit
+
+----
+#### TECHNICAL KNOWLEDGE
+**Languages**:Python, Java, Ruby, Shell, Racket**Tools**: Chef, Docker, Git, Jenkins, Jira, SQL, UML 
+
+**Frameworks**:
+Django, Hadoop
+
+**Methodologies**:Agile, Scrum

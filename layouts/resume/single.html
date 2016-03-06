@@ -2,36 +2,59 @@
 <html class="no-js" lang="{{ if .Site.Params.languageCode }}{{ .Site.Params.languageCode }}{{ else }}en-us{{end}}" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
     <meta charset="utf-8">
-    <title>{{ .Title }}</title>
-    <meta name="description" content="{{ .Site.Params.author }}'s Résumé">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="{{ .Title }}">
     <meta name="author" content="{{ .Site.Params.author }}">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/base.css">
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/skeleton.css">
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/layout.css">
+    <title>{{ .Title }}</title>
+
+    <!-- selection of themed bootstrap css to load-->
+    {{ if isset .Site.Params "theme" }}
+        <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/theme/{{ .Site.Params.theme.name }}.css">
+    {{ else}}
+        <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/theme/default.css">
+    {{ end }}
+
     <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/font-awesome.min.css">
-    <link rel="shortcut icon" href="/favicon.ico">
-</head>
-<body>
-<div class="container">
-    <header class="three columns">
-        <h1>{{ .Site.Params.author }}</h1>
-        <address>
-            <a href="https://www.google.com/maps/place/Botson">
-                Boston<br/>
-                US
-            </a>
-        </address>
-        <p>
-            <a href="mailto:yumminhuang@gmail.com"><i class="fa fa-envelope"></i> Email</a><br/>
-            <a href="{{ .Site.Params.github }}"><i class="fa fa-github-alt"></i> Github</a> /
-            <a href="{{ .Site.Params.twitter }}"><i class="fa fa-twitter"></i> Twitter</a>
-        </p>
-    </header>
-    <div class="thirteen columns clearfix">
 
-        {{ .Content }}
+    <!-- include custom css -->
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css">
+
+    <!-- javascript -->
+    <script src="{{ .Site.BaseURL }}/js/jquery.min-2.1.4.js"></script>
+    <script src="{{ .Site.BaseURL }}/js/bootstrap.min-3.3.5.js"></script>
+
+</head>
+<body lang="{{ if .Site.Params.languageCode }}{{ .Site.Params.languageCode }}{{ else }}en{{ end }}">
+<div class="container">
+    <div class="row">
+        <div class="navbar navbar-default {{ if .Site.Params.theme.inverse }}navbar-inverse{{ end }}" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" >{{ .Title }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <br>
+            {{ .Content }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
 
 {{ partial "footer.html" . }}
