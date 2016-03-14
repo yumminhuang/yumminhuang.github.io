@@ -1,7 +1,6 @@
 +++
 categories = ["随笔"]
 date = "2016-03-07T16:18:47-05:00"
-draft = true
 title = "Zootopia 观后感"
 
 +++
