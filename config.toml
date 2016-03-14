@@ -11,7 +11,7 @@ theme       = "hugo-multi-bootswatch"
 [params]
     # name of the site author; used in header meta information
     author = "Yaming Huang"
-    copyright = "2015 ~ Yaming Huang"
+    copyright = "2016 ~ Yaming Huang"
 
     use_summaries = true
 

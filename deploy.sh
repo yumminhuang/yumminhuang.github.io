@@ -11,14 +11,20 @@ cd public
 git add -A
 
 # Commit changes.
-msg="rebuilding site `date`"
-if [ $# -eq 1 ]
-  then msg="$1"
-fi
-git commit -m "$msg"
+git commit -m "rebuilding site `date`"
 
 # Push source and build repos.
 git push origin master
 
 # Come Back
 cd ..
+
+# Commit changes
+git add -A
+msg="updating blog `date`"
+
+if [ $# -eq 1 ]
+  then msg="$1"
+fi
+git commit -m "$msg"
+git push origin master

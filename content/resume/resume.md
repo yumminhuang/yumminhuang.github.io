@@ -36,11 +36,11 @@ GPA: 84.6/100
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015 
 
 *Operation Engineer Co-Op*
-* Architected and built a Security Updates Management Tool for Ubuntu Cluster using Sensu to report and leveraging Jenkins to build
-* Contributed to CI automation by grabbing test results from Jenkins builds and posting to BitBucket
-* Added improvements to open source projects ([automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-plugin](https://github.com/sensu/sensu-community-plugins), etc)
-* Automated workflows for dumping/restoring test minified database based on Jenkins and Fabric
-* Implemented and rolled out proof of concepts for logging management(ELK, Logentries, Sumologic)**Locately**, Boston, MA, July — Aug. 2014 
+* Architected and built a Security Updates Management Tool for Ubuntu Cluster based on Sensu Alerts for reporting and leveraging Jenkins to roll out updates
+* Architected and built a Security Updates Management Tool for Ubuntu Cluster based on Sensu Alerts for reporting and leveraging Jenkins to roll out updates
+* Committed improvements to open source tools and APIs ([automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-plugin](https://github.com/sensu/sensu-community-plugins), etc)
+* Automated workflows for dumping/restoring test minified database as a Jenkins build using Fabric and Django API
+* Implemented and rolled out proof of concepts for logging management(ELK, Logentries, Sumologic), writing chef code to deploy these solutions, mocking up dashboards and prototyping example queries of high-value searches**Locately**, Boston, MA, July — Aug. 2014 
 
 *Back-end Software Engineer Intern*
 * Implemented *Auto Scaling* on AWS, a feature reducing operations costs by $3000/year
@@ -53,9 +53,14 @@ GPA: 84.6/100
 
 ----
 #### TECHNICAL KNOWLEDGE
-**Languages**:Python, Java, Ruby, Shell, Racket**Tools**: Chef, Docker, Git, Jenkins, Jira, SQL, UML 
+**Languages**:
+Python, Java, Ruby, Shell, Racket
+
+**Tools**:
+Chef, Docker, Git, Jenkins, Jira, SQL, UML 
 
 **Frameworks**:
 Django, Hadoop
 
-**Methodologies**:Agile, Scrum
+**Methodologies**:
+Agile, Scrum
