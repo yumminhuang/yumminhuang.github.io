@@ -1,6 +1,6 @@
 +++
 title       = "Jenkins 简介"
-tags        = ["DevOps", "Jenkin", "CI"]
+tags        = ["DevOps", "Jenkins", "CI"]
 categories  = ["DevOps",""]
 date        = "2015-06-02"
 +++

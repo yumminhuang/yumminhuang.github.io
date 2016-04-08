@@ -13,6 +13,10 @@ GPA: 3.875/4.00
 
 **课程项目**
 
+* 软件工程项目
+	*  使用 Jersey 和 Tomcat 构建 JAX-RS 网站：WHAM (What Happened Around Me)；
+	*  根据 Scrum 方法指导项目开发进程；
+	*  利用 JIRA 进行项目管理和缺陷追踪，Confluence 管理文档。
 * MapReduce 项目
 	*  分析旧金山市犯罪记录,并使用朴素贝叶斯算法预测一个案件的犯罪类型；
 	*  在 AWS EMR 上运行 Hadoop 和 Spark 程序。

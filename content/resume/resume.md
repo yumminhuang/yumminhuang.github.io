@@ -13,6 +13,10 @@ GPA: 3.875/4.00
 
 **Projects**
 
+* Managing Software Development Project
+	* Built a JAX-RS website --- WHAM (What Happened Around Me) using Jersey and Tomcat;
+	* Managed software development progress by Scrum methodology;
+	* Used Jira to track issues and Confluence to manage documents. 
 * MapReduce Project
 	*  Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
 	*  Run Hadoop programs on AWS EMR
