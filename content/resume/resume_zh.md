@@ -28,37 +28,50 @@ GPA: 3.875/4.00
 
 **暨南大学**，广州，2009 年 9 月 —— 2013 年 7 月
 
-软件工程工学学士学位 
+软件工程工学学士学位
 
 GPA: 84.6/100
 
-**毕业论文*** 《可视化的 Java 多线程程序错误定位工具》
-	* 一个动态的错误定位工具,用来定位 Java 多线程程序当作的并发错误；	* 使用 [Soot](https://sable.github.io/soot/) 分析 Java 字节码,进行插装。
+**毕业论文**
+
+* 《可视化的 Java 多线程程序错误定位工具》
+	* 一个动态的错误定位工具,用来定位 Java 多线程程序当作的并发错误；
+	* 使用 [Soot](https://sable.github.io/soot/) 分析 Java 字节码,进行插装。
 
 ----
 #### 职业经历
 **BitSight**，剑桥，美国，2015 年 1 月 —— 8 月
 
-实习运维工程师* 为 Ubuntu 集群设计并构建了一套安全更新管理系统：使用 Sensu 报告可安装更新,利用 Jenkins 安装更新；
+实习运维工程师
+
+* 为 Ubuntu 集群设计并构建了一套安全更新管理系统：使用 Sensu 报告可安装更新,利用 Jenkins 安装更新；
 * 改进公司持续集成框架：从 Jenkins 获取测试结果,将测试结果生成总结报告并发送到 BitBucket 页面；
 * 使用 Jenkins 和 Fabric 创建了一个自动化工作流,用来备份和还原测试数据库；
-* 改进了一些开源项目（包括 [automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-plugin](https://github.com/sensu/sensu-community-plugins) 等）；
-* 部署并对比几款日志管理系统（ELK, Logentries, Sumologic）使用 Chef 部署，创建控制面板和常用搜索。**Locately**，波士顿，美国， 2014 年 7 月 —— 8 月
+* 改进了一些开源项目（包括 [automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-community-plugins](https://github.com/sensu/sensu-community-plugins) 等）；
+* 部署并对比几款日志管理系统（ELK, Logentries, Sumologic）使用 Chef 部署，创建控制面板和常用搜索。
+
+**Locately**，波士顿，美国， 2014 年 7 月 —— 8 月
 
 实习后端软件工程师
-* 实现 AWS 的 *Auto Scaling* 功能,帮助公司节每年省运营成本 $3000；
+* 实现 AWS 的 *Auto Scaling* 功能,帮助公司节每年省运营成本 $3000；
 *  开发 Apache access log 监视器，将 EC2 实例上收集的数据发送到 AWS CloudWatch，用来监控服务器性能；
 *  重写测试代码,使得 API 测试可以并行运行,从而使测试速度提高 17%。
-**Aston University**，伯明翰，英国，2012 年 3 月 —— 4月
+**Aston University**，伯明翰，英国，2012 年 3 月 —— 4月
 
 实习软件开发
-* 开发了一款名为 *Scenario Capture* 的 Eclipse 插件，可以在图形界面下操作，并自动生成 JUnit 测试代码；* 使用 JUnit 测试代码。
+* 开发了一款名为 *Scenario Capture* 的 Eclipse 插件，可以在图形界面下操作，并自动生成 JUnit 测试代码；
+* 使用 JUnit 测试代码。
 
 ----
 #### 专业技能
-**语言**:Python, Java, Ruby, Shell, Racket**工具**: Chef, Docker, Git, Jenkins, Jira, SQL, UML 
+**语言**:
+Python, Java, Ruby, Shell, Racket
+
+**工具**:
+Chef, Docker, Git, Jenkins, Jira, SQL, UML
 
 **框架**:
 Django, Hadoop
 
-**方法**:Agile, Scrum
+**方法**:
+Agile, Scrum

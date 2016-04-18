@@ -16,7 +16,7 @@ GPA: 3.875/4.00
 * Managing Software Development Project
 	* Built a JAX-RS website --- WHAM (What Happened Around Me) using Jersey and Tomcat;
 	* Managed software development progress by Scrum methodology;
-	* Used Jira to track issues and Confluence to manage documents. 
+	* Used Jira to track issues and Confluence to manage documents.
 * MapReduce Project
 	*  Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
 	*  Run Hadoop programs on AWS EMR
@@ -26,34 +26,40 @@ GPA: 3.875/4.00
 * Database Project
 	*  Built [OData](http://www.odata.org/) service (RESTful APIs for accessing database) over MySQL using JPA.
 
-**Jinan University**, Guangzhou, CHINA, Sept. 2009 — July 2013 
+**Jinan University**, Guangzhou, CHINA, Sept. 2009 — July 2013
 
-Bachelor of Engineering in Software Engineering 
+Bachelor of Engineering in Software Engineering
 
 GPA: 84.6/100
 
-**Thesis*** *Visual Fault Localization Tool for Java Multi-threaded Program*
-	* Dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs	* Using [Soot](https://sable.github.io/soot/) to analyze Java byte code and instrument Java programs
+**Thesis**
+
+* *Visual Fault Localization Tool for Java Multi-threaded Program*
+	* Dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs
+	* Using [Soot](https://sable.github.io/soot/) to analyze Java byte code and instrument Java programs
 
 ----
 #### PROFESSIONAL EXPERIENCE
-**BitSight**, Cambridge, MA, Jan. — Aug. 2015 
+**BitSight**, Cambridge, MA, Jan. — Aug. 2015
 
 *Operation Engineer Co-Op*
-* Architected and built a Security Updates Management Tool for Ubuntu Cluster based on Sensu Alerts for reporting and leveraging Jenkins to roll out updates
 * Architected and built a Security Updates Management Tool for Ubuntu Cluster based on Sensu Alerts for reporting and leveraging Jenkins to roll out updates
-* Committed improvements to open source tools and APIs ([automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-plugin](https://github.com/sensu/sensu-community-plugins), etc)
+* Architected and built a Security Updates Management Tool for Ubuntu Cluster based on Sensu Alerts for reporting and leveraging Jenkins to roll out updates
+* Committed improvements to open source tools and APIs ([automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-community-plugins](https://github.com/sensu/sensu-community-plugins), etc)
 * Automated workflows for dumping/restoring test minified database as a Jenkins build using Fabric and Django API
-* Implemented and rolled out proof of concepts for logging management(ELK, Logentries, Sumologic), writing chef code to deploy these solutions, mocking up dashboards and prototyping example queries of high-value searches**Locately**, Boston, MA, July — Aug. 2014 
+* Implemented and rolled out proof of concepts for logging management(ELK, Logentries, Sumologic), writing chef code to deploy these solutions, mocking up dashboards and prototyping example queries of high-value searches
+
+**Locately**, Boston, MA, July — Aug. 2014
 
 *Back-end Software Engineer Intern*
-* Implemented *Auto Scaling* on AWS, a feature reducing operations costs by $3000/year
+* Implemented *Auto Scaling* on AWS, a feature reducing operations costs by $3000/year
 *  Wrote Apache access log monitor in EC2 instances to collect access statistics to AWS CloudWatch
 *  Rewrote test code allowing parallel testing to speed up API test execution by 17%
-**Aston University**, Birmingham, United Kingdom Mar. — Apr. 2012 
+**Aston University**, Birmingham, United Kingdom Mar. — Apr. 2012
 
 *Software Developer Intern*
-* Developed an Eclipse plug-in called *Scenario Capture* which can automatically generate JUnit test cases in GUI* Tested code by JUnit
+* Developed an Eclipse plug-in called *Scenario Capture* which can automatically generate JUnit test cases in GUI
+* Tested code by JUnit
 
 ----
 #### TECHNICAL KNOWLEDGE
@@ -61,7 +67,7 @@ GPA: 84.6/100
 Python, Java, Ruby, Shell, Racket
 
 **Tools**:
-Chef, Docker, Git, Jenkins, Jira, SQL, UML 
+Chef, Docker, Git, Jenkins, Jira, SQL, UML
 
 **Frameworks**:
 Django, Hadoop
