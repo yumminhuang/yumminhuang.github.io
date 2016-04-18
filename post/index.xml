@@ -80,7 +80,7 @@ deploy:
 
 &lt;p&gt;第二，频繁的不必要的构建。按照「北航实验指导书」中的设置，每次提交一个更新都会触发构建。事实上，这是没有必要的，因为有时候可能只是更新 README，而非 LaTeX 源码。「北航实验指导书」中为了避免这一问题，很多提交更新都加上了 &lt;code&gt;[ci skip]&lt;/code&gt; 的前缀来&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Skipping-a-build&#34;&gt;跳过自动构建&lt;/a&gt;。这样无形中增加了开发过程的负担。&lt;/p&gt;
 
-&lt;p&gt;最后，编译出来的中文简历格式令我不要满意。Ubuntu trusty 的环境中，使用 &lt;code&gt;apt-get&lt;/code&gt; 只能安装 texlive 2013；而我的中文简历使用了新版 ctex 的特性，需要用到 texlive 2015。如果在 trusty 里下载 texlive 2015 的镜像安装可能又需要安装更多的工具链，很麻烦；在 Ubuntu 15.10 和 Ubuntu 16.04 中倒是可以使用 &lt;code&gt;apt-get&lt;/code&gt; 安装texlive 2015，但 Travis-CI 似乎只提供了 Ubuntu trusty，没有更新的版本。&lt;/p&gt;
+&lt;p&gt;最后，编译出来的中文简历格式令我不要满意。Ubuntu trusty 的环境中，使用 &lt;code&gt;apt-get&lt;/code&gt; 只能安装 texlive 2013；而我的中文简历使用了新版 ctex 的特性，需要用到 texlive 2015。如果在 trusty 里下载 texlive 2015 的镜像安装可能又需要安装更多的工具链，很麻烦；在 Ubuntu 15.10 和 Ubuntu 16.04 中倒是可以使用 &lt;code&gt;apt-get&lt;/code&gt; 安装 texlive 2015，但 Travis-CI 似乎只提供了 Ubuntu trusty，没有更新的版本。&lt;/p&gt;
 
 &lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
 
