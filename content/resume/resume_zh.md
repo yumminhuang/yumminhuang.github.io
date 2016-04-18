@@ -53,12 +53,15 @@ GPA: 84.6/100
 **Locately**，波士顿，美国， 2014 年 7 月 —— 8 月
 
 实习后端软件工程师
+
 * 实现 AWS 的 *Auto Scaling* 功能,帮助公司节每年省运营成本 $3000；
 *  开发 Apache access log 监视器，将 EC2 实例上收集的数据发送到 AWS CloudWatch，用来监控服务器性能；
 *  重写测试代码,使得 API 测试可以并行运行,从而使测试速度提高 17%。
+
 **Aston University**，伯明翰，英国，2012 年 3 月 —— 4月
 
 实习软件开发
+
 * 开发了一款名为 *Scenario Capture* 的 Eclipse 插件，可以在图形界面下操作，并自动生成 JUnit 测试代码；
 * 使用 JUnit 测试代码。
 
