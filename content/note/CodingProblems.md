@@ -89,19 +89,22 @@ def add(lst1, lst2):
     carry = 0
     # From left to right
     for i in range(-1, -(length + 1), -1):
-        ret.append(carry + (lst1[i] + lst2[i]) % 10)
-        carry = (lst1[i] + lst2[i]) / 10
+        ret.append((carry + lst1[i] + lst2[i]) % 10)
+        carry = (carry + lst1[i] + lst2[i]) / 10
 
     # Adding extra digits
     if len(lst1) > length:
         for n in lst1[len(lst1) - length - 1::-1]:
-            ret.append(carry + n)
-            carry = 0
+            ret.append((carry + n) % 10)
+            carry = (carry + n) / 10
 
     if len(lst2) > length:
         for n in lst2[len(lst2) - length - 1::-1]:
-            ret.append(carry + n)
-            carry = 0
+            ret.append((carry + n) % 10)
+            carry = (carry + n) / 10
+
+    if carry > 0:
+        ret.append(carry)
 
     # Reverse result list
     return ret[::-1]
