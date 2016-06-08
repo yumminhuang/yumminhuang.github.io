@@ -87,7 +87,7 @@
 			<br>
 			
 
-<h2 id="graphite:b7837abce316965fc5b3c43248c541ea">Graphite</h2>
+<h2 id="graphite">Graphite</h2>
 
 <p><a href="http://graphite.wikidot.com/start">Graphite</a> 是一款开源的监控绘图工具。</p>
 
@@ -101,7 +101,7 @@
 
 <p><img src="https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png" alt="Graphite Overview" /></p>
 
-<h3 id="向graphite发送数据:b7837abce316965fc5b3c43248c541ea">向Graphite发送数据</h3>
+<h3 id="向graphite发送数据">向Graphite发送数据</h3>
 
 <p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送<code>观测量: 观测值</code>这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。</p>
 
@@ -129,7 +129,7 @@ echo &quot;local.metric.random 4 `date +%s`&quot; | nc -q0 ${SERVER} ${PORT}
 
 <p>Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的第一步就是给 Metric 选取一个合适的名称。关于如何组织 Metric 的名称，可以参阅文章 <a href="http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/">Practical Guide to StatsD/Graphite Monitoring</a>。</p>
 
-<h3 id="graphite-event:b7837abce316965fc5b3c43248c541ea">Graphite Event</h3>
+<h3 id="graphite-event">Graphite Event</h3>
 
 <p>除了支持简单的键／值数据类型，Graphite 还可以通过 <a href="http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events">Events</a> 来存储更复杂的数据。简而言之，Graphite Events 使用了 <code>tag</code> 和 <code>data</code> 两个键来存储更多的信息。</p>
 
@@ -181,13 +181,13 @@ curl -X POST $HOST -d &lsquo;{&ldquo;what&rdquo;: &ldquo;Deployment&rdquo;, &ldq
 
 <p>从图中，我们可以发现第一次代码部署之后导致了大量的警告信息，经过随后的两次 Hotfix 之后，警告信息基本消除。</p>
 
-<h2 id="总结:b7837abce316965fc5b3c43248c541ea">总结</h2>
+<h2 id="总结">总结</h2>
 
 <p>本文非常简要地介绍了 Graphite 和 Grafana 的一些特性和使用场景。我也是在实习当中第一次接触到这两个工具，很多具体的细节还在摸索之中。</p>
 
 <p>总之，Graphite 是一个易扩展，使用简便的监控绘图工具，在这里推荐给大家使用。</p>
 
-<h2 id="参考文献:b7837abce316965fc5b3c43248c541ea">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 
 <ol>
 <li><a href="http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events">Graphite Tip - A Better Way to Store Events</a></li>

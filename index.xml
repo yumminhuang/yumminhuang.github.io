@@ -24,7 +24,7 @@
 
 &lt;p&gt;当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用-travis-ci-自动发布:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
+&lt;h3 id=&#34;使用-travis-ci-自动发布&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
 
 &lt;p&gt;上周在 &lt;a href=&#34;http://www.latexstudio.net&#34;&gt;LaTeX 开源小屋&lt;/a&gt;看到一篇&lt;a href=&#34;http://www.latexstudio.net/archives/5892&#34;&gt;文章&lt;/a&gt;。文章中介绍了 GitHub 上一个&lt;a href=&#34;https://github.com/SivilTaram/BUAAOS-guide-book&#34;&gt;北航小操作系统实验指导书&lt;/a&gt;的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 &lt;a href=&#34;https://help.github.com/articles/about-releases/&#34;&gt;GitHub Release 页面&lt;/a&gt;。&lt;/p&gt;
 
@@ -72,7 +72,7 @@ deploy:
 
 &lt;p&gt;这样，我就完成了可以自动编译、自动发布的 &lt;a href=&#34;https://github.com/yumminhuang/Resume/releases/tag/v1.0&#34;&gt;1.0 版&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;优化持续发布流程:5086ce26c310980bb90201cbb48acae6&#34;&gt;优化持续发布流程&lt;/h3&gt;
+&lt;h3 id=&#34;优化持续发布流程&#34;&gt;优化持续发布流程&lt;/h3&gt;
 
 &lt;p&gt;1.0 版完成只实现了自动化，还有一些不令人满意的地方。&lt;/p&gt;
 
@@ -84,7 +84,7 @@ deploy:
 
 &lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
 
-&lt;h4 id=&#34;使用-docker-编译:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Docker 编译&lt;/h4&gt;
+&lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
 
@@ -130,7 +130,7 @@ script:
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
 
-&lt;h4 id=&#34;build-tagged-commits-only:5086ce26c310980bb90201cbb48acae6&#34;&gt;Build tagged commits only&lt;/h4&gt;
+&lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
 
@@ -168,19 +168,19 @@ git push -u origin master --tags
 &lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续集成:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续集成&lt;/h3&gt;
+&lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image1.png&#34; alt=&#34;Continuous Integration&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;持续集成强调开发人员提交了新代码之后，立刻进行构建、（单元）测试、打包等步骤。根据反馈的测试结果，我们可以知道新代码和原有代码能否正确地集成在一起。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续交付:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续交付&lt;/h3&gt;
+&lt;h3 id=&#34;持续交付&#34;&gt;持续交付&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image4-manual.png&#34; alt=&#34;Continuous Delivery&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;持续交付在持续集成的基础上，将集成后的代码部署到更贴近真实运行环境的「类生产环境（ &lt;em&gt;production-like environments&lt;/em&gt; ）」中。比如，我们完成单元测试后，可以把代码部署到连接数据库的 Staging 环境中进行更多的测试。如果代码没有问题，接下来就可以继续&lt;strong&gt;手动部署&lt;/strong&gt;到生产环境中。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续部署:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续部署&lt;/h3&gt;
+&lt;h3 id=&#34;持续部署&#34;&gt;持续部署&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image3-auto.png&#34; alt=&#34;Continuous Deployment&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
@@ -204,11 +204,11 @@ git push -u origin master --tags
 
 &lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
-&lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming&#34;&gt;Naming convention&lt;/a&gt;)）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
+&lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
 
 &lt;p&gt;关于 Git 的工作流，业界已经有了很多讨论。&lt;/p&gt;
 
-&lt;h3 id=&#34;git-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git flow&lt;/h3&gt;
+&lt;h3 id=&#34;git-flow&#34;&gt;Git flow&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://nvie.com/posts/a-successful-git-branching-model/&#34;&gt;git-flow&lt;/a&gt; 最早在2010年提出。用下面这幅图可以概括 git-flow 的主要内容。&lt;/p&gt;
 
@@ -216,11 +216,11 @@ git push -u origin master --tags
 
 &lt;p&gt;git-flow 包含一个 &lt;em&gt;master&lt;/em&gt; 分支、一个 &lt;em&gt;develop&lt;/em&gt; 分支，&lt;em&gt;release&lt;/em&gt; 分支、&lt;em&gt;hotfix&lt;/em&gt; 分支和若干 &lt;em&gt;feature&lt;/em&gt; 分支。开发工作在 &lt;code&gt;develop&lt;/code&gt; 进行，然后提交到 &lt;code&gt;release&lt;/code&gt; ，最后合并到 &lt;code&gt;master&lt;/code&gt;。但是 git-flow 太复杂了，需要维护很多分支，开发时还要不停切换分支。所以，到了后来有一些&lt;a href=&#34;http://insights.thoughtworkers.org/gitflow-consider-harmful/&#34;&gt;文章&lt;/a&gt;就对 git-flow 提出了质疑。&lt;/p&gt;
 
-&lt;h3 id=&#34;github-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Github flow&lt;/h3&gt;
+&lt;h3 id=&#34;github-flow&#34;&gt;Github flow&lt;/h3&gt;
 
 &lt;p&gt;Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提出了一套更为简单的工作流 —— &lt;a href=&#34;http://scottchacon.com/2011/08/31/github-flow.html&#34;&gt;Github flow&lt;/a&gt;。 Github flow 简化了分支：只有一个可部署的 &lt;code&gt;master&lt;/code&gt; 分支；新添加的代码（不区分 feature、bug-fix）都放在基于 master 创建的新分支里；分支的名称应当能描述出问题（Issue），例如 &lt;code&gt;new-oauth2-scopes&lt;/code&gt;。Github flow 同时还强调持续交付（&lt;a href=&#34;http://martinfowler.com/bliki/ContinuousDelivery.html&#34;&gt;Continuous delivery&lt;/a&gt;）和使用当时 Github 新推出的 Pull Request 进行代码审查（&lt;a href=&#34;https://en.wikipedia.org/wiki/Code_review&#34;&gt;Code review&lt;/a&gt;）。经过几年的发展，Github flow 基本上已经成为业内的标准：几乎所有的代码托管网站、使用 Git 的 SaaS、Git 软件都有基于 branch 的 Pull Request 功能。&lt;/p&gt;
 
-&lt;h3 id=&#34;gitlab-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Gitlab flow&lt;/h3&gt;
+&lt;h3 id=&#34;gitlab-flow&#34;&gt;Gitlab flow&lt;/h3&gt;
 
 &lt;p&gt;但是 Github flow 仍有不足和值得改进的地方，所以 Gitlab 提出了 &lt;a href=&#34;https://about.gitlab.com/2014/09/29/gitlab-flow/&#34;&gt;Gitlab flow&lt;/a&gt;。Github flow 强调持续交付，合并到 &lt;code&gt;master&lt;/code&gt; 的代码要立刻部署到线上。Gitlab 指出这种模式并非适用于所有的开放环境。比如有的软件可能隔几个月，甚至几年才会发布新版本。因此（如下图所示），在这些例子里，创建一个 &lt;em&gt;production&lt;/em&gt; 或 &lt;em&gt;release&lt;/em&gt; 分支来管理发布的代码是有必要的。&lt;/p&gt;
 
@@ -228,7 +228,7 @@ git push -u origin master --tags
 
 &lt;p&gt;另外，Gitlab flow 还强调代码的任何修改都应该开始于一个目标明确的Issue。因此，为一个 Issue 创建新分支时，这个分支的名字应该以 Issue 的编号开始，比如 &lt;code&gt;15-require-a-password-to-change-it&lt;/code&gt;。Commit 的信息或 Merge Request 的描述里应关联相关的 Issue，如&lt;code&gt;fixes #14&lt;/code&gt; 或 &lt;code&gt;closes #67&lt;/code&gt;，这样合并到 &lt;code&gt;master&lt;/code&gt; 的时候可以自动关闭相应的 Issue。&lt;/p&gt;
 
-&lt;h3 id=&#34;git-工作流的需求:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git 工作流的需求&lt;/h3&gt;
+&lt;h3 id=&#34;git-工作流的需求&#34;&gt;Git 工作流的需求&lt;/h3&gt;
 
 &lt;p&gt;在实际开发的过程中，有各种各样的需要。鉴于诸如 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development)&#34;&gt;Scrum&lt;/a&gt; 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：&lt;/p&gt;
 
@@ -258,7 +258,7 @@ git push -u origin master --tags
 
 &lt;p&gt;最后，应该能在尽可能多的平台上，无论是 Github、BitBucket 这样的 SaaS，还是自己使用 Gitlab 搭建的服务器，实践这个工作流。最好可以让 GUI 和 CLI 都能够完成整个工作流。&lt;/p&gt;
 
-&lt;h3 id=&#34;改进的-git-工作流:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;改进的 Git 工作流&lt;/h3&gt;
+&lt;h3 id=&#34;改进的-git-工作流&#34;&gt;改进的 Git 工作流&lt;/h3&gt;
 
 &lt;p&gt;基于 Github flow，并加入 Gitlab flow 的一些优点，我设计了一个改进的 Git 工作流：&lt;/p&gt;
 
@@ -353,7 +353,7 @@ git push -u origin master --tags
 
 &lt;ul&gt;
 &lt;li&gt;是：继续回答问题2&lt;/li&gt;
-&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;如果他人修改了你的代码，是否需要了解修改？
 
@@ -381,8 +381,8 @@ git push -u origin master --tags
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -469,15 +469,15 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 
 &lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。&lt;/p&gt;
 
-&lt;h2 id=&#34;猴子补丁:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;猴子补丁&lt;/h2&gt;
+&lt;h2 id=&#34;猴子补丁&#34;&gt;猴子补丁&lt;/h2&gt;
 
 &lt;p&gt;猴子补丁（&lt;a href=&#34;https://en.wikipedia.org/wiki/Monkey_patch&#34;&gt;Monkey Patch&lt;/a&gt;）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。&lt;/p&gt;
 
-&lt;h3 id=&#34;词源:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;词源&lt;/h3&gt;
+&lt;h3 id=&#34;词源&#34;&gt;词源&lt;/h3&gt;
 
 &lt;p&gt;Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用场景:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;使用场景&#34;&gt;使用场景&lt;/h3&gt;
 
 &lt;p&gt;以我的理解，Monkey patch 有两种使用场景：&lt;/p&gt;
 
@@ -486,7 +486,7 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 &lt;li&gt;修改或扩展库中的属性和方法。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;在-ruby-中使用-monkey-patch:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;在 Ruby 中使用 Monkey Patch&lt;/h2&gt;
+&lt;h2 id=&#34;在-ruby-中使用-monkey-patch&#34;&gt;在 Ruby 中使用 Monkey Patch&lt;/h2&gt;
 
 &lt;p&gt;我当时遇到的场景是这样的：&lt;/p&gt;
 
@@ -545,7 +545,7 @@ module Fog
 end
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;总结:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;通过在自己的代码中添加一个 Monkey patch，我们成功地实现了向 fog 中动态添加新实例类型。我司终于可以使用 fog 创建 D2 类型的机器了；而且这个方法改动的代码量最小，也更加容易维护。&lt;/p&gt;
 
@@ -553,7 +553,7 @@ end
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;参考文章:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;参考文章&lt;/h3&gt;
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.justinweiss.com/blog/2015/01/20/3-ways-to-monkey-patch-without-making-a-mess/&#34;&gt;3 Ways to Monkey-patch Without Making a Mess&lt;/a&gt;&lt;/li&gt;

@@ -26,9 +26,9 @@
 
 &lt;p&gt;废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。&lt;/p&gt;
 
-&lt;h3 id=&#34;1-基本语法:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1. 基本语法&lt;/h3&gt;
+&lt;h3 id=&#34;1-基本语法&#34;&gt;1. 基本语法&lt;/h3&gt;
 
-&lt;h4 id=&#34;1-1-创建对象:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1.1 创建对象&lt;/h4&gt;
+&lt;h4 id=&#34;1-1-创建对象&#34;&gt;1.1 创建对象&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
 
@@ -40,7 +40,7 @@
 &lt;pre&gt;&lt;code&gt;MyClass *obj = [[MyClass alloc] init];
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;1-2-调用方法:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1.2 调用方法&lt;/h4&gt;
+&lt;h4 id=&#34;1-2-调用方法&#34;&gt;1.2 调用方法&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
 
@@ -56,7 +56,7 @@ obj.method3(arg1,arg2) // 多个参数
 [obj method3:arg2 andArg: arg2] // 多个参数
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;2-类的定义:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;2. 类的定义&lt;/h3&gt;
+&lt;h3 id=&#34;2-类的定义&#34;&gt;2. 类的定义&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
 
@@ -118,7 +118,7 @@ obj.method3(arg1,arg2) // 多个参数
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;3-协议-接口-的定义:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;3. 协议（接口）的定义&lt;/h3&gt;
+&lt;h3 id=&#34;3-协议-接口-的定义&#34;&gt;3. 协议（接口）的定义&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;
 定义接口&lt;/p&gt;

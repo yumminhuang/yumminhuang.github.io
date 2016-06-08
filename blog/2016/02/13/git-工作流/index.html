@@ -86,11 +86,11 @@
 
 <p>Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。</p>
 
-<p>正如编程过程中变量命名需要一套标准的命名规则（<a href="https://en.wikipedia.org/wiki/Naming_convention_(programming">Naming convention</a>)）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。</p>
+<p>正如编程过程中变量命名需要一套标准的命名规则（<a href="https://en.wikipedia.org/wiki/Naming_convention_(programming)">Naming convention</a>）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。</p>
 
 <p>关于 Git 的工作流，业界已经有了很多讨论。</p>
 
-<h3 id="git-flow:6a03d3862c7b57291f07850ad6a5776a">Git flow</h3>
+<h3 id="git-flow">Git flow</h3>
 
 <p><a href="http://nvie.com/posts/a-successful-git-branching-model/">git-flow</a> 最早在2010年提出。用下面这幅图可以概括 git-flow 的主要内容。</p>
 
@@ -98,11 +98,11 @@
 
 <p>git-flow 包含一个 <em>master</em> 分支、一个 <em>develop</em> 分支，<em>release</em> 分支、<em>hotfix</em> 分支和若干 <em>feature</em> 分支。开发工作在 <code>develop</code> 进行，然后提交到 <code>release</code> ，最后合并到 <code>master</code>。但是 git-flow 太复杂了，需要维护很多分支，开发时还要不停切换分支。所以，到了后来有一些<a href="http://insights.thoughtworkers.org/gitflow-consider-harmful/">文章</a>就对 git-flow 提出了质疑。</p>
 
-<h3 id="github-flow:6a03d3862c7b57291f07850ad6a5776a">Github flow</h3>
+<h3 id="github-flow">Github flow</h3>
 
 <p>Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提出了一套更为简单的工作流 —— <a href="http://scottchacon.com/2011/08/31/github-flow.html">Github flow</a>。 Github flow 简化了分支：只有一个可部署的 <code>master</code> 分支；新添加的代码（不区分 feature、bug-fix）都放在基于 master 创建的新分支里；分支的名称应当能描述出问题（Issue），例如 <code>new-oauth2-scopes</code>。Github flow 同时还强调持续交付（<a href="http://martinfowler.com/bliki/ContinuousDelivery.html">Continuous delivery</a>）和使用当时 Github 新推出的 Pull Request 进行代码审查（<a href="https://en.wikipedia.org/wiki/Code_review">Code review</a>）。经过几年的发展，Github flow 基本上已经成为业内的标准：几乎所有的代码托管网站、使用 Git 的 SaaS、Git 软件都有基于 branch 的 Pull Request 功能。</p>
 
-<h3 id="gitlab-flow:6a03d3862c7b57291f07850ad6a5776a">Gitlab flow</h3>
+<h3 id="gitlab-flow">Gitlab flow</h3>
 
 <p>但是 Github flow 仍有不足和值得改进的地方，所以 Gitlab 提出了 <a href="https://about.gitlab.com/2014/09/29/gitlab-flow/">Gitlab flow</a>。Github flow 强调持续交付，合并到 <code>master</code> 的代码要立刻部署到线上。Gitlab 指出这种模式并非适用于所有的开放环境。比如有的软件可能隔几个月，甚至几年才会发布新版本。因此（如下图所示），在这些例子里，创建一个 <em>production</em> 或 <em>release</em> 分支来管理发布的代码是有必要的。</p>
 
@@ -110,7 +110,7 @@
 
 <p>另外，Gitlab flow 还强调代码的任何修改都应该开始于一个目标明确的Issue。因此，为一个 Issue 创建新分支时，这个分支的名字应该以 Issue 的编号开始，比如 <code>15-require-a-password-to-change-it</code>。Commit 的信息或 Merge Request 的描述里应关联相关的 Issue，如<code>fixes #14</code> 或 <code>closes #67</code>，这样合并到 <code>master</code> 的时候可以自动关闭相应的 Issue。</p>
 
-<h3 id="git-工作流的需求:6a03d3862c7b57291f07850ad6a5776a">Git 工作流的需求</h3>
+<h3 id="git-工作流的需求">Git 工作流的需求</h3>
 
 <p>在实际开发的过程中，有各种各样的需要。鉴于诸如 <a href="https://en.wikipedia.org/wiki/Scrum_(software_development)">Scrum</a> 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：</p>
 
@@ -140,7 +140,7 @@
 
 <p>最后，应该能在尽可能多的平台上，无论是 Github、BitBucket 这样的 SaaS，还是自己使用 Gitlab 搭建的服务器，实践这个工作流。最好可以让 GUI 和 CLI 都能够完成整个工作流。</p>
 
-<h3 id="改进的-git-工作流:6a03d3862c7b57291f07850ad6a5776a">改进的 Git 工作流</h3>
+<h3 id="改进的-git-工作流">改进的 Git 工作流</h3>
 
 <p>基于 Github flow，并加入 Gitlab flow 的一些优点，我设计了一个改进的 Git 工作流：</p>
 

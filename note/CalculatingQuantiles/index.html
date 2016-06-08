@@ -86,13 +86,13 @@
 
 <p>This problem is from my recent online coding test. I didn&rsquo;t solve it in the limited time cause I used a wrong way. When I realize that, I don&rsquo;t have enough time to fix it. I feel regretful for failing the test.</p>
 
-<h2 id="problem:ee9e02e68027d4735cd5290b8e666adb">Problem</h2>
+<h2 id="problem">Problem</h2>
 
 <p>Find quantiles for a population of N values. These values are index 1, &hellip;, N from lowest to highest. The K<sup>th</sup> Q-quantile of such population is determined by computing the index l<sub>k</sub> = N * k / Q and taking the value found at index l<sub>k</sub>. If l<sub>k</sub> is not a integer, then it is rounded to the next integer to get the index. For a given value of Q, there will be (Q-1) quantiles.</p>
 
 <p>For example, for Q = 2 the 1<sup>st</sup> (and only) quantile of the population {3, 5, 6} is 5. Explanation: N = 3, Q = 2, k = 1, which means l<sub>1</sub> = ceiling(3 * 1 / 2) = 2. Value at index 2 is 5.</p>
 
-<h2 id="input-format:ee9e02e68027d4735cd5290b8e666adb">Input format</h2>
+<h2 id="input-format">Input format</h2>
 
 <p>The solution should read input from Standard Input in the following format:</p>
 
@@ -117,7 +117,7 @@ vn cn
 
 <p>The population of number is <code>{7, 7, 6, 6, 5, 5}</code> and we need to calculate the two 3-quantiles of this population.</p>
 
-<h2 id="output-format:ee9e02e68027d4735cd5290b8e666adb">Output format</h2>
+<h2 id="output-format">Output format</h2>
 
 <p>Print out the values of all Q-quantiles to the Standard Output in ascending order, separated by newlines.</p>
 
@@ -127,7 +127,7 @@ vn cn
 6
 </code></pre>
 
-<h2 id="constraints:ee9e02e68027d4735cd5290b8e666adb">Constraints</h2>
+<h2 id="constraints">Constraints</h2>
 
 <ol>
 <li>1 ≤ N ≤ 10<sup>12</sup></li>
@@ -137,7 +137,7 @@ vn cn
 <li>v<sub>i</sub> and c<sub>i</sub> values are integers</li>
 </ol>
 
-<h2 id="solutions:ee9e02e68027d4735cd5290b8e666adb">Solutions</h2>
+<h2 id="solutions">Solutions</h2>
 
 <p>At first, I chose a very naïve way to solve this problem. Read v/c pairs and create the whole list, then find all quantiles by their indexes. This is easy to understand and implement, but it will exceed
 memory limit when population is large.</p>

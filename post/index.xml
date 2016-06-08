@@ -24,7 +24,7 @@
 
 &lt;p&gt;当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用-travis-ci-自动发布:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
+&lt;h3 id=&#34;使用-travis-ci-自动发布&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
 
 &lt;p&gt;上周在 &lt;a href=&#34;http://www.latexstudio.net&#34;&gt;LaTeX 开源小屋&lt;/a&gt;看到一篇&lt;a href=&#34;http://www.latexstudio.net/archives/5892&#34;&gt;文章&lt;/a&gt;。文章中介绍了 GitHub 上一个&lt;a href=&#34;https://github.com/SivilTaram/BUAAOS-guide-book&#34;&gt;北航小操作系统实验指导书&lt;/a&gt;的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 &lt;a href=&#34;https://help.github.com/articles/about-releases/&#34;&gt;GitHub Release 页面&lt;/a&gt;。&lt;/p&gt;
 
@@ -72,7 +72,7 @@ deploy:
 
 &lt;p&gt;这样，我就完成了可以自动编译、自动发布的 &lt;a href=&#34;https://github.com/yumminhuang/Resume/releases/tag/v1.0&#34;&gt;1.0 版&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;优化持续发布流程:5086ce26c310980bb90201cbb48acae6&#34;&gt;优化持续发布流程&lt;/h3&gt;
+&lt;h3 id=&#34;优化持续发布流程&#34;&gt;优化持续发布流程&lt;/h3&gt;
 
 &lt;p&gt;1.0 版完成只实现了自动化，还有一些不令人满意的地方。&lt;/p&gt;
 
@@ -84,7 +84,7 @@ deploy:
 
 &lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
 
-&lt;h4 id=&#34;使用-docker-编译:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Docker 编译&lt;/h4&gt;
+&lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
 
@@ -130,7 +130,7 @@ script:
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
 
-&lt;h4 id=&#34;build-tagged-commits-only:5086ce26c310980bb90201cbb48acae6&#34;&gt;Build tagged commits only&lt;/h4&gt;
+&lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
 
@@ -166,19 +166,19 @@ git push -u origin master --tags
 &lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续集成:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续集成&lt;/h3&gt;
+&lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image1.png&#34; alt=&#34;Continuous Integration&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;持续集成强调开发人员提交了新代码之后，立刻进行构建、（单元）测试、打包等步骤。根据反馈的测试结果，我们可以知道新代码和原有代码能否正确地集成在一起。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续交付:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续交付&lt;/h3&gt;
+&lt;h3 id=&#34;持续交付&#34;&gt;持续交付&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image4-manual.png&#34; alt=&#34;Continuous Delivery&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;持续交付在持续集成的基础上，将集成后的代码部署到更贴近真实运行环境的「类生产环境（ &lt;em&gt;production-like environments&lt;/em&gt; ）」中。比如，我们完成单元测试后，可以把代码部署到连接数据库的 Staging 环境中进行更多的测试。如果代码没有问题，接下来就可以继续&lt;strong&gt;手动部署&lt;/strong&gt;到生产环境中。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续部署:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续部署&lt;/h3&gt;
+&lt;h3 id=&#34;持续部署&#34;&gt;持续部署&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image3-auto.png&#34; alt=&#34;Continuous Deployment&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
@@ -202,11 +202,11 @@ git push -u origin master --tags
 
 &lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
-&lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming&#34;&gt;Naming convention&lt;/a&gt;)）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
+&lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
 
 &lt;p&gt;关于 Git 的工作流，业界已经有了很多讨论。&lt;/p&gt;
 
-&lt;h3 id=&#34;git-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git flow&lt;/h3&gt;
+&lt;h3 id=&#34;git-flow&#34;&gt;Git flow&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://nvie.com/posts/a-successful-git-branching-model/&#34;&gt;git-flow&lt;/a&gt; 最早在2010年提出。用下面这幅图可以概括 git-flow 的主要内容。&lt;/p&gt;
 
@@ -214,11 +214,11 @@ git push -u origin master --tags
 
 &lt;p&gt;git-flow 包含一个 &lt;em&gt;master&lt;/em&gt; 分支、一个 &lt;em&gt;develop&lt;/em&gt; 分支，&lt;em&gt;release&lt;/em&gt; 分支、&lt;em&gt;hotfix&lt;/em&gt; 分支和若干 &lt;em&gt;feature&lt;/em&gt; 分支。开发工作在 &lt;code&gt;develop&lt;/code&gt; 进行，然后提交到 &lt;code&gt;release&lt;/code&gt; ，最后合并到 &lt;code&gt;master&lt;/code&gt;。但是 git-flow 太复杂了，需要维护很多分支，开发时还要不停切换分支。所以，到了后来有一些&lt;a href=&#34;http://insights.thoughtworkers.org/gitflow-consider-harmful/&#34;&gt;文章&lt;/a&gt;就对 git-flow 提出了质疑。&lt;/p&gt;
 
-&lt;h3 id=&#34;github-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Github flow&lt;/h3&gt;
+&lt;h3 id=&#34;github-flow&#34;&gt;Github flow&lt;/h3&gt;
 
 &lt;p&gt;Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提出了一套更为简单的工作流 —— &lt;a href=&#34;http://scottchacon.com/2011/08/31/github-flow.html&#34;&gt;Github flow&lt;/a&gt;。 Github flow 简化了分支：只有一个可部署的 &lt;code&gt;master&lt;/code&gt; 分支；新添加的代码（不区分 feature、bug-fix）都放在基于 master 创建的新分支里；分支的名称应当能描述出问题（Issue），例如 &lt;code&gt;new-oauth2-scopes&lt;/code&gt;。Github flow 同时还强调持续交付（&lt;a href=&#34;http://martinfowler.com/bliki/ContinuousDelivery.html&#34;&gt;Continuous delivery&lt;/a&gt;）和使用当时 Github 新推出的 Pull Request 进行代码审查（&lt;a href=&#34;https://en.wikipedia.org/wiki/Code_review&#34;&gt;Code review&lt;/a&gt;）。经过几年的发展，Github flow 基本上已经成为业内的标准：几乎所有的代码托管网站、使用 Git 的 SaaS、Git 软件都有基于 branch 的 Pull Request 功能。&lt;/p&gt;
 
-&lt;h3 id=&#34;gitlab-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Gitlab flow&lt;/h3&gt;
+&lt;h3 id=&#34;gitlab-flow&#34;&gt;Gitlab flow&lt;/h3&gt;
 
 &lt;p&gt;但是 Github flow 仍有不足和值得改进的地方，所以 Gitlab 提出了 &lt;a href=&#34;https://about.gitlab.com/2014/09/29/gitlab-flow/&#34;&gt;Gitlab flow&lt;/a&gt;。Github flow 强调持续交付，合并到 &lt;code&gt;master&lt;/code&gt; 的代码要立刻部署到线上。Gitlab 指出这种模式并非适用于所有的开放环境。比如有的软件可能隔几个月，甚至几年才会发布新版本。因此（如下图所示），在这些例子里，创建一个 &lt;em&gt;production&lt;/em&gt; 或 &lt;em&gt;release&lt;/em&gt; 分支来管理发布的代码是有必要的。&lt;/p&gt;
 
@@ -226,7 +226,7 @@ git push -u origin master --tags
 
 &lt;p&gt;另外，Gitlab flow 还强调代码的任何修改都应该开始于一个目标明确的Issue。因此，为一个 Issue 创建新分支时，这个分支的名字应该以 Issue 的编号开始，比如 &lt;code&gt;15-require-a-password-to-change-it&lt;/code&gt;。Commit 的信息或 Merge Request 的描述里应关联相关的 Issue，如&lt;code&gt;fixes #14&lt;/code&gt; 或 &lt;code&gt;closes #67&lt;/code&gt;，这样合并到 &lt;code&gt;master&lt;/code&gt; 的时候可以自动关闭相应的 Issue。&lt;/p&gt;
 
-&lt;h3 id=&#34;git-工作流的需求:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git 工作流的需求&lt;/h3&gt;
+&lt;h3 id=&#34;git-工作流的需求&#34;&gt;Git 工作流的需求&lt;/h3&gt;
 
 &lt;p&gt;在实际开发的过程中，有各种各样的需要。鉴于诸如 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development)&#34;&gt;Scrum&lt;/a&gt; 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：&lt;/p&gt;
 
@@ -256,7 +256,7 @@ git push -u origin master --tags
 
 &lt;p&gt;最后，应该能在尽可能多的平台上，无论是 Github、BitBucket 这样的 SaaS，还是自己使用 Gitlab 搭建的服务器，实践这个工作流。最好可以让 GUI 和 CLI 都能够完成整个工作流。&lt;/p&gt;
 
-&lt;h3 id=&#34;改进的-git-工作流:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;改进的 Git 工作流&lt;/h3&gt;
+&lt;h3 id=&#34;改进的-git-工作流&#34;&gt;改进的 Git 工作流&lt;/h3&gt;
 
 &lt;p&gt;基于 Github flow，并加入 Gitlab flow 的一些优点，我设计了一个改进的 Git 工作流：&lt;/p&gt;
 
@@ -347,7 +347,7 @@ git push -u origin master --tags
 
 &lt;ul&gt;
 &lt;li&gt;是：继续回答问题2&lt;/li&gt;
-&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;如果他人修改了你的代码，是否需要了解修改？
 
@@ -375,8 +375,8 @@ git push -u origin master --tags
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -451,15 +451,15 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 
 &lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。&lt;/p&gt;
 
-&lt;h2 id=&#34;猴子补丁:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;猴子补丁&lt;/h2&gt;
+&lt;h2 id=&#34;猴子补丁&#34;&gt;猴子补丁&lt;/h2&gt;
 
 &lt;p&gt;猴子补丁（&lt;a href=&#34;https://en.wikipedia.org/wiki/Monkey_patch&#34;&gt;Monkey Patch&lt;/a&gt;）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。&lt;/p&gt;
 
-&lt;h3 id=&#34;词源:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;词源&lt;/h3&gt;
+&lt;h3 id=&#34;词源&#34;&gt;词源&lt;/h3&gt;
 
 &lt;p&gt;Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用场景:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;使用场景&#34;&gt;使用场景&lt;/h3&gt;
 
 &lt;p&gt;以我的理解，Monkey patch 有两种使用场景：&lt;/p&gt;
 
@@ -468,7 +468,7 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 &lt;li&gt;修改或扩展库中的属性和方法。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;在-ruby-中使用-monkey-patch:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;在 Ruby 中使用 Monkey Patch&lt;/h2&gt;
+&lt;h2 id=&#34;在-ruby-中使用-monkey-patch&#34;&gt;在 Ruby 中使用 Monkey Patch&lt;/h2&gt;
 
 &lt;p&gt;我当时遇到的场景是这样的：&lt;/p&gt;
 
@@ -527,7 +527,7 @@ module Fog
 end
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;总结:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;通过在自己的代码中添加一个 Monkey patch，我们成功地实现了向 fog 中动态添加新实例类型。我司终于可以使用 fog 创建 D2 类型的机器了；而且这个方法改动的代码量最小，也更加容易维护。&lt;/p&gt;
 
@@ -535,7 +535,7 @@ end
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;参考文章:aca85750c766d78d41bd1c15f9f6ff31&#34;&gt;参考文章&lt;/h3&gt;
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.justinweiss.com/blog/2015/01/20/3-ways-to-monkey-patch-without-making-a-mess/&#34;&gt;3 Ways to Monkey-patch Without Making a Mess&lt;/a&gt;&lt;/li&gt;
@@ -558,7 +558,7 @@ end
 
 &lt;p&gt;本文将主要介绍如何使用 &lt;a href=&#34;https://travis-ci.org&#34;&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href=&#34;https://coveralls.io/&#34;&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。&lt;/p&gt;
 
-&lt;h2 id=&#34;travis-ci:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;Travis CI&lt;/h2&gt;
+&lt;h2 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h2&gt;
 
 &lt;p&gt;Travis CI 是一款 Web 端的 &lt;ruby&gt; 持续 &lt;rt&gt;Continuous&lt;/rt&gt;&lt;/ruby&gt; &lt;ruby&gt; 集成 &lt;rt&gt;Integration&lt;/rt&gt;&lt;/ruby&gt; 工具。&lt;/p&gt;
 
@@ -566,17 +566,17 @@ end
 
 &lt;p&gt;和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。&lt;/p&gt;
 
-&lt;h2 id=&#34;coveralls:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;Coveralls&lt;/h2&gt;
+&lt;h2 id=&#34;coveralls&#34;&gt;Coveralls&lt;/h2&gt;
 
 &lt;p&gt;Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。&lt;/p&gt;
 
 &lt;p&gt;Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Coveralls 支持包括 Travis CI、Jenkins 在内的绝大多数持续集成工具。&lt;/p&gt;
 
-&lt;h2 id=&#34;样例:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;样例&lt;/h2&gt;
+&lt;h2 id=&#34;样例&#34;&gt;样例&lt;/h2&gt;
 
-&lt;p&gt;接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:src&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:src&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;依赖管理和虚拟环境:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;依赖管理和虚拟环境&lt;/h3&gt;
+&lt;h3 id=&#34;依赖管理和虚拟环境&#34;&gt;依赖管理和虚拟环境&lt;/h3&gt;
 
 &lt;p&gt;我喜欢为每个项目新建一个 &lt;ruby&gt;virtualenv&lt;rt&gt; 虚拟环境 &lt;/rt&gt;&lt;/ruby&gt;，这样可以确保每个项目的开发环境相互独立，避免发生冲突。&lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt; 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。&lt;/p&gt;
 
@@ -587,7 +587,7 @@ end
 
 &lt;p&gt;就可以安装所有的库。&lt;/p&gt;
 
-&lt;h3 id=&#34;单元测试和测试覆盖:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
+&lt;h3 id=&#34;单元测试和测试覆盖&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
 
 &lt;p&gt;对于 Python 项目，我喜欢使用 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose&lt;/a&gt; 来进行单元测试。此外，我还会使用 &lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;coverage.py&lt;/a&gt; 来测量代码的测试覆盖率。&lt;/p&gt;
 
@@ -600,7 +600,7 @@ end
 
 &lt;p&gt;详细的使用方法可以参见 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose 的官方文档&lt;/a&gt; 和&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html&#34;&gt;coverage.py 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续集成:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;持续集成&lt;/h3&gt;
+&lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 &lt;code&gt;.travis.yml&lt;/code&gt;。Travis CI 的配置使用的是非常易读的 YAML 文件。&lt;/p&gt;
 
@@ -627,7 +627,7 @@ after_success:
 
 &lt;p&gt;详细的配置说明可以参见 &lt;a href=&#34;http://docs.travis-ci.com/&#34;&gt;Travis CI 的官方文档&lt;/a&gt; 和&lt;a href=&#34;https://coveralls.zendesk.com/hc/en-us&#34;&gt;Coveralls 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;其它:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;其它&lt;/h3&gt;
+&lt;h3 id=&#34;其它&#34;&gt;其它&lt;/h3&gt;
 
 &lt;p&gt;Travis CI 和 Coveralls 都可以生成 &lt;ruby&gt; 图章 &lt;rt&gt;Badge&lt;/rt&gt;&lt;/ruby&gt;，用来显示 &lt;ruby&gt; 构建 &lt;rt&gt;Build&lt;/rt&gt;&lt;/ruby&gt; 的结果，或者测试覆盖率。&lt;/p&gt;
 
@@ -639,8 +639,8 @@ after_success:
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;详细代码可参见 &lt;a href=&#34;https://github.com/yumminhuang/turbo-octo-meme&#34;&gt;turbo-octo-meme&lt;/a&gt;。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:src&#34;&gt;详细代码可参见 &lt;a href=&#34;https://github.com/yumminhuang/turbo-octo-meme&#34;&gt;turbo-octo-meme&lt;/a&gt;。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:src&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -664,13 +664,13 @@ after_success:
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;jenkins是什么:e83bca251359d2ad1ae1277c1018011a&#34;&gt;Jenkins是什么&lt;/h3&gt;
+&lt;h3 id=&#34;jenkins是什么&#34;&gt;Jenkins是什么&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://jenkins-ci.org/&#34;&gt;Jenkins&lt;/a&gt; 是一个用 Java 编写的开源的&lt;ruby&gt;持续&lt;rt&gt;Continuous&lt;/rt&gt;&lt;/ruby&gt; &lt;ruby&gt;集成&lt;rt&gt;Integration&lt;/rt&gt;&lt;/ruby&gt;工具。&lt;/p&gt;
 
 &lt;p&gt;Jenkins 是用 Java 开发的（界面和 Eclipse一样，带着一股浓浓的 SWT 的味道，好在界面并不太影响使用。），对 Java 程序开发有天然的良好支持，如 JUnit/TestNG 测试，Maven、Ant 等 Java 开发中常用的工具都包含在 Jenkins 里。当然，Jenkins 也可以通过插件来实现其它语言的开发。&lt;/p&gt;
 
-&lt;h3 id=&#34;jenkins的特性:e83bca251359d2ad1ae1277c1018011a&#34;&gt;Jenkins的特性&lt;/h3&gt;
+&lt;h3 id=&#34;jenkins的特性&#34;&gt;Jenkins的特性&lt;/h3&gt;
 
 &lt;p&gt;在使用的过程中，我体会比较深刻的特性有：&lt;/p&gt;
 
@@ -687,7 +687,7 @@ after_success:
 &lt;p&gt;Jenkins 的开发者社区非常活跃，&lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/Plugins&#34;&gt;第三方插件&lt;/a&gt;很多，从而可以帮助我们实现很多常用的功能。
 比如，Hipchat 插件可以在 Job 运行结束后把结果发送到 Hipchat 的聊天室里；Cobertura 插件可以显示测试覆盖率的数据。&lt;/p&gt;
 
-&lt;h3 id=&#34;jenkins的使用场景:e83bca251359d2ad1ae1277c1018011a&#34;&gt;Jenkins的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;jenkins的使用场景&#34;&gt;Jenkins的使用场景&lt;/h3&gt;
 
 &lt;p&gt;在我们公司，Jenkins 主要被用来用于：&lt;/p&gt;
 
@@ -747,7 +747,7 @@ after_success:
 &lt;li&gt;简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;基于-jenkins-的-python-自动化测试工具:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;基于 Jenkins 的 Python 自动化测试工具&lt;/h3&gt;
+&lt;h3 id=&#34;基于-jenkins-的-python-自动化测试工具&#34;&gt;基于 Jenkins 的 Python 自动化测试工具&lt;/h3&gt;
 
 &lt;p&gt;使用到的 Python 模块：&lt;/p&gt;
 
@@ -767,7 +767,7 @@ after_success:
 
 &lt;p&gt;安装需要的 Jenkins 插件之后，在 Jenkins 当中新建一个作业（Job）接下来进行设置。&lt;/p&gt;
 
-&lt;h4 id=&#34;从哪里得到代码:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;从哪里得到代码&lt;/h4&gt;
+&lt;h4 id=&#34;从哪里得到代码&#34;&gt;从哪里得到代码&lt;/h4&gt;
 
 &lt;p&gt;如下图所以，在 Jenkins 的 &lt;strong&gt;Source Code Management&lt;/strong&gt; 当中可以添加 Git Repository。&lt;/p&gt;
 
@@ -775,7 +775,7 @@ after_success:
 
 &lt;p&gt;Jenkins 同样支持 subversion 等 CVS 工具。&lt;/p&gt;
 
-&lt;h4 id=&#34;什么时候运行作业:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;什么时候运行作业&lt;/h4&gt;
+&lt;h4 id=&#34;什么时候运行作业&#34;&gt;什么时候运行作业&lt;/h4&gt;
 
 &lt;p&gt;在 Jenkins 中可以将 &lt;strong&gt;Build Triggers&lt;/strong&gt; 设置为 &lt;strong&gt;Poll SCM&lt;/strong&gt; 对代码库进行轮询。如下图，&lt;strong&gt;Schedule&lt;/strong&gt; 设为 &lt;code&gt;* * * * *&lt;/code&gt;（含义和 Cron 一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行 &lt;strong&gt;Build&lt;/strong&gt;。&lt;/p&gt;
 
@@ -783,7 +783,7 @@ after_success:
 
 &lt;p&gt;当然，也可以使用 &lt;a href=&#34;http://git-scm.com/book/zh/v2/Customizing-Git-Git-Hooks&#34;&gt;Git Hook&lt;/a&gt;，从而避免轮询消耗过多的资源。&lt;/p&gt;
 
-&lt;h4 id=&#34;运行什么:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;运行什么&lt;/h4&gt;
+&lt;h4 id=&#34;运行什么&#34;&gt;运行什么&lt;/h4&gt;
 
 &lt;p&gt;添加一段 &lt;strong&gt;Build Script&lt;/strong&gt;:&lt;/p&gt;
 
@@ -803,7 +803,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 &lt;p&gt;具体参数的含义可以参阅原文的第一、第二部分。&lt;/p&gt;
 
-&lt;h4 id=&#34;显示结果:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;显示结果&lt;/h4&gt;
+&lt;h4 id=&#34;显示结果&#34;&gt;显示结果&lt;/h4&gt;
 
 &lt;p&gt;上一步的 Build Script 有三个输出文件：&lt;/p&gt;
 
@@ -819,7 +819,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 &lt;p&gt;&lt;img src=&#34;http://4.bp.blogspot.com/-f_YtJcTOQ64/T5qnlOiE35I/AAAAAAAAAF8/l5Nl_YvRSuM/s1600/jenkins+after+logout+added.png&#34; alt=&#34;Jenkins Output&#34; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;持续整合:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;持续整合！&lt;/h3&gt;
+&lt;h3 id=&#34;持续整合&#34;&gt;持续整合！&lt;/h3&gt;
 
 &lt;p&gt;我们持续整合的大致流程是这样的。在代码库中有一个 Master 分支，开发人员添加新功能，修复 Bug 都需要在新建的分支里进行。每新建一个合并到到 Master 的 Pull Request 时，Jenkins 可以自动运行测试。测试通过则在 Bitbucket 的 Pull Request 页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。&lt;/p&gt;
 
@@ -854,7 +854,7 @@ TOTAL         +2       -2      +50.00%
 
 &lt;p&gt;最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。&lt;/p&gt;
 
-&lt;h3 id=&#34;参考文献:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;参考文献&lt;/h3&gt;
+&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html&#34;&gt;Automated python unit testing, code coverage and code quality analysis with Jenkins - part 3&lt;/a&gt;&lt;/li&gt;
@@ -874,11 +874,11 @@ TOTAL         +2       -2      +50.00%
             <guid>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
             <description>
 
-&lt;h2 id=&#34;fabric-简介:900de048502f7d5abcf000aa59dbd264&#34;&gt;Fabric 简介&lt;/h2&gt;
+&lt;h2 id=&#34;fabric-简介&#34;&gt;Fabric 简介&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用-fabric-的好处:900de048502f7d5abcf000aa59dbd264&#34;&gt;使用 Fabric 的好处&lt;/h3&gt;
+&lt;h3 id=&#34;使用-fabric-的好处&#34;&gt;使用 Fabric 的好处&lt;/h3&gt;
 
 &lt;p&gt;个人觉得，Fabric 非常适合简单的、重复性的远程操作。&lt;/p&gt;
 
@@ -890,11 +890,11 @@ TOTAL         +2       -2      +50.00%
 
 &lt;p&gt;基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。&lt;/p&gt;
 
-&lt;h2 id=&#34;常用的-fabric-函数:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用的 Fabric 函数&lt;/h2&gt;
+&lt;h2 id=&#34;常用的-fabric-函数&#34;&gt;常用的 Fabric 函数&lt;/h2&gt;
 
 &lt;p&gt;这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 &lt;a href=&#34;http://docs.fabfile.org/en/latest/index.html&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h2 id=&#34;常用操作:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用操作&lt;/h2&gt;
+&lt;h2 id=&#34;常用操作&#34;&gt;常用操作&lt;/h2&gt;
 
 &lt;p&gt;Fabric 的常用 &lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/operations.html&#34;&gt;操作&lt;/a&gt;&lt;/p&gt;
 
@@ -908,7 +908,7 @@ TOTAL         +2       -2      +50.00%
 &lt;li&gt;&lt;code&gt;reboot&lt;/code&gt;：重启远程机器。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;常用上下文管理器和装饰器:900de048502f7d5abcf000aa59dbd264&#34;&gt;常用上下文管理器和装饰器&lt;/h3&gt;
+&lt;h3 id=&#34;常用上下文管理器和装饰器&#34;&gt;常用上下文管理器和装饰器&lt;/h3&gt;
 
 &lt;p&gt;上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 &lt;a href=&#34;http://zh.wikipedia.org/wiki / 语法糖&#34;&gt;「语法糖（Syntax sugar）」&lt;/a&gt;。Fabric 中常用的&lt;a href=&#34;http://docs.fabfile.org/en/latest/api/core/context_managers.html&#34;&gt;上下文管理器&lt;/a&gt; 有：&lt;/p&gt;
 
@@ -929,7 +929,7 @@ TOTAL         +2       -2      +50.00%
 
 &lt;p&gt;Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 &lt;code&gt;fab task_name&lt;/code&gt; 来执行了。&lt;/p&gt;
 
-&lt;h2 id=&#34;一个例子:900de048502f7d5abcf000aa59dbd264&#34;&gt;一个例子&lt;/h2&gt;
+&lt;h2 id=&#34;一个例子&#34;&gt;一个例子&lt;/h2&gt;
 
 &lt;p&gt;在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。&lt;/p&gt;
 
@@ -959,7 +959,7 @@ def check_log_with_keyword(log_file, keyword):
 
 &lt;p&gt;远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。&lt;/p&gt;
 
-&lt;h3 id=&#34;参考文献:900de048502f7d5abcf000aa59dbd264&#34;&gt;参考文献&lt;/h3&gt;
+&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments&#34;&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
@@ -979,7 +979,7 @@ def check_log_with_keyword(log_file, keyword):
             <guid>http://yumminhuang.github.io/blog/2015/04/08/graphite-%E5%92%8C-grafana-%E7%AE%80%E4%BB%8B/</guid>
             <description>
 
-&lt;h2 id=&#34;graphite:b7837abce316965fc5b3c43248c541ea&#34;&gt;Graphite&lt;/h2&gt;
+&lt;h2 id=&#34;graphite&#34;&gt;Graphite&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://graphite.wikidot.com/start&#34;&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;
 
@@ -993,7 +993,7 @@ def check_log_with_keyword(log_file, keyword):
 
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png&#34; alt=&#34;Graphite Overview&#34; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;向graphite发送数据:b7837abce316965fc5b3c43248c541ea&#34;&gt;向Graphite发送数据&lt;/h3&gt;
+&lt;h3 id=&#34;向graphite发送数据&#34;&gt;向Graphite发送数据&lt;/h3&gt;
 
 &lt;p&gt;Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送&lt;code&gt;观测量: 观测值&lt;/code&gt;这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。&lt;/p&gt;
 
@@ -1021,7 +1021,7 @@ echo &amp;quot;local.metric.random 4 `date +%s`&amp;quot; | nc -q0 ${SERVER} ${P
 
 &lt;p&gt;Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的第一步就是给 Metric 选取一个合适的名称。关于如何组织 Metric 的名称，可以参阅文章 &lt;a href=&#34;http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/&#34;&gt;Practical Guide to StatsD/Graphite Monitoring&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;graphite-event:b7837abce316965fc5b3c43248c541ea&#34;&gt;Graphite Event&lt;/h3&gt;
+&lt;h3 id=&#34;graphite-event&#34;&gt;Graphite Event&lt;/h3&gt;
 
 &lt;p&gt;除了支持简单的键／值数据类型，Graphite 还可以通过 &lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events&#34;&gt;Events&lt;/a&gt; 来存储更复杂的数据。简而言之，Graphite Events 使用了 &lt;code&gt;tag&lt;/code&gt; 和 &lt;code&gt;data&lt;/code&gt; 两个键来存储更多的信息。&lt;/p&gt;
 
@@ -1073,13 +1073,13 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;从图中，我们可以发现第一次代码部署之后导致了大量的警告信息，经过随后的两次 Hotfix 之后，警告信息基本消除。&lt;/p&gt;
 
-&lt;h2 id=&#34;总结:b7837abce316965fc5b3c43248c541ea&#34;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;本文非常简要地介绍了 Graphite 和 Grafana 的一些特性和使用场景。我也是在实习当中第一次接触到这两个工具，很多具体的细节还在摸索之中。&lt;/p&gt;
 
 &lt;p&gt;总之，Graphite 是一个易扩展，使用简便的监控绘图工具，在这里推荐给大家使用。&lt;/p&gt;
 
-&lt;h2 id=&#34;参考文献:b7837abce316965fc5b3c43248c541ea&#34;&gt;参考文献&lt;/h2&gt;
+&lt;h2 id=&#34;参考文献&#34;&gt;参考文献&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events&#34;&gt;Graphite Tip - A Better Way to Store Events&lt;/a&gt;&lt;/li&gt;
@@ -1101,7 +1101,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
             <guid>http://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</guid>
             <description>
 
-&lt;h2 id=&#34;sensu-简介:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu 简介&lt;/h2&gt;
+&lt;h2 id=&#34;sensu-简介&#34;&gt;Sensu 简介&lt;/h2&gt;
 
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
 
@@ -1123,7 +1123,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;其中，&lt;code&gt;subscriptions&lt;/code&gt; 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了&lt;a href=&#34;http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern&#34;&gt;订阅者模式&lt;/a&gt;，相应地，定义监控项目的时候则需要指定 &lt;code&gt;subscribers&lt;/code&gt;（后文中将会提及）。&lt;/p&gt;
 
-&lt;h3 id=&#34;sensu-的优势:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu 的优势&lt;/h3&gt;
+&lt;h3 id=&#34;sensu-的优势&#34;&gt;Sensu 的优势&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;纯 Ruby 实现，核心代码不超过 1000 行；&lt;/li&gt;
@@ -1132,11 +1132,11 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;li&gt;丰富的社区支持，&lt;a href=&#34;https://github.com/sensu/sensu-community-plugins&#34;&gt;Sensu Community Plugin&lt;/a&gt; 几乎包含了所有常用的监控项目。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;sensu-的结构:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu 的结构&lt;/h3&gt;
+&lt;h3 id=&#34;sensu-的结构&#34;&gt;Sensu 的结构&lt;/h3&gt;
 
 &lt;p&gt;简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以设置 Handler 根据当前的条件采取相应的行动。&lt;/p&gt;
 
-&lt;h4 id=&#34;sensu-check:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu Check&lt;/h4&gt;
+&lt;h4 id=&#34;sensu-check&#34;&gt;Sensu Check&lt;/h4&gt;
 
 &lt;p&gt;Sensu Check 用来监控服务和资源。Check 由 Sensu Server 发出执行指令后在 Sensu Client 上运行。本质上，Sensu Check 是一个命令或者脚本，用来把数据输出到 &lt;code&gt;STDOUT&lt;/code&gt; 或者 &lt;code&gt;STDERR&lt;/code&gt;；同时，用返回值（exit status code）来指示状态：&lt;/p&gt;
 
@@ -1184,7 +1184,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;&lt;code&gt;subscribers&lt;/code&gt; 用来指定订阅者。&lt;code&gt;interval&lt;/code&gt; 定义检查的周期为 &lt;code&gt;60s&lt;/code&gt;，&lt;code&gt;handlers&lt;/code&gt; 则告诉 Sensu 当此 Check 出现异常时使用 &lt;code&gt;pagerduty&lt;/code&gt; 和 &lt;code&gt;mail&lt;/code&gt; 这两个 Handler。&lt;/p&gt;
 
-&lt;h4 id=&#34;sensu-handler:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu Handler&lt;/h4&gt;
+&lt;h4 id=&#34;sensu-handler&#34;&gt;Sensu Handler&lt;/h4&gt;
 
 &lt;p&gt;Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 &lt;a href=&#34;http://graphite.wikidot.com&#34;&gt;Graphite&lt;/a&gt;，等等。 Handler 有不同的类型，有常用的 &lt;code&gt;Pipe&lt;/code&gt;，可以将 Event 传入到 &lt;code&gt;STDIN&lt;/code&gt;（可以理解为 &lt;code&gt;cat event.json | handler&lt;/code&gt;）；有 TCP/UDP，将 Event 传入到 Socket 发送。&lt;/p&gt;
 
@@ -1200,13 +1200,13 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;基于-sensu-的安全更新监控工具:b6bdba0566435a1fdf738209881f4749&#34;&gt;基于 Sensu 的安全更新监控工具&lt;/h2&gt;
+&lt;h2 id=&#34;基于-sensu-的安全更新监控工具&#34;&gt;基于 Sensu 的安全更新监控工具&lt;/h2&gt;
 
 &lt;p&gt;接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。&lt;/p&gt;
 
-&lt;h3 id=&#34;需求:b6bdba0566435a1fdf738209881f4749&#34;&gt;需求&lt;/h3&gt;
+&lt;h3 id=&#34;需求&#34;&gt;需求&lt;/h3&gt;
 
-&lt;p&gt;我们公司在 AWS 上有大约350个实例&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：&lt;/p&gt;
+&lt;p&gt;我们公司在 AWS 上有大约350个实例&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:Instance&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:Instance&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;更新的软件包名称；&lt;/li&gt;
@@ -1216,9 +1216,9 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;此外，一个邮件里包含 350 台机器的信息显然不方便阅读。恰好公司的 350 台服务器根据功能分为若干个 &lt;code&gt;subnet&lt;/code&gt;，如 dev，tst，stg 等。所以，最好可以为每一个 subnet 生成一份安全更新的报告。&lt;/p&gt;
 
-&lt;h3 id=&#34;实现:b6bdba0566435a1fdf738209881f4749&#34;&gt;实现&lt;/h3&gt;
+&lt;h3 id=&#34;实现&#34;&gt;实现&lt;/h3&gt;
 
-&lt;h4 id=&#34;安全更新的信息收集:b6bdba0566435a1fdf738209881f4749&#34;&gt;安全更新的信息收集&lt;/h4&gt;
+&lt;h4 id=&#34;安全更新的信息收集&#34;&gt;安全更新的信息收集&lt;/h4&gt;
 
 &lt;p&gt;使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息：&lt;/p&gt;
 
@@ -1287,7 +1287,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。&lt;/p&gt;
 
-&lt;h3 id=&#34;总结:b6bdba0566435a1fdf738209881f4749&#34;&gt;总结&lt;/h3&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
 
 &lt;p&gt;这就是我的第一个 Sensu 项目。学习一门编程语言或一个工具最好的方法就是用它来做一个项目。的确，通过这个项目让我对 Sensu 的功能和特性有了比较清楚的了解。&lt;/p&gt;
 
@@ -1301,8 +1301,8 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:Instance&#34;&gt;「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:Instance&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -1404,11 +1404,11 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
 
-&lt;h2 id=&#34;平铺式窗口管理器:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;平铺式窗口管理器&lt;/h2&gt;
+&lt;h2 id=&#34;平铺式窗口管理器&#34;&gt;平铺式窗口管理器&lt;/h2&gt;
 
 &lt;p&gt;窗口管理器（Window manager）是在图形用户界面的视窗系统中，用来控制窗口位置与外观的系统软件。&lt;/p&gt;
 
-&lt;p&gt;窗口管理器主要有两种&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:0e9ce4b3aef4da2b8e28b127787defb4:type&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:0e9ce4b3aef4da2b8e28b127787defb4:type&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;p&gt;窗口管理器主要有两种&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:type&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:type&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;堆叠式窗口管理器（Stacking Window Manager）；&lt;/li&gt;
@@ -1430,7 +1430,7 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;具体来说。平铺式窗口管理器没有绚丽的界面和复杂的功能，可以让人更加专注于正在做的事情。同时，平铺式管理器非常精简，如 i3 的安装包只有 900 多 KB，相应地，消耗的资源也更少。平铺式管理器多依赖键盘操作，较少使用鼠标，配合应用程序的快捷键，基本上可以避免鼠标操作，从而提升工作效率。平铺式管理器不仅可以实现边框颜色之类的常规设置，还可以根据用户的需求，修改桌面、窗口等。最后，因为平铺式管理器非常精简，较之堆叠式管理器也更加稳定。至少在我使用的两个月里还没有出现过崩溃的情况。&lt;/p&gt;
 
-&lt;p&gt;我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:0e9ce4b3aef4da2b8e28b127787defb4:monitor&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:0e9ce4b3aef4da2b8e28b127787defb4:monitor&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;，就像下图中那样，平铺式窗口管理器最能发挥作用。&lt;/p&gt;
+&lt;p&gt;我觉得在工作环境中需要同时打开多个窗口，又拥有多台显示器的时候&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:monitor&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:monitor&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;，就像下图中那样，平铺式窗口管理器最能发挥作用。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://awesome.naquadah.org/images/6mon.small.png&#34; alt=&#34;i3 配合多屏幕&#34; /&gt;&lt;/p&gt;
 
@@ -1448,9 +1448,9 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;虽然需要同时打开了很多软件，但是因为窗口是平铺的，每次要切换软件时，只需要将屏幕的焦点切换到相应的窗口即可，而不需要像堆叠式管理器那样在凌乱的桌面上找到要用的窗口。&lt;/p&gt;
 
-&lt;h2 id=&#34;i3-窗口管理器的基本操作:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;i3 窗口管理器的基本操作&lt;/h2&gt;
+&lt;h2 id=&#34;i3-窗口管理器的基本操作&#34;&gt;i3 窗口管理器的基本操作&lt;/h2&gt;
 
-&lt;h3 id=&#34;按键:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;按键&lt;/h3&gt;
+&lt;h3 id=&#34;按键&#34;&gt;按键&lt;/h3&gt;
 
 &lt;p&gt;i3 窗口管理器操作中非常不同的是需要设置一个 &lt;code&gt;MOD&lt;/code&gt; 键，用来执行指令。
 我用的是一般 PC 键盘上没什么用的 Windows 键 (Mod4)。为此，我特意把&lt;a href=&#34;http://instagram.com/p/0N9WKCBDZt/&#34;&gt;办公室的键盘&lt;/a&gt;的 Windows 键换成了醒目的红色。&lt;/p&gt;
@@ -1465,11 +1465,11 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 
 &lt;p&gt;按下 &lt;code&gt;MOD+Shift&lt;/code&gt; 键时对应的指令&lt;/p&gt;
 
-&lt;h3 id=&#34;容器:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;容器&lt;/h3&gt;
+&lt;h3 id=&#34;容器&#34;&gt;容器&lt;/h3&gt;
 
 &lt;p&gt;i3 窗口管理器有一个很重要的概念就是容器（Container）。每个容器内可以存放一个应用程序的窗口。一个桌面（或者说 Workspace）就是一个容器。容器可以嵌套形成树型的结构，所以我们可以将容器水平或者垂直地分割成多个容器，从而充分利用桌面的空间。详细解释请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#_tree&#34;&gt;文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;常用的指令:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;常用的指令&lt;/h3&gt;
+&lt;h3 id=&#34;常用的指令&#34;&gt;常用的指令&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;MOD + H, J, K, L&lt;/code&gt;：移动屏幕焦点；&lt;/li&gt;
@@ -1480,9 +1480,9 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;li&gt;&lt;code&gt;MOD + Enter&lt;/code&gt;：打开终端。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;i3窗口管理器的安装和配置:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;i3窗口管理器的安装和配置&lt;/h2&gt;
+&lt;h2 id=&#34;i3窗口管理器的安装和配置&#34;&gt;i3窗口管理器的安装和配置&lt;/h2&gt;
 
-&lt;h3 id=&#34;安装:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;安装&lt;/h3&gt;
+&lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
 
 &lt;p&gt;以Ubuntu为例。首先添加i3到源列表。&lt;/p&gt;
 
@@ -1496,11 +1496,11 @@ apt-get --allow-unauthenticated install sur5r-keyring
 apt-get install i3
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;配置:0e9ce4b3aef4da2b8e28b127787defb4&#34;&gt;配置&lt;/h3&gt;
+&lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
 
 &lt;p&gt;我之所以放弃 Awesome 的一个很重要的原因就是它的配置过于复杂。诚然，Awesome 的效果要比 i3 酷炫很多，但是设置需要用到 Lua 脚本。很多功能还需要通过安装插件来完成。相反，i3 只需要两个设置文件，而且用的是非常易读的语法。&lt;/p&gt;
 
-&lt;p&gt;配置文件包括两部分，&lt;code&gt;~/.config/i3/config&lt;/code&gt; 和 &lt;code&gt;~/.config/i3status/config&lt;/code&gt;，分别用来设置 i3 窗口管理器和状态栏&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:0e9ce4b3aef4da2b8e28b127787defb4:config&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:0e9ce4b3aef4da2b8e28b127787defb4:config&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;配置文件包括两部分，&lt;code&gt;~/.config/i3/config&lt;/code&gt; 和 &lt;code&gt;~/.config/i3status/config&lt;/code&gt;，分别用来设置 i3 窗口管理器和状态栏&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:config&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:config&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 
 &lt;p&gt;在这里贴一下我自己的&lt;a href=&#34;https://github.com/yumminhuang/dotfiles/blob/master/files/i3_config&#34;&gt; i3 配置文件&lt;/a&gt;和&lt;a href=&#34;https://github.com/yumminhuang/dotfiles/blob/master/files/i3status_config&#34;&gt; i3 状态栏的配置文件&lt;/a&gt;，基本上每条设置都做了注释，以供读者参考。&lt;/p&gt;
 
@@ -1510,12 +1510,12 @@ apt-get install i3
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:0e9ce4b3aef4da2b8e28b127787defb4:type&#34;&gt;事实上，一些窗口管理器，如 Awesome 和 i3，支持堆叠式和平铺式两种窗口管理器的形式。这样的窗口管理器被称作&lt;a href=&#34;http://en.wikipedia.org/wiki/Dynamic_window_manager&#34;&gt;「动态式窗口管理器」&lt;/a&gt;。因为本文主要介绍 i3 作为平铺的特性，故将其划为平铺式窗口管理器。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:0e9ce4b3aef4da2b8e28b127787defb4:type&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:0e9ce4b3aef4da2b8e28b127787defb4:monitor&#34;&gt;多台显示器支持可以使用 &lt;code&gt;xrandr&lt;/code&gt; 指令。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:0e9ce4b3aef4da2b8e28b127787defb4:monitor&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:0e9ce4b3aef4da2b8e28b127787defb4:config&#34;&gt;为了方便编辑，我把配置文件放在 &lt;code&gt;~&lt;/code&gt; 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#configuring&#34;&gt;关于 i3 设置的文档&lt;/a&gt;和&lt;a href=&#34;http://i3wm.org/i3status/manpage.html#_options&#34;&gt;关于状态栏设置的文档&lt;/a&gt;。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:0e9ce4b3aef4da2b8e28b127787defb4:config&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:type&#34;&gt;事实上，一些窗口管理器，如 Awesome 和 i3，支持堆叠式和平铺式两种窗口管理器的形式。这样的窗口管理器被称作&lt;a href=&#34;http://en.wikipedia.org/wiki/Dynamic_window_manager&#34;&gt;「动态式窗口管理器」&lt;/a&gt;。因为本文主要介绍 i3 作为平铺的特性，故将其划为平铺式窗口管理器。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:type&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:monitor&#34;&gt;多台显示器支持可以使用 &lt;code&gt;xrandr&lt;/code&gt; 指令。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:monitor&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:config&#34;&gt;为了方便编辑，我把配置文件放在 &lt;code&gt;~&lt;/code&gt; 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#configuring&#34;&gt;关于 i3 设置的文档&lt;/a&gt;和&lt;a href=&#34;http://i3wm.org/i3status/manpage.html#_options&#34;&gt;关于状态栏设置的文档&lt;/a&gt;。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:config&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -1533,7 +1533,7 @@ apt-get install i3
             <guid>http://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
             <description>
 
-&lt;h2 id=&#34;简介:eb745fd234e99be994e6ebc392359fde&#34;&gt;简介&lt;/h2&gt;
+&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;从来就没有什么救世主&lt;/p&gt;
@@ -1553,14 +1553,14 @@ apt-get install i3
 &lt;li&gt;价格：自己搭建 VPN，一个月的费用大概在 $5 左右。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;具体步骤:eb745fd234e99be994e6ebc392359fde&#34;&gt;具体步骤&lt;/h2&gt;
+&lt;h2 id=&#34;具体步骤&#34;&gt;具体步骤&lt;/h2&gt;
 
-&lt;h4 id=&#34;注册一个-vps-账号:eb745fd234e99be994e6ebc392359fde&#34;&gt;注册一个 VPS 账号&lt;/h4&gt;
+&lt;h4 id=&#34;注册一个-vps-账号&#34;&gt;注册一个 VPS 账号&lt;/h4&gt;
 
 &lt;p&gt;注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
 至于选择哪家服务商，此处按下不表。下文将以 &lt;strong&gt;DigitalOcean&lt;/strong&gt; 为例描述具体步骤。&lt;/p&gt;
 
-&lt;h4 id=&#34;新建一个-droplet:eb745fd234e99be994e6ebc392359fde&#34;&gt;新建一个 Droplet&lt;/h4&gt;
+&lt;h4 id=&#34;新建一个-droplet&#34;&gt;新建一个 Droplet&lt;/h4&gt;
 
 &lt;p&gt;我新建的 Droplet 是最低配置，具体配置包括：&lt;/p&gt;
 
@@ -1580,12 +1580,12 @@ apt-get install i3
 
 &lt;p&gt;其余添加用户、Linux 基本设置等内容在此不再赘述。&lt;/p&gt;
 
-&lt;h4 id=&#34;安装pptp:eb745fd234e99be994e6ebc392359fde&#34;&gt;安装PPTP&lt;/h4&gt;
+&lt;h4 id=&#34;安装pptp&#34;&gt;安装PPTP&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;sudo apt-get install pptpd
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;配置:eb745fd234e99be994e6ebc392359fde&#34;&gt;配置&lt;/h4&gt;
+&lt;h4 id=&#34;配置&#34;&gt;配置&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;配置 IP 地址&lt;/li&gt;
@@ -1654,7 +1654,7 @@ sudo sysctl -p
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;trouble-shooting:eb745fd234e99be994e6ebc392359fde&#34;&gt;Trouble Shooting&lt;/h3&gt;
+&lt;h3 id=&#34;trouble-shooting&#34;&gt;Trouble Shooting&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;PPTP connection error: GRE: Bad checksum from pppd&lt;/li&gt;
@@ -1677,7 +1677,7 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;vps服务提供商选择:eb745fd234e99be994e6ebc392359fde&#34;&gt;VPS服务提供商选择&lt;/h3&gt;
+&lt;h3 id=&#34;vps服务提供商选择&#34;&gt;VPS服务提供商选择&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Amazon Web Service
@@ -1703,7 +1703,7 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;参考文献:eb745fd234e99be994e6ebc392359fde&#34;&gt;参考文献：&lt;/h3&gt;
+&lt;h3 id=&#34;参考文献&#34;&gt;参考文献：&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp&#34;&gt;How To Setup Your Own VPN With PPTP &amp;ndash; DigitalOcean.com&lt;/a&gt;&lt;/li&gt;

@@ -90,7 +90,7 @@
 
 <p>当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。</p>
 
-<h3 id="使用-travis-ci-自动发布:5086ce26c310980bb90201cbb48acae6">使用 Travis-CI 自动发布</h3>
+<h3 id="使用-travis-ci-自动发布">使用 Travis-CI 自动发布</h3>
 
 <p>上周在 <a href="http://www.latexstudio.net">LaTeX 开源小屋</a>看到一篇<a href="http://www.latexstudio.net/archives/5892">文章</a>。文章中介绍了 GitHub 上一个<a href="https://github.com/SivilTaram/BUAAOS-guide-book">北航小操作系统实验指导书</a>的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 <a href="https://help.github.com/articles/about-releases/">GitHub Release 页面</a>。</p>
 
@@ -138,7 +138,7 @@ deploy:
 
 <p>这样，我就完成了可以自动编译、自动发布的 <a href="https://github.com/yumminhuang/Resume/releases/tag/v1.0">1.0 版</a>。</p>
 
-<h3 id="优化持续发布流程:5086ce26c310980bb90201cbb48acae6">优化持续发布流程</h3>
+<h3 id="优化持续发布流程">优化持续发布流程</h3>
 
 <p>1.0 版完成只实现了自动化，还有一些不令人满意的地方。</p>
 
@@ -150,7 +150,7 @@ deploy:
 
 <p>为了解决这三个问题，我做了两点改进。</p>
 
-<h4 id="使用-docker-编译:5086ce26c310980bb90201cbb48acae6">使用 Docker 编译</h4>
+<h4 id="使用-docker-编译">使用 Docker 编译</h4>
 
 <p>既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 <code>build.sh</code>。</p>
 
@@ -196,7 +196,7 @@ script:
 
 <p>最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。</p>
 
-<h4 id="build-tagged-commits-only:5086ce26c310980bb90201cbb48acae6">Build tagged commits only</h4>
+<h4 id="build-tagged-commits-only">Build tagged commits only</h4>
 
 <p>为了避免不必要的构建，我在 <code>.travis.yml</code> 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。</p>
 

@@ -18,7 +18,7 @@
             <guid>http://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</guid>
             <description>
 
-&lt;h2 id=&#34;sensu-简介:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu 简介&lt;/h2&gt;
+&lt;h2 id=&#34;sensu-简介&#34;&gt;Sensu 简介&lt;/h2&gt;
 
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
 
@@ -40,7 +40,7 @@
 
 &lt;p&gt;其中，&lt;code&gt;subscriptions&lt;/code&gt; 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了&lt;a href=&#34;http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern&#34;&gt;订阅者模式&lt;/a&gt;，相应地，定义监控项目的时候则需要指定 &lt;code&gt;subscribers&lt;/code&gt;（后文中将会提及）。&lt;/p&gt;
 
-&lt;h3 id=&#34;sensu-的优势:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu 的优势&lt;/h3&gt;
+&lt;h3 id=&#34;sensu-的优势&#34;&gt;Sensu 的优势&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;纯 Ruby 实现，核心代码不超过 1000 行；&lt;/li&gt;
@@ -49,11 +49,11 @@
 &lt;li&gt;丰富的社区支持，&lt;a href=&#34;https://github.com/sensu/sensu-community-plugins&#34;&gt;Sensu Community Plugin&lt;/a&gt; 几乎包含了所有常用的监控项目。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;sensu-的结构:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu 的结构&lt;/h3&gt;
+&lt;h3 id=&#34;sensu-的结构&#34;&gt;Sensu 的结构&lt;/h3&gt;
 
 &lt;p&gt;简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以设置 Handler 根据当前的条件采取相应的行动。&lt;/p&gt;
 
-&lt;h4 id=&#34;sensu-check:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu Check&lt;/h4&gt;
+&lt;h4 id=&#34;sensu-check&#34;&gt;Sensu Check&lt;/h4&gt;
 
 &lt;p&gt;Sensu Check 用来监控服务和资源。Check 由 Sensu Server 发出执行指令后在 Sensu Client 上运行。本质上，Sensu Check 是一个命令或者脚本，用来把数据输出到 &lt;code&gt;STDOUT&lt;/code&gt; 或者 &lt;code&gt;STDERR&lt;/code&gt;；同时，用返回值（exit status code）来指示状态：&lt;/p&gt;
 
@@ -101,7 +101,7 @@
 
 &lt;p&gt;&lt;code&gt;subscribers&lt;/code&gt; 用来指定订阅者。&lt;code&gt;interval&lt;/code&gt; 定义检查的周期为 &lt;code&gt;60s&lt;/code&gt;，&lt;code&gt;handlers&lt;/code&gt; 则告诉 Sensu 当此 Check 出现异常时使用 &lt;code&gt;pagerduty&lt;/code&gt; 和 &lt;code&gt;mail&lt;/code&gt; 这两个 Handler。&lt;/p&gt;
 
-&lt;h4 id=&#34;sensu-handler:b6bdba0566435a1fdf738209881f4749&#34;&gt;Sensu Handler&lt;/h4&gt;
+&lt;h4 id=&#34;sensu-handler&#34;&gt;Sensu Handler&lt;/h4&gt;
 
 &lt;p&gt;Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 &lt;a href=&#34;http://graphite.wikidot.com&#34;&gt;Graphite&lt;/a&gt;，等等。 Handler 有不同的类型，有常用的 &lt;code&gt;Pipe&lt;/code&gt;，可以将 Event 传入到 &lt;code&gt;STDIN&lt;/code&gt;（可以理解为 &lt;code&gt;cat event.json | handler&lt;/code&gt;）；有 TCP/UDP，将 Event 传入到 Socket 发送。&lt;/p&gt;
 
@@ -117,13 +117,13 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;基于-sensu-的安全更新监控工具:b6bdba0566435a1fdf738209881f4749&#34;&gt;基于 Sensu 的安全更新监控工具&lt;/h2&gt;
+&lt;h2 id=&#34;基于-sensu-的安全更新监控工具&#34;&gt;基于 Sensu 的安全更新监控工具&lt;/h2&gt;
 
 &lt;p&gt;接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。&lt;/p&gt;
 
-&lt;h3 id=&#34;需求:b6bdba0566435a1fdf738209881f4749&#34;&gt;需求&lt;/h3&gt;
+&lt;h3 id=&#34;需求&#34;&gt;需求&lt;/h3&gt;
 
-&lt;p&gt;我们公司在 AWS 上有大约350个实例&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：&lt;/p&gt;
+&lt;p&gt;我们公司在 AWS 上有大约350个实例&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:Instance&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:Instance&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;更新的软件包名称；&lt;/li&gt;
@@ -133,9 +133,9 @@
 
 &lt;p&gt;此外，一个邮件里包含 350 台机器的信息显然不方便阅读。恰好公司的 350 台服务器根据功能分为若干个 &lt;code&gt;subnet&lt;/code&gt;，如 dev，tst，stg 等。所以，最好可以为每一个 subnet 生成一份安全更新的报告。&lt;/p&gt;
 
-&lt;h3 id=&#34;实现:b6bdba0566435a1fdf738209881f4749&#34;&gt;实现&lt;/h3&gt;
+&lt;h3 id=&#34;实现&#34;&gt;实现&lt;/h3&gt;
 
-&lt;h4 id=&#34;安全更新的信息收集:b6bdba0566435a1fdf738209881f4749&#34;&gt;安全更新的信息收集&lt;/h4&gt;
+&lt;h4 id=&#34;安全更新的信息收集&#34;&gt;安全更新的信息收集&lt;/h4&gt;
 
 &lt;p&gt;使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息：&lt;/p&gt;
 
@@ -204,7 +204,7 @@
 
 &lt;p&gt;整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。&lt;/p&gt;
 
-&lt;h3 id=&#34;总结:b6bdba0566435a1fdf738209881f4749&#34;&gt;总结&lt;/h3&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
 
 &lt;p&gt;这就是我的第一个 Sensu 项目。学习一门编程语言或一个工具最好的方法就是用它来做一个项目。的确，通过这个项目让我对 Sensu 的功能和特性有了比较清楚的了解。&lt;/p&gt;
 
@@ -218,8 +218,8 @@
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:b6bdba0566435a1fdf738209881f4749:Instance&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:Instance&#34;&gt;「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:Instance&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>

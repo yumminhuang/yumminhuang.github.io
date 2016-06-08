@@ -86,7 +86,7 @@
 
 <p>本文将主要介绍如何使用 <a href="https://travis-ci.org">Travis CI</a> 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 <a href="https://coveralls.io/">Coveralls</a> 来监测测试覆盖率。</p>
 
-<h2 id="travis-ci:583dfe1ccd5a6962c32f3c2bbdee5427">Travis CI</h2>
+<h2 id="travis-ci">Travis CI</h2>
 
 <p>Travis CI 是一款 Web 端的 <ruby> 持续 <rt>Continuous</rt></ruby> <ruby> 集成 <rt>Integration</rt></ruby> 工具。</p>
 
@@ -94,17 +94,17 @@
 
 <p>和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。</p>
 
-<h2 id="coveralls:583dfe1ccd5a6962c32f3c2bbdee5427">Coveralls</h2>
+<h2 id="coveralls">Coveralls</h2>
 
 <p>Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。</p>
 
 <p>Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Coveralls 支持包括 Travis CI、Jenkins 在内的绝大多数持续集成工具。</p>
 
-<h2 id="样例:583dfe1ccd5a6962c32f3c2bbdee5427">样例</h2>
+<h2 id="样例">样例</h2>
 
-<p>接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls<sup class="footnote-ref" id="fnref:583dfe1ccd5a6962c32f3c2bbdee5427:src"><a rel="footnote" href="#fn:583dfe1ccd5a6962c32f3c2bbdee5427:src">1</a></sup>。</p>
+<p>接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls<sup class="footnote-ref" id="fnref:src"><a rel="footnote" href="#fn:src">1</a></sup>。</p>
 
-<h3 id="依赖管理和虚拟环境:583dfe1ccd5a6962c32f3c2bbdee5427">依赖管理和虚拟环境</h3>
+<h3 id="依赖管理和虚拟环境">依赖管理和虚拟环境</h3>
 
 <p>我喜欢为每个项目新建一个 <ruby>virtualenv<rt> 虚拟环境 </rt></ruby>，这样可以确保每个项目的开发环境相互独立，避免发生冲突。<a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a> 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。</p>
 
@@ -115,7 +115,7 @@
 
 <p>就可以安装所有的库。</p>
 
-<h3 id="单元测试和测试覆盖:583dfe1ccd5a6962c32f3c2bbdee5427">单元测试和测试覆盖</h3>
+<h3 id="单元测试和测试覆盖">单元测试和测试覆盖</h3>
 
 <p>对于 Python 项目，我喜欢使用 <a href="https://nose.readthedocs.org/en/latest/">nose</a> 来进行单元测试。此外，我还会使用 <a href="http://nedbatchelder.com/code/coverage/">coverage.py</a> 来测量代码的测试覆盖率。</p>
 
@@ -128,7 +128,7 @@
 
 <p>详细的使用方法可以参见 <a href="https://nose.readthedocs.org/en/latest/">nose 的官方文档</a> 和<a href="http://nedbatchelder.com/code/coverage/cmd.html">coverage.py 的官方文档</a>。</p>
 
-<h3 id="持续集成:583dfe1ccd5a6962c32f3c2bbdee5427">持续集成</h3>
+<h3 id="持续集成">持续集成</h3>
 
 <p>在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 <code>.travis.yml</code>。Travis CI 的配置使用的是非常易读的 YAML 文件。</p>
 
@@ -155,7 +155,7 @@ after_success:
 
 <p>详细的配置说明可以参见 <a href="http://docs.travis-ci.com/">Travis CI 的官方文档</a> 和<a href="https://coveralls.zendesk.com/hc/en-us">Coveralls 的官方文档</a>。</p>
 
-<h3 id="其它:583dfe1ccd5a6962c32f3c2bbdee5427">其它</h3>
+<h3 id="其它">其它</h3>
 
 <p>Travis CI 和 Coveralls 都可以生成 <ruby> 图章 <rt>Badge</rt></ruby>，用来显示 <ruby> 构建 <rt>Build</rt></ruby> 的结果，或者测试覆盖率。</p>
 
@@ -167,8 +167,8 @@ after_success:
 <hr />
 
 <ol>
-<li id="fn:583dfe1ccd5a6962c32f3c2bbdee5427:src">详细代码可参见 <a href="https://github.com/yumminhuang/turbo-octo-meme">turbo-octo-meme</a>。
- <a class="footnote-return" href="#fnref:583dfe1ccd5a6962c32f3c2bbdee5427:src"><sup>[return]</sup></a></li>
+<li id="fn:src">详细代码可参见 <a href="https://github.com/yumminhuang/turbo-octo-meme">turbo-octo-meme</a>。
+ <a class="footnote-return" href="#fnref:src"><sup>[return]</sup></a></li>
 </ol>
 </div>
 

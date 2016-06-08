@@ -102,7 +102,7 @@
 <li>简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。</li>
 </ol>
 
-<h3 id="基于-jenkins-的-python-自动化测试工具:fc2286d3c2ea2f10cc076fd6905b3f97">基于 Jenkins 的 Python 自动化测试工具</h3>
+<h3 id="基于-jenkins-的-python-自动化测试工具">基于 Jenkins 的 Python 自动化测试工具</h3>
 
 <p>使用到的 Python 模块：</p>
 
@@ -122,7 +122,7 @@
 
 <p>安装需要的 Jenkins 插件之后，在 Jenkins 当中新建一个作业（Job）接下来进行设置。</p>
 
-<h4 id="从哪里得到代码:fc2286d3c2ea2f10cc076fd6905b3f97">从哪里得到代码</h4>
+<h4 id="从哪里得到代码">从哪里得到代码</h4>
 
 <p>如下图所以，在 Jenkins 的 <strong>Source Code Management</strong> 当中可以添加 Git Repository。</p>
 
@@ -130,7 +130,7 @@
 
 <p>Jenkins 同样支持 subversion 等 CVS 工具。</p>
 
-<h4 id="什么时候运行作业:fc2286d3c2ea2f10cc076fd6905b3f97">什么时候运行作业</h4>
+<h4 id="什么时候运行作业">什么时候运行作业</h4>
 
 <p>在 Jenkins 中可以将 <strong>Build Triggers</strong> 设置为 <strong>Poll SCM</strong> 对代码库进行轮询。如下图，<strong>Schedule</strong> 设为 <code>* * * * *</code>（含义和 Cron 一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行 <strong>Build</strong>。</p>
 
@@ -138,7 +138,7 @@
 
 <p>当然，也可以使用 <a href="http://git-scm.com/book/zh/v2/Customizing-Git-Git-Hooks">Git Hook</a>，从而避免轮询消耗过多的资源。</p>
 
-<h4 id="运行什么:fc2286d3c2ea2f10cc076fd6905b3f97">运行什么</h4>
+<h4 id="运行什么">运行什么</h4>
 
 <p>添加一段 <strong>Build Script</strong>:</p>
 
@@ -158,7 +158,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 <p>具体参数的含义可以参阅原文的第一、第二部分。</p>
 
-<h4 id="显示结果:fc2286d3c2ea2f10cc076fd6905b3f97">显示结果</h4>
+<h4 id="显示结果">显示结果</h4>
 
 <p>上一步的 Build Script 有三个输出文件：</p>
 
@@ -174,7 +174,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 <p><img src="http://4.bp.blogspot.com/-f_YtJcTOQ64/T5qnlOiE35I/AAAAAAAAAF8/l5Nl_YvRSuM/s1600/jenkins+after+logout+added.png" alt="Jenkins Output" /></p>
 
-<h3 id="持续整合:fc2286d3c2ea2f10cc076fd6905b3f97">持续整合！</h3>
+<h3 id="持续整合">持续整合！</h3>
 
 <p>我们持续整合的大致流程是这样的。在代码库中有一个 Master 分支，开发人员添加新功能，修复 Bug 都需要在新建的分支里进行。每新建一个合并到到 Master 的 Pull Request 时，Jenkins 可以自动运行测试。测试通过则在 Bitbucket 的 Pull Request 页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。</p>
 
@@ -209,7 +209,7 @@ TOTAL         +2       -2      +50.00%
 
 <p>最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。</p>
 
-<h3 id="参考文献:fc2286d3c2ea2f10cc076fd6905b3f97">参考文献</h3>
+<h3 id="参考文献">参考文献</h3>
 
 <ol>
 <li><a href="http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html">Automated python unit testing, code coverage and code quality analysis with Jenkins - part 3</a></li>

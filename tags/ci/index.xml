@@ -24,7 +24,7 @@
 
 &lt;p&gt;当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用-travis-ci-自动发布:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
+&lt;h3 id=&#34;使用-travis-ci-自动发布&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
 
 &lt;p&gt;上周在 &lt;a href=&#34;http://www.latexstudio.net&#34;&gt;LaTeX 开源小屋&lt;/a&gt;看到一篇&lt;a href=&#34;http://www.latexstudio.net/archives/5892&#34;&gt;文章&lt;/a&gt;。文章中介绍了 GitHub 上一个&lt;a href=&#34;https://github.com/SivilTaram/BUAAOS-guide-book&#34;&gt;北航小操作系统实验指导书&lt;/a&gt;的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 &lt;a href=&#34;https://help.github.com/articles/about-releases/&#34;&gt;GitHub Release 页面&lt;/a&gt;。&lt;/p&gt;
 
@@ -72,7 +72,7 @@ deploy:
 
 &lt;p&gt;这样，我就完成了可以自动编译、自动发布的 &lt;a href=&#34;https://github.com/yumminhuang/Resume/releases/tag/v1.0&#34;&gt;1.0 版&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;优化持续发布流程:5086ce26c310980bb90201cbb48acae6&#34;&gt;优化持续发布流程&lt;/h3&gt;
+&lt;h3 id=&#34;优化持续发布流程&#34;&gt;优化持续发布流程&lt;/h3&gt;
 
 &lt;p&gt;1.0 版完成只实现了自动化，还有一些不令人满意的地方。&lt;/p&gt;
 
@@ -84,7 +84,7 @@ deploy:
 
 &lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
 
-&lt;h4 id=&#34;使用-docker-编译:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Docker 编译&lt;/h4&gt;
+&lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
 
@@ -130,7 +130,7 @@ script:
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
 
-&lt;h4 id=&#34;build-tagged-commits-only:5086ce26c310980bb90201cbb48acae6&#34;&gt;Build tagged commits only&lt;/h4&gt;
+&lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
 
@@ -166,19 +166,19 @@ git push -u origin master --tags
 &lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续集成:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续集成&lt;/h3&gt;
+&lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image1.png&#34; alt=&#34;Continuous Integration&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;持续集成强调开发人员提交了新代码之后，立刻进行构建、（单元）测试、打包等步骤。根据反馈的测试结果，我们可以知道新代码和原有代码能否正确地集成在一起。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续交付:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续交付&lt;/h3&gt;
+&lt;h3 id=&#34;持续交付&#34;&gt;持续交付&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image4-manual.png&#34; alt=&#34;Continuous Delivery&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;持续交付在持续集成的基础上，将集成后的代码部署到更贴近真实运行环境的「类生产环境（ &lt;em&gt;production-like environments&lt;/em&gt; ）」中。比如，我们完成单元测试后，可以把代码部署到连接数据库的 Staging 环境中进行更多的测试。如果代码没有问题，接下来就可以继续&lt;strong&gt;手动部署&lt;/strong&gt;到生产环境中。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续部署:ed2e44cca576baa11abf8e76b69d08a2&#34;&gt;持续部署&lt;/h3&gt;
+&lt;h3 id=&#34;持续部署&#34;&gt;持续部署&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://cdn02.mindtheproduct.com/wp-content/uploads/2015/12/409-images-for-snap-blog-postedit_image3-auto.png&#34; alt=&#34;Continuous Deployment&#34; style=&#34;width: 500px;&#34;/&gt;&lt;/p&gt;
 
@@ -202,11 +202,11 @@ git push -u origin master --tags
 
 &lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
-&lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming&#34;&gt;Naming convention&lt;/a&gt;)）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
+&lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
 
 &lt;p&gt;关于 Git 的工作流，业界已经有了很多讨论。&lt;/p&gt;
 
-&lt;h3 id=&#34;git-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git flow&lt;/h3&gt;
+&lt;h3 id=&#34;git-flow&#34;&gt;Git flow&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://nvie.com/posts/a-successful-git-branching-model/&#34;&gt;git-flow&lt;/a&gt; 最早在2010年提出。用下面这幅图可以概括 git-flow 的主要内容。&lt;/p&gt;
 
@@ -214,11 +214,11 @@ git push -u origin master --tags
 
 &lt;p&gt;git-flow 包含一个 &lt;em&gt;master&lt;/em&gt; 分支、一个 &lt;em&gt;develop&lt;/em&gt; 分支，&lt;em&gt;release&lt;/em&gt; 分支、&lt;em&gt;hotfix&lt;/em&gt; 分支和若干 &lt;em&gt;feature&lt;/em&gt; 分支。开发工作在 &lt;code&gt;develop&lt;/code&gt; 进行，然后提交到 &lt;code&gt;release&lt;/code&gt; ，最后合并到 &lt;code&gt;master&lt;/code&gt;。但是 git-flow 太复杂了，需要维护很多分支，开发时还要不停切换分支。所以，到了后来有一些&lt;a href=&#34;http://insights.thoughtworkers.org/gitflow-consider-harmful/&#34;&gt;文章&lt;/a&gt;就对 git-flow 提出了质疑。&lt;/p&gt;
 
-&lt;h3 id=&#34;github-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Github flow&lt;/h3&gt;
+&lt;h3 id=&#34;github-flow&#34;&gt;Github flow&lt;/h3&gt;
 
 &lt;p&gt;Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提出了一套更为简单的工作流 —— &lt;a href=&#34;http://scottchacon.com/2011/08/31/github-flow.html&#34;&gt;Github flow&lt;/a&gt;。 Github flow 简化了分支：只有一个可部署的 &lt;code&gt;master&lt;/code&gt; 分支；新添加的代码（不区分 feature、bug-fix）都放在基于 master 创建的新分支里；分支的名称应当能描述出问题（Issue），例如 &lt;code&gt;new-oauth2-scopes&lt;/code&gt;。Github flow 同时还强调持续交付（&lt;a href=&#34;http://martinfowler.com/bliki/ContinuousDelivery.html&#34;&gt;Continuous delivery&lt;/a&gt;）和使用当时 Github 新推出的 Pull Request 进行代码审查（&lt;a href=&#34;https://en.wikipedia.org/wiki/Code_review&#34;&gt;Code review&lt;/a&gt;）。经过几年的发展，Github flow 基本上已经成为业内的标准：几乎所有的代码托管网站、使用 Git 的 SaaS、Git 软件都有基于 branch 的 Pull Request 功能。&lt;/p&gt;
 
-&lt;h3 id=&#34;gitlab-flow:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Gitlab flow&lt;/h3&gt;
+&lt;h3 id=&#34;gitlab-flow&#34;&gt;Gitlab flow&lt;/h3&gt;
 
 &lt;p&gt;但是 Github flow 仍有不足和值得改进的地方，所以 Gitlab 提出了 &lt;a href=&#34;https://about.gitlab.com/2014/09/29/gitlab-flow/&#34;&gt;Gitlab flow&lt;/a&gt;。Github flow 强调持续交付，合并到 &lt;code&gt;master&lt;/code&gt; 的代码要立刻部署到线上。Gitlab 指出这种模式并非适用于所有的开放环境。比如有的软件可能隔几个月，甚至几年才会发布新版本。因此（如下图所示），在这些例子里，创建一个 &lt;em&gt;production&lt;/em&gt; 或 &lt;em&gt;release&lt;/em&gt; 分支来管理发布的代码是有必要的。&lt;/p&gt;
 
@@ -226,7 +226,7 @@ git push -u origin master --tags
 
 &lt;p&gt;另外，Gitlab flow 还强调代码的任何修改都应该开始于一个目标明确的Issue。因此，为一个 Issue 创建新分支时，这个分支的名字应该以 Issue 的编号开始，比如 &lt;code&gt;15-require-a-password-to-change-it&lt;/code&gt;。Commit 的信息或 Merge Request 的描述里应关联相关的 Issue，如&lt;code&gt;fixes #14&lt;/code&gt; 或 &lt;code&gt;closes #67&lt;/code&gt;，这样合并到 &lt;code&gt;master&lt;/code&gt; 的时候可以自动关闭相应的 Issue。&lt;/p&gt;
 
-&lt;h3 id=&#34;git-工作流的需求:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;Git 工作流的需求&lt;/h3&gt;
+&lt;h3 id=&#34;git-工作流的需求&#34;&gt;Git 工作流的需求&lt;/h3&gt;
 
 &lt;p&gt;在实际开发的过程中，有各种各样的需要。鉴于诸如 &lt;a href=&#34;https://en.wikipedia.org/wiki/Scrum_(software_development)&#34;&gt;Scrum&lt;/a&gt; 之类的敏捷开发方法已经被业界采用，再结合我以前的经验，我觉得 Git 工作流应当结合以下功能：&lt;/p&gt;
 
@@ -256,7 +256,7 @@ git push -u origin master --tags
 
 &lt;p&gt;最后，应该能在尽可能多的平台上，无论是 Github、BitBucket 这样的 SaaS，还是自己使用 Gitlab 搭建的服务器，实践这个工作流。最好可以让 GUI 和 CLI 都能够完成整个工作流。&lt;/p&gt;
 
-&lt;h3 id=&#34;改进的-git-工作流:6a03d3862c7b57291f07850ad6a5776a&#34;&gt;改进的 Git 工作流&lt;/h3&gt;
+&lt;h3 id=&#34;改进的-git-工作流&#34;&gt;改进的 Git 工作流&lt;/h3&gt;
 
 &lt;p&gt;基于 Github flow，并加入 Gitlab flow 的一些优点，我设计了一个改进的 Git 工作流：&lt;/p&gt;
 
@@ -338,7 +338,7 @@ git push -u origin master --tags
 
 &lt;p&gt;本文将主要介绍如何使用 &lt;a href=&#34;https://travis-ci.org&#34;&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href=&#34;https://coveralls.io/&#34;&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。&lt;/p&gt;
 
-&lt;h2 id=&#34;travis-ci:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;Travis CI&lt;/h2&gt;
+&lt;h2 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h2&gt;
 
 &lt;p&gt;Travis CI 是一款 Web 端的 &lt;ruby&gt; 持续 &lt;rt&gt;Continuous&lt;/rt&gt;&lt;/ruby&gt; &lt;ruby&gt; 集成 &lt;rt&gt;Integration&lt;/rt&gt;&lt;/ruby&gt; 工具。&lt;/p&gt;
 
@@ -346,17 +346,17 @@ git push -u origin master --tags
 
 &lt;p&gt;和 Jenkins 相比，Travis CI 要轻量很多。但是已经足以完成简单的自动化测试、部署。&lt;/p&gt;
 
-&lt;h2 id=&#34;coveralls:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;Coveralls&lt;/h2&gt;
+&lt;h2 id=&#34;coveralls&#34;&gt;Coveralls&lt;/h2&gt;
 
 &lt;p&gt;Coveralls 用来显示代码覆盖率，从而可以让程序员及时了解代码质量。&lt;/p&gt;
 
 &lt;p&gt;Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Coveralls 支持包括 Travis CI、Jenkins 在内的绝大多数持续集成工具。&lt;/p&gt;
 
-&lt;h2 id=&#34;样例:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;样例&lt;/h2&gt;
+&lt;h2 id=&#34;样例&#34;&gt;样例&lt;/h2&gt;
 
-&lt;p&gt;接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;接下来以 Python 项目为例，说明如何使用 Travis CI 和 Coveralls&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:src&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:src&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;依赖管理和虚拟环境:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;依赖管理和虚拟环境&lt;/h3&gt;
+&lt;h3 id=&#34;依赖管理和虚拟环境&#34;&gt;依赖管理和虚拟环境&lt;/h3&gt;
 
 &lt;p&gt;我喜欢为每个项目新建一个 &lt;ruby&gt;virtualenv&lt;rt&gt; 虚拟环境 &lt;/rt&gt;&lt;/ruby&gt;，这样可以确保每个项目的开发环境相互独立，避免发生冲突。&lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt; 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。&lt;/p&gt;
 
@@ -367,7 +367,7 @@ git push -u origin master --tags
 
 &lt;p&gt;就可以安装所有的库。&lt;/p&gt;
 
-&lt;h3 id=&#34;单元测试和测试覆盖:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
+&lt;h3 id=&#34;单元测试和测试覆盖&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
 
 &lt;p&gt;对于 Python 项目，我喜欢使用 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose&lt;/a&gt; 来进行单元测试。此外，我还会使用 &lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;coverage.py&lt;/a&gt; 来测量代码的测试覆盖率。&lt;/p&gt;
 
@@ -380,7 +380,7 @@ git push -u origin master --tags
 
 &lt;p&gt;详细的使用方法可以参见 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose 的官方文档&lt;/a&gt; 和&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html&#34;&gt;coverage.py 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;持续集成:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;持续集成&lt;/h3&gt;
+&lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 &lt;code&gt;.travis.yml&lt;/code&gt;。Travis CI 的配置使用的是非常易读的 YAML 文件。&lt;/p&gt;
 
@@ -407,7 +407,7 @@ after_success:
 
 &lt;p&gt;详细的配置说明可以参见 &lt;a href=&#34;http://docs.travis-ci.com/&#34;&gt;Travis CI 的官方文档&lt;/a&gt; 和&lt;a href=&#34;https://coveralls.zendesk.com/hc/en-us&#34;&gt;Coveralls 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;其它:583dfe1ccd5a6962c32f3c2bbdee5427&#34;&gt;其它&lt;/h3&gt;
+&lt;h3 id=&#34;其它&#34;&gt;其它&lt;/h3&gt;
 
 &lt;p&gt;Travis CI 和 Coveralls 都可以生成 &lt;ruby&gt; 图章 &lt;rt&gt;Badge&lt;/rt&gt;&lt;/ruby&gt;，用来显示 &lt;ruby&gt; 构建 &lt;rt&gt;Build&lt;/rt&gt;&lt;/ruby&gt; 的结果，或者测试覆盖率。&lt;/p&gt;
 
@@ -419,8 +419,8 @@ after_success:
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;详细代码可参见 &lt;a href=&#34;https://github.com/yumminhuang/turbo-octo-meme&#34;&gt;turbo-octo-meme&lt;/a&gt;。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:583dfe1ccd5a6962c32f3c2bbdee5427:src&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:src&#34;&gt;详细代码可参见 &lt;a href=&#34;https://github.com/yumminhuang/turbo-octo-meme&#34;&gt;turbo-octo-meme&lt;/a&gt;。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:src&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -444,13 +444,13 @@ after_success:
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;jenkins是什么:e83bca251359d2ad1ae1277c1018011a&#34;&gt;Jenkins是什么&lt;/h3&gt;
+&lt;h3 id=&#34;jenkins是什么&#34;&gt;Jenkins是什么&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://jenkins-ci.org/&#34;&gt;Jenkins&lt;/a&gt; 是一个用 Java 编写的开源的&lt;ruby&gt;持续&lt;rt&gt;Continuous&lt;/rt&gt;&lt;/ruby&gt; &lt;ruby&gt;集成&lt;rt&gt;Integration&lt;/rt&gt;&lt;/ruby&gt;工具。&lt;/p&gt;
 
 &lt;p&gt;Jenkins 是用 Java 开发的（界面和 Eclipse一样，带着一股浓浓的 SWT 的味道，好在界面并不太影响使用。），对 Java 程序开发有天然的良好支持，如 JUnit/TestNG 测试，Maven、Ant 等 Java 开发中常用的工具都包含在 Jenkins 里。当然，Jenkins 也可以通过插件来实现其它语言的开发。&lt;/p&gt;
 
-&lt;h3 id=&#34;jenkins的特性:e83bca251359d2ad1ae1277c1018011a&#34;&gt;Jenkins的特性&lt;/h3&gt;
+&lt;h3 id=&#34;jenkins的特性&#34;&gt;Jenkins的特性&lt;/h3&gt;
 
 &lt;p&gt;在使用的过程中，我体会比较深刻的特性有：&lt;/p&gt;
 
@@ -467,7 +467,7 @@ after_success:
 &lt;p&gt;Jenkins 的开发者社区非常活跃，&lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/Plugins&#34;&gt;第三方插件&lt;/a&gt;很多，从而可以帮助我们实现很多常用的功能。
 比如，Hipchat 插件可以在 Job 运行结束后把结果发送到 Hipchat 的聊天室里；Cobertura 插件可以显示测试覆盖率的数据。&lt;/p&gt;
 
-&lt;h3 id=&#34;jenkins的使用场景:e83bca251359d2ad1ae1277c1018011a&#34;&gt;Jenkins的使用场景&lt;/h3&gt;
+&lt;h3 id=&#34;jenkins的使用场景&#34;&gt;Jenkins的使用场景&lt;/h3&gt;
 
 &lt;p&gt;在我们公司，Jenkins 主要被用来用于：&lt;/p&gt;
 
@@ -527,7 +527,7 @@ after_success:
 &lt;li&gt;简要介绍我们如何在这篇文章的基础上把代码覆盖率整合到公司的 Bitbucket 代码库当中。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;基于-jenkins-的-python-自动化测试工具:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;基于 Jenkins 的 Python 自动化测试工具&lt;/h3&gt;
+&lt;h3 id=&#34;基于-jenkins-的-python-自动化测试工具&#34;&gt;基于 Jenkins 的 Python 自动化测试工具&lt;/h3&gt;
 
 &lt;p&gt;使用到的 Python 模块：&lt;/p&gt;
 
@@ -547,7 +547,7 @@ after_success:
 
 &lt;p&gt;安装需要的 Jenkins 插件之后，在 Jenkins 当中新建一个作业（Job）接下来进行设置。&lt;/p&gt;
 
-&lt;h4 id=&#34;从哪里得到代码:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;从哪里得到代码&lt;/h4&gt;
+&lt;h4 id=&#34;从哪里得到代码&#34;&gt;从哪里得到代码&lt;/h4&gt;
 
 &lt;p&gt;如下图所以，在 Jenkins 的 &lt;strong&gt;Source Code Management&lt;/strong&gt; 当中可以添加 Git Repository。&lt;/p&gt;
 
@@ -555,7 +555,7 @@ after_success:
 
 &lt;p&gt;Jenkins 同样支持 subversion 等 CVS 工具。&lt;/p&gt;
 
-&lt;h4 id=&#34;什么时候运行作业:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;什么时候运行作业&lt;/h4&gt;
+&lt;h4 id=&#34;什么时候运行作业&#34;&gt;什么时候运行作业&lt;/h4&gt;
 
 &lt;p&gt;在 Jenkins 中可以将 &lt;strong&gt;Build Triggers&lt;/strong&gt; 设置为 &lt;strong&gt;Poll SCM&lt;/strong&gt; 对代码库进行轮询。如下图，&lt;strong&gt;Schedule&lt;/strong&gt; 设为 &lt;code&gt;* * * * *&lt;/code&gt;（含义和 Cron 一样）表示每分钟检查一次代码库，看是否有更新。如果代码库有更新的话则运行 &lt;strong&gt;Build&lt;/strong&gt;。&lt;/p&gt;
 
@@ -563,7 +563,7 @@ after_success:
 
 &lt;p&gt;当然，也可以使用 &lt;a href=&#34;http://git-scm.com/book/zh/v2/Customizing-Git-Git-Hooks&#34;&gt;Git Hook&lt;/a&gt;，从而避免轮询消耗过多的资源。&lt;/p&gt;
 
-&lt;h4 id=&#34;运行什么:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;运行什么&lt;/h4&gt;
+&lt;h4 id=&#34;运行什么&#34;&gt;运行什么&lt;/h4&gt;
 
 &lt;p&gt;添加一段 &lt;strong&gt;Build Script&lt;/strong&gt;:&lt;/p&gt;
 
@@ -583,7 +583,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 &lt;p&gt;具体参数的含义可以参阅原文的第一、第二部分。&lt;/p&gt;
 
-&lt;h4 id=&#34;显示结果:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;显示结果&lt;/h4&gt;
+&lt;h4 id=&#34;显示结果&#34;&gt;显示结果&lt;/h4&gt;
 
 &lt;p&gt;上一步的 Build Script 有三个输出文件：&lt;/p&gt;
 
@@ -599,7 +599,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 &lt;p&gt;&lt;img src=&#34;http://4.bp.blogspot.com/-f_YtJcTOQ64/T5qnlOiE35I/AAAAAAAAAF8/l5Nl_YvRSuM/s1600/jenkins+after+logout+added.png&#34; alt=&#34;Jenkins Output&#34; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;持续整合:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;持续整合！&lt;/h3&gt;
+&lt;h3 id=&#34;持续整合&#34;&gt;持续整合！&lt;/h3&gt;
 
 &lt;p&gt;我们持续整合的大致流程是这样的。在代码库中有一个 Master 分支，开发人员添加新功能，修复 Bug 都需要在新建的分支里进行。每新建一个合并到到 Master 的 Pull Request 时，Jenkins 可以自动运行测试。测试通过则在 Bitbucket 的 Pull Request 页面里添加一个的评论表示可以合并，否则会添加一个否决的评论。这个项目的目标就是再添加一个关于测试覆盖率的评论。&lt;/p&gt;
 
@@ -634,7 +634,7 @@ TOTAL         +2       -2      +50.00%
 
 &lt;p&gt;最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。&lt;/p&gt;
 
-&lt;h3 id=&#34;参考文献:fc2286d3c2ea2f10cc076fd6905b3f97&#34;&gt;参考文献&lt;/h3&gt;
+&lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html&#34;&gt;Automated python unit testing, code coverage and code quality analysis with Jenkins - part 3&lt;/a&gt;&lt;/li&gt;

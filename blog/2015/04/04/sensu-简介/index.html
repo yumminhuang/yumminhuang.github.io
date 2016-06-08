@@ -84,7 +84,7 @@
 			<br>
 			
 
-<h2 id="sensu-简介:b6bdba0566435a1fdf738209881f4749">Sensu 简介</h2>
+<h2 id="sensu-简介">Sensu 简介</h2>
 
 <p>Sensu 是一款开源的监控框架。</p>
 
@@ -106,7 +106,7 @@
 
 <p>其中，<code>subscriptions</code> 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了<a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">订阅者模式</a>，相应地，定义监控项目的时候则需要指定 <code>subscribers</code>（后文中将会提及）。</p>
 
-<h3 id="sensu-的优势:b6bdba0566435a1fdf738209881f4749">Sensu 的优势</h3>
+<h3 id="sensu-的优势">Sensu 的优势</h3>
 
 <ul>
 <li>纯 Ruby 实现，核心代码不超过 1000 行；</li>
@@ -115,11 +115,11 @@
 <li>丰富的社区支持，<a href="https://github.com/sensu/sensu-community-plugins">Sensu Community Plugin</a> 几乎包含了所有常用的监控项目。</li>
 </ul>
 
-<h3 id="sensu-的结构:b6bdba0566435a1fdf738209881f4749">Sensu 的结构</h3>
+<h3 id="sensu-的结构">Sensu 的结构</h3>
 
 <p>简单来说，Sensu 分为 Check 和 Handler 两个部分。Sensu 经常被描述为「monitoring router」，因为它不仅可以用 Check 监控系统，还可以设置 Handler 根据当前的条件采取相应的行动。</p>
 
-<h4 id="sensu-check:b6bdba0566435a1fdf738209881f4749">Sensu Check</h4>
+<h4 id="sensu-check">Sensu Check</h4>
 
 <p>Sensu Check 用来监控服务和资源。Check 由 Sensu Server 发出执行指令后在 Sensu Client 上运行。本质上，Sensu Check 是一个命令或者脚本，用来把数据输出到 <code>STDOUT</code> 或者 <code>STDERR</code>；同时，用返回值（exit status code）来指示状态：</p>
 
@@ -167,7 +167,7 @@
 
 <p><code>subscribers</code> 用来指定订阅者。<code>interval</code> 定义检查的周期为 <code>60s</code>，<code>handlers</code> 则告诉 Sensu 当此 Check 出现异常时使用 <code>pagerduty</code> 和 <code>mail</code> 这两个 Handler。</p>
 
-<h4 id="sensu-handler:b6bdba0566435a1fdf738209881f4749">Sensu Handler</h4>
+<h4 id="sensu-handler">Sensu Handler</h4>
 
 <p>Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 <a href="http://graphite.wikidot.com">Graphite</a>，等等。 Handler 有不同的类型，有常用的 <code>Pipe</code>，可以将 Event 传入到 <code>STDIN</code>（可以理解为 <code>cat event.json | handler</code>）；有 TCP/UDP，将 Event 传入到 Socket 发送。</p>
 
@@ -183,13 +183,13 @@
 }
 </code></pre>
 
-<h2 id="基于-sensu-的安全更新监控工具:b6bdba0566435a1fdf738209881f4749">基于 Sensu 的安全更新监控工具</h2>
+<h2 id="基于-sensu-的安全更新监控工具">基于 Sensu 的安全更新监控工具</h2>
 
 <p>接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。</p>
 
-<h3 id="需求:b6bdba0566435a1fdf738209881f4749">需求</h3>
+<h3 id="需求">需求</h3>
 
-<p>我们公司在 AWS 上有大约350个实例<sup class="footnote-ref" id="fnref:b6bdba0566435a1fdf738209881f4749:Instance"><a rel="footnote" href="#fn:b6bdba0566435a1fdf738209881f4749:Instance">1</a></sup>，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：</p>
+<p>我们公司在 AWS 上有大约350个实例<sup class="footnote-ref" id="fnref:Instance"><a rel="footnote" href="#fn:Instance">1</a></sup>，运行的是 Ubuntu 操作系统。服务器上的软件会不定期收到更新，包括非常重要的安全更新。我们希望及时知道服务器上有哪些安全更新可以安装，最好可以通过邮件的方式通知。通知里应当至少包括如下信息：</p>
 
 <ol>
 <li>更新的软件包名称；</li>
@@ -199,9 +199,9 @@
 
 <p>此外，一个邮件里包含 350 台机器的信息显然不方便阅读。恰好公司的 350 台服务器根据功能分为若干个 <code>subnet</code>，如 dev，tst，stg 等。所以，最好可以为每一个 subnet 生成一份安全更新的报告。</p>
 
-<h3 id="实现:b6bdba0566435a1fdf738209881f4749">实现</h3>
+<h3 id="实现">实现</h3>
 
-<h4 id="安全更新的信息收集:b6bdba0566435a1fdf738209881f4749">安全更新的信息收集</h4>
+<h4 id="安全更新的信息收集">安全更新的信息收集</h4>
 
 <p>使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息：</p>
 
@@ -270,7 +270,7 @@
 
 <p>整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。</p>
 
-<h3 id="总结:b6bdba0566435a1fdf738209881f4749">总结</h3>
+<h3 id="总结">总结</h3>
 
 <p>这就是我的第一个 Sensu 项目。学习一门编程语言或一个工具最好的方法就是用它来做一个项目。的确，通过这个项目让我对 Sensu 的功能和特性有了比较清楚的了解。</p>
 
@@ -284,8 +284,8 @@
 <hr />
 
 <ol>
-<li id="fn:b6bdba0566435a1fdf738209881f4749:Instance">「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
- <a class="footnote-return" href="#fnref:b6bdba0566435a1fdf738209881f4749:Instance"><sup>[return]</sup></a></li>
+<li id="fn:Instance">「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
+ <a class="footnote-return" href="#fnref:Instance"><sup>[return]</sup></a></li>
 </ol>
 </div>
 

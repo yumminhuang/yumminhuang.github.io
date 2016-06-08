@@ -24,7 +24,7 @@
 
 &lt;p&gt;当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。&lt;/p&gt;
 
-&lt;h3 id=&#34;使用-travis-ci-自动发布:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
+&lt;h3 id=&#34;使用-travis-ci-自动发布&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
 
 &lt;p&gt;上周在 &lt;a href=&#34;http://www.latexstudio.net&#34;&gt;LaTeX 开源小屋&lt;/a&gt;看到一篇&lt;a href=&#34;http://www.latexstudio.net/archives/5892&#34;&gt;文章&lt;/a&gt;。文章中介绍了 GitHub 上一个&lt;a href=&#34;https://github.com/SivilTaram/BUAAOS-guide-book&#34;&gt;北航小操作系统实验指导书&lt;/a&gt;的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 &lt;a href=&#34;https://help.github.com/articles/about-releases/&#34;&gt;GitHub Release 页面&lt;/a&gt;。&lt;/p&gt;
 
@@ -72,7 +72,7 @@ deploy:
 
 &lt;p&gt;这样，我就完成了可以自动编译、自动发布的 &lt;a href=&#34;https://github.com/yumminhuang/Resume/releases/tag/v1.0&#34;&gt;1.0 版&lt;/a&gt;。&lt;/p&gt;
 
-&lt;h3 id=&#34;优化持续发布流程:5086ce26c310980bb90201cbb48acae6&#34;&gt;优化持续发布流程&lt;/h3&gt;
+&lt;h3 id=&#34;优化持续发布流程&#34;&gt;优化持续发布流程&lt;/h3&gt;
 
 &lt;p&gt;1.0 版完成只实现了自动化，还有一些不令人满意的地方。&lt;/p&gt;
 
@@ -84,7 +84,7 @@ deploy:
 
 &lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
 
-&lt;h4 id=&#34;使用-docker-编译:5086ce26c310980bb90201cbb48acae6&#34;&gt;使用 Docker 编译&lt;/h4&gt;
+&lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
 
@@ -130,7 +130,7 @@ script:
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
 
-&lt;h4 id=&#34;build-tagged-commits-only:5086ce26c310980bb90201cbb48acae6&#34;&gt;Build tagged commits only&lt;/h4&gt;
+&lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
 
@@ -176,7 +176,7 @@ git push -u origin master --tags
 
 &lt;ul&gt;
 &lt;li&gt;是：继续回答问题2&lt;/li&gt;
-&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;如果他人修改了你的代码，是否需要了解修改？
 
@@ -204,8 +204,8 @@ git push -u origin master --tags
 &lt;hr /&gt;
 
 &lt;ol&gt;
-&lt;li id=&#34;fn:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:79a41204317e0bfdc567861d342a8b18:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 </description>
@@ -294,9 +294,9 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 
 &lt;p&gt;废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。&lt;/p&gt;
 
-&lt;h3 id=&#34;1-基本语法:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1. 基本语法&lt;/h3&gt;
+&lt;h3 id=&#34;1-基本语法&#34;&gt;1. 基本语法&lt;/h3&gt;
 
-&lt;h4 id=&#34;1-1-创建对象:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1.1 创建对象&lt;/h4&gt;
+&lt;h4 id=&#34;1-1-创建对象&#34;&gt;1.1 创建对象&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
 
@@ -308,7 +308,7 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 &lt;pre&gt;&lt;code&gt;MyClass *obj = [[MyClass alloc] init];
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;1-2-调用方法:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;1.2 调用方法&lt;/h4&gt;
+&lt;h4 id=&#34;1-2-调用方法&#34;&gt;1.2 调用方法&lt;/h4&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
 
@@ -324,7 +324,7 @@ obj.method3(arg1,arg2) // 多个参数
 [obj method3:arg2 andArg: arg2] // 多个参数
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;2-类的定义:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;2. 类的定义&lt;/h3&gt;
+&lt;h3 id=&#34;2-类的定义&#34;&gt;2. 类的定义&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
 
@@ -386,7 +386,7 @@ obj.method3(arg1,arg2) // 多个参数
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;3-协议-接口-的定义:f380f29864ae1f196ebf2be42cd77c15&#34;&gt;3. 协议（接口）的定义&lt;/h3&gt;
+&lt;h3 id=&#34;3-协议-接口-的定义&#34;&gt;3. 协议（接口）的定义&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;
 定义接口&lt;/p&gt;
