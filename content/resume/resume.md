@@ -40,6 +40,11 @@ GPA: 84.6/100
 
 ----
 #### PROFESSIONAL EXPERIENCE
+
+**LeEco Zhixin**, Beijing, China, Jul. 2016 — Present
+
+*IT Operation Engineer*
+
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015
 
 *Operation Engineer Co-Op*
