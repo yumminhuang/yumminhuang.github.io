@@ -1,5 +1,5 @@
-+++
-title 		= "How to remove all .pyc files from a project?"
+ +++
+title 		= "How to remove all pyc files from a project?"
 tags 		= ["Linux", "Shell"]
 categories	= ["Linux"]
 date		= "2014-07-31"

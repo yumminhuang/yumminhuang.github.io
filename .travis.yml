@@ -17,6 +17,8 @@ services:
 
 install:
   - rm -rf public || exit 0
+  - git config --global user.email "yumminhuang@gmail.com"
+  - git config --global user.name "Travis CI"
 
 script:
   - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
