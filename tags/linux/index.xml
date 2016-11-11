@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Linux on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/linux/</link>
-    <description>Recent content in Linux on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/linux/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 29 Mar 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>i3 窗口管理器简介</title>
-            <link>http://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/</link>
             <pubDate>Sun, 29 Mar 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/</guid>
-            <description>
-
-&lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/</guid>
+            <description>&lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。
+&lt;/p&gt;
 
 &lt;h2 id=&#34;平铺式窗口管理器&#34;&gt;平铺式窗口管理器&lt;/h2&gt;
 
@@ -133,8 +132,7 @@ apt-get install i3
 &lt;li id=&#34;fn:config&#34;&gt;为了方便编辑，我把配置文件放在 &lt;code&gt;~&lt;/code&gt; 目录下，也可以放在其它目录下面。配置文件路径具体的读取顺序请参阅&lt;a href=&#34;http://i3wm.org/docs/userguide.html#configuring&#34;&gt;关于 i3 设置的文档&lt;/a&gt;和&lt;a href=&#34;http://i3wm.org/i3status/manpage.html#_options&#34;&gt;关于状态栏设置的文档&lt;/a&gt;。
  &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:config&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-</description>
+&lt;/div&gt;</description>
           </item>
         
       
@@ -143,13 +141,11 @@ apt-get install i3
         
           <item>
             <title>在 VPS 搭建 VPN 服务器</title>
-            <link>http://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+            <link>https://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
             <pubDate>Mon, 16 Mar 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
-            <description>
-
-&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+            <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;从来就没有什么救世主&lt;/p&gt;
@@ -160,6 +156,8 @@ apt-get install i3
 
 &lt;p&gt;全靠我们自己&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;为了在 &lt;a href=&#34;http://zh.wikipedia.org/wiki/防火长城&#34;&gt;GFW&lt;/a&gt; 的封锁之下进行正常的上网活动，可以使用 &lt;a href=&#34;http://zh.wikipedia.org/wiki/虛擬私人網路&#34;&gt;VPN&lt;/a&gt;。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：&lt;/p&gt;
 
@@ -324,8 +322,7 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp&#34;&gt;How To Setup Your Own VPN With PPTP &amp;ndash; DigitalOcean.com&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://riobard.com/2011/11/12/pptp-vpn-on-ubuntu/&#34;&gt;Configure PPTP VPN on Ubuntu&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+&lt;/ol&gt;</description>
           </item>
         
       

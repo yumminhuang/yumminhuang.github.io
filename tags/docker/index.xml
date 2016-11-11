@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docker on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/docker/</link>
-    <description>Recent content in Docker on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/docker/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 08 Apr 2016 15:17:48 -0400</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>一个自动构建简历的方法</title>
-            <link>http://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+            <link>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
-            <description>
+            <guid>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+            <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
-&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;本文中提到的简历已经放在了 &lt;a href=&#34;https://github.com/yumminhuang/Resume&#34;&gt;GitHub&lt;/a&gt; 上，欢迎参考。&lt;/p&gt;
 
@@ -147,8 +147,7 @@ script:
 git commit -m &amp;quot;Message&amp;quot;
 git tag v1.2.1
 git push -u origin master --tags
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
           </item>
         
       

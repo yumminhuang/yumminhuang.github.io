@@ -2,23 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>临水轩志</title>
-    <link>http://yumminhuang.github.io/</link>
+    <link>https://yumminhuang.github.io/index.xml</link>
     <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
+    <copyright>2016 ~ Yaming Huang</copyright>
     <lastBuildDate>Fri, 08 Apr 2016 15:17:48 -0400</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>一个自动构建简历的方法</title>
-            <link>http://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+            <link>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
-            <description>
+            <guid>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+            <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
-&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;本文中提到的简历已经放在了 &lt;a href=&#34;https://github.com/yumminhuang/Resume&#34;&gt;GitHub&lt;/a&gt; 上，欢迎参考。&lt;/p&gt;
 
@@ -147,8 +148,7 @@ script:
 git commit -m &amp;quot;Message&amp;quot;
 git tag v1.2.1
 git push -u origin master --tags
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
           </item>
         
       
@@ -159,14 +159,14 @@ git push -u origin master --tags
         
           <item>
             <title>持续集成交付部署</title>
-            <link>http://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</link>
+            <link>https://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</link>
             <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</guid>
-            <description>
-
-&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
+            <guid>https://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</guid>
+            <description>&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
@@ -186,8 +186,7 @@ git push -u origin master --tags
 
 &lt;p&gt;持续部署则是在持续交付的基础上，把部署到生产环境的过程自动化。&lt;/p&gt;
 
-&lt;p&gt;我个人觉得持续集成、持续交付、持续部署非常值得推广。开发过程中最怕集成时遇到问题导致返工，而持续集成、持续交付、持续部署恰恰可以做到问题早发现早解决，从而可以避免这样的麻烦。另外，持续集成、持续交付、持续部署的流程高度依赖自动化工具，所以这种开发方法也可以大大提高开发人员的工作效率。&lt;/p&gt;
-</description>
+&lt;p&gt;我个人觉得持续集成、持续交付、持续部署非常值得推广。开发过程中最怕集成时遇到问题导致返工，而持续集成、持续交付、持续部署恰恰可以做到问题早发现早解决，从而可以避免这样的麻烦。另外，持续集成、持续交付、持续部署的流程高度依赖自动化工具，所以这种开发方法也可以大大提高开发人员的工作效率。&lt;/p&gt;</description>
           </item>
         
       
@@ -196,17 +195,17 @@ git push -u origin master --tags
         
           <item>
             <title>Git 工作流</title>
-            <link>http://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</link>
+            <link>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</link>
             <pubDate>Sat, 13 Feb 2016 16:36:21 -0500</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</guid>
-            <description>
-
-&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</guid>
+            <description>&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
 &lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
 
 &lt;p&gt;关于 Git 的工作流，业界已经有了很多讨论。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;git-flow&#34;&gt;Git flow&lt;/h3&gt;
 
@@ -322,8 +321,7 @@ git push -u origin master --tags
 
 &lt;hr /&gt;
 
-&lt;p&gt;这是一个基于 Github flow 和 Gitlab flow 的，又根据我自己的经验改进的 Git 工作流，可能还有一些值得改进的地方。也许未来随着开发经验的增加，我会尝试完善这整个流程。&lt;/p&gt;
-</description>
+&lt;p&gt;这是一个基于 Github flow 和 Gitlab flow 的，又根据我自己的经验改进的 Git 工作流，可能还有一些值得改进的地方。也许未来随着开发经验的增加，我会尝试完善这整个流程。&lt;/p&gt;</description>
           </item>
         
       
@@ -336,13 +334,15 @@ git push -u origin master --tags
         
           <item>
             <title>如何选择开源项目的证书</title>
-            <link>http://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</link>
+            <link>https://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</link>
             <pubDate>Fri, 18 Dec 2015 10:27:50 -0500</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</guid>
+            <guid>https://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</guid>
             <description>&lt;p&gt;世界上的开源许可证有很多。除了常见的 &lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache&lt;/a&gt;，&lt;a href=&#34;http://en.wikipedia.org/wiki/BSD_licenses&#34;&gt;BSD&lt;/a&gt;， &lt;a href=&#34;https://en.wikipedia.org/wiki/MIT_License&#34;&gt;MIT&lt;/a&gt; 等之外，还有一些奇特的证书，比如 &lt;a href=&#34;http://www.wtfpl.net/&#34;&gt;WTFPL (Do What the Fuck You Want to Public License)&lt;/a&gt;。Github 还专门做了一个&lt;a href=&#34;http://choosealicense.com/&#34;&gt;网站&lt;/a&gt; 介绍了常见的开源证书。&lt;/p&gt;
 
 &lt;p&gt;然而开源证书虽多，却很少有人会仔细研究证书上的法律条文，搞清楚它们的区别。我最近看了 Github 的网站，又看了一些网上的文章，稍稍研究了几个常用证书的区别，以及如何为开源项目选择证书。故撰此文以供参考。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;如果开源的内容不是代码，可以选择&lt;a href=&#34;http://creativecommons.org/&#34;&gt;知识共享许可协议&lt;/a&gt;。针对是否需要署名使用，是否可以商用等问题，知识共享许可协议有许多不同的版本，可以访问&lt;a href=&#34;http://creativecommons.org/choose/&#34;&gt;链接&lt;/a&gt;来选择一个合适的知识共享许可协议。&lt;/p&gt;
 
@@ -384,8 +384,7 @@ git push -u origin master --tags
 &lt;li id=&#34;fn:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
  &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-</description>
+&lt;/div&gt;</description>
           </item>
         
       
@@ -402,11 +401,12 @@ git push -u origin master --tags
         
           <item>
             <title>将博客由 Pelican 迁移到 Hugo</title>
-            <link>http://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</link>
+            <link>https://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</link>
             <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</guid>
-            <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</guid>
+            <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
+&lt;/p&gt;
 
 &lt;p&gt;Pelican 是一个优秀的静态博客生成器。当初选用 Pelican 的主要是因为它是用 Python 开发的，而我又对 Python 比较熟悉。而且 Pelican 有很多由第三方开发者制作的插件提供了更多的功能。但是长期使用的过程中还是有一些小小的麻烦。当初，我想给博客里的中文文章添加&lt;a href=&#34;https://css.hanzi.co/&#34;&gt;「汉字标准格式」&lt;/a&gt; 这个框架，需要向模版里添加一段引入 CSS 和 JS 代码。但是 Pelican 的模版不易更改，我需要为了修改一两行 HTML 文件 Fork 之前的模版，方法既不优雅，维护成本又很高。另外，Pelican 的模版似乎是全局性的，所有的页面都使用相同的模版。&lt;/p&gt;
 
@@ -447,8 +447,7 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 
 &lt;p&gt;当然，Hugo 也有不足。比如，Hugo 默认是不支持代码高亮的，需要额外设置。此外，在 Pelican 里，可以通过 &lt;a href=&#34;https://github.com/yuex/cjk-auto-spacing&#34;&gt;cjk-auto-spacing&lt;/a&gt; 插件来自动在英文单词和汉字之间插入空格，这对于有大量中英文混排的技术笔记来说非常方便。但是，目前我还没有找到 Hugo 有类似的解决方法，暂时只能在写文章的时候手工加入空格。&lt;/p&gt;
 
-&lt;p&gt;刚开始使用 Hugo，有一些诸如 Taxonomies，Section 之类的功能还没有仔细研究。这篇文章也是草草完成，不慎严谨，俟后完善。&lt;/p&gt;
-</description>
+&lt;p&gt;刚开始使用 Hugo，有一些诸如 Taxonomies，Section 之类的功能还没有仔细研究。这篇文章也是草草完成，不慎严谨，俟后完善。&lt;/p&gt;</description>
           </item>
         
       
@@ -461,13 +460,12 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
         
           <item>
             <title>Ruby 中的猴子补丁</title>
-            <link>http://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</link>
+            <link>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</link>
             <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</guid>
-            <description>
-
-&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</guid>
+            <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
+&lt;/p&gt;
 
 &lt;h2 id=&#34;猴子补丁&#34;&gt;猴子补丁&lt;/h2&gt;
 
@@ -558,8 +556,7 @@ end
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.justinweiss.com/blog/2015/01/20/3-ways-to-monkey-patch-without-making-a-mess/&#34;&gt;3 Ways to Monkey-patch Without Making a Mess&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://devblog.avdi.org/2008/02/23/why-monkeypatching-is-destroying-ruby/&#34;&gt;Monkeypatching is Destroying Ruby&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+&lt;/ul&gt;</description>
           </item>
         
       

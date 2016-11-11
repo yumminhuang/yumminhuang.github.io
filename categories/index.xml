@@ -2,25 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>临水轩志</title>
-    <link>http://yumminhuang.github.io/categories/</link>
+    <link>https://yumminhuang.github.io/categories/index.xml</link>
     <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 02 Jun 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Jenkins 简介</title>
-            <link>http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</link>
             <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</guid>
-            <description>
+            <guid>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</guid>
+            <description>&lt;p&gt;在&lt;a href=&#34;http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
 
-&lt;p&gt;在&lt;a href=&#34;http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
-
-&lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。&lt;/p&gt;
+&lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。
+&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -76,8 +75,7 @@
 &lt;li&gt;&lt;strong&gt;自动化一些复杂的流程，如数据库的迁移、备份，系统更新的安装等等&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;有一些常用，但是流程很复杂的过程，可以在 Jenkins 里通过 Job 来完成。&lt;/p&gt;
-</description>
+&lt;p&gt;有一些常用，但是流程很复杂的过程，可以在 Jenkins 里通过 Job 来完成。&lt;/p&gt;</description>
           </item>
         
       

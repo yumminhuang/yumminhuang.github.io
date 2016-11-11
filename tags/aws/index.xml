@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Aws on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/aws/</link>
-    <description>Recent content in Aws on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/aws/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 02 Aug 2014 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/aws/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>在 AWS AutoScaling Group 中替换 Instance</title>
-            <link>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</link>
+            <link>https://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</link>
             <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</guid>
-            <description>&lt;p&gt;这两周，我被分配的任务是实现 &lt;a href=&#34;http://aws.amazon.com/&#34;&gt;AWS&lt;/a&gt; 的 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;Auto Scaling&lt;/a&gt;功能。多亏有了 &lt;a href=&#34;https://github.com/boto/boto&#34;&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</guid>
+            <description>&lt;p&gt;这两周，我被分配的任务是实现 &lt;a href=&#34;http://aws.amazon.com/&#34;&gt;AWS&lt;/a&gt; 的 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;Auto Scaling&lt;/a&gt;功能。多亏有了 &lt;a href=&#34;https://github.com/boto/boto&#34;&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。
+&lt;/p&gt;
 
 &lt;p&gt;我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：&lt;/p&gt;
 
@@ -170,8 +171,7 @@ def main():
 
 if __name__ == &amp;quot;__main__&amp;quot;:
     main()
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
           </item>
         
       

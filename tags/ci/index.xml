@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ci on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/ci/</link>
-    <description>Recent content in Ci on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/ci/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 08 Apr 2016 15:17:48 -0400</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/ci/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/ci/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>一个自动构建简历的方法</title>
-            <link>http://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+            <link>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
-            <description>
+            <guid>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+            <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
-&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;本文中提到的简历已经放在了 &lt;a href=&#34;https://github.com/yumminhuang/Resume&#34;&gt;GitHub&lt;/a&gt; 上，欢迎参考。&lt;/p&gt;
 
@@ -147,8 +147,7 @@ script:
 git commit -m &amp;quot;Message&amp;quot;
 git tag v1.2.1
 git push -u origin master --tags
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
           </item>
         
       
@@ -157,14 +156,14 @@ git push -u origin master --tags
         
           <item>
             <title>持续集成交付部署</title>
-            <link>http://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</link>
+            <link>https://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</link>
             <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</guid>
-            <description>
-
-&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
+            <guid>https://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</guid>
+            <description>&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
@@ -184,8 +183,7 @@ git push -u origin master --tags
 
 &lt;p&gt;持续部署则是在持续交付的基础上，把部署到生产环境的过程自动化。&lt;/p&gt;
 
-&lt;p&gt;我个人觉得持续集成、持续交付、持续部署非常值得推广。开发过程中最怕集成时遇到问题导致返工，而持续集成、持续交付、持续部署恰恰可以做到问题早发现早解决，从而可以避免这样的麻烦。另外，持续集成、持续交付、持续部署的流程高度依赖自动化工具，所以这种开发方法也可以大大提高开发人员的工作效率。&lt;/p&gt;
-</description>
+&lt;p&gt;我个人觉得持续集成、持续交付、持续部署非常值得推广。开发过程中最怕集成时遇到问题导致返工，而持续集成、持续交付、持续部署恰恰可以做到问题早发现早解决，从而可以避免这样的麻烦。另外，持续集成、持续交付、持续部署的流程高度依赖自动化工具，所以这种开发方法也可以大大提高开发人员的工作效率。&lt;/p&gt;</description>
           </item>
         
       
@@ -194,17 +192,17 @@ git push -u origin master --tags
         
           <item>
             <title>Git 工作流</title>
-            <link>http://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</link>
+            <link>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</link>
             <pubDate>Sat, 13 Feb 2016 16:36:21 -0500</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</guid>
-            <description>
-
-&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</guid>
+            <description>&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
 &lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
 
 &lt;p&gt;关于 Git 的工作流，业界已经有了很多讨论。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;git-flow&#34;&gt;Git flow&lt;/h3&gt;
 
@@ -320,8 +318,7 @@ git push -u origin master --tags
 
 &lt;hr /&gt;
 
-&lt;p&gt;这是一个基于 Github flow 和 Gitlab flow 的，又根据我自己的经验改进的 Git 工作流，可能还有一些值得改进的地方。也许未来随着开发经验的增加，我会尝试完善这整个流程。&lt;/p&gt;
-</description>
+&lt;p&gt;这是一个基于 Github flow 和 Gitlab flow 的，又根据我自己的经验改进的 Git 工作流，可能还有一些值得改进的地方。也许未来随着开发经验的增加，我会尝试完善这整个流程。&lt;/p&gt;</description>
           </item>
         
       
@@ -330,13 +327,12 @@ git push -u origin master --tags
         
           <item>
             <title>Travis CI</title>
-            <link>http://yumminhuang.github.io/blog/2015/06/20/travis-ci/</link>
+            <link>https://yumminhuang.github.io/blog/2015/06/20/travis-ci/</link>
             <pubDate>Sat, 20 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/06/20/travis-ci/</guid>
-            <description>
-
-&lt;p&gt;本文将主要介绍如何使用 &lt;a href=&#34;https://travis-ci.org&#34;&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href=&#34;https://coveralls.io/&#34;&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/06/20/travis-ci/</guid>
+            <description>&lt;p&gt;本文将主要介绍如何使用 &lt;a href=&#34;https://travis-ci.org&#34;&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href=&#34;https://coveralls.io/&#34;&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。
+&lt;/p&gt;
 
 &lt;h2 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h2&gt;
 
@@ -422,8 +418,7 @@ after_success:
 &lt;li id=&#34;fn:src&#34;&gt;详细代码可参见 &lt;a href=&#34;https://github.com/yumminhuang/turbo-octo-meme&#34;&gt;turbo-octo-meme&lt;/a&gt;。
  &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:src&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-</description>
+&lt;/div&gt;</description>
           </item>
         
       
@@ -432,15 +427,14 @@ after_success:
         
           <item>
             <title>Jenkins 简介</title>
-            <link>http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</link>
             <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</guid>
-            <description>
+            <guid>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</guid>
+            <description>&lt;p&gt;在&lt;a href=&#34;http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
 
-&lt;p&gt;在&lt;a href=&#34;http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
-
-&lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。&lt;/p&gt;
+&lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。
+&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -496,8 +490,7 @@ after_success:
 &lt;li&gt;&lt;strong&gt;自动化一些复杂的流程，如数据库的迁移、备份，系统更新的安装等等&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;有一些常用，但是流程很复杂的过程，可以在 Jenkins 里通过 Job 来完成。&lt;/p&gt;
-</description>
+&lt;p&gt;有一些常用，但是流程很复杂的过程，可以在 Jenkins 里通过 Job 来完成。&lt;/p&gt;</description>
           </item>
         
       
@@ -506,13 +499,12 @@ after_success:
         
           <item>
             <title>基于 Jenkins 的 Python 代码集成整合</title>
-            <link>http://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</link>
+            <link>https://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</link>
             <pubDate>Fri, 17 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</guid>
-            <description>
-
-&lt;p&gt;实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</guid>
+            <description>&lt;p&gt;实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。
+&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;This project uses Java and XML. How it could be good?&lt;/p&gt;
@@ -638,8 +630,7 @@ TOTAL         +2       -2      +50.00%
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;http://bhfsteve.blogspot.com/2012/04/automated-python-unit-testing-code_27.html&#34;&gt;Automated python unit testing, code coverage and code quality analysis with Jenkins - part 3&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+&lt;/ol&gt;</description>
           </item>
         
       

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sensu on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/sensu/</link>
-    <description>Recent content in Sensu on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/sensu/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 04 Apr 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/sensu/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/sensu/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Sensu 简介</title>
-            <link>http://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</link>
             <pubDate>Sat, 04 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</guid>
-            <description>
-
-&lt;h2 id=&#34;sensu-简介&#34;&gt;Sensu 简介&lt;/h2&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</guid>
+            <description>&lt;h2 id=&#34;sensu-简介&#34;&gt;Sensu 简介&lt;/h2&gt;
 
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif&#34; alt=&#34;Sensu components&#34; /&gt;&lt;/p&gt;
 
@@ -221,8 +221,7 @@
 &lt;li id=&#34;fn:Instance&#34;&gt;「实例」（Instance）这个说法听上去非常别扭，若无特别说明下文中「服务器」即指 AWS 实例。
  &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:Instance&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-</description>
+&lt;/div&gt;</description>
           </item>
         
       

@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ruby on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/ruby/</link>
-    <description>Recent content in Ruby on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/ruby/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 27 Jun 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Ruby 中的猴子补丁</title>
-            <link>http://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</link>
+            <link>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</link>
             <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</guid>
-            <description>
-
-&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</guid>
+            <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
+&lt;/p&gt;
 
 &lt;h2 id=&#34;猴子补丁&#34;&gt;猴子补丁&lt;/h2&gt;
 
@@ -109,8 +108,7 @@ end
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.justinweiss.com/blog/2015/01/20/3-ways-to-monkey-patch-without-making-a-mess/&#34;&gt;3 Ways to Monkey-patch Without Making a Mess&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://devblog.avdi.org/2008/02/23/why-monkeypatching-is-destroying-ruby/&#34;&gt;Monkeypatching is Destroying Ruby&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+&lt;/ul&gt;</description>
           </item>
         
       

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Python on 临水轩志</title>
-    <link>http://yumminhuang.github.io/tags/python/</link>
-    <description>Recent content in Python on 临水轩志</description>
+    <title>临水轩志</title>
+    <link>https://yumminhuang.github.io/tags/python/index.xml</link>
+    <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 18 Dec 2015 16:53:33 -0500</lastBuildDate>
-    <atom:link href="http://yumminhuang.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2016 ~ Yaming Huang</copyright>
+    <atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
       
     
@@ -20,15 +20,14 @@
         
           <item>
             <title>使用 Fabric 进行远程操作</title>
-            <link>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</link>
+            <link>https://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</link>
             <pubDate>Thu, 16 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
-            <description>
+            <guid>https://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
+            <description>&lt;h2 id=&#34;fabric-简介&#34;&gt;Fabric 简介&lt;/h2&gt;
 
-&lt;h2 id=&#34;fabric-简介&#34;&gt;Fabric 简介&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。
+&lt;/p&gt;
 
 &lt;h3 id=&#34;使用-fabric-的好处&#34;&gt;使用 Fabric 的好处&lt;/h3&gt;
 
@@ -115,8 +114,7 @@ def check_log_with_keyword(log_file, keyword):
 
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments&#34;&gt;How To Use Fabric To Automate Administration Tasks And Deployments&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+&lt;/ol&gt;</description>
           </item>
         
       
@@ -127,11 +125,12 @@ def check_log_with_keyword(log_file, keyword):
         
           <item>
             <title>在 AWS AutoScaling Group 中替换 Instance</title>
-            <link>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</link>
+            <link>https://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</link>
             <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
             
-            <guid>http://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</guid>
-            <description>&lt;p&gt;这两周，我被分配的任务是实现 &lt;a href=&#34;http://aws.amazon.com/&#34;&gt;AWS&lt;/a&gt; 的 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;Auto Scaling&lt;/a&gt;功能。多亏有了 &lt;a href=&#34;https://github.com/boto/boto&#34;&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/blog/2014/08/02/%E5%9C%A8-aws-autoscaling-group-%E4%B8%AD%E6%9B%BF%E6%8D%A2-instance/</guid>
+            <description>&lt;p&gt;这两周，我被分配的任务是实现 &lt;a href=&#34;http://aws.amazon.com/&#34;&gt;AWS&lt;/a&gt; 的 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;Auto Scaling&lt;/a&gt;功能。多亏有了 &lt;a href=&#34;https://github.com/boto/boto&#34;&gt;Boto&lt;/a&gt;， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。
+&lt;/p&gt;
 
 &lt;p&gt;我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：&lt;/p&gt;
 
@@ -285,8 +284,7 @@ def main():
 
 if __name__ == &amp;quot;__main__&amp;quot;:
     main()
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;/code&gt;&lt;/pre&gt;</description>
           </item>
         
       
