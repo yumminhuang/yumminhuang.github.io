@@ -2,7 +2,7 @@
 categories = ["Miscellaneous"]
 date = "2016-04-08T15:17:48-04:00"
 tags = ["CI", "Docker"]
-title = "一个自动构建简历的方法"
+title = "使用 Travis CI 和 Docker 自动构建 LaTeX 简历"
 +++
 
 又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。

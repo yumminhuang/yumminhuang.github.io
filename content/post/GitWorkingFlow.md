@@ -41,7 +41,7 @@ Github 针对 git-flow 的不足，并且充分利用 Pull Request 功能，提�
 
 代码审查的重要性不必赘述，在开发过程中，团队成员之间互相检查对于保证代码质量是非常关键的。
 
-持续集成同样有助于提高代码质量。快速持续的合并到 `master` 可以确保团队在最新、最准确的代码上工作，避免了不必要的冲突。通过使用诸如 [Jenkins](http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/)、[Travis CI](http://yumminhuang.github.io/blog/2015/06/20/travis-ci/) 之类的持续集成工具，可以自动测试每一个 Pull Request，从而保证 `master` 当中代码的正确性。
+持续集成同样有助于提高代码质量。快速持续的合并到 `master` 可以确保团队在最新、最准确的代码上工作，避免了不必要的冲突。通过使用诸如 [Jenkins](https://yumminhuang.github.io/post/Jenkins/)、[Travis CI](https://yumminhuang.github.io/post/TravisCI/) 之类的持续集成工具，可以自动测试每一个 Pull Request，从而保证 `master` 当中代码的正确性。
 
 另外，Git 工作流还需要满足的要求：
 
