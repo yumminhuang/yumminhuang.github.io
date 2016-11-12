@@ -12,10 +12,10 @@
         
           <item>
             <title>Git 工作流</title>
-            <link>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</link>
+            <link>https://yumminhuang.github.io/post/GitWorkingFlow/</link>
             <pubDate>Sat, 13 Feb 2016 16:36:21 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</guid>
+            <guid>https://yumminhuang.github.io/post/GitWorkingFlow/</guid>
             <description>&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
 &lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
@@ -58,7 +58,7 @@
 
 &lt;p&gt;代码审查的重要性不必赘述，在开发过程中，团队成员之间互相检查对于保证代码质量是非常关键的。&lt;/p&gt;
 
-&lt;p&gt;持续集成同样有助于提高代码质量。快速持续的合并到 &lt;code&gt;master&lt;/code&gt; 可以确保团队在最新、最准确的代码上工作，避免了不必要的冲突。通过使用诸如 &lt;a href=&#34;http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/&#34;&gt;Jenkins&lt;/a&gt;、&lt;a href=&#34;http://yumminhuang.github.io/blog/2015/06/20/travis-ci/&#34;&gt;Travis CI&lt;/a&gt; 之类的持续集成工具，可以自动测试每一个 Pull Request，从而保证 &lt;code&gt;master&lt;/code&gt; 当中代码的正确性。&lt;/p&gt;
+&lt;p&gt;持续集成同样有助于提高代码质量。快速持续的合并到 &lt;code&gt;master&lt;/code&gt; 可以确保团队在最新、最准确的代码上工作，避免了不必要的冲突。通过使用诸如 &lt;a href=&#34;https://yumminhuang.github.io/post/Jenkins/&#34;&gt;Jenkins&lt;/a&gt;、&lt;a href=&#34;https://yumminhuang.github.io/post/TravisCI/&#34;&gt;Travis CI&lt;/a&gt; 之类的持续集成工具，可以自动测试每一个 Pull Request，从而保证 &lt;code&gt;master&lt;/code&gt; 当中代码的正确性。&lt;/p&gt;
 
 &lt;p&gt;另外，Git 工作流还需要满足的要求：&lt;/p&gt;
 

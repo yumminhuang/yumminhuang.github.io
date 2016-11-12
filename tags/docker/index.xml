@@ -11,11 +11,154 @@
       
         
           <item>
-            <title>一个自动构建简历的方法</title>
-            <link>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+            <title>自动构建 Github Pages 博客</title>
+            <link>https://yumminhuang.github.io/post/AutoBuildBlog/</link>
+            <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/AutoBuildBlog/</guid>
+            <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
+
+&lt;p&gt;以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;整理工作&#34;&gt;整理工作&lt;/h3&gt;
+
+&lt;p&gt;之前，为了搭建 &lt;a href=&#34;https://pages.github.com/&#34;&gt;Github Pages&lt;/a&gt; 的博客，我创建了两个代码库。一个是存放网站的 yumminhuang.github.io.git，另外一个是存放 Hugo 配置和文章的 Blog.git。每次发布一篇文章，都需要同步两个代码库。&lt;/p&gt;
+
+&lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
+
+&lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone git@github.com/yumminhuang/Blog.git
+cd Blog
+# Delete the old remote
+git remote rm origin
+# Add a new remote
+git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+# (Optional) Modify .git/config for submodules, etc
+vi .git/config
+# Create the new branch and switch to it
+git checkout -b source
+# Push the new branch to remote
+git push origin source
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
+
+&lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
+
+&lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 Dockerfile 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM alpine:latest
+MAINTAINER Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;
+
+ARG HUGO_VERSION=0.17
+
+RUN apk add --update wget ca-certificates &amp;amp;&amp;amp; \
+  cd /tmp/ &amp;amp;&amp;amp; \
+  wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
+  tar xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
+  rm -r hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
+  mv hugo*/hugo* /usr/bin/hugo &amp;amp;&amp;amp; \
+  apk del wget ca-certificates &amp;amp;&amp;amp; \
+  rm /var/cache/apk/*
+
+VOLUME /website
+VOLUME /public
+
+WORKDIR /website
+ENTRYPOINT [&amp;quot;/usr/bin/hugo&amp;quot;]
+
+EXPOSE 1313
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
+
+&lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
+
+&lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
+
+&lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
+
+&lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;env:
+  global:
+  - secure: &amp;quot; LONG TOKEN &amp;quot;
+  - GIT_DEPLOY_DIR=public
+  - GIT_DEPLOY_BRANCH=master
+  - GIT_DEPLOY_USERNAME=&amp;quot;Travis CI&amp;quot;
+  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
+
+branches:
+  only:
+    - source
+
+sudo: required
+
+services:
+  - docker
+
+install:
+  - rm -rf public || exit 0
+  - git config --global user.email &amp;quot;yumminhuang@gmail.com&amp;quot;
+  - git config --global user.name &amp;quot;Travis CI&amp;quot;
+
+script:
+  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+
+after_success:
+  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
+  - bash deploy.sh -m &amp;quot;updating blog `date`&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_DIR&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_BRANCH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_USERNAME&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_EMAIL&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接下来，在 Travis CI 上完成授权，就能够在每次提交到 &lt;code&gt;source&lt;/code&gt; 分支后出发自动构建了。&lt;/p&gt;
+
+&lt;h3 id=&#34;参考内容&#34;&gt;参考内容&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://speps.github.io/articles/hugo-setup/&#34;&gt;Setup Hugo with Travis CI and GitHub Pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.hypriot.com/post/static-website-generation-on-steriods-with-docker/&#34;&gt;Static Website Generation on Steriods with Docker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/jojomi/docker-hugo&#34;&gt;jojomi/docker-hugo&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+          </item>
+        
+      
+    
+      
+        
+          <item>
+            <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
+            <link>https://yumminhuang.github.io/post/AutoBuildResume/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+            <guid>https://yumminhuang.github.io/post/AutoBuildResume/</guid>
             <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;

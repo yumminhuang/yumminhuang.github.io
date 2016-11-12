@@ -12,10 +12,10 @@
         
           <item>
             <title>Ruby 中的猴子补丁</title>
-            <link>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</link>
+            <link>https://yumminhuang.github.io/post/MonkeyPatchinRuby/</link>
             <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</guid>
+            <guid>https://yumminhuang.github.io/post/MonkeyPatchinRuby/</guid>
             <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
 &lt;/p&gt;
 

@@ -6,17 +6,160 @@
     <description>Recent content in Post-rsses on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2016 ~ Yaming Huang</copyright>
-    <lastBuildDate>Fri, 08 Apr 2016 15:17:48 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 12 Nov 2016 12:31:51 +0800</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
-            <title>一个自动构建简历的方法</title>
-            <link>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+            <title>自动构建 Github Pages 博客</title>
+            <link>https://yumminhuang.github.io/post/AutoBuildBlog/</link>
+            <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/AutoBuildBlog/</guid>
+            <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
+
+&lt;p&gt;以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;整理工作&#34;&gt;整理工作&lt;/h3&gt;
+
+&lt;p&gt;之前，为了搭建 &lt;a href=&#34;https://pages.github.com/&#34;&gt;Github Pages&lt;/a&gt; 的博客，我创建了两个代码库。一个是存放网站的 yumminhuang.github.io.git，另外一个是存放 Hugo 配置和文章的 Blog.git。每次发布一篇文章，都需要同步两个代码库。&lt;/p&gt;
+
+&lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
+
+&lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone git@github.com/yumminhuang/Blog.git
+cd Blog
+# Delete the old remote
+git remote rm origin
+# Add a new remote
+git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+# (Optional) Modify .git/config for submodules, etc
+vi .git/config
+# Create the new branch and switch to it
+git checkout -b source
+# Push the new branch to remote
+git push origin source
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
+
+&lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
+
+&lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 Dockerfile 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM alpine:latest
+MAINTAINER Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;
+
+ARG HUGO_VERSION=0.17
+
+RUN apk add --update wget ca-certificates &amp;amp;&amp;amp; \
+  cd /tmp/ &amp;amp;&amp;amp; \
+  wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
+  tar xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
+  rm -r hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
+  mv hugo*/hugo* /usr/bin/hugo &amp;amp;&amp;amp; \
+  apk del wget ca-certificates &amp;amp;&amp;amp; \
+  rm /var/cache/apk/*
+
+VOLUME /website
+VOLUME /public
+
+WORKDIR /website
+ENTRYPOINT [&amp;quot;/usr/bin/hugo&amp;quot;]
+
+EXPOSE 1313
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
+
+&lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
+
+&lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
+
+&lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
+
+&lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;env:
+  global:
+  - secure: &amp;quot; LONG TOKEN &amp;quot;
+  - GIT_DEPLOY_DIR=public
+  - GIT_DEPLOY_BRANCH=master
+  - GIT_DEPLOY_USERNAME=&amp;quot;Travis CI&amp;quot;
+  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
+
+branches:
+  only:
+    - source
+
+sudo: required
+
+services:
+  - docker
+
+install:
+  - rm -rf public || exit 0
+  - git config --global user.email &amp;quot;yumminhuang@gmail.com&amp;quot;
+  - git config --global user.name &amp;quot;Travis CI&amp;quot;
+
+script:
+  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+
+after_success:
+  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
+  - bash deploy.sh -m &amp;quot;updating blog `date`&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_DIR&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_BRANCH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_USERNAME&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_EMAIL&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接下来，在 Travis CI 上完成授权，就能够在每次提交到 &lt;code&gt;source&lt;/code&gt; 分支后出发自动构建了。&lt;/p&gt;
+
+&lt;h3 id=&#34;参考内容&#34;&gt;参考内容&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://speps.github.io/articles/hugo-setup/&#34;&gt;Setup Hugo with Travis CI and GitHub Pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.hypriot.com/post/static-website-generation-on-steriods-with-docker/&#34;&gt;Static Website Generation on Steriods with Docker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/jojomi/docker-hugo&#34;&gt;jojomi/docker-hugo&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+          </item>
+        
+      
+    
+      
+        
+          <item>
+            <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
+            <link>https://yumminhuang.github.io/post/AutoBuildResume/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2016/04/08/%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8E%86%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+            <guid>https://yumminhuang.github.io/post/AutoBuildResume/</guid>
             <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
@@ -157,10 +300,10 @@ git push -u origin master --tags
         
           <item>
             <title>持续集成交付部署</title>
-            <link>https://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</link>
+            <link>https://yumminhuang.github.io/post/CI/</link>
             <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2016/03/05/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BA%A4%E4%BB%98%E9%83%A8%E7%BD%B2/</guid>
+            <guid>https://yumminhuang.github.io/post/CI/</guid>
             <description>&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
 
@@ -193,10 +336,10 @@ git push -u origin master --tags
         
           <item>
             <title>Git 工作流</title>
-            <link>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</link>
+            <link>https://yumminhuang.github.io/post/GitWorkingFlow/</link>
             <pubDate>Sat, 13 Feb 2016 16:36:21 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2016/02/13/git-%E5%B7%A5%E4%BD%9C%E6%B5%81/</guid>
+            <guid>https://yumminhuang.github.io/post/GitWorkingFlow/</guid>
             <description>&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
 &lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
@@ -239,7 +382,7 @@ git push -u origin master --tags
 
 &lt;p&gt;代码审查的重要性不必赘述，在开发过程中，团队成员之间互相检查对于保证代码质量是非常关键的。&lt;/p&gt;
 
-&lt;p&gt;持续集成同样有助于提高代码质量。快速持续的合并到 &lt;code&gt;master&lt;/code&gt; 可以确保团队在最新、最准确的代码上工作，避免了不必要的冲突。通过使用诸如 &lt;a href=&#34;http://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/&#34;&gt;Jenkins&lt;/a&gt;、&lt;a href=&#34;http://yumminhuang.github.io/blog/2015/06/20/travis-ci/&#34;&gt;Travis CI&lt;/a&gt; 之类的持续集成工具，可以自动测试每一个 Pull Request，从而保证 &lt;code&gt;master&lt;/code&gt; 当中代码的正确性。&lt;/p&gt;
+&lt;p&gt;持续集成同样有助于提高代码质量。快速持续的合并到 &lt;code&gt;master&lt;/code&gt; 可以确保团队在最新、最准确的代码上工作，避免了不必要的冲突。通过使用诸如 &lt;a href=&#34;https://yumminhuang.github.io/post/Jenkins/&#34;&gt;Jenkins&lt;/a&gt;、&lt;a href=&#34;https://yumminhuang.github.io/post/TravisCI/&#34;&gt;Travis CI&lt;/a&gt; 之类的持续集成工具，可以自动测试每一个 Pull Request，从而保证 &lt;code&gt;master&lt;/code&gt; 当中代码的正确性。&lt;/p&gt;
 
 &lt;p&gt;另外，Git 工作流还需要满足的要求：&lt;/p&gt;
 
@@ -328,10 +471,10 @@ git push -u origin master --tags
         
           <item>
             <title>如何选择开源项目的证书</title>
-            <link>https://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</link>
+            <link>https://yumminhuang.github.io/post/ChooseAOpenSourceLicense/</link>
             <pubDate>Fri, 18 Dec 2015 10:27:50 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/12/18/%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%81%E4%B9%A6/</guid>
+            <guid>https://yumminhuang.github.io/post/ChooseAOpenSourceLicense/</guid>
             <description>&lt;p&gt;世界上的开源许可证有很多。除了常见的 &lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache&lt;/a&gt;，&lt;a href=&#34;http://en.wikipedia.org/wiki/BSD_licenses&#34;&gt;BSD&lt;/a&gt;， &lt;a href=&#34;https://en.wikipedia.org/wiki/MIT_License&#34;&gt;MIT&lt;/a&gt; 等之外，还有一些奇特的证书，比如 &lt;a href=&#34;http://www.wtfpl.net/&#34;&gt;WTFPL (Do What the Fuck You Want to Public License)&lt;/a&gt;。Github 还专门做了一个&lt;a href=&#34;http://choosealicense.com/&#34;&gt;网站&lt;/a&gt; 介绍了常见的开源证书。&lt;/p&gt;
 
 &lt;p&gt;然而开源证书虽多，却很少有人会仔细研究证书上的法律条文，搞清楚它们的区别。我最近看了 Github 的网站，又看了一些网上的文章，稍稍研究了几个常用证书的区别，以及如何为开源项目选择证书。故撰此文以供参考。&lt;/p&gt;
@@ -387,10 +530,10 @@ git push -u origin master --tags
         
           <item>
             <title>将博客由 Pelican 迁移到 Hugo</title>
-            <link>https://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</link>
+            <link>https://yumminhuang.github.io/post/MigratetoHugo/</link>
             <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/11/13/%E5%B0%86%E5%8D%9A%E5%AE%A2%E7%94%B1-pelican-%E8%BF%81%E7%A7%BB%E5%88%B0-hugo/</guid>
+            <guid>https://yumminhuang.github.io/post/MigratetoHugo/</guid>
             <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
 &lt;/p&gt;
 
@@ -442,10 +585,10 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
         
           <item>
             <title>Ruby 中的猴子补丁</title>
-            <link>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</link>
+            <link>https://yumminhuang.github.io/post/MonkeyPatchinRuby/</link>
             <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/06/27/ruby-%E4%B8%AD%E7%9A%84%E7%8C%B4%E5%AD%90%E8%A1%A5%E4%B8%81/</guid>
+            <guid>https://yumminhuang.github.io/post/MonkeyPatchinRuby/</guid>
             <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
 &lt;/p&gt;
 
@@ -547,10 +690,10 @@ end
         
           <item>
             <title>Travis CI</title>
-            <link>https://yumminhuang.github.io/blog/2015/06/20/travis-ci/</link>
+            <link>https://yumminhuang.github.io/post/TravisCI/</link>
             <pubDate>Sat, 20 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/06/20/travis-ci/</guid>
+            <guid>https://yumminhuang.github.io/post/TravisCI/</guid>
             <description>&lt;p&gt;本文将主要介绍如何使用 &lt;a href=&#34;https://travis-ci.org&#34;&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href=&#34;https://coveralls.io/&#34;&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。
 &lt;/p&gt;
 
@@ -647,11 +790,11 @@ after_success:
         
           <item>
             <title>Jenkins 简介</title>
-            <link>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/post/Jenkins/</link>
             <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</guid>
-            <description>&lt;p&gt;在&lt;a href=&#34;http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/post/Jenkins/</guid>
+            <description>&lt;p&gt;在&lt;a href=&#34;https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
 
 &lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。
 &lt;/p&gt;
@@ -719,10 +862,10 @@ after_success:
         
           <item>
             <title>基于 Jenkins 的 Python 代码集成整合</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</link>
+            <link>https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/</link>
             <pubDate>Fri, 17 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</guid>
+            <guid>https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/</guid>
             <description>&lt;p&gt;实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。
 &lt;/p&gt;
 
@@ -859,10 +1002,10 @@ TOTAL         +2       -2      +50.00%
         
           <item>
             <title>使用 Fabric 进行远程操作</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</link>
+            <link>https://yumminhuang.github.io/post/RemoteCommandsviaFabric/</link>
             <pubDate>Thu, 16 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/16/%E4%BD%BF%E7%94%A8-fabric-%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/</guid>
+            <guid>https://yumminhuang.github.io/post/RemoteCommandsviaFabric/</guid>
             <description>&lt;h2 id=&#34;fabric-简介&#34;&gt;Fabric 简介&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.fabfile.org&#34;&gt;Fabric&lt;/a&gt; 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。
@@ -962,10 +1105,10 @@ def check_log_with_keyword(log_file, keyword):
         
           <item>
             <title>Graphite 和 Grafana 简介</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/08/graphite-%E5%92%8C-grafana-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/post/GraphiteandGrafana/</link>
             <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/08/graphite-%E5%92%8C-grafana-%E7%AE%80%E4%BB%8B/</guid>
+            <guid>https://yumminhuang.github.io/post/GraphiteandGrafana/</guid>
             <description>&lt;h2 id=&#34;graphite&#34;&gt;Graphite&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://graphite.wikidot.com/start&#34;&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;
@@ -1082,10 +1225,10 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
         
           <item>
             <title>Sensu 简介</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/post/Sensu/</link>
             <pubDate>Sat, 04 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/04/sensu-%E7%AE%80%E4%BB%8B/</guid>
+            <guid>https://yumminhuang.github.io/post/Sensu/</guid>
             <description>&lt;h2 id=&#34;sensu-简介&#34;&gt;Sensu 简介&lt;/h2&gt;
 
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;
@@ -1300,16 +1443,16 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
         
           <item>
             <title>3 个月运维工作之总结</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/01/3-%E4%B8%AA%E6%9C%88%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C%E4%B9%8B%E6%80%BB%E7%BB%93/</link>
+            <link>https://yumminhuang.github.io/post/ThreeMonthesofOperationWork/</link>
             <pubDate>Wed, 01 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/01/3-%E4%B8%AA%E6%9C%88%E8%BF%90%E7%BB%B4%E5%B7%A5%E4%BD%9C%E4%B9%8B%E6%80%BB%E7%BB%93/</guid>
+            <guid>https://yumminhuang.github.io/post/ThreeMonthesofOperationWork/</guid>
             <description>&lt;p&gt;自从 1 月 5 日开始实习至今，在 Operation Team 已经工作了三个月。我觉得有必要对工作进行一下总结。既是我对三个月来所学新知识的归纳，也是对运维工作的一些思考。
 &lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;这次实习并非是我第一次接触运维工作。2014 年夏天，我有一份两个月的暑期实习。当时实习工作的职位是 *Backend Software Engineer*，但事实上所完成的绝大部分工作的内容是关于运维，主要有 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;AWS Auto Scaling&lt;/a&gt; 的搭建（关于这部分内容可以参见之前的一篇 &lt;a href=&#34;http://yumminhuang.github.io/zai-aws-auto-scaling-group-zhong-ti-huan-instance.html&#34;&gt;博文&lt;/a&gt;）和基于 &lt;a href=&#34;http://aws.amazon.com/cloudwatch/&#34;&gt;AWS Cloudwatch&lt;/a&gt; 实现一些监测工具。所以也算对运维工作有一些经验。之后在找实习的时候，我也是有意识地找运维相关的职位。&lt;/p&gt;
+&lt;p&gt;这次实习并非是我第一次接触运维工作。2014 年夏天，我有一份两个月的暑期实习。当时实习工作的职位是 *Backend Software Engineer*，但事实上所完成的绝大部分工作的内容是关于运维，主要有 &lt;a href=&#34;http://aws.amazon.com/autoscaling/&#34;&gt;AWS Auto Scaling&lt;/a&gt; 的搭建（关于这部分内容可以参见之前的一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/ReplaceInstancesinAutoScalingGroup/&#34;&gt;博文&lt;/a&gt;）和基于 &lt;a href=&#34;http://aws.amazon.com/cloudwatch/&#34;&gt;AWS Cloudwatch&lt;/a&gt; 实现一些监测工具。所以也算对运维工作有一些经验。之后在找实习的时候，我也是有意识地找运维相关的职位。&lt;/p&gt;
 
 &lt;p&gt;这里也顺便说一下暑期实习的公司。那是一个只有 5、6 个程序员的初创公司。公司所有的服务都搭建在 Amazon Web Service。运维可以说略显「简陋」：服务器的操作全部由 Python 脚本实现；代码的部署也是用 Python 脚本从 svn 下载再进行安装；系统监控全部部署在 Cloudwatch。对于只有十多台服务器的公司来说，这样的运维方法似乎也足够了。&lt;/p&gt;
 
@@ -1382,10 +1525,10 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
         
           <item>
             <title>i3 窗口管理器简介</title>
-            <link>https://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/post/i3WindowManager/</link>
             <pubDate>Sun, 29 Mar 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/03/29/i3-%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B/</guid>
+            <guid>https://yumminhuang.github.io/post/i3WindowManager/</guid>
             <description>&lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。
 &lt;/p&gt;
 
@@ -1503,196 +1646,6 @@ apt-get install i3
  &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:config&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;</description>
-          </item>
-        
-      
-    
-      
-        
-          <item>
-            <title>在 VPS 搭建 VPN 服务器</title>
-            <link>https://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
-            <pubDate>Mon, 16 Mar 2015 00:00:00 +0000</pubDate>
-            
-            <guid>https://yumminhuang.github.io/blog/2015/03/16/%E5%9C%A8-vps-%E6%90%AD%E5%BB%BA-vpn-%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
-            <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;从来就没有什么救世主&lt;/p&gt;
-
-&lt;p&gt;也不靠神仙皇帝&lt;/p&gt;
-
-&lt;p&gt;要创造人类的幸福&lt;/p&gt;
-
-&lt;p&gt;全靠我们自己&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;为了在 &lt;a href=&#34;http://zh.wikipedia.org/wiki/防火长城&#34;&gt;GFW&lt;/a&gt; 的封锁之下进行正常的上网活动，可以使用 &lt;a href=&#34;http://zh.wikipedia.org/wiki/虛擬私人網路&#34;&gt;VPN&lt;/a&gt;。为什么有各种各样的 VPN 服务提供商还要自己搭建 VPN 呢？有以下几方面的考虑：&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;安全性：你很难保证一些 VPN 提供商不会盗取你的敏感信息，自己搭建 VPN 则可以避免这个问题；&lt;/li&gt;
-&lt;li&gt;稳定：「道高一尺，魔高一丈」，现在很多 VPN 提供商都是打一枪换一个地方，难以保证稳定的连接；&lt;/li&gt;
-&lt;li&gt;价格：自己搭建 VPN，一个月的费用大概在 $5 左右。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;具体步骤&#34;&gt;具体步骤&lt;/h2&gt;
-
-&lt;h4 id=&#34;注册一个-vps-账号&#34;&gt;注册一个 VPS 账号&lt;/h4&gt;
-
-&lt;p&gt;注册任意一家 VPS 服务提供商的账号。此步可能需要一张双币信用卡。
-至于选择哪家服务商，此处按下不表。下文将以 &lt;strong&gt;DigitalOcean&lt;/strong&gt; 为例描述具体步骤。&lt;/p&gt;
-
-&lt;h4 id=&#34;新建一个-droplet&#34;&gt;新建一个 Droplet&lt;/h4&gt;
-
-&lt;p&gt;我新建的 Droplet 是最低配置，具体配置包括：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;512MB RAM&lt;/li&gt;
-&lt;li&gt;20GB SSD&lt;/li&gt;
-&lt;li&gt;2TB 流量&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;地理位置选的是最近的。&lt;/p&gt;
-
-&lt;p&gt;操作系统开始选择的是 Ubuntu14.04，后来用的是 Ubuntu12.04（版本应该没有影响）。&lt;/p&gt;
-
-&lt;p&gt;没有选择多余的设置。&lt;/p&gt;
-
-&lt;p&gt;点击新建按钮会收到一份包含登陆密码的邮件。接着就可以通过ssh进行登录了。&lt;/p&gt;
-
-&lt;p&gt;其余添加用户、Linux 基本设置等内容在此不再赘述。&lt;/p&gt;
-
-&lt;h4 id=&#34;安装pptp&#34;&gt;安装PPTP&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install pptpd
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;配置&#34;&gt;配置&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;配置 IP 地址&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;编辑 &lt;code&gt;/etc/pptpd.conf&lt;/code&gt;，添加以下内容(基本上默认设置已经完成或者被注释了)：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;option /etc/ppp/pptpd-options
-localip 192.168.0.1
-remoteip 192.168.0.100-200
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这里是 PPTP 服务器的 IP 地址设为 &lt;code&gt;192.178.0.1&lt;/code&gt; ，把 PPTP 客户端的 IP 地址设置为 &lt;code&gt;192.168.0.100&lt;/code&gt; 到 &lt;code&gt;192.168.0.200&lt;/code&gt; 的区间内。当然你也可以自己的需要和喜欢进行相应的设置&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;配置客户端 DNS&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;编辑 &lt;code&gt;/etc/ppp/pptpd-options&lt;/code&gt; ，添加 DNS 地址。这里我选择的是&lt;a href=&#34;https://developers.google.com/speed/public-dns/&#34;&gt;Google Public DNS&lt;/a&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ms-dns 8.8.8.8
-ms-dns 8.8.4.4
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;添加用户&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;编辑 &lt;code&gt;/etc/ppp/chap-secrets&lt;/code&gt;，添加账号和密码。其中第一列为账户名，第二列为密码。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# client    server  secret          IP addresses
-test		pptpd   1234            *
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;设置 IP 转发&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;打开 IPv4 转发，并重新载入设置。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo sed -i &#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39; /etc/sysctl.conf
-sudo sysctl -p
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;为 PPTP 连接设置 NAT，否则不能访问别的网站。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;也可以直接编辑 &lt;code&gt;/etc/rc.local&lt;/code&gt;，在 &lt;code&gt;exit 0&lt;/code&gt; 之前添加以上内容。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;重启 PPTP&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo service pptpd restart
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这样PPTP服务器就搭建完毕了，可以「科学上网」了！&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;没有什么能够阻挡&lt;/p&gt;
-
-&lt;p&gt;你对自由地向往&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;trouble-shooting&#34;&gt;Trouble Shooting&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;PPTP connection error: GRE: Bad checksum from pppd&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;第一次设置完毕之后尝试连接 VPN，发现连接失败。重新设置之后依然没有解决，以至于让我怀疑是 Ubuntu14.04 的问题。我新建了一个 Droplet，更换成 Ubuntu12.04 之后还是同样的问题。接着尝试用&lt;code&gt;netstat&lt;/code&gt;检查，发现连接已经建立，但是因为某种原因被断开了。检查&lt;code&gt;/var/log/syslog&lt;/code&gt;，发现了以下内容：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Mar 21 16:54:23 Server pptpd[1808]: GRE: Bad checksum from pppd.
-Mar 21 16:54:53 Server pppd[1809]: LCP: timeout sending Config-Requests
-Mar 21 16:54:53 Server pppd[1809]: Connection terminated.
-Mar 21 16:54:53 Server pppd[1809]: Modem hangup
-Mar 21 16:54:53 Server pppd[1809]: Exit.
-Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;上网搜索，在 StackOverflow 上找到了&lt;a href=&#34;http://stackoverflow.com/a/21347817&#34;&gt;答案&lt;/a&gt;。至此，终于定位到无法连接的根本原因 —— 是路由器不支持 &lt;code&gt;PPTP Passthrough&lt;/code&gt; 功能。我上路由器厂商的官网一看，果然发现了去年12月发布了一个固件更新用来修复VPN连接的问题。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;vps服务提供商选择&#34;&gt;VPS服务提供商选择&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Amazon Web Service
-
-&lt;ul&gt;
-&lt;li&gt;大公司，服务稳定，无须担心亚马逊被封（因为亚马逊非常熟悉中国的那一套，&lt;a href=&#34;http://zhuanlan.zhihu.com/riobard/19910423&#34;&gt;有图&lt;/a&gt;为证）；&lt;/li&gt;
-&lt;li&gt;高度可定制；&lt;/li&gt;
-&lt;li&gt;丰富的文档、社区支持；&lt;/li&gt;
-&lt;li&gt;按小时收费，新注册用户可以免费使用一年；&lt;/li&gt;
-&lt;li&gt;可以将虚拟机部署在东京，理论上访问速度更快。&lt;/li&gt;
-&lt;li&gt;缺点：&lt;strong&gt;设置复杂&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;DigitalOcean
-
-&lt;ul&gt;
-&lt;li&gt;可选择包月套餐，性价比更高；&lt;/li&gt;
-&lt;li&gt;控制台界面清爽、简洁。&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Linode 似乎很多人在用，一个老牌的VPS提供商，但是我没有用过。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如果你选择 DigitalOcean，点击&lt;a href=&#34;https://www.digitalocean.com/?refcode=ba81ee4b40b2&#34;&gt;链接&lt;/a&gt;注册，可以获得10美元的优惠。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;参考文献&#34;&gt;参考文献：&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-setup-your-own-vpn-with-pptp&#34;&gt;How To Setup Your Own VPN With PPTP &amp;ndash; DigitalOcean.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://riobard.com/2011/11/12/pptp-vpn-on-ubuntu/&#34;&gt;Configure PPTP VPN on Ubuntu&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description>
           </item>
         
       

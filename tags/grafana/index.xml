@@ -12,10 +12,10 @@
         
           <item>
             <title>Graphite 和 Grafana 简介</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/08/graphite-%E5%92%8C-grafana-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/post/GraphiteandGrafana/</link>
             <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/08/graphite-%E5%92%8C-grafana-%E7%AE%80%E4%BB%8B/</guid>
+            <guid>https://yumminhuang.github.io/post/GraphiteandGrafana/</guid>
             <description>&lt;h2 id=&#34;graphite&#34;&gt;Graphite&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://graphite.wikidot.com/start&#34;&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;

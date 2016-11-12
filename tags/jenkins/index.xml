@@ -12,11 +12,11 @@
         
           <item>
             <title>Jenkins 简介</title>
-            <link>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</link>
+            <link>https://yumminhuang.github.io/post/Jenkins/</link>
             <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/06/02/jenkins-%E7%AE%80%E4%BB%8B/</guid>
-            <description>&lt;p&gt;在&lt;a href=&#34;http://yumminhuang.github.io/ji-yu-jenkinsde-pythondai-ma-ji-cheng-zheng-he.html&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
+            <guid>https://yumminhuang.github.io/post/Jenkins/</guid>
+            <description>&lt;p&gt;在&lt;a href=&#34;https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
 
 &lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。
 &lt;/p&gt;
@@ -84,10 +84,10 @@
         
           <item>
             <title>基于 Jenkins 的 Python 代码集成整合</title>
-            <link>https://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</link>
+            <link>https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/</link>
             <pubDate>Fri, 17 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/blog/2015/04/17/%E5%9F%BA%E4%BA%8E-jenkins-%E7%9A%84-python-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90%E6%95%B4%E5%90%88/</guid>
+            <guid>https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/</guid>
             <description>&lt;p&gt;实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。
 &lt;/p&gt;
 
