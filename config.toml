@@ -1,6 +1,6 @@
 baseurl     = "https://yumminhuang.github.io"  # the baseurl for your website
 title       = "临水轩志"     # blog title
-paginate    = 10            # the number of posts on a page
+paginate    = 10             # the number of posts on a page
 theme       = "hugo-multi-bootswatch"
 
 # if true, auto-detect Chinese/Japanese/Korean Languages in the content.
@@ -35,7 +35,7 @@ hasCJKLanguage =  true
 
 [params.theme]
     inverse = true     # indicating if the theme should use inversed colors
-    name = "yeti"   # name of the theme to use
+    name = "yeti"      # name of the theme to use
 
 
 [[menu.main]]
