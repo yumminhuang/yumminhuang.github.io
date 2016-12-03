@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Notes">
+    <meta name="description" content="Find Gerrit Outdated Projects">
     <meta name="author" content="Yaming Huang">
 
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Notes &middot; 临水轩志</title>
+    <title>Find Gerrit Outdated Projects &middot; 临水轩志</title>
 
    	
     
@@ -31,7 +31,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
 
     
-    <link href="https://yumminhuang.github.io/note/index.xml" rel="alternate" type="application/rss+xml" title="临水轩志" />
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
 </head>
 <body lang="en">
     
@@ -59,117 +59,47 @@
 </div>
 
 
+
+<div class="container">
     <div class="row">
-        <div class="text-center">
-            <h3>Posts</h3>
+        <div class="col-md-offset-1 col-md-10">
+            <h3>Find Gerrit Outdated Projects</h3>
+                <span class="label label-primary">Sat, Dec 3, 2016</span> in
+                
+                    
+                    <a href="/categories/gerrit">Gerrit</a>
+                 using tags
+                
+                    
+                    <a href="/tags/gerrit">Gerrit</a>
+                
+            </small>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <ul>
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/FindGerritOutdatedProjects/">Find Gerrit Outdated Projects</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Sat, Dec 3, 2016</h4>
-	</div>
-</div>
+            <br>
+            <p>Recently, I had a job to clean up our Gerrit server.
+First of all, I have to find projects which we can deprecate and remove them.</p>
 
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/CodingProblems/">Two Coding Problems</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Fri, Dec 18, 2015</h4>
-	</div>
-</div>
+<p>Here is the solution how I found outdated Gerrit Projects.</p>
 
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/SREInterview/">Site Reliability Engineer Interview</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Thu, Dec 3, 2015</h4>
-	</div>
-</div>
+<p>Gerrit Administrator can use <a href="https://gerrit-review.googlesource.com/Documentation/cmd-gsql.html">gerrit gsql command</a>
+ to access Gerrit backend database and query outdated projects.
+The below SQL can find <strong>projects whose lastest changes were updated 180 days ago</strong>.</p>
 
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/CalculatingQuantiles/">Calculating Quantiles</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Thu, Dec 3, 2015</h4>
-	</div>
-</div>
+<script src="https://gist.github.com/yumminhuang/b30e3650d26f0958384b68ab405f6932.js"></script>
 
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/PythonDebugTrick/">One Trick for Debugging Python</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Mon, May 11, 2015</h4>
-	</div>
-</div>
+<p>The results could be the candidates of deprecating projects.</p>
 
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/YelpInterviewProblem/">Yelp Interview Problem</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Tue, Nov 18, 2014</h4>
-	</div>
-</div>
-
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/RemovePyc/">How to remove all pyc files from a project?</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Thu, Jul 31, 2014</h4>
-	</div>
-</div>
-
-                    
-                
-                    
-                        <div class="row">
-	<div class="col-md-offset-2 col-md-6 col-md-offset-2 col-md-6">
-		<h4><a href="https://yumminhuang.github.io/note/linux%20ssh%20background%20command/">Execute a Command in the Background on Remote Server using SSH</a></h4>
-	</div>
-	<div class="col-md-4 col-md-4">
-		<h4>Sun, May 4, 2014</h4>
-	</div>
-</div>
-
-                    
-                
-            </ul>
         </div>
     </div>
     <div class="row">
-        <hr>
+        <div class="col-md-12">
+            <hr>
+        </div>
     </div>
+</div>
 
     <div class="container">
         <div class="row col-md-12">
@@ -203,9 +133,6 @@
                         <a href="http://weibo.com/yumminhuang" target="_blank">
                         <i class="fa fa-weibo fa-2x"></i></a>
                     
-                    
-                        <a href="https://yumminhuang.github.io/note/index.xml" target="_blank">
-                        <i class="fa fa-rss-square fa-2x"></i></a>
                     
                 </div>
             </footer>
