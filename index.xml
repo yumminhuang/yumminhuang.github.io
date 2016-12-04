@@ -6,8 +6,10 @@
     <description>Recent content on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2016 ~ Yaming Huang</copyright>
-    <lastBuildDate>Sat, 03 Dec 2016 14:09:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Dec 2016 14:20:37 +0800</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+      
     
       
     
@@ -595,8 +597,6 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 &lt;p&gt;刚开始使用 Hugo，有一些诸如 Taxonomies，Section 之类的功能还没有仔细研究。这篇文章也是草草完成，不慎严谨，俟后完善。&lt;/p&gt;</description>
           </item>
         
-      
-    
       
     
   </channel>
