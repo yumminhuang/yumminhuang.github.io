@@ -5,11 +5,11 @@ title = "Resume"
 
 #### ACADEMIC EXPERIENCE
 
-**Northeasetern University**, Boston, MA, Sept. 2013 -- Dec. 2015
+**Northeastern University**, Boston, MA, Sept. 2013 -- Dec. 2015
 
 Master of Science in Computer Science
 
-GPA: 3.875/4.00
+GPA: 3.88/4.00
 
 **Projects**
 
@@ -45,6 +45,10 @@ GPA: 84.6/100
 
 *IT Operation Engineer*
 
+* Manage Gerrit cluster, which hosts about 1TB codebase, for providing service to over 300 developers
+* Establish ELK stack that collecting logs from Gerrit cluster, and provide log analysis and decision support
+* Develop Ansible playbook for Gerrit cluster, implementing automation of Gerrit deployment
+
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015
 
 *Operation Engineer Co-Op*
@@ -76,10 +80,10 @@ GPA: 84.6/100
 Python, Java, Ruby, Shell, Racket
 
 **Tools**:
-Chef, Docker, Git, Jenkins, Jira, SQL, UML
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, UML
 
 **Frameworks**:
-Django, Hadoop
+ELK, Django, Hadoop
 
 **Methodologies**:
 Agile, Scrum

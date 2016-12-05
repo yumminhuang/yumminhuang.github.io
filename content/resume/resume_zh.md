@@ -9,7 +9,7 @@ title = "简历"
 
 计算机科学硕士学位
 
-GPA: 3.875/4.00
+GPA: 3.88/4.00
 
 **课程项目**
 
@@ -45,6 +45,10 @@ GPA: 84.6/100
 
 IT 运维工程师
 
+* 管理 Gerrit 集群，托管近 1TB 代码库，为超过 300 名研发人员提供服务；
+* 搭建 ELK 框架，收集 Gerrit 集群日志，提供日志分析和决策支持；
+* 为 Gerrit 集群编 Ansible Playbook，实现自动化 Gerrit 部署、配置更新。
+
 **BitSight**，剑桥，美国，2015 年 1 月 —— 8 月
 
 实习运维工程师
@@ -76,10 +80,10 @@ IT 运维工程师
 Python, Java, Ruby, Shell, Racket
 
 **工具**:
-Chef, Docker, Git, Jenkins, Jira, SQL, UML
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, UML
 
 **框架**:
-Django, Hadoop
+ELK, Django, Hadoop
 
 **方法**:
 Agile, Scrum

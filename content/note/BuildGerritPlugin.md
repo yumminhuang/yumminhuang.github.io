@@ -5,7 +5,7 @@ tags        = ["Gerrit"]
 categories  = ["Gerrit"]
 +++
 
-Gerrit plugins can be built with both [Buck](https://buckbuild.com/) and [Maven](http://maven.apache.org/.
+Gerrit plugins can be built with both [Buck](https://buckbuild.com/) and [Maven](http://maven.apache.org/).
 
 **NOTE**: Developing Gerrit plugins requires installing JDK first.
 
