@@ -72,7 +72,7 @@ For more details about how they work, please see [official documents](https://ge
 
 # Update Homepage
 
-**NOTICE**: There is no need to restart Gerrit after updating HTML/CSS. The homepage will work immediately after putting HTML/CSS files in $site_path/etc directory.
+**NOTICE**: There is no need to restart Gerrit after updating HTML/CSS. The homepage will work immediately after putting HTML/CSS files in `$site_path/etc` directory.
 
 We use Ansible to deploy Gerrit. Here are examples that how to update HTML/CSS files by Ansible command.
 
