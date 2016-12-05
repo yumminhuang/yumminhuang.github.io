@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Customize Gerrit Homepage">
+    <meta name="description" content="Build Gerrit Plugins">
     <meta name="author" content="Yaming Huang">
 
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Customize Gerrit Homepage &middot; 临水轩志</title>
+    <title>Build Gerrit Plugins &middot; 临水轩志</title>
 
    	
     
@@ -63,7 +63,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <h3>Customize Gerrit Homepage</h3>
+            <h3>Build Gerrit Plugins</h3>
                 <span class="label label-primary">Sat, Dec 3, 2016</span> in
                 
                     
@@ -81,94 +81,77 @@
             <br>
             
 
-<h1 id="customized-homepage">Customized Homepage</h1>
+<p>Gerrit plugins can be built with both <a href="https://buckbuild.com/">Buck</a> and [Maven](<a href="http://maven.apache.org/">http://maven.apache.org/</a>.</p>
 
-<p>To customize Gerrit homepage, we added the following files:</p>
+<p><strong>NOTE</strong>: Developing Gerrit plugins requires installing JDK first.</p>
 
-<ul>
-<li><code>$site_path/etc/GerritSiteHeader.html</code> HTML is inserted below the menu bar, but above any page content. This is a good location for an organizational logo.</li>
-<li><code>$site_path/etc/GerritSiteFooter.html</code> HTML is inserted at the bottom of the page, below all other content. Display links to FAQ, user guides, etc.</li>
-<li><code>$site_path/etc/GerritSite.css</code> The customized CSS rules are inlined into the top of the HTML page.</li>
-<li><code>$site_path/static/logo.cache.png</code> The Logo picture.</li>
-</ul>
+<h1 id="build-by-maven">Build by Maven</h1>
 
-<p>For more details about how they work, please see <a href="https://gerrit-review.googlesource.com/Documentation/config-themes.html">official documents</a>.</p>
-
-<h2 id="examples">Examples</h2>
+<p>If plugin contains <code>pom.xml</code> file, it can be built with Maven.</p>
 
 <ul>
-<li><code>GerritSiteHeader.html</code></li>
+<li>Install Maven, see <a href="http://maven.apache.org/install.html">Maven Doc about Installing Apache Maven</a></li>
+<li>Check out plugin source code</li>
 </ul>
 
-<pre><code>&lt;div&gt;
-  &lt;div id=&quot;logo&quot;&gt;&lt;a href=&quot;#/&quot;&gt;&lt;img src=&quot;static/logo.cache.png&quot; height=&quot;41&quot; width=&quot;32&quot;/&gt;&lt;/a&gt;&lt;/div&gt;
-  &lt;!-- Add more contents if necessary
-  &lt;p id=&quot;customized_paragraph&quot;&gt;&lt;strong&gt;NOTICE&lt;/strong&gt;&lt;/p&gt;
-  &lt;ol&gt;
-  &lt;li&gt;Maintain/Shutdown Announcements&lt;/li&gt;
-  &lt;li&gt;New Features&lt;/li&gt;
-  &lt;/ol&gt;
-  &lt;p id=&quot;customized_paragraph&quot;&gt;2016/11/10&lt;/p&gt;
-  --&gt;
-&lt;/div&gt;
+<pre><code>git clone https://gerrit.googlesource.com/plugins/reviewers
 </code></pre>
 
 <ul>
-<li><code>GerritSiteFooter.html</code></li>
+<li>Build with Maven</li>
 </ul>
 
-<pre><code>&lt;div&gt;
-  &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.mediawiki.org/wiki/Git_and_Gerrit_FAQ&quot; target=&quot;_blank&quot;&gt;Frequently Asked Questions&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.mediawiki.org/wiki/Gerrit/Tutorial&quot; target=&quot;_blank&quot;&gt;Setup Gerrit&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;
-  &lt;p id=&quot;customized_paragraph&quot;&gt;If you have any problem, please contact &lt;a href=&quot;mailto:email@example.com&quot; target=&quot;_blank&quot;&gt;DevOps Team&lt;/a&gt;&lt;/p&gt;
-&lt;!-- Add Piwik if necessary --&gt;
-&lt;/div&gt;
+<pre><code>mvn clean package
 </code></pre>
 
-<ul>
-<li><code>GerritSite.css</code></li>
-</ul>
+<p>Maven will automatically download all dependencies and build source code. You will be able to find jar file in <code>$WORKSPACE/target</code> directory.</p>
 
-<pre><code>#logo {
-  display: block !important;
-  margin-bottom: -55px;
-  padding-left: 20px;
-  position: relative;
-  top: -50px;
-  width: 60px;
-}
-#gerrit_topmenu {
-  left: 55px;
-  margin-right: 55px;
-  margin-bottom: 5px;
-  position: relative;
-}
-#customized_paragraph {
-  padding-left: 10px;
-}
+<h1 id="build-by-buck">Build by BUCK</h1>
+
+<p>BUCK is recommended by Gerrit Community. It&rsquo;s faster. The build artifcat is also smaller than Maven.</p>
+
+<h2 id="install-buck">Install BUCK</h2>
+
+<p>See <a href="https://gerrit-review.googlesource.com/Documentation/dev-buck.html#_installation">Gerrit Documentation</a></p>
+
+<h2 id="build-via-command-line">Build via Command Line</h2>
+
+<p>Two build modes are supported: <em>Standalone</em> and <em>in Gerrit tree</em>. The standalone build mode is recommended, as this mode doesn&rsquo;t require the Gerrit tree to exist locally.</p>
+
+<h3 id="build-standalone">Build standalone</h3>
+
+<pre><code># clone bucklets library
+git clone https://gerrit.googlesource.com/bucklets
+# checkout the correct bucklets version: Make sure bucklets/buckversion is same as the gerrit/.buckversion
+git checkout SHA-1
+# link bucklets to the plugin directory
+cd PLUGIN_DIRECTORY
+ln -s ../bucklets .
+# link to the .buckversion file
+ln -s bucklets/buckversion .buckversion
+# build the plugin
+buck build plugin
+# You will be able to find the plugin in buck-out/gen
 </code></pre>
 
-<h1 id="update-homepage">Update Homepage</h1>
+<p><strong>NOTE</strong></p>
 
-<p><strong>NOTICE</strong>: There is no need to restart Gerrit after updating HTML/CSS. The homepage will work immediately after putting HTML/CSS files in <code>$site_path/etc</code> directory.</p>
+<p>It&rsquo;s critical to checkout correct bucklets version. You have to travese commit history of bucklets repository and find out the correct version.</p>
 
-<p>We use Ansible to deploy Gerrit. Here are examples that how to update HTML/CSS files by Ansible command.</p>
+<p>For example, we need to build a plugin for Gerrit version stable-2.11.</p>
 
-<ul>
-<li>Adding <code>GerritSiteHeader.html</code> to Gerrit</li>
-</ul>
+<p>Go to gerrit source repository, and we can find <code>.buckversion</code> which contains the commit SHA-1 <code>79d36de9f5284f6e833cca81867d6088a25685fb</code></p>
 
-<pre><code>ansible production -i hosts [-l &lt;single-gerrit-host&gt;] -m copy -s -a 'src=GerritSiteHeader.html dest=/site_path/etc owner=gerrit2 group=gerrit2 mode=0644' -v
-</code></pre>
+<p>Then we will check bucklets repository and find in commit <code>bdd7f97</code>, the <code>bucklets/buckversion</code> has the same commit SHA-1 <code>79d36de9f5284f6e833cca81867d6088a25685fb</code>.</p>
 
-<ul>
-<li>Removing <code>GerritSiteFooter.html</code></li>
-</ul>
+<p>So we need to checkout <code>bdd7f97</code> for bucklets repository.</p>
 
-<pre><code>ansible production -i hosts [-l &lt;single-gerrit-host&gt;] -m file -s -a 'dest=/site_path/etc state=absent' -v
-</code></pre>
+<h1 id="references">References</h1>
+
+<ol>
+<li><a href="https://gerrit-review.googlesource.com/Documentation/dev-build-plugins.html">Gerrit Documentation: Building plugins</a></li>
+<li><a href="https://gerrit-review.googlesource.com/Documentation/dev-buck.html">Gerrit Documentation: Building with Buck</a></li>
+</ol>
 
         </div>
     </div>
