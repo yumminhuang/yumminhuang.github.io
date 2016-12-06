@@ -15,6 +15,6 @@ Gerrit Administrator can use [gerrit gsql command](https://gerrit-review.googles
  to access Gerrit backend database and query outdated projects. 
 The below SQL can find **projects whose lastest changes were updated 180 days ago**.
 
-<script src="https://gist.github.com/yumminhuang/b30e3650d26f0958384b68ab405f6932.js"></script>
+<script src="https://gist.github.com/yumminhuang/b30e3650d26f0958384b68ab405f6932.js?file=find_outdated_gerrit_projects.sql" type="text/javascript"></script>
 
 The results could be the candidates of deprecating projects.

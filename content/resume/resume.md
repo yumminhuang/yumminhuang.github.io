@@ -45,9 +45,9 @@ GPA: 84.6/100
 
 *IT Operation Engineer*
 
-* Manage Gerrit cluster, which hosts about 1TB codebase, for providing service to over 300 developers
-* Establish ELK stack that collecting logs from Gerrit cluster, and provide log analysis and decision support
-* Develop Ansible playbook for Gerrit cluster, implementing automation of Gerrit deployment
+* Managed Gerrit cluster, which hosts about 1TB codebase, for providing service to over 300 developers
+* Established ELK stack that collecting logs from Gerrit cluster, and provide log analysis and decision support
+* Developed an Ansible playbook for Gerrit cluster, implementing automation of Gerrit deployment
 
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015
 
