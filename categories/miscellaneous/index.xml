@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>临水轩志</title>
+    <title>Miscellaneous on 临水轩志</title>
     <link>https://yumminhuang.github.io/categories/miscellaneous/index.xml</link>
-    <description>Recent content on 临水轩志</description>
+    <description>Recent content in Miscellaneous on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2016 ~ Yaming Huang</copyright>
     <atom:link href="/categories/miscellaneous/index.xml" rel="self" type="application/rss+xml" />
@@ -30,7 +30,7 @@
 
 &lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;git clone git@github.com/yumminhuang/Blog.git
+&lt;pre&gt;&lt;code class=&#34;language-Bash&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
 cd Blog
 # Delete the old remote
 git remote rm origin
@@ -48,9 +48,9 @@ git push origin source
 
 &lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
 
-&lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 Dockerfile 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
+&lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 &lt;a href=&#34;https://github.com/yumminhuang/hugo-docker&#34;&gt;Dockerfile&lt;/a&gt; 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;FROM alpine:latest
+&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;FROM alpine:latest
 MAINTAINER Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;
 
 ARG HUGO_VERSION=0.17
@@ -73,7 +73,7 @@ ENTRYPOINT [&amp;quot;/usr/bin/hugo&amp;quot;]
 EXPOSE 1313
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
+&lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo-docker&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
 &lt;/code&gt;&lt;/pre&gt;
@@ -98,7 +98,7 @@ EXPOSE 1313
 
 &lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;env:
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;env:
   global:
   - secure: &amp;quot; LONG TOKEN &amp;quot;
   - GIT_DEPLOY_DIR=public

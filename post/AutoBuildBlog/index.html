@@ -21,13 +21,13 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
     
@@ -96,7 +96,7 @@
 
 <p>当然，还是有必要保留以前提交的历史记录。大概的操作流程是：</p>
 
-<pre><code>git clone git@github.com/yumminhuang/Blog.git
+<pre><code class="language-Bash">git clone git@github.com/yumminhuang/Blog.git
 cd Blog
 # Delete the old remote
 git remote rm origin
@@ -114,9 +114,9 @@ git push origin source
 
 <h3 id="docker-for-hugo">Docker for Hugo</h3>
 
-<p>接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 Dockerfile 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。</p>
+<p>接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 <a href="https://github.com/yumminhuang/hugo-docker">Dockerfile</a> 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。</p>
 
-<pre><code>FROM alpine:latest
+<pre><code class="language-dockerfile">FROM alpine:latest
 MAINTAINER Yaming Huang &lt;yumminhuang@gmail.com&gt;
 
 ARG HUGO_VERSION=0.17
@@ -139,7 +139,7 @@ ENTRYPOINT [&quot;/usr/bin/hugo&quot;]
 EXPOSE 1313
 </code></pre>
 
-<p>Build 之后生成 <code>yumminhuang/hugo</code>， 这样每次运行一条命令，就可以生成网页到 <code>public</code> 目录下。</p>
+<p>Build 之后生成 <code>yumminhuang/hugo-docker</code>， 这样每次运行一条命令，就可以生成网页到 <code>public</code> 目录下。</p>
 
 <pre><code>docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
 </code></pre>
@@ -164,7 +164,7 @@ EXPOSE 1313
 
 <p>完整的 <code>.travis.yml</code> 如下所示。</p>
 
-<pre><code>env:
+<pre><code class="language-yaml">env:
   global:
   - secure: &quot; LONG TOKEN &quot;
   - GIT_DEPLOY_DIR=public

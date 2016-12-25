@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>临水轩志</title>
+    <title>Git on 临水轩志</title>
     <link>https://yumminhuang.github.io/tags/git/index.xml</link>
-    <description>Recent content on 临水轩志</description>
+    <description>Recent content in Git on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2016 ~ Yaming Huang</copyright>
     <atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
