@@ -20,7 +20,7 @@ isCJKLanguage = true
 
 当然，还是有必要保留以前提交的历史记录。大概的操作流程是：
 
-```
+```Bash
 git clone git@github.com/yumminhuang/Blog.git
 cd Blog
 # Delete the old remote
@@ -39,9 +39,9 @@ git push origin source
 
 ### Docker for Hugo
 
-接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 Dockerfile 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。
+接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 [Dockerfile](https://github.com/yumminhuang/hugo-docker) 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。
 
-```
+```dockerfile
 FROM alpine:latest
 MAINTAINER Yaming Huang <yumminhuang@gmail.com>
 
@@ -65,7 +65,7 @@ ENTRYPOINT ["/usr/bin/hugo"]
 EXPOSE 1313
 ```
 
-Build 之后生成 `yumminhuang/hugo`， 这样每次运行一条命令，就可以生成网页到 `public` 目录下。
+Build 之后生成 `yumminhuang/hugo-docker`， 这样每次运行一条命令，就可以生成网页到 `public` 目录下。
 
 ```
 docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
@@ -93,7 +93,7 @@ travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/repon
 
 完整的 `.travis.yml` 如下所示。
 
-```
+```yaml
 env:
   global:
   - secure: " LONG TOKEN "

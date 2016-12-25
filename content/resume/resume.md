@@ -45,7 +45,7 @@ GPA: 84.6/100
 
 *IT Operation Engineer*
 
-* Managed Gerrit cluster, which hosts about 1TB codebase, for providing service to over 300 developers
+* Managed Gerrit cluster, which hosts about 1TB codebase, for providing service to over 1500 developers
 * Established ELK stack that collecting logs from Gerrit cluster, and provide log analysis and decision support
 * Developed an Ansible playbook for Gerrit cluster, implementing automation of Gerrit deployment
 

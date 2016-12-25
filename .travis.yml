@@ -21,7 +21,7 @@ install:
   - git config --global user.name "Travis CI"
 
 script:
-  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+  - docker run --rm -v $(pwd):/website yumminhuang/hugo-docker:latest
 
 after_success:
   - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
