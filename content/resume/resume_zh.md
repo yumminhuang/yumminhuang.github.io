@@ -43,11 +43,11 @@ GPA: 84.6/100
 
 **乐视致新**，北京，2016 年 7 月至今
 
-IT 运维工程师
+DevOps 运维开发工程师
 
-* 管理 Gerrit 集群，托管近 1TB 代码库，为约 1500 名研发人员提供服务；
-* 搭建 ELK 框架，收集 Gerrit 集群日志，提供日志分析和决策支持；
-* 为 Gerrit 集群编写 Ansible Playbook，实现自动化 Gerrit 部署、配置更新。
+* 管理分布式 Gerrit 集群，托管近 1TB 代码库，为约 1500 名研发人员提供代码托管服务；
+* 搭建包括 ELK 框架在内的实时数据分析平台，收集 Gerrit、Jenkins 集群数据，提供数据分析和决策支持；
+* 编写 Gerrit 集群 Ansible Playbook，实现自动化 Gerrit 部署、配置更新。
 
 **BitSight**，剑桥，美国，2015 年 1 月 —— 8 月
 
@@ -80,10 +80,10 @@ IT 运维工程师
 Python, Java, Ruby, Shell, Racket
 
 **工具**:
-Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, UML
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, Superset
 
 **框架**:
-ELK, Django, Hadoop
+Elastic Stack, Django, Hadoop
 
 **方法**:
 Agile, Scrum

@@ -10,7 +10,7 @@ hasCJKLanguage =  true
 [params]
     # name of the site author; used in header meta information
     author = "Yaming Huang"
-    copyright = "2016 ~ Yaming Huang"
+    copyright = "2017 ~ Yaming Huang"
 
     use_summaries = true
 
@@ -32,11 +32,9 @@ hasCJKLanguage =  true
     # name of the header used in the post list page
     posts_list_header = "列表"
 
-
 [params.theme]
     inverse = true     # indicating if the theme should use inversed colors
     name = "yeti"      # name of the theme to use
-
 
 [[menu.main]]
     name = "关于"

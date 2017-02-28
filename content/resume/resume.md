@@ -43,10 +43,10 @@ GPA: 84.6/100
 
 **LeEco Zhixin**, Beijing, China, Jul. 2016 — Present
 
-*IT Operation Engineer*
+*DevOps Engineer*
 
-* Managed Gerrit cluster, which hosts about 1TB codebase, for providing service to over 1500 developers
-* Established ELK stack that collecting logs from Gerrit cluster, and provide log analysis and decision support
+* Managed the distributed Gerrit cluster, which hosts about 1TB codebase, for providing service to over 1500 developers
+* Established a real-time data analysis platform that collecting logs from Jenkins and Gerrit cluster, and provide log analysis and decision support
 * Developed an Ansible playbook for Gerrit cluster, implementing automation of Gerrit deployment
 
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015
@@ -80,10 +80,10 @@ GPA: 84.6/100
 Python, Java, Ruby, Shell, Racket
 
 **Tools**:
-Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, UML
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, Superset
 
 **Frameworks**:
-ELK, Django, Hadoop
+Elastic Stack, Django, Hadoop
 
 **Methodologies**:
 Agile, Scrum
