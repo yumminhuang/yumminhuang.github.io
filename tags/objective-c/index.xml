@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Objective C on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/objective-c/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/objective-c/</link>
     <description>Recent content in Objective C on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/objective-c/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Sun, 04 May 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/objective-c/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Objective-C 语法总结</title>
-            <link>https://yumminhuang.github.io/post/objective-cReference/</link>
+            <link>https://yumminhuang.github.io/post/objective-creference/</link>
             <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/objective-cReference/</guid>
+            <guid>https://yumminhuang.github.io/post/objective-creference/</guid>
             <description>&lt;p&gt;最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。&lt;/p&gt;
 
 &lt;p&gt;在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 &lt;code&gt;object.method(argument1, argument2...)&lt;/code&gt;。然而 Objective-C 的格式却是 &lt;code&gt;[object method: argument1 andArg: argument2...]&lt;/code&gt;。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。

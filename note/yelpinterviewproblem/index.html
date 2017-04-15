@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Yelp Interview Problem">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Yelp Interview Problem &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <h3>Yelp Interview Problem</h3>
+                <span class="label label-primary">Tue, Nov 18, 2014</span> in
+                
+                    
+                    <a href="/categories/miscellaneous">Miscellaneous</a>
+                 using tags
+                
+                    
+                    <a href="/tags/python">Python</a>
+                
+                     , 
+                    <a href="/tags/interview">Interview</a>
+                
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <br>
+            <p>Today, I had a skype interview with Yelp.
+</p>
+
+<h3 id="interview">Interview</h3>
+
+<p>At first, the interviewer asked me about my experience. Then, he asked me some technical questions, such as
+&gt; * What will cause access a website slowly?
+&gt; * Difference between thread and process,
+&gt; * What is deadlock?
+&gt; * What&rsquo;s your favorite programming language? And why?</p>
+
+<p>The last part of the interview is a coding question. The interviewer sent me a link of <a href="http://coderpad.io">CoderPad</a> and asked me to write code on it.</p>
+
+<h3 id="coding-problem-description">Coding Problem Description</h3>
+
+<p>The problem is not very difficult. Write a function to <strong>find the longest prefix of a list of string.</strong> For example,</p>
+
+<p><code>['abc', 'abcde', 'abxyz'] =&gt; 'ab'</code></p>
+
+<h3 id="solutions">Solutions</h3>
+
+<p>During the interview, I spent some time to finish it due to the pressure from time and the interviewer. He asked me to review the code after I finished by walking through each step in my function. This process did help me complete the task, cause I found some bugs in my code and fixed them in time. He also asked me the time complexity of my solution. Here is my solution.</p>
+
+<pre><code>def longest_prefix(lst):
+    tmp = list()
+    for i in range(min(map(lambda x: len(x), lst))):
+        for idx, s in enumerate(lst):
+            if idx == 0:
+                tmp.append(s[i])
+            if s[i] != tmp[-1]:
+                return str(tmp[:-1])
+    return str(tmp)
+</code></pre>
+
+<p>Obviously, my solution is not good. My function does not work when input is a empty list. The return of my function is a list instead of a string. It would be better if modify my solution like this way:</p>
+
+<pre><code>def longest_prefix(lst):
+    if not lst:
+        return ''
+    prefix = []
+    for i in range(min(map(lambda x: len(x), lst))):
+        for idx, item in enumerate(lst):
+            if idx == 0:
+                prefix.append(item[i])
+            if item[i] != prefix[-1]:
+                return ''.join((prefix[:-1]))
+    return ''.join((prefix))
+</code></pre>
+
+<h3 id="better-solutions">Better solutions</h3>
+
+<p>After the interview, I searched this problem and tried to find some better solutions. I want to code like a <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html"><em>pythonista</em></a>. Here are <a href="http://stackoverflow.com/questions/6718196/python-determine-prefix-from-a-set-of-similar-strings">some good solutions</a>.</p>
+
+<pre><code>def commonprefix(m):
+    &quot;&quot;&quot;
+    Return the longest prefix of all list elements.
+    &quot;&quot;&quot;
+    if not m: return ''
+    s1 = min(m)
+    s2 = max(m)
+    for i, c in enumerate(s1):
+        if c != s2[i]:
+            return s1[:i]
+    return s1
+</code></pre>
+
+<p>Some guy even found a way to solve this problem using only one line python code.</p>
+
+<pre><code>&gt;&gt;&gt; lst = ['abc', 'abcde', 'abxyz']
+&gt;&gt;&gt; from itertools import takewhile, izip
+&gt;&gt;&gt; ''.join(c[0] for c in takewhile(lambda x: all(x[0] == y for y in x), izip(*lst)))
+'ab'
+</code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/linux/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/linux/</link>
     <description>Recent content in Linux on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Sun, 29 Mar 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/linux/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>i3 窗口管理器简介</title>
-            <link>https://yumminhuang.github.io/post/i3WindowManager/</link>
+            <link>https://yumminhuang.github.io/post/i3windowmanager/</link>
             <pubDate>Sun, 29 Mar 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/i3WindowManager/</guid>
+            <guid>https://yumminhuang.github.io/post/i3windowmanager/</guid>
             <description>&lt;p&gt;在&lt;a href=&#34;http://kernelpanic.fm&#34;&gt;内核恐慌&lt;/a&gt;第九期&lt;a href=&#34;http://ipn.li/kernelpanic/9/&#34;&gt;「程序员的理想工作环境」&lt;/a&gt;中，主持人 Rio 和吴涛谈及了 Tiling Window Manager，并且介绍了 &lt;a href=&#34;http://awesome.naquadah.org/&#34;&gt;Awesome 窗口管理器&lt;/a&gt;和 i3 窗口管理器。节目中两位主持人的对描述 Tiling Window Manager 恰好符合我的需求，并且实习所用的笔记本操作系统刚好是 Ubuntu，所以听完节目后，我也试着在办公电脑上安装了 Awesome。然而体验并不愉快，我为此在微博上&lt;a href=&#34;http://www.weibo.com/2622511625/C1N9FgPr5&#34;&gt;吐槽&lt;/a&gt;。之后在 Rio 的建议下，我安装了 i3，果然非常好用。这里，结合我两个月的使用体验，简单地介绍一下 i3 窗口管理器，并且推荐大家使用。
 &lt;/p&gt;
 
@@ -141,10 +142,10 @@ apt-get install i3
         
           <item>
             <title>在 VPS 搭建 VPN 服务器</title>
-            <link>https://yumminhuang.github.io/post/BuildVPNonVPS/</link>
+            <link>https://yumminhuang.github.io/post/buildvpnonvps/</link>
             <pubDate>Mon, 16 Mar 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/BuildVPNonVPS/</guid>
+            <guid>https://yumminhuang.github.io/post/buildvpnonvps/</guid>
             <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
 
 &lt;blockquote&gt;

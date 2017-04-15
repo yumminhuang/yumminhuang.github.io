@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="使用 Fabric 进行远程操作">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>使用 Fabric 进行远程操作 &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>使用 Fabric 进行远程操作</h3>
+				<span class="label label-primary">Thu, Apr 16, 2015</span> in 
+				
+					
+					<a href="/categories/devops">DevOps</a>
+				 using tags
+				
+					
+					<a href="/tags/devops">DevOps</a>
+				
+					 , 
+					<a href="/tags/python">Python</a>
+				
+					 , 
+					<a href="/tags/fabric">Fabric</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			<h2 id="fabric-简介">Fabric 简介</h2>
+
+<p><a href="http://www.fabfile.org">Fabric</a> 是一个实现远程操作和部署的 Python 模块。Fabric 主要用来作为 SSH 的替代，实现一些简单的应用部署和系统管理。
+</p>
+
+<h3 id="使用-fabric-的好处">使用 Fabric 的好处</h3>
+
+<p>个人觉得，Fabric 非常适合简单的、重复性的远程操作。</p>
+
+<p>首先，Fabric 可以使用 Python，比 Shell 要强大、灵活。</p>
+
+<p>再者，Fabric 避免远程登录，可以把远程操作放在本地运行。</p>
+
+<p>最后，Fabric 非常简单，只需要编写一个 <code>fabfile.py</code>（或者像 Python 那样 <a href="http://docs.fabfile.org/en/latest/usage/fabfiles.html">导入包来添加更多的功能</a>），就可以使用<a href="http://docs.fabfile.org/en/latest/usage/fab.html"><code>fab</code> 指令</a> 运行了。这比 Salt、Chef 等工具轻量，更加容易上手。</p>
+
+<p>基本上，代码部署，文件修改，远程执行等操作都可以使用 Fabric。</p>
+
+<h2 id="常用的-fabric-函数">常用的 Fabric 函数</h2>
+
+<p>这里简单地介绍 Fabric 里常用的函数，具体的说明请参见 <a href="http://docs.fabfile.org/en/latest/index.html">官方文档</a>。</p>
+
+<h2 id="常用操作">常用操作</h2>
+
+<p>Fabric 的常用 <a href="http://docs.fabfile.org/en/latest/api/core/operations.html">操作</a></p>
+
+<ul>
+<li><code>run</code>：在远程机器上执行 Shell 命令；</li>
+<li><code>sudo</code>：带有 root 权限的 <code>run</code>；</li>
+<li><code>local</code>：执行本地命令；</li>
+<li><code>get</code>：从远程机器下载文件；</li>
+<li><code>put</code>：上传文件到远程机器；</li>
+<li><code>prompt</code>：可以理解为在远程机器上执行 <code>raw_input</code></li>
+<li><code>reboot</code>：重启远程机器。</li>
+</ul>
+
+<h3 id="常用上下文管理器和装饰器">常用上下文管理器和装饰器</h3>
+
+<p>上下文管理器（Context Manager）和装饰器（Decorators）是 Python 中的常用的 <a href="http://zh.wikipedia.org/wiki / 语法糖">「语法糖（Syntax sugar）」</a>。Fabric 中常用的<a href="http://docs.fabfile.org/en/latest/api/core/context_managers.html">上下文管理器</a> 有：</p>
+
+<ul>
+<li><code>cd</code>：切换目录；</li>
+<li><code>lcd</code>：在本地切换目录，即 <code>local cd</code>；</li>
+<li><code>path</code>：可以添加路径到 <code>PATH</code>;</li>
+<li><code>settings</code>：用来临时修改 <code>env</code> 变量，使变量只作用在一段代码中。</li>
+</ul>
+
+<p>常用的 <a href="http://docs.fabfile.org/en/latest/api/core/decorators.html">装饰器</a> 有：</p>
+
+<ul>
+<li><code>@task</code>：用来把一个函数声明为 <a href="http://docs.fabfile.org/en/latest/usage/tasks.html">Fabric Task</a>；</li>
+<li><code>@hosts</code>：用来制定远程操作的目标机器；</li>
+<li><code>@with_settings</code>：用来临时设定 <code>env</code> 变量，可以等同于 <code>with settings</code>。</li>
+</ul>
+
+<p>Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可以直接使用 <code>fab task_name</code> 来执行了。</p>
+
+<h2 id="一个例子">一个例子</h2>
+
+<p>在实习当中，我做了一个工具用来自动备份 AWS EBS Volume。程序运行在远程服务器上。每天早上，我都要检查一下日志文件，看看程序有没有出错。</p>
+
+<p>开始，我检查的方式是使用 <code>ssh</code> 登陆之后，再使用 <code>grep</code> 检查日志文件是否包含 <code>ERROR</code>、<code>WARNING</code> 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 <code>ssh</code> 登陆，再运行脚本进行检查。</p>
+
+<p>但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 <code>datetime</code>，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。</p>
+
+<pre><code>from fabric.api import *
+
+def check_log_with_keyword(log_file, keyword):
+    with settings(hide('warnings','output'),
+                  host_string='eb101.ops',
+                  warn_only=True):
+        result = run('grep %s %s' % (keyword, filename))
+
+        if result.return_code == 0:
+            print(result)
+</code></pre>
+
+<ul>
+<li>使用 <code>with settings()</code> 来临时更改 <code>env</code> 变量；</li>
+<li><code>hide('warnings', 'output')</code> 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 <code>stderr</code> 和 <code>stdout</code>；</li>
+<li><code>host_string='eb101.ops'</code>，设定目标机器，Fabric 可以使用 <code>.ssh/config</code> 的设置；</li>
+<li><code>warn_only=True</code> 用来确保 Fabric 程序不会因为 <code>grep</code> 指令出错而退出（grep 没找到匹配内容时，返回值是 1）；</li>
+<li><code>result = run('grep %s %s' % (keyword, filename))</code>, 运行 <code>grep</code> 指令并得到结果。</li>
+</ul>
+
+<p>远程检查日志的过程很简单，并且是机械而重复的过程，因此非常适合使用 Fabric。</p>
+
+<h3 id="参考文献">参考文献</h3>
+
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-fabric-to-automate-administration-tasks-and-deployments">How To Use Fabric To Automate Administration Tasks And Deployments</a></li>
+</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

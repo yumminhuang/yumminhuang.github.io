@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sensu on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/sensu/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/sensu/</link>
     <description>Recent content in Sensu on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/sensu/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Sat, 04 Apr 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/sensu/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Sensu 简介</title>
-            <link>https://yumminhuang.github.io/post/Sensu/</link>
+            <link>https://yumminhuang.github.io/post/sensu/</link>
             <pubDate>Sat, 04 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/Sensu/</guid>
+            <guid>https://yumminhuang.github.io/post/sensu/</guid>
             <description>&lt;h2 id=&#34;sensu-简介&#34;&gt;Sensu 简介&lt;/h2&gt;
 
 &lt;p&gt;Sensu 是一款开源的监控框架。&lt;/p&gt;

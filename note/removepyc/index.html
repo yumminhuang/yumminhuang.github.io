@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="How to remove all pyc files from a project?">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>How to remove all pyc files from a project? &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <h3>How to remove all pyc files from a project?</h3>
+                <span class="label label-primary">Thu, Jul 31, 2014</span> in
+                
+                    
+                    <a href="/categories/linux">Linux</a>
+                 using tags
+                
+                    
+                    <a href="/tags/linux">Linux</a>
+                
+                     , 
+                    <a href="/tags/shell">Shell</a>
+                
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <br>
+            <p>I am a paranoid guy. I like to delete all &ldquo;useless&rdquo; files. Today, I want to clean up my project repository. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.
+</p>
+
+<pre><code>find . -name &quot;*.pyc&quot; -exec rm -rf {} \;
+</code></pre>
+
+<p>OR</p>
+
+<pre><code>find . -name &quot;*.pyc&quot; -delete;
+</code></pre>
+
+<p>I can also delete all <code>*.class</code> files for Java project and <code>.o</code> files for C project in this way.</p>
+
+<pre><code>find . -name &quot;*.class&quot; -exec rm -rf {} \;
+find . -name &quot;*.o&quot; -exec rm -rf {} \;
+</code></pre>
+
+<p>Or I can delete all files whose name starts with &lsquo;test&rsquo;.</p>
+
+<pre><code>find . -name &quot;test*&quot; -exec rm -rf {} \;
+</code></pre>
+
+<p><strong>Reference:</strong></p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project">How do I remove all .pyc files from a project?</a></li>
+</ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

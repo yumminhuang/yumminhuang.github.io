@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ruby on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/ruby/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/ruby/</link>
     <description>Recent content in Ruby on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Sat, 27 Jun 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/ruby/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Ruby 中的猴子补丁</title>
-            <link>https://yumminhuang.github.io/post/MonkeyPatchinRuby/</link>
+            <link>https://yumminhuang.github.io/post/monkeypatchinruby/</link>
             <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/MonkeyPatchinRuby/</guid>
+            <guid>https://yumminhuang.github.io/post/monkeypatchinruby/</guid>
             <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
 &lt;/p&gt;
 

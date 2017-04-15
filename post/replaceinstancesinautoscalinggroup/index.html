@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="在 AWS AutoScaling Group 中替换 Instance">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>在 AWS AutoScaling Group 中替换 Instance &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>在 AWS AutoScaling Group 中替换 Instance</h3>
+				<span class="label label-primary">Sat, Aug 2, 2014</span> in 
+				
+					
+					<a href="/categories/devops">DevOps</a>
+				 using tags
+				
+					
+					<a href="/tags/devops">DevOps</a>
+				
+					 , 
+					<a href="/tags/python">Python</a>
+				
+					 , 
+					<a href="/tags/boto">Boto</a>
+				
+					 , 
+					<a href="/tags/aws">AWS</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			<p>这两周，我被分配的任务是实现 <a href="http://aws.amazon.com/">AWS</a> 的 <a href="http://aws.amazon.com/autoscaling/">Auto Scaling</a>功能。多亏有了 <a href="https://github.com/boto/boto">Boto</a>， 很快就实现了创建 Auto Scaling Group 和添加 Scaling Policy。但是有一个问题却花费了一些时间才顺利解决。
+</p>
+
+<p>我们的团队每周四发布新的代码。为了确保服务不中断，更新代码的步骤如下：</p>
+
+<ol>
+<li>创建并配置（下载新发布的代码）多个新的 Instance；</li>
+<li>依次关闭旧的 Instance，每关闭一个 Instance，就激活（运行代码）一个新的 Instance 来替代被关闭的 Instance。</li>
+</ol>
+
+<p>这样可以保证在 AWS 上运行的 Instance 依次得到更新，并且服务没有中断。</p>
+
+<p>现在的问题是：使用了 Auto Scaling 之后，每次尝试改变 Auto Scaling Group 当中的 Instance 数目，都会激发 Scaling Policy。比如我想关闭一个旧的 Instance，这样 Auto Scaling Group 当中 Instance 的数量就会小于 Desired Capacity，Auto Scaling Group 就会新创建一个 Instance， 而不是等我激活一个 Instance 去替代。</p>
+
+<p>我想到的办法步骤如下：</p>
+
+<ol>
+<li>将 Auto Scaling Group 挂起（避免激发 Scaling Policy）；</li>
+<li>按照以前的方法替换旧的 Instance；</li>
+<li>将新创建的 Instance 添加到 Auto Scaling Group。</li>
+</ol>
+
+<p>因为 AWS Auto Scaling 的特性（比如 Auto Scaling Group 被挂起的时候不能够添加 Instance，<code>desired_capacity</code> 不能小于 <code>min_size</code>），实现第三步并不容易。具体来说第三步又要分成下面几个步骤：</p>
+
+<ol>
+<li>将 Auto Scaling Group 的 <code>desired_capacity</code> 和 <code>min_size</code> 分别置为 <code>0</code>（防止恢复 Auto Scaling Group 的时候自动创建 Instance）；</li>
+<li>恢复 Auto Scaling Group（结束挂起状态，然后才可以添加 Instance）；</li>
+<li>添加 Instance 到 Auto Scaling Group 里；</li>
+<li>恢复 Auto Scaling Group 的 <code>min_size</code>。</li>
+</ol>
+
+<p>下面提供一份示例代码以供参考：</p>
+
+<pre><code>#!python
+import sys
+import time
+
+from boto.ec2.autoscale import AutoScaleConnection
+from boto.ec2.connection import EC2Connection
+
+AUTO_SCALING_GROUP = &quot;test_auto_scaling_group&quot;
+NEW_INSTANCES = [&quot;i-4acb0666&quot;, &quot;i-4acbqa9&quot;]
+CHECK_INTERVAL = 5
+
+
+def suspend(as_conn):
+    &quot;&quot;&quot;
+    Suspend auto scaling group
+    &quot;&quot;&quot;
+    as_conn.suspend_processes(AUTO_SCALING_GROUP)
+    print &quot;Suspend Done\n&quot;
+
+
+def resume(as_conn):
+    &quot;&quot;&quot;
+    Resume auto scaling group
+    &quot;&quot;&quot;
+    as_conn.resume_processes(AUTO_SCALING_GROUP)
+    print &quot;Resume Done\n&quot;
+
+
+def get_instance_by_id(ec2conn, inst_id):
+    &quot;&quot;&quot;
+    Get instance by its id
+    &quot;&quot;&quot;
+    ...
+    pass
+
+def deactivate_instance(inst):
+    &quot;&quot;&quot;
+    Deactivate instance
+    &quot;&quot;&quot;
+    ...
+    pass
+
+
+def delete_instances(as_conn, ec2conn):
+    &quot;&quot;&quot;
+    Delete instances in auto scaling group
+    &quot;&quot;&quot;
+    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+    instances = [get_instance_by_id(ec2conn, i.instance_id) for i in as_group.instances]
+    for instance in instances:
+        if instance.state != &quot;terminated&quot;:
+            print &quot;*** Terminate Instance %s&quot; % instance.id
+            deactivate_instance(instance)
+    # All instances should be terminated
+    while any([inst.update() != &quot;terminated&quot; for inst in instances]):
+        sys.stdout.write(&quot;.&quot;)
+        sys.stdout.flush()
+        time.sleep(CHECK_INTERVAL)
+    print &quot;.\nDelete Done\n&quot;
+
+
+def attach_instances(as_conn):
+    &quot;&quot;&quot;
+    Attach instances into auto scaling group
+    &quot;&quot;&quot;
+    while True and NEW_INSTANCES:
+        as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+        if len(as_group.instances) == 0:
+            as_conn.attach_instances(AUTO_SCALING_GROUP, NEW_INSTANCES)
+            print &quot;Attach Done\n&quot;
+            return
+        else:
+            print &quot;There are instances still in the group&quot;
+            time.sleep(CHECK_INTERVAL)
+
+
+def set_capacity(as_conn):
+    &quot;&quot;&quot;
+    Set desired capacity and minimum size as 0
+    &quot;&quot;&quot;
+    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+    as_group.min_size = 0
+    as_group.desired_capacity = 0
+    as_group.update()
+    print &quot;Set Capacity Done\n&quot;
+
+
+def resume_capacity(as_conn):
+    &quot;&quot;&quot;
+    Resume minimum size as the original value
+    &quot;&quot;&quot;
+    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
+    setattr(as_group,&quot;min_size&quot;, 1)
+    as_group.update()
+    print &quot;Resume Capacity Done\n&quot;
+
+
+def main():
+    as_conn = AutoScaleConnection()
+    ec2conn = EC2Connection()
+
+    print &quot;Suspend Auto Scaling Group&quot;
+    suspend(as_conn)
+
+    print &quot;Delete Instances&quot;
+    delete_instances(as_conn, ec2conn)
+
+    print &quot;Set Capacity&quot;
+    set_capacity(as_conn)
+
+    print &quot;Resume Auto Scaling Group&quot;
+    resume(as_conn)
+
+    print &quot;Attach Instances&quot;
+    attach_instances(as_conn)
+
+    print &quot;Resume Capacity&quot;
+    resume_capacity(as_conn)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

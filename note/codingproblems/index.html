@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Two Coding Problems">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Two Coding Problems &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <h3>Two Coding Problems</h3>
+                <span class="label label-primary">Fri, Dec 18, 2015</span> in
+                
+                    
+                    <a href="/categories/miscellaneous">Miscellaneous</a>
+                 using tags
+                
+                    
+                    <a href="/tags/python">Python</a>
+                
+                     , 
+                    <a href="/tags/interview">Interview</a>
+                
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <br>
+            
+
+<p>Two coding problems I encountered in a recent interview.</p>
+
+<h3 id="problem-1">Problem 1</h3>
+
+<blockquote>
+<p>Problem: Print a binary tree row-by-row, from top to bottom.</p>
+
+<p>Example:</p>
+</blockquote>
+
+<pre><code>Input: Binary tree
+  3
+ / \
+1   4 
+ \   \
+  2   5
+  
+Output: 3, 1, 4, 2, 5
+</code></pre>
+
+<p><strong>Solution</strong></p>
+
+<pre><code>class Node(object):
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+
+def traverse(rootnode):
+    # The list to save all visited nodes
+    visited = list()
+
+    # BFS
+    thislevel = [rootnode]
+    while thislevel:
+        nextlevel = list()
+        for n in thislevel:
+            visited.append(n.value)
+            if n.left:
+                nextlevel.append(n.left)
+            if n.right:
+                nextlevel.append(n.right)
+
+        thislevel = nextlevel
+    # Print
+    print(', '.join(map(str, visited)))
+</code></pre>
+
+<p>Output for the given example</p>
+
+<pre><code>t = Node(3, Node(1, right=Node(2)), Node(4, right=Node(5)))
+traverse(t)
+</code></pre>
+
+<h3 id="problem-2">Problem 2</h3>
+
+<blockquote>
+<p>Problem: Write a function to add two numbers represented as arrays of digits.</p>
+
+<p>Example: [1, 2, 3] + [3, 2, 1] = [4, 4, 4] =&gt; 123 + 321 = 444</p>
+</blockquote>
+
+<p>The given example is confusing. There are two difficulties:</p>
+
+<ol>
+<li>carry digit when adding two digits, e.g. <code>[1, 2, 3] + [9, 8, 7]</code>;</li>
+<li>input two arrays of different size, e.g. <code>[1, 2, 3] + [4, 3, 2, 1]</code></li>
+</ol>
+
+<p>Although and the interviewer didn&rsquo;t mention those points, I thought I should consider them. Otherwise, the problem can be easily solved by a loop or one line code of python
+<code>[x + y for x, y in zip(lst1, lst2)]</code>.</p>
+
+<p>Similar problem solved by C++: <a href="http://www.geeksforgeeks.org/sum-of-two-linked-lists/">Add two numbers represented by linked lists</a>.</p>
+
+<p><strong>Solution</strong></p>
+
+<pre><code>def add(lst1, lst2):
+    ret = list()
+    # minimum size
+    length = min(len(lst1), len(lst2))
+
+    carry = 0
+    # From left to right
+    for i in range(-1, -(length + 1), -1):
+        ret.append((carry + lst1[i] + lst2[i]) % 10)
+        carry = (carry + lst1[i] + lst2[i]) / 10
+
+    # Adding extra digits
+    if len(lst1) &gt; length:
+        for n in lst1[len(lst1) - length - 1::-1]:
+            ret.append((carry + n) % 10)
+            carry = (carry + n) / 10
+
+    if len(lst2) &gt; length:
+        for n in lst2[len(lst2) - length - 1::-1]:
+            ret.append((carry + n) % 10)
+            carry = (carry + n) / 10
+
+    if carry &gt; 0:
+        ret.append(carry)
+
+    # Reverse result list
+    return ret[::-1]
+</code></pre>
+
+<p><strong>Follow Up Problem</strong></p>
+
+<blockquote>
+<p>How to modify your code if input is a list of arrays instead of two arrays?</p>
+</blockquote>
+
+<pre><code>def add_lists(*lists):
+    return reduce(lambda x, y: add(x, y), lists)
+</code></pre>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

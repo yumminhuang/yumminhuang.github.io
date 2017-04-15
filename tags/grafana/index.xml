@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Grafana on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/grafana/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/grafana/</link>
     <description>Recent content in Grafana on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/grafana/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Wed, 08 Apr 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/grafana/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>Graphite 和 Grafana 简介</title>
-            <link>https://yumminhuang.github.io/post/GraphiteandGrafana/</link>
+            <link>https://yumminhuang.github.io/post/graphiteandgrafana/</link>
             <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/GraphiteandGrafana/</guid>
+            <guid>https://yumminhuang.github.io/post/graphiteandgrafana/</guid>
             <description>&lt;h2 id=&#34;graphite&#34;&gt;Graphite&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://graphite.wikidot.com/start&#34;&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;

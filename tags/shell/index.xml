@@ -2,11 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shell on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/shell/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/shell/</link>
     <description>Recent content in Shell on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Thu, 31 Jul 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/shell/" rel="self" type="application/rss+xml" />
     
       
     

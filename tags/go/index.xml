@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/go/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/go/</link>
     <description>Recent content in Go on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Fri, 13 Nov 2015 09:38:53 -0500</lastBuildDate>
+    <atom:link href="/tags/go/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>将博客由 Pelican 迁移到 Hugo</title>
-            <link>https://yumminhuang.github.io/post/MigratetoHugo/</link>
+            <link>https://yumminhuang.github.io/post/migratetohugo/</link>
             <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/MigratetoHugo/</guid>
+            <guid>https://yumminhuang.github.io/post/migratetohugo/</guid>
             <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
 &lt;/p&gt;
 

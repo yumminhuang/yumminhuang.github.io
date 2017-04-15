@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Miscellaneous on 临水轩志</title>
-    <link>https://yumminhuang.github.io/categories/miscellaneous/index.xml</link>
+    <link>https://yumminhuang.github.io/categories/miscellaneous/</link>
     <description>Recent content in Miscellaneous on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/categories/miscellaneous/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Sat, 12 Nov 2016 12:31:51 +0800</lastBuildDate>
+    <atom:link href="/categories/miscellaneous/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>自动构建 Github Pages 博客</title>
-            <link>https://yumminhuang.github.io/post/AutoBuildBlog/</link>
+            <link>https://yumminhuang.github.io/post/autobuildblog/</link>
             <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/AutoBuildBlog/</guid>
+            <guid>https://yumminhuang.github.io/post/autobuildblog/</guid>
             <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。&lt;/p&gt;
@@ -155,10 +156,10 @@ after_success:
         
           <item>
             <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
-            <link>https://yumminhuang.github.io/post/AutoBuildResume/</link>
+            <link>https://yumminhuang.github.io/post/autobuildresume/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/AutoBuildResume/</guid>
+            <guid>https://yumminhuang.github.io/post/autobuildresume/</guid>
             <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
@@ -301,10 +302,10 @@ git push -u origin master --tags
         
           <item>
             <title>如何选择开源项目的证书</title>
-            <link>https://yumminhuang.github.io/post/ChooseAOpenSourceLicense/</link>
+            <link>https://yumminhuang.github.io/post/chooseaopensourcelicense/</link>
             <pubDate>Fri, 18 Dec 2015 10:27:50 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/ChooseAOpenSourceLicense/</guid>
+            <guid>https://yumminhuang.github.io/post/chooseaopensourcelicense/</guid>
             <description>&lt;p&gt;世界上的开源许可证有很多。除了常见的 &lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache&lt;/a&gt;，&lt;a href=&#34;http://en.wikipedia.org/wiki/BSD_licenses&#34;&gt;BSD&lt;/a&gt;， &lt;a href=&#34;https://en.wikipedia.org/wiki/MIT_License&#34;&gt;MIT&lt;/a&gt; 等之外，还有一些奇特的证书，比如 &lt;a href=&#34;http://www.wtfpl.net/&#34;&gt;WTFPL (Do What the Fuck You Want to Public License)&lt;/a&gt;。Github 还专门做了一个&lt;a href=&#34;http://choosealicense.com/&#34;&gt;网站&lt;/a&gt; 介绍了常见的开源证书。&lt;/p&gt;
 
 &lt;p&gt;然而开源证书虽多，却很少有人会仔细研究证书上的法律条文，搞清楚它们的区别。我最近看了 Github 的网站，又看了一些网上的文章，稍稍研究了几个常用证书的区别，以及如何为开源项目选择证书。故撰此文以供参考。&lt;/p&gt;
@@ -364,10 +365,10 @@ git push -u origin master --tags
         
           <item>
             <title>将博客由 Pelican 迁移到 Hugo</title>
-            <link>https://yumminhuang.github.io/post/MigratetoHugo/</link>
+            <link>https://yumminhuang.github.io/post/migratetohugo/</link>
             <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/MigratetoHugo/</guid>
+            <guid>https://yumminhuang.github.io/post/migratetohugo/</guid>
             <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
 &lt;/p&gt;
 
@@ -423,10 +424,10 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
         
           <item>
             <title>Objective-C 语法总结</title>
-            <link>https://yumminhuang.github.io/post/objective-cReference/</link>
+            <link>https://yumminhuang.github.io/post/objective-creference/</link>
             <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/objective-cReference/</guid>
+            <guid>https://yumminhuang.github.io/post/objective-creference/</guid>
             <description>&lt;p&gt;最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。&lt;/p&gt;
 
 &lt;p&gt;在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 &lt;code&gt;object.method(argument1, argument2...)&lt;/code&gt;。然而 Objective-C 的格式却是 &lt;code&gt;[object method: argument1 andArg: argument2...]&lt;/code&gt;。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Site Reliability Engineer Interview">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Site Reliability Engineer Interview &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <h3>Site Reliability Engineer Interview</h3>
+                <span class="label label-primary">Thu, Dec 3, 2015</span> in
+                
+                    
+                    <a href="/categories/miscellaneous">Miscellaneous</a>
+                 using tags
+                
+                    
+                    <a href="/tags/python">Python</a>
+                
+                     , 
+                    <a href="/tags/interview">Interview</a>
+                
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <br>
+            <p>Recently, I had a phone interview for a position of Site Reliability Engineer. They asked me four questions in 60 minutes. I was asked to writing code on <a href="http://collabedit.com/">collabedit</a>
+Because Site Reliability Team of that company uses Python and I also prefer to Python, so all solutions are written in Python.</p>
+
+<p></p>
+
+<h4 id="question-1">Question 1</h4>
+
+<p>It is a kind of <a href="https://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz</a> problem.</p>
+
+<p>This is a quite easy coding task that can be completed in 5 minutes. There are some <a href="http://codereview.stackexchange.com/questions/9751/ultra-beginner-python-fizzbuzz-am-i-missing-something">solutions</a> online.</p>
+
+<h4 id="question-2">Question 2</h4>
+
+<p>Parse <code>/var/log/syslog</code> and extract values.</p>
+
+<pre><code>Dec  3 00:02:54 Mac Google Chrome Helper[69194]: Couldn't set selectedTextBackgroundColor from default ()
+Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: keychain: -25300
+Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: status: off
+Dec  3 00:03:06 Mac com.apple.xpc.launchd[1] (com.apple.WebKit.Networking.AC8ED90D-0AC0-4666-B213-8BE93DE51E8C[68993]): Service exited with abnormal code: 1
+Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367
+Dec  3 00:03:08 Mac garcon[68729]: host connection &lt;NSXPCConnection: 0x7fc9d8f1eda0&gt; connection from pid 68708 invalidated
+Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367
+</code></pre>
+
+<p>Write a script which parses /var/log/messages and generates a CSV with two columns: minute, number_of_messages in sorted time order.</p>
+
+<pre><code>minute,number_of_messages
+Dec  3 00:02,1
+Dec  3 00:03,6
+</code></pre>
+
+<p>Extract the program name from the field between the hostname and the log message and output those values in columns.</p>
+
+<pre><code>minute,number_of_messages,Google Chrome Helper,Safari,com.apple.xpc.launchd,WindowServer,garcon
+Dec  3 00:02,1,0,0,0,0
+Dec  3 00:03,0,2,1,2,1
+</code></pre>
+
+<p>I think the key part of this problem is <em>regular expression</em>. For the first task, I used the following regular expression:</p>
+
+<pre><code>^(.*? \d+ \d+\:\d+).*
+</code></pre>
+
+<ul>
+<li>Then use <a href="https://docs.python.org/2/library/re.html#re.MatchObject.groups"><code>re.match(regexp, line).groups()</code></a> to extract <code>minute</code>.</li>
+<li><a href="https://docs.python.org/2/library/collections.html#collections.Counter">collections.Counter</a> can count objects.</li>
+</ul>
+
+<p>For the second task, the regular expression is:</p>
+
+<pre><code>^(.*? \d+ \d+\:\d+)\:\d+ .*? (.*?)\: .*
+</code></pre>
+
+<p>The second task also has to find all programs in the log file.</p>
+
+<h4 id="question-3">Question 3</h4>
+
+<p>Assume there is a REST API available at <code>http://www.employee.com/api</code> for accessing employee information The employee information endpoint is <code>/employee/&lt;id&gt;</code> Each employee record you retrieve will be a JSON object with the following keys:</p>
+
+<ul>
+<li><code>name</code>  refers to a String that contains the employee&rsquo;s first and last name</li>
+<li><code>title</code> refers to a String that contains the employee&rsquo;s job title</li>
+<li><code>reports</code> refers to an Array of Strings containing the IDs of the employee&rsquo;s direct reports</li>
+</ul>
+
+<p>Write a function that will take an employee ID and print out the entire hierarchy of employees under that employee. For example, suppose that Flynn Mackie&rsquo;s employee id is &lsquo;A123456789&rsquo; and his only direct reports are Wesley Thomas and Nina Chiswick. If you provide &lsquo;A123456789&rsquo; as input to your function, you will see the sample output below.</p>
+
+<pre><code>Flynn Mackie - Senior VP of Engineering
+  Wesley Thomas - VP of Design
+    Randall Cosmo - Director of Design
+      Brenda Plager - Senior Designer
+  Nina Chiswick - VP of Engineering
+    Tommy Quinn - Director of Engineering
+      Jake Farmer - Frontend Manager
+        Liam Freeman - Junior Code Monkey
+      Sheila Dunbar - Backend Manager
+        Peter Young - Senior Code Cowboy
+</code></pre>
+
+<p>Main ideas for my solution:</p>
+
+<ul>
+<li><a href="http://docs.python-requests.org/en/latest/">requests</a> is a useful module for calling RESTful APIs.</li>
+<li><a href="https://docs.python.org/2/library/json.html#json.loads"><code>json.loads()</code></a> is required to parse JSON.</li>
+<li>Recursion is the easiest way to handle such DFS algorithm.</li>
+<li>Be careful about indentation of each line. Adding a <code>depth</code> parameter in function. Here is the basic idea:</li>
+</ul>
+
+<pre><code>def foo(id, depth=0):
+    ...
+    if depth == 0:
+        # print without indentation
+    else:
+        # print with a prefix ' ' * 2 * depth
+    ...
+    foo(employee, depth + 1)
+</code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

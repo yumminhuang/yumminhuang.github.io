@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Notes on 临水轩志</title>
-    <link>https://yumminhuang.github.io/note/index.xml</link>
+    <link>https://yumminhuang.github.io/note/</link>
     <description>Recent content in Notes on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
+    <copyright>2017 ~ Yaming Huang</copyright>
     <lastBuildDate>Sat, 03 Dec 2016 14:21:57 +0800</lastBuildDate>
-    <atom:link href="/note/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/note/" rel="self" type="application/rss+xml" />
     
       
     

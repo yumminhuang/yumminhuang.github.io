@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Build Gerrit Plugins">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Build Gerrit Plugins &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.1.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.5.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <h3>Build Gerrit Plugins</h3>
+                <span class="label label-primary">Sat, Dec 3, 2016</span> in
+                
+                    
+                    <a href="/categories/gerrit">Gerrit</a>
+                 using tags
+                
+                    
+                    <a href="/tags/gerrit">Gerrit</a>
+                
+            </small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <br>
+            
+
+<p>Gerrit plugins can be built with both <a href="https://buckbuild.com/">Buck</a> and <a href="http://maven.apache.org/">Maven</a>.</p>
+
+<p><strong>NOTE</strong>: Developing Gerrit plugins requires installing JDK first.</p>
+
+<h1 id="build-by-maven">Build by Maven</h1>
+
+<p>If plugin contains <code>pom.xml</code> file, it can be built with Maven.</p>
+
+<ul>
+<li>Install Maven, see <a href="http://maven.apache.org/install.html">Maven Doc about Installing Apache Maven</a></li>
+<li>Check out plugin source code</li>
+</ul>
+
+<pre><code>git clone https://gerrit.googlesource.com/plugins/reviewers
+</code></pre>
+
+<ul>
+<li>Build with Maven</li>
+</ul>
+
+<pre><code>mvn clean package
+</code></pre>
+
+<p>Maven will automatically download all dependencies and build source code. You will be able to find jar file in <code>$WORKSPACE/target</code> directory.</p>
+
+<h1 id="build-by-buck">Build by BUCK</h1>
+
+<p>BUCK is recommended by Gerrit Community. It&rsquo;s faster. The build artifcat is also smaller than Maven.</p>
+
+<h2 id="install-buck">Install BUCK</h2>
+
+<p>See <a href="https://gerrit-review.googlesource.com/Documentation/dev-buck.html#_installation">Gerrit Documentation</a></p>
+
+<h2 id="build-via-command-line">Build via Command Line</h2>
+
+<p>Two build modes are supported: <em>Standalone</em> and <em>in Gerrit tree</em>. The standalone build mode is recommended, as this mode doesn&rsquo;t require the Gerrit tree to exist locally.</p>
+
+<h3 id="build-standalone">Build standalone</h3>
+
+<pre><code># clone bucklets library
+git clone https://gerrit.googlesource.com/bucklets
+# checkout the correct bucklets version: Make sure bucklets/buckversion is same as the gerrit/.buckversion
+git checkout SHA-1
+# link bucklets to the plugin directory
+cd PLUGIN_DIRECTORY
+ln -s ../bucklets .
+# link to the .buckversion file
+ln -s bucklets/buckversion .buckversion
+# build the plugin
+buck build plugin
+# You will be able to find the plugin in buck-out/gen
+</code></pre>
+
+<p><strong>NOTE</strong></p>
+
+<p>It&rsquo;s critical to checkout correct bucklets version. You have to travese commit history of bucklets repository and find out the correct version.</p>
+
+<p>For example, we need to build a plugin for Gerrit version stable-2.11.</p>
+
+<p>Go to gerrit source repository, and we can find <code>.buckversion</code> which contains the commit SHA-1 <code>79d36de9f5284f6e833cca81867d6088a25685fb</code></p>
+
+<p>Then we will check bucklets repository and find in commit <code>bdd7f97</code>, the <code>bucklets/buckversion</code> has the same commit SHA-1 <code>79d36de9f5284f6e833cca81867d6088a25685fb</code>.</p>
+
+<p>So we need to checkout <code>bdd7f97</code> for bucklets repository.</p>
+
+<h1 id="references">References</h1>
+
+<ol>
+<li><a href="https://gerrit-review.googlesource.com/Documentation/dev-build-plugins.html">Gerrit Documentation: Building plugins</a></li>
+<li><a href="https://gerrit-review.googlesource.com/Documentation/dev-buck.html">Gerrit Documentation: Building with Buck</a></li>
+</ol>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://hugo.spf13.com">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github-square fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter-square fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

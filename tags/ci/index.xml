@@ -2,20 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ci on 临水轩志</title>
-    <link>https://yumminhuang.github.io/tags/ci/index.xml</link>
+    <link>https://yumminhuang.github.io/tags/ci/</link>
     <description>Recent content in Ci on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2016 ~ Yaming Huang</copyright>
-    <atom:link href="/tags/ci/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2017 ~ Yaming Huang</copyright>
+    <lastBuildDate>Sat, 12 Nov 2016 12:31:51 +0800</lastBuildDate>
+    <atom:link href="/tags/ci/" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>自动构建 Github Pages 博客</title>
-            <link>https://yumminhuang.github.io/post/AutoBuildBlog/</link>
+            <link>https://yumminhuang.github.io/post/autobuildblog/</link>
             <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/AutoBuildBlog/</guid>
+            <guid>https://yumminhuang.github.io/post/autobuildblog/</guid>
             <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。&lt;/p&gt;
@@ -155,10 +156,10 @@ after_success:
         
           <item>
             <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
-            <link>https://yumminhuang.github.io/post/AutoBuildResume/</link>
+            <link>https://yumminhuang.github.io/post/autobuildresume/</link>
             <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/AutoBuildResume/</guid>
+            <guid>https://yumminhuang.github.io/post/autobuildresume/</guid>
             <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
@@ -299,10 +300,10 @@ git push -u origin master --tags
         
           <item>
             <title>持续集成交付部署</title>
-            <link>https://yumminhuang.github.io/post/CI/</link>
+            <link>https://yumminhuang.github.io/post/ci/</link>
             <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/CI/</guid>
+            <guid>https://yumminhuang.github.io/post/ci/</guid>
             <description>&lt;p&gt;最近看了一篇文章 &lt;a href=&#34;http://www.mindtheproduct.com/2016/02/what-the-hell-are-ci-cd-and-devops-a-cheatsheet-for-the-rest-of-us/&#34;&gt;&lt;em&gt;The Product Managers’ Guide to Continuous Delivery and DevOps&lt;/em&gt;&lt;/a&gt;。
 文中对「持续集成（ &lt;em&gt;Continuous Integration&lt;/em&gt; ）」、「持续交付（ &lt;em&gt;Continuous Delivery&lt;/em&gt; ）」和「持续部署（ &lt;em&gt;Continuous Deployment&lt;/em&gt; ）」这三个概念有很详细的解释。这里借用文中的插图，说一下我对这三个概念的理解。&lt;/p&gt;
 
@@ -335,10 +336,10 @@ git push -u origin master --tags
         
           <item>
             <title>Git 工作流</title>
-            <link>https://yumminhuang.github.io/post/GitWorkingFlow/</link>
+            <link>https://yumminhuang.github.io/post/gitworkingflow/</link>
             <pubDate>Sat, 13 Feb 2016 16:36:21 -0500</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/GitWorkingFlow/</guid>
+            <guid>https://yumminhuang.github.io/post/gitworkingflow/</guid>
             <description>&lt;p&gt;Git 可能是每个开发者最常用的工具之一。Git 让开发团队更加方便地进行版本控制和多人协作。但是如果开发团队没有约定如何使用 Git 工作，很可能会导致工作变得一团糟。其中最大的问题是同时存在太多的开发中的分支，每个分支都包含了部分修改。最终开放团队很难弄清楚哪一个分支应该继续开发，或者把它发布成产品。&lt;/p&gt;
 
 &lt;p&gt;正如编程过程中变量命名需要一套标准的命名规则（&lt;a href=&#34;https://en.wikipedia.org/wiki/Naming_convention_(programming)&#34;&gt;Naming convention&lt;/a&gt;）一样，开发团队在使用 Git 的时候，也需要一套标准的工作流，从而确保高效的开发、测试和部署。&lt;/p&gt;
@@ -470,10 +471,10 @@ git push -u origin master --tags
         
           <item>
             <title>Travis CI</title>
-            <link>https://yumminhuang.github.io/post/TravisCI/</link>
+            <link>https://yumminhuang.github.io/post/travisci/</link>
             <pubDate>Sat, 20 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/TravisCI/</guid>
+            <guid>https://yumminhuang.github.io/post/travisci/</guid>
             <description>&lt;p&gt;本文将主要介绍如何使用 &lt;a href=&#34;https://travis-ci.org&#34;&gt;Travis CI&lt;/a&gt; 托管 Github 上的开源项目，从而实现自动化测试、部署。同时，还将介绍使用 &lt;a href=&#34;https://coveralls.io/&#34;&gt;Coveralls&lt;/a&gt; 来监测测试覆盖率。
 &lt;/p&gt;
 
@@ -570,10 +571,10 @@ after_success:
         
           <item>
             <title>Jenkins 简介</title>
-            <link>https://yumminhuang.github.io/post/Jenkins/</link>
+            <link>https://yumminhuang.github.io/post/jenkins/</link>
             <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/Jenkins/</guid>
+            <guid>https://yumminhuang.github.io/post/jenkins/</guid>
             <description>&lt;p&gt;在&lt;a href=&#34;https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/&#34;&gt;之前的一篇文章中&lt;/a&gt;，曾经提及过 Jenkins。在本次实习中，Jenkins 是我每天都要使用的工具。在频繁的使用过程当中：通过实际工作感受了「持续集成」的概念（关于持续集成的概念，此处按下不表，待有时间的时候再详细总结。）；逐渐熟悉了 Jenkins 的使用，并且体会到其带来的方便。因此，希望总结一下 Jenkins 的使用。&lt;/p&gt;
 
 &lt;p&gt;然而 Jenkins 不通过具体的案例难以体会其方便之处，网上相关使用说明之类的文章又颇多，所以本文仅谈个人使用中的体会，并非学习Jenkins使用的教程。
@@ -642,10 +643,10 @@ after_success:
         
           <item>
             <title>基于 Jenkins 的 Python 代码集成整合</title>
-            <link>https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/</link>
+            <link>https://yumminhuang.github.io/post/pythontestcoveragewithjenkins/</link>
             <pubDate>Fri, 17 Apr 2015 00:00:00 +0000</pubDate>
             
-            <guid>https://yumminhuang.github.io/post/PythonTestCoveragewithJenkins/</guid>
+            <guid>https://yumminhuang.github.io/post/pythontestcoveragewithjenkins/</guid>
             <description>&lt;p&gt;实习中最近做了一个多月的项目是将代码测试覆盖率整合到公司持续整合（Continuous Integration）的流程当中。
 &lt;/p&gt;
 
