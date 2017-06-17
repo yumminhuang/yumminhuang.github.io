@@ -3,51 +3,15 @@ date = "2015-11-13T10:19:57-05:00"
 title = "Resume"
 +++
 
-#### ACADEMIC EXPERIENCE
-
-**Northeastern University**, Boston, MA, Sept. 2013 -- Dec. 2015
-
-Master of Science in Computer Science
-
-GPA: 3.88/4.00
-
-**Projects**
-
-* Managing Software Development Project
-	* Built a JAX-RS website --- WHAM (What Happened Around Me) using Jersey and Tomcat;
-	* Managed software development progress by Scrum methodology;
-	* Used Jira to track issues and Confluence to manage documents.
-* MapReduce Project
-	*  Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
-	*  Run Hadoop programs on AWS EMR
-*  Computer Networking Projects
-	* *Row Sockets* ---  Built TCP/IP stack using Python raw sockets
-	* *Roll Your Own CDN* --- Built a simplified [Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network) using Amazon EC2.
-* Database Project
-	*  Built [OData](http://www.odata.org/) service (RESTful APIs for accessing database) over MySQL using JPA.
-
-**Jinan University**, Guangzhou, China, Sept. 2009 — July 2013
-
-Bachelor of Engineering in Software Engineering
-
-GPA: 84.6/100
-
-**Thesis**
-
-* *Visual Fault Localization Tool for Java Multi-threaded Program*
-	* Dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs
-	* Using [Soot](https://sable.github.io/soot/) to analyze Java byte code and instrument Java programs
-
-----
 #### PROFESSIONAL EXPERIENCE
 
 **LeEco Zhixin**, Beijing, China, Jul. 2016 — Present
 
 *DevOps Engineer*
 
-* Managed the distributed Gerrit cluster, which hosts about 1TB codebase, for providing service to over 1500 developers
-* Established a real-time data analysis platform that collecting logs from Jenkins and Gerrit cluster, and provide log analysis and decision support
-* Developed an Ansible playbook for Gerrit cluster, implementing automation of Gerrit deployment
+* Managed the distributed Gerrit cluster, which hosts about 1TB codebase, for providing the code host service to over 1500 developers around the world
+* Established a real-time data analysis platform that collecting data from Jenkins build and Gerrit cluster to provide data analysis and decision support
+* Developed an Ansible playbook for Gerrit and ELK cluster, implementing automated deployment and configuration
 
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015
 
@@ -64,8 +28,8 @@ GPA: 84.6/100
 *Back-end Software Engineer Intern*
 
 * Implemented *Auto Scaling* on AWS, a feature reducing operations costs by $3000/year
-*  Wrote Apache access log monitor in EC2 instances to collect access statistics to AWS CloudWatch
-*  Rewrote test code allowing parallel testing to speed up API test execution by 17%
+* Wrote Apache access log monitor in EC2 instances to collect access statistics to AWS CloudWatch
+* Rewrote test code allowing parallel testing to speed up API test execution by 17%
 
 **Aston University**, Birmingham, United Kingdom, Mar. — Apr. 2012
 
@@ -74,16 +38,52 @@ GPA: 84.6/100
 * Developed an Eclipse plug-in called *Scenario Capture* which can automatically generate JUnit test cases in GUI
 * Tested code by JUnit
 
+---
+#### ACADEMIC EXPERIENCE
+
+**Northeastern University**, Boston, MA, Sept. 2013 -- Dec. 2015
+
+Master of Science in Computer Science
+
+GPA: 3.88/4.00
+
+**Projects**
+
+* Managing Software Development Project
+	* Built a JAX-RS website --- WHAM (What Happened Around Me) using Jersey and Tomcat;
+	* Setup a continuous deployment pipeline on Jenkins;
+	* Managed software development progress by Scrum, with using Jira to track issues and Confluence to manage documents.
+* MapReduce Project
+	* Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
+	* Run Hadoop programs on AWS EMR
+*  Computer Networking Projects
+	* *Row Sockets* ---  Built TCP/IP stack using Python raw sockets
+	* *Roll Your Own CDN* --- Built a simplified [Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network) using Amazon EC2.
+* Database Project
+	* Built [OData](http://www.odata.org/) service (RESTful APIs for accessing database) over MySQL using JPA.
+
+**Jinan University**, Guangzhou, China, Sept. 2009 — July 2013
+
+Bachelor of Engineering in Software Engineering
+
+GPA: 84.6/100
+
+**Thesis**
+
+* *Visual Fault Localization Tool for Java Multi-threaded Program*
+	* Implement a dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs
+	* Using [Soot](https://sable.github.io/soot/) to analyze Java byte code and SWT to build a GUI
+
 ----
 #### TECHNICAL KNOWLEDGE
 **Languages**:
 Python, Java, Ruby, Shell, Racket
 
 **Tools**:
-Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, Superset
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, MySQL, Postgres, Superset
 
 **Frameworks**:
-Elastic Stack, Django, Hadoop
+AWS, Elastic Stack, Django, Hadoop
 
 **Methodologies**:
 Agile, Scrum

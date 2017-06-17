@@ -3,51 +3,15 @@ date = "2015-11-13T10:19:57-05:00"
 title = "简历"
 +++
 
-#### 教育经历
-
-**东北大学**，波士顿，美国， 2013 年 9 月 —— 2015 年 12 月
-
-计算机科学硕士学位
-
-GPA: 3.88/4.00
-
-**课程项目**
-
-* 软件工程项目
-	* 使用 Jersey 和 Tomcat 构建 JAX-RS 网站：WHAM (What Happened Around Me)；
-	* 根据 Scrum 方法指导项目开发进程；
-	* 利用 JIRA 进行项目管理和缺陷追踪，Confluence 管理文档。
-* MapReduce 项目
-	* 统计、分析旧金山市犯罪记录（超过 180 万条记录），并使用朴素贝叶斯算法预测一个案件的犯罪类型；
-	* 编写 Hadoop 和 Spark 程序，在 AWS EMR 上运行。
-*  计算机网络项目
-	* *Row Sockets* ---  使用 Python 的 Row Sockets 构建 TCP/IP 栈；
-	* *Roll Your Own CDN* --- 基于 AWS EC2 搭建一个简易的「内容分发网络（[Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network)）」。
-* 数据库项目
-	* 使用 JPA 为 MySQL 搭建 [OData](http://www.odata.org/) 服务（一款用来访问数据库的 RESTful API）。
-
-**暨南大学**，广州，2009 年 9 月 —— 2013 年 7 月
-
-软件工程工学学士学位
-
-GPA: 84.6/100
-
-**毕业论文**
-
-* 《可视化的 Java 多线程程序错误定位工具》
-	* 一个动态的错误定位工具,用来定位 Java 多线程程序当作的并发错误；
-	* 使用 [Soot](https://sable.github.io/soot/) 分析 Java 字节码,进行插装。
-
-----
 #### 职业经历
 
 **乐视致新**，北京，2016 年 7 月至今
 
 DevOps 运维开发工程师
 
-* 管理分布式 Gerrit 集群，托管近 1TB 代码库，为约 1500 名研发人员提供代码托管服务；
-* 搭建包括 ELK 框架在内的实时数据分析平台，收集 Gerrit、Jenkins 集群数据，提供数据分析和决策支持；
-* 编写 Gerrit 集群 Ansible Playbook，实现自动化 Gerrit 部署、配置更新。
+* 管理分布式 Gerrit 集群，托管近 1TB 代码库，为全球约 1500 名研发人员提供代码托管服务；
+* 搭建包括ELK、Superset 在内的实时数据分析平台，收集Gerrit 集群、研发虚拟机集群、代码编译等数据，用于提供数据分析和决策支持；
+* 编写 Gerrit、ELK 集群的 Ansible Playbook，实现自动化 Gerrit 部署、配置更新。
 
 **BitSight**，剑桥，美国，2015 年 1 月 —— 8 月
 
@@ -75,15 +39,51 @@ DevOps 运维开发工程师
 * 使用 JUnit 测试代码。
 
 ----
+#### 教育经历
+
+**东北大学**，波士顿，美国， 2013 年 9 月 —— 2015 年 12 月
+
+计算机科学硕士学位
+
+GPA: 3.88/4.00
+
+**课程项目**
+
+* 软件工程项目
+	* 使用 Jersey 和 Tomcat 构建 JAX-RS 网站：WHAM (What Happened Around Me)；
+	* 使用 Jenkins 搭建持续交付工作流；
+	* 根据 Scrum 方法指导项目开发进程，使用 JIRA 进行项目管理和缺陷追踪，Confluence 管理文档。
+* MapReduce 项目
+	* 统计、分析旧金山市犯罪记录（超过 180 万条记录），并使用朴素贝叶斯算法预测一个案件的犯罪类型；
+	* 编写 Hadoop 和 Spark 程序，在 AWS EMR 上运行。
+*  计算机网络项目
+	* *Row Sockets* ---  使用 Python 的 Row Sockets 构建 TCP/IP 栈；
+	* *Roll Your Own CDN* --- 基于 AWS EC2 搭建一个简易的「内容分发网络（[Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network)）」。
+* 数据库项目
+	* 使用 JPA 为 MySQL 搭建 [OData](http://www.odata.org/) 服务（一款用来访问数据库的 RESTful API）。
+
+**暨南大学**，广州，2009 年 9 月 —— 2013 年 7 月
+
+软件工程工学学士学位
+
+GPA: 84.6/100
+
+**毕业论文**
+
+* 《可视化的 Java 多线程程序错误定位工具》
+	* 实现一个动态错误定位工具，用来定位 Java 多线程程序当中的并发错误；
+	* 使用 [Soot](https://sable.github.io/soot/) 分析 Java 字节码，进行插装；SWT 制作图形用户界面。。
+
+----
 #### 专业技能
 **语言**:
 Python, Java, Ruby, Shell, Racket
 
 **工具**:
-Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, SQL, Superset
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, MySQL, Postgres, Superset
 
 **框架**:
-Elastic Stack, Django, Hadoop
+AWS, Elastic Stack, Django, Hadoop
 
 **方法**:
 Agile, Scrum
