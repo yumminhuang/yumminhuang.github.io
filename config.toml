@@ -3,6 +3,8 @@ title       = "临水轩志"     # blog title
 paginate    = 10             # the number of posts on a page
 theme       = "hugo-multi-bootswatch"
 
+footnoteReturnLinkContents = "↩"
+
 # if true, auto-detect Chinese/Japanese/Korean Languages in the content.
 # (.Summary and .WordCount can work properly in CJKLanguage)
 hasCJKLanguage =  true

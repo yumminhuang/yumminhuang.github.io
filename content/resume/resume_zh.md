@@ -11,13 +11,13 @@ DevOps 运维开发工程师
 
 * 管理分布式 Gerrit 集群，托管近 1TB 代码库，为全球约 1500 名研发人员提供代码托管服务；
 * 搭建包括ELK、Superset 在内的实时数据分析平台，收集Gerrit 集群、研发虚拟机集群、代码编译等数据，用于提供数据分析和决策支持；
-* 编写 Gerrit、ELK 集群的 Ansible Playbook，实现自动化 Gerrit 部署、配置更新。
+* 编写 Gerrit、ELK 集群的 Ansible Playbook，实现自动化部署与配置更新。
 
 **BitSight**，剑桥，美国，2015 年 1 月 —— 8 月
 
 实习运维工程师
 
-* 为 Ubuntu 集群设计并构建了一套安全补丁管理系统：使用 Sensu 报告可安装补丁，利用 Jenkins 一键安装补丁；
+* 为 AWS 上百台 Ubuntu 集群设计并构建了一套安全补丁管理系统：使用 Sensu 报告可安装补丁，利用 Jenkins 一键安装补丁；
 * 改进公司持续集成框架：从 Jenkins 获取测试结果，将测试结果生成总结报告并发送到 BitBucket Pull Request 页面；
 * 使用 Jenkins 和 Fabric 调用 Django API，创建了一个自动化工作流备份和还原 MySQL 测试数据库；
 * 改进了一些开源项目（包括 [automated-ebs-snapshots](https://github.com/skymill/automated-ebs-snapshots), [BitBucket-api](https://github.com/CBitLabs/BitBucket-api), [sensu-community-plugins](https://github.com/sensu/sensu-community-plugins) 等）；
@@ -71,19 +71,20 @@ GPA: 84.6/100
 **毕业论文**
 
 * 《可视化的 Java 多线程程序错误定位工具》
-	* 实现一个动态错误定位工具，用来定位 Java 多线程程序当中的并发错误；
-	* 使用 [Soot](https://sable.github.io/soot/) 分析 Java 字节码，进行插装；SWT 制作图形用户界面。。
+	* 实现一个动态的错误定位工具，用来定位 Java 多线程程序当作的并发错误；
+	* 使用 [Soot](https://sable.github.io/soot/) 分析 Java 字节码，进行插装；SWT 制作图形用户界面。
 
-----
+---
 #### 专业技能
 **语言**:
 Python, Java, Ruby, Shell, Racket
 
 **工具**:
-Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, MySQL, Postgres, Superset
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, MySQL, Postgres, Superset, Zabbix
 
 **框架**:
 AWS, Elastic Stack, Django, Hadoop
 
 **方法**:
 Agile, Scrum
+

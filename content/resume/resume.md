@@ -57,7 +57,7 @@ GPA: 3.88/4.00
 	* Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
 	* Run Hadoop programs on AWS EMR
 *  Computer Networking Projects
-	* *Row Sockets* ---  Built TCP/IP stack using Python raw sockets
+	* *Row Sockets* ---  Built TCP/IP stack using Python raw socket
 	* *Roll Your Own CDN* --- Built a simplified [Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network) using Amazon EC2.
 * Database Project
 	* Built [OData](http://www.odata.org/) service (RESTful APIs for accessing database) over MySQL using JPA.
@@ -74,16 +74,17 @@ GPA: 84.6/100
 	* Implement a dynamic fault-localization tool to locate concurrent faults in multi-threaded Java programs
 	* Using [Soot](https://sable.github.io/soot/) to analyze Java byte code and SWT to build a GUI
 
-----
+---
 #### TECHNICAL KNOWLEDGE
 **Languages**:
 Python, Java, Ruby, Shell, Racket
 
 **Tools**:
-Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, MySQL, Postgres, Superset
+Ansible, Chef, Docker, Git, Gerrit, Jenkins, Jira, MySQL, Postgres, Superset, Zabbix
 
 **Frameworks**:
 AWS, Elastic Stack, Django, Hadoop
 
 **Methodologies**:
 Agile, Scrum
+
