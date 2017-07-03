@@ -21,8 +21,9 @@ install:
   - git config --global user.name "Travis CI"
 
 script:
-  - docker run --rm -v $(pwd):/website yumminhuang/hugo-docker:latest
+  - docker run --rm -v $(pwd):/website yumminhuang/docker-hugo:latest
 
 after_success:
+  - sudo chown -R travis:travis public/
   - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
   - bash deploy.sh -m "updating blog `date`"
