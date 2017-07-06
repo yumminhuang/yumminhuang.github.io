@@ -101,6 +101,7 @@
     {{ else if eq .Type "link" }}
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
+                <h3><a href="{{.Permalink}}">{{ .Title }}</a></h3>
                 <small>
                     <span class="label label-primary">
                         {{ if .Site.Params.strings.date_format }}
@@ -109,22 +110,23 @@
                             {{ .Date.Format "Mon, Jan 2, 2006" }}
                         {{ end }}
                     </span>
-                    &nbsp;<b>
-                        {{ if .Site.Params.strings.linklog_text }}
-                            {{ .Site.Params.strings.linklog_text }}
-                        {{ else }}
-                            Linklog:
-                        {{ end }}
-                    </b>&nbsp;{{ .Params.author }}: <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    &nbsp; by {{ .Params.author }} &nbsp;in
+                    {{ range $i, $e :=.Params.categories }}
+                        {{if $i}} , {{end}}
+                        <a href="/categories/{{ . | urlize }}">{{ . }}</a>
+                    {{ end }}
                 </small>
-                <small>
-                    {{ .Content }}
-                </small>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <hr>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <br>
+                {{ .Content }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
         </div>
     {{ end }}

@@ -1,5 +1,5 @@
 +++
-date        = "2015-01-01"
+date        = {{ .Date }}
 title       = "题目"
 categories  = ["类别1"]
 tags        = ["标签1", "标签2"]
