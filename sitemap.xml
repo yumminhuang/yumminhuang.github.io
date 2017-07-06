@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yumminhuang.github.io/link/whynotwechat/</loc>
+    <lastmod>2017-07-06T20:48:02+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yumminhuang.github.io/note/buildgerritplugin/</loc>
     <lastmod>2016-12-03T14:21:57+08:00</lastmod>
   </url>
@@ -286,6 +291,12 @@
   </url>
   
   <url>
+    <loc>https://yumminhuang.github.io/link/</loc>
+    <lastmod>2017-07-06T20:48:02+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://yumminhuang.github.io/tags/linux/</loc>
     <lastmod>2015-03-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -377,13 +388,13 @@
   
   <url>
     <loc>https://yumminhuang.github.io/</loc>
-    <lastmod>2016-12-03T14:21:57+08:00</lastmod>
+    <lastmod>2017-07-06T20:48:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://yumminhuang.github.io/categories/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2016-03-07T16:18:47-05:00</lastmod>
+    <lastmod>2017-07-06T20:48:02+08:00</lastmod>
     <priority>0</priority>
   </url>
   
