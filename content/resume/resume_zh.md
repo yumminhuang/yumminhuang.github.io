@@ -5,12 +5,13 @@ title = "简历"
 
 #### 职业经历
 
-**乐视致新**，北京，2016 年 7 月至今
+**乐视致新**，北京，2016 年 7 月 —— 2017 年 7 月
 
 DevOps 运维开发工程师
 
 * 管理分布式 Gerrit 集群，托管近 1TB 代码库，为全球约 1500 名研发人员提供代码托管服务；
 * 搭建包括ELK、Superset 在内的实时数据分析平台，收集Gerrit 集群、研发虚拟机集群、代码编译等数据，用于提供数据分析和决策支持；
+* 构建基于Jenkinsfile的PHP项目持续交付Pipeline;
 * 编写 Gerrit、ELK 集群的 Ansible Playbook，实现自动化部署与配置更新。
 
 **BitSight**，剑桥，美国，2015 年 1 月 —— 8 月
@@ -57,7 +58,7 @@ GPA: 3.88/4.00
 	* 统计、分析旧金山市犯罪记录（超过 180 万条记录），并使用朴素贝叶斯算法预测一个案件的犯罪类型；
 	* 编写 Hadoop 和 Spark 程序，在 AWS EMR 上运行。
 *  计算机网络项目
-	* *Row Sockets* ---  使用 Python 的 Row Sockets 构建 TCP/IP 栈；
+	* *Row Socket* ---  使用 Python 的 Row Socket 构建 TCP/IP 栈；
 	* *Roll Your Own CDN* --- 基于 AWS EC2 搭建一个简易的「内容分发网络（[Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network)）」。
 * 数据库项目
 	* 使用 JPA 为 MySQL 搭建 [OData](http://www.odata.org/) 服务（一款用来访问数据库的 RESTful API）。

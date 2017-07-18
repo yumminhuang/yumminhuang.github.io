@@ -5,12 +5,13 @@ title = "Resume"
 
 #### PROFESSIONAL EXPERIENCE
 
-**LeEco Zhixin**, Beijing, China, Jul. 2016 — Present
+**LeEco Zhixin**, Beijing, China, Jul. 2016 — Jul. 2017
 
 *DevOps Engineer*
 
 * Managed the distributed Gerrit cluster, which hosts about 1TB codebase, for providing the code host service to over 1500 developers around the world
 * Established a real-time data analysis platform that collecting data from Jenkins build and Gerrit cluster to provide data analysis and decision support
+* Built a continuous delivery pipeline for PHP project based on Jenkinsfile
 * Developed an Ansible playbook for Gerrit and ELK cluster, implementing automated deployment and configuration
 
 **BitSight**, Cambridge, MA, Jan. — Aug. 2015
@@ -57,7 +58,7 @@ GPA: 3.88/4.00
 	* Analyze San Francisco crime incidents and predict crime category by naïve bayesian algorithm
 	* Run Hadoop programs on AWS EMR
 *  Computer Networking Projects
-	* *Row Sockets* ---  Built TCP/IP stack using Python raw socket
+	* *Row Socket* ---  Built TCP/IP stack using Python raw socket
 	* *Roll Your Own CDN* --- Built a simplified [Content Delivery Network](https://en.wikipedia.org/wiki/Content_delivery_network) using Amazon EC2.
 * Database Project
 	* Built [OData](http://www.odata.org/) service (RESTful APIs for accessing database) over MySQL using JPA.

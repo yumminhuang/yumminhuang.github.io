@@ -1,7 +1,6 @@
     {{ if eq .Type "post" }}
         {{ if ne .Params.menu "main" }}
             <div class="row">
-                <!-- <div class="col-md-offset-1 col-md-10"> -->
                 <div class="col-md-offset-1 col-md-10">
                     <h3><a href="{{.Permalink}}">{{ .Title }}</a></h3>
                         <small><span class="label label-primary">
@@ -110,7 +109,7 @@
                             {{ .Date.Format "Mon, Jan 2, 2006" }}
                         {{ end }}
                     </span>
-                    &nbsp; by {{ .Params.author }} &nbsp;in
+                    &nbsp; authored by {{ .Params.author }} &nbsp;in
                     {{ range $i, $e :=.Params.categories }}
                         {{if $i}} , {{end}}
                         <a href="/categories/{{ . | urlize }}">{{ . }}</a>
