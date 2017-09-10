@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="搭建分布式 Gerrit 集群">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>搭建分布式 Gerrit 集群 &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>搭建分布式 Gerrit 集群</h3>
+				<span class="label label-primary">Sun, Sep 10, 2017</span> in 
+				
+					
+					<a href="/categories/miscellaneous">Miscellaneous</a>
+				 using tags
+				
+					
+					<a href="/tags/gerrit">Gerrit</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			<p><a href="https://www.gerritcodereview.com">Gerrit</a> 是由 Google为了管理 Android 项目而开发的，一款免费、开源的代码审查软件。Gerrit 使用 Git 作为底层版本控制系统，提供了代码审查、权限管理等功能。</p>
+
+<p>本文将会简单介绍如何搭建分布式 Gerrit 集群，即搭建由一个可以读写的 Gerrit Master 和若干个只读的 Gerrit Slave 组成的 Gerrit 集群。Gerrit Slave 可以实时同步 Gerrit Master 的数据，保证代码的一致性。</p>
+
+<p></p>
+
+<p>分布式的架构可以用来：</p>
+
+<ol>
+<li>分流下载：下载代码可以从只读的 Slave 下载，从而减轻 Master 的负载。如果 Slave 和 Master 在不同地区，还可以起到加速下载的功效。</li>
+<li>灾备切换：如果 Master 出现故障，可以切换到 Slave 继续工作。</li>
+</ol>
+
+<h2 id="分布式-gerrit-架构">分布式 Gerrit 架构</h2>
+
+<p>Gerrit 里的数据主要是两部分：</p>
+
+<ol>
+<li>Git 代码库，用来存储代码；</li>
+<li>数据库<sup class="footnote-ref" id="fnref:database"><a rel="footnote" href="#fn:database">1</a></sup>，用来存储代码提交（Change），用户、分组权限等信息。</li>
+</ol>
+
+<p>因此在实现分布式 Gerrit 时，对应两部分数据，我们需要通过：</p>
+
+<ol>
+<li><a href="https://www.postgresql.org">PostgreSQL</a> <a href="https://wiki.postgresql.org/wiki/Streaming_Replication">Streaming Replication</a></li>
+<li><a href="https://gerrit.googlesource.com/plugins/replication"><em>Gerrit Replication</em> 插件</a></li>
+</ol>
+
+<p>来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。</p>
+
+<p>分布式 Gerrit 架构如下图所示。</p>
+
+<pre><code>+----------------------+                  +--------------------+
+|                      |                  |                    |
+|    Gerrit Master     |                  |    Gerrit Slave    |
+|       Server         |                  |       Server       |
+|                +-----+-----+            |                    |
+|   +----------+ |  Gerrit   |            |     +----------+   |
+|   |Repository| |Replication|  git push  |     |Repository|   |
+|   |          +-+  Plugin   +-----------------&gt;+          |   |
+|   +----------+ +-----+-----+            |     +----------+   |
+|                      |                  |                    |
+|   +--------------+   |                  |  +--------------+  |
+|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+|   |    PRIMARY   +------------------------&gt;+ HOT-STANDBY  |  |
+|   +--------------+   |                  |  +--------------+  |
++----------------------+                  +--------------------+
+</code></pre>
+
+<p>在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，<code>refs/meta</code> 分支下的变更或是创建的新代码库）同步到 Slave。</p>
+
+<p>为了实现数据库的同步，需要将 PostgreSQL 运行在 <a href="https://www.postgresql.org/docs/9.4/static/hot-standby.html">Hot Standby 模式</a>。 在 Gerrit Master 上运行的 PostgreSQL 是 <em>primary</em> ，可以进行读、写操作； 在 Gerrit Slave 上运行的 PostgreSQL 是 <em>stanby</em> ，可以和 <em>primary</em> 保持同步，可以接受客户端的连接，但只能进行读操作。如果 <em>primary</em> 故障了，整个系统可以迁移（ <em>fail over</em> ）到 <em>stanby</em> ，由 <em>stanby</em> 承担 <em>primary</em> 的角色。</p>
+
+<h2 id="分布式-gerrit-配置">分布式 Gerrit 配置</h2>
+
+<h3 id="配置-gerrit">配置 Gerrit</h3>
+
+<p>对于安装和配置 Gerrit Master，分布式的搭建和单点的搭建并没有区别。</p>
+
+<h4 id="gerrit-slave">Gerrit Slave</h4>
+
+<p>安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 <code>gerrit.config</code> 文件里的 <code>[container]</code> 下面添加 <code>slave = true</code> 。</p>
+
+<pre><code>[container]
+    user = gerrit2
+    javaHome = /usr/lib/jvm/java-7-oracle/jre
+    javaOptions = -Xmx80g -Xms20g -Xmn2g
+    slave = true
+[database]
+    type = postgresql
+    database = reviewdb
+    hostname = localhost
+    username = gerrit2
+...
+</code></pre>
+
+<p>这样 Gerrit 才会启动为 Slave。</p>
+
+<h3 id="配置-postgresql-数据库">配置 PostgreSQL 数据库</h3>
+
+<p>在 Master 上要配置 <code>/etc/postgresql/9.4/main/postgresql.conf</code>，打开 Hot Standby 功能。</p>
+
+<pre><code>...
+wal_level = hot_standby
+...
+</code></pre>
+
+<p>还需要在 <code>/etc/postgresql/9.4/main/pg_hba.conf</code> 添加  <em>stanby</em> 的 IP，确保 <em>stanby</em> 可以连接  <em>primary</em> 进行同步。</p>
+
+<pre><code>host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5
+</code></pre>
+
+<p>在 Slave 上首先需要配置 <code>/etc/postgresql/9.4/main/postgresql.conf</code>，设置 PostgreSQL 运行为 <em>stanby</em> 。</p>
+
+<pre><code>...
+hot_standby = on
+...
+</code></pre>
+
+<p>接下来，添加 <code>/var/lib/postgresql/9.4/main/recovery.conf</code> 文件，配置  <em>primary</em>  信息。</p>
+
+<pre><code>standby_mode = on 
+primary_conninfo = 'host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD'
+trigger_file = '/var/lib/postgresql/postgresql.trigger'
+</code></pre>
+
+<p>其中 <code>trigger_file</code> 被用来触发 <em>fail over</em> ，此时不需要创建。</p>
+
+<p>配置完成后，在 <em>primary</em>  上运行命令将数据拷贝到 <em>standby</em> 。</p>
+
+<pre><code class="language-shell">rsync -av --exclude pg_xlog --exclude postgresql.conf data/* \
+	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/
+</code></pre>
+
+<p>重启两端的 PostgreSQL 后，<em>primary</em> 和 <em>standby</em> 将保持同步。</p>
+
+<p>关于 Hot Standby 的详细的说明，可以参见 Postgresql 的这篇<a href="https://wiki.postgresql.org/wiki/Hot_Standby">官方文档</a>。</p>
+
+<h3 id="配置-gerrit-replication">配置 Gerrit Replication</h3>
+
+<h4 id="gerrit-slave-1">Gerrit Slave</h4>
+
+<p>首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。</p>
+
+<pre><code>$ sudo apt install xinetd
+$ cat /etc/xinetd.d/git-daemon
+ 
+# default: off
+# description: The git server offers access to git repositories service git
+service git
+{
+        disable = no
+        type = UNLISTED
+        port = 9418
+        socket_type = stream
+        wait = no
+        env  = HOME=/home/gerrit2
+        user = gerrit2
+        server = /usr/bin/git
+        only_from = gerrit-master.example.com
+        log_type = SYSLOG daemon info
+        server_args = daemon --inetd --syslog --export-all --enable=upload-pack --enable=receive-pack --base-path=/home/gerrit2/review_site/git --verbose
+        log_on_success += USERID HOST DURATION EXIT
+        log_on_failure += USERID HOST ATTEMPT
+        cps = 150 10
+}
+$ sudo /etc/init.d/xinetd restart
+</code></pre>
+
+<p>重启 xinetd 之后，9418 端口将会开启，可以通过 <code>git://</code> 访问 Gerrit Slave 上的代码库。</p>
+
+<h4 id="gerrit-master">Gerrit Master</h4>
+
+<p>在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 <code>$REVIEW_SITE/plugin</code> 目录下。</p>
+
+<p>接下来，添加 <code>$REVIEW_SITE/etc/replication.config</code> 文件，加上 Gerrit Slave 的配置</p>
+
+<pre><code>[remote &quot;slave&quot;]
+  url = git://gerrit-slave.example.com/${name}.git 
+  mirror = true
+  threads = 4
+  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git
+</code></pre>
+
+<p>注意，<code>adminUrl</code> 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。</p>
+
+<p>这样，启动 Gerrit Master 之后，每次代码库有变更，Gerrit Replication 插件都会将变更通过 git 协议 Push 到 Slave 上。</p>
+
+<p>通常，在启动 Gerrit Slave 之前，需要将代码库拷贝到 Slave 机器上，以缩短首次同步的时间。</p>
+
+<hr />
+
+<p>分布式 Gerrit 搭建完成之后，我们可以添加 <code>.gitconfig</code> 文件来实现代码上传和下载分流。</p>
+
+<pre><code class="language-shell">[url &quot;ssh://&lt;username&gt;@gerrit-slave.example.com:29418&quot;]
+    insteadOf = gerrit
+    pushInsteadOf = ssh://&lt;username&gt;@gerrit-master.example.com:29418
+</code></pre>
+
+<p>这样，克隆代码库的时候使用命令</p>
+
+<pre><code class="language-shell">git clone gerrit:path/to/repo
+</code></pre>
+
+<p>可以从 Gerrit Slave 下载代码，而 <code>git push</code> 的时候会自动将代码 Push 到 Gerrit Master。</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="https://cloud.google.com/community/tutorials/setting-up-postgres-hot-standby#understanding-hot-standby">Setting Up Postgres Hot Standby</a></li>
+</ol>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:database">Gerrit 支持大部分主流的关系型数据库，具体的配置方法可以参见<a href="https://gerrit-review.googlesource.com/Documentation/database-setup.html">建立数据库</a> 和<a href="https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#database">配置数据库</a>的官方文档。本文以 PostgreSQL 为例。
+ <a class="footnote-return" href="#fnref:database">↩</a></li>
+</ol>
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2017 ~ Yaming Huang ~ Powered By <a href="http://gohugo.io/">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

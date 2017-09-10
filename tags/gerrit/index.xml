@@ -6,8 +6,221 @@
     <description>Recent content in Gerrit on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2017 ~ Yaming Huang</copyright>
-    <lastBuildDate>Sat, 03 Dec 2016 14:21:57 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 10 Sep 2017 11:31:51 +0800</lastBuildDate>
     <atom:link href="/tags/gerrit/" rel="self" type="application/rss+xml" />
+    
+      
+        
+          <item>
+            <title>搭建分布式 Gerrit 集群</title>
+            <link>https://yumminhuang.github.io/post/distributedgerrit/</link>
+            <pubDate>Sun, 10 Sep 2017 11:31:51 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/distributedgerrit/</guid>
+            <description>&lt;p&gt;&lt;a href=&#34;https://www.gerritcodereview.com&#34;&gt;Gerrit&lt;/a&gt; 是由 Google为了管理 Android 项目而开发的，一款免费、开源的代码审查软件。Gerrit 使用 Git 作为底层版本控制系统，提供了代码审查、权限管理等功能。&lt;/p&gt;
+
+&lt;p&gt;本文将会简单介绍如何搭建分布式 Gerrit 集群，即搭建由一个可以读写的 Gerrit Master 和若干个只读的 Gerrit Slave 组成的 Gerrit 集群。Gerrit Slave 可以实时同步 Gerrit Master 的数据，保证代码的一致性。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;分布式的架构可以用来：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;分流下载：下载代码可以从只读的 Slave 下载，从而减轻 Master 的负载。如果 Slave 和 Master 在不同地区，还可以起到加速下载的功效。&lt;/li&gt;
+&lt;li&gt;灾备切换：如果 Master 出现故障，可以切换到 Slave 继续工作。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;分布式-gerrit-架构&#34;&gt;分布式 Gerrit 架构&lt;/h2&gt;
+
+&lt;p&gt;Gerrit 里的数据主要是两部分：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Git 代码库，用来存储代码；&lt;/li&gt;
+&lt;li&gt;数据库&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:database&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:database&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，用来存储代码提交（Change），用户、分组权限等信息。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;因此在实现分布式 Gerrit 时，对应两部分数据，我们需要通过：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.postgresql.org&#34;&gt;PostgreSQL&lt;/a&gt; &lt;a href=&#34;https://wiki.postgresql.org/wiki/Streaming_Replication&#34;&gt;Streaming Replication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gerrit.googlesource.com/plugins/replication&#34;&gt;&lt;em&gt;Gerrit Replication&lt;/em&gt; 插件&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。&lt;/p&gt;
+
+&lt;p&gt;分布式 Gerrit 架构如下图所示。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+----------------------+                  +--------------------+
+|                      |                  |                    |
+|    Gerrit Master     |                  |    Gerrit Slave    |
+|       Server         |                  |       Server       |
+|                +-----+-----+            |                    |
+|   +----------+ |  Gerrit   |            |     +----------+   |
+|   |Repository| |Replication|  git push  |     |Repository|   |
+|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
+|   +----------+ +-----+-----+            |     +----------+   |
+|                      |                  |                    |
+|   +--------------+   |                  |  +--------------+  |
+|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
+|   +--------------+   |                  |  +--------------+  |
++----------------------+                  +--------------------+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，&lt;code&gt;refs/meta&lt;/code&gt; 分支下的变更或是创建的新代码库）同步到 Slave。&lt;/p&gt;
+
+&lt;p&gt;为了实现数据库的同步，需要将 PostgreSQL 运行在 &lt;a href=&#34;https://www.postgresql.org/docs/9.4/static/hot-standby.html&#34;&gt;Hot Standby 模式&lt;/a&gt;。 在 Gerrit Master 上运行的 PostgreSQL 是 &lt;em&gt;primary&lt;/em&gt; ，可以进行读、写操作； 在 Gerrit Slave 上运行的 PostgreSQL 是 &lt;em&gt;stanby&lt;/em&gt; ，可以和 &lt;em&gt;primary&lt;/em&gt; 保持同步，可以接受客户端的连接，但只能进行读操作。如果 &lt;em&gt;primary&lt;/em&gt; 故障了，整个系统可以迁移（ &lt;em&gt;fail over&lt;/em&gt; ）到 &lt;em&gt;stanby&lt;/em&gt; ，由 &lt;em&gt;stanby&lt;/em&gt; 承担 &lt;em&gt;primary&lt;/em&gt; 的角色。&lt;/p&gt;
+
+&lt;h2 id=&#34;分布式-gerrit-配置&#34;&gt;分布式 Gerrit 配置&lt;/h2&gt;
+
+&lt;h3 id=&#34;配置-gerrit&#34;&gt;配置 Gerrit&lt;/h3&gt;
+
+&lt;p&gt;对于安装和配置 Gerrit Master，分布式的搭建和单点的搭建并没有区别。&lt;/p&gt;
+
+&lt;h4 id=&#34;gerrit-slave&#34;&gt;Gerrit Slave&lt;/h4&gt;
+
+&lt;p&gt;安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 &lt;code&gt;gerrit.config&lt;/code&gt; 文件里的 &lt;code&gt;[container]&lt;/code&gt; 下面添加 &lt;code&gt;slave = true&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[container]
+    user = gerrit2
+    javaHome = /usr/lib/jvm/java-7-oracle/jre
+    javaOptions = -Xmx80g -Xms20g -Xmn2g
+    slave = true
+[database]
+    type = postgresql
+    database = reviewdb
+    hostname = localhost
+    username = gerrit2
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样 Gerrit 才会启动为 Slave。&lt;/p&gt;
+
+&lt;h3 id=&#34;配置-postgresql-数据库&#34;&gt;配置 PostgreSQL 数据库&lt;/h3&gt;
+
+&lt;p&gt;在 Master 上要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，打开 Hot Standby 功能。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+wal_level = hot_standby
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;还需要在 &lt;code&gt;/etc/postgresql/9.4/main/pg_hba.conf&lt;/code&gt; 添加  &lt;em&gt;stanby&lt;/em&gt; 的 IP，确保 &lt;em&gt;stanby&lt;/em&gt; 可以连接  &lt;em&gt;primary&lt;/em&gt; 进行同步。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在 Slave 上首先需要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，设置 PostgreSQL 运行为 &lt;em&gt;stanby&lt;/em&gt; 。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+hot_standby = on
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;接下来，添加 &lt;code&gt;/var/lib/postgresql/9.4/main/recovery.conf&lt;/code&gt; 文件，配置  &lt;em&gt;primary&lt;/em&gt;  信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;standby_mode = on 
+primary_conninfo = &#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&#39;
+trigger_file = &#39;/var/lib/postgresql/postgresql.trigger&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其中 &lt;code&gt;trigger_file&lt;/code&gt; 被用来触发 &lt;em&gt;fail over&lt;/em&gt; ，此时不需要创建。&lt;/p&gt;
+
+&lt;p&gt;配置完成后，在 &lt;em&gt;primary&lt;/em&gt;  上运行命令将数据拷贝到 &lt;em&gt;standby&lt;/em&gt; 。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* \
+	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重启两端的 PostgreSQL 后，&lt;em&gt;primary&lt;/em&gt; 和 &lt;em&gt;standby&lt;/em&gt; 将保持同步。&lt;/p&gt;
+
+&lt;p&gt;关于 Hot Standby 的详细的说明，可以参见 Postgresql 的这篇&lt;a href=&#34;https://wiki.postgresql.org/wiki/Hot_Standby&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h3 id=&#34;配置-gerrit-replication&#34;&gt;配置 Gerrit Replication&lt;/h3&gt;
+
+&lt;h4 id=&#34;gerrit-slave-1&#34;&gt;Gerrit Slave&lt;/h4&gt;
+
+&lt;p&gt;首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt install xinetd
+$ cat /etc/xinetd.d/git-daemon
+ 
+# default: off
+# description: The git server offers access to git repositories service git
+service git
+{
+        disable = no
+        type = UNLISTED
+        port = 9418
+        socket_type = stream
+        wait = no
+        env  = HOME=/home/gerrit2
+        user = gerrit2
+        server = /usr/bin/git
+        only_from = gerrit-master.example.com
+        log_type = SYSLOG daemon info
+        server_args = daemon --inetd --syslog --export-all --enable=upload-pack --enable=receive-pack --base-path=/home/gerrit2/review_site/git --verbose
+        log_on_success += USERID HOST DURATION EXIT
+        log_on_failure += USERID HOST ATTEMPT
+        cps = 150 10
+}
+$ sudo /etc/init.d/xinetd restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重启 xinetd 之后，9418 端口将会开启，可以通过 &lt;code&gt;git://&lt;/code&gt; 访问 Gerrit Slave 上的代码库。&lt;/p&gt;
+
+&lt;h4 id=&#34;gerrit-master&#34;&gt;Gerrit Master&lt;/h4&gt;
+
+&lt;p&gt;在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 &lt;code&gt;$REVIEW_SITE/plugin&lt;/code&gt; 目录下。&lt;/p&gt;
+
+&lt;p&gt;接下来，添加 &lt;code&gt;$REVIEW_SITE/etc/replication.config&lt;/code&gt; 文件，加上 Gerrit Slave 的配置&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[remote &amp;quot;slave&amp;quot;]
+  url = git://gerrit-slave.example.com/${name}.git 
+  mirror = true
+  threads = 4
+  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注意，&lt;code&gt;adminUrl&lt;/code&gt; 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。&lt;/p&gt;
+
+&lt;p&gt;这样，启动 Gerrit Master 之后，每次代码库有变更，Gerrit Replication 插件都会将变更通过 git 协议 Push 到 Slave 上。&lt;/p&gt;
+
+&lt;p&gt;通常，在启动 Gerrit Slave 之前，需要将代码库拷贝到 Slave 机器上，以缩短首次同步的时间。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;分布式 Gerrit 搭建完成之后，我们可以添加 &lt;code&gt;.gitconfig&lt;/code&gt; 文件来实现代码上传和下载分流。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[url &amp;quot;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;quot;]
+    insteadOf = gerrit
+    pushInsteadOf = ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样，克隆代码库的时候使用命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git clone gerrit:path/to/repo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以从 Gerrit Slave 下载代码，而 &lt;code&gt;git push&lt;/code&gt; 的时候会自动将代码 Push 到 Gerrit Master。&lt;/p&gt;
+
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/community/tutorials/setting-up-postgres-hot-standby#understanding-hot-standby&#34;&gt;Setting Up Postgres Hot Standby&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:database&#34;&gt;Gerrit 支持大部分主流的关系型数据库，具体的配置方法可以参见&lt;a href=&#34;https://gerrit-review.googlesource.com/Documentation/database-setup.html&#34;&gt;建立数据库&lt;/a&gt; 和&lt;a href=&#34;https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#database&#34;&gt;配置数据库&lt;/a&gt;的官方文档。本文以 PostgreSQL 为例。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:database&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+          </item>
+        
+      
     
       
     
