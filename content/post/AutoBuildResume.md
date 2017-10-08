@@ -21,7 +21,7 @@ title = "使用 Travis CI 和 Docker 自动构建 LaTeX 简历"
 
 先看一下我的 `.travis.yml`。
 
-```
+```yaml
 sudo: required
 dist: trusty
 before_install:
@@ -78,7 +78,7 @@ deploy:
 
 既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 `build.sh`。
 
-```
+```shell
 #!/bin/bash
 
 # install texlive 2015 and dependencies
@@ -108,7 +108,7 @@ rm *.aux *.log *.out
 
 这样，使用一个 Ubuntu 16.04 的容器运行该脚本就可以生成简历了。接着，我把 `.travis.yml` 的 `before_install` 和 `script` 过程简化成下面的设置。
 
-```
+```yaml
 services:
   - docker
 
@@ -126,7 +126,7 @@ script:
 
 为了避免不必要的构建，我在 `.travis.yml` 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。
 
-```
+```yaml
 branches:
   only:
     - /^v[\d.]+\d$/
@@ -136,7 +136,7 @@ branches:
 
 这样，我平时可以正常地提交更新而不会触发 Travis-CI。需要发布新的简历时，按照 `^v[\d.]+\d$` 的格式，比如 `v1.2.1`，加一个标签再提交即可。
 
-```
+```shell
 git add -a
 git commit -m "Message"
 git tag v1.2.1

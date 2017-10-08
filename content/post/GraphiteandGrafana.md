@@ -30,7 +30,7 @@ Graphite 的使用非常简单。我们可以定义一个被观测量（Metric�
 
 例如，有一个 Metric 叫作 `local.metric.random`，可以用下面的 Bash 命令发送当前时刻的值 `4`。
 
-```
+```shell
 PORT=2003
 SERVER=graphite.your.org
 echo "local.metric.random 4 `date +%s`" | nc -q0 ${SERVER} ${PORT}
@@ -52,7 +52,8 @@ Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的
 
 我们可以使用 HTTP POST 向 Graphite 发送一个 Event。
 
-```curl -X POST "http://graphite.your.org/events" -d '{"what": "Deployment", "tags": "webserver", "data": "Deploy webserver"}'
+```shell
+curl -X POST "http://graphite.your.org/events" -d '{"what": "Deployment", "tags": "webserver", "data": "Deploy webserver"}'
 ```
 
 下文将会通过一个具体的实例来介绍Events的使用场景。
@@ -63,7 +64,7 @@ Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的
 
 设置 Grafana，只需编辑 `config.js` 设置数据来源[^update]。
 
-```
+```js
 datasources: {
   graphite: {
     type: 'graphite',
@@ -78,7 +79,7 @@ datasources: {
 
 我实习所在公司使用 [Jenkins](https://jenkins-ci.org) 部署代码。在部署完成之后，我添加了一段 [post-build script](https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin) 执行下面的脚本。
 
-```
+```shell
 #!/bin/bash
 
 HOST=http://graphite.your.org/events

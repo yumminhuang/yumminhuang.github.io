@@ -39,7 +39,7 @@ Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员
 
 最后，在同事的指点下，我采用了第三种方法，即 **Monkey Patch**。我在我司的 Ruby 项目里添加了一个文件 `lib/PROJECT_NAME/monkey_patches/flavors.rb`，接着在文件中添加以下代码来修改 `fog/aws/models/compute/flavors`：
 
-```
+```ruby
 require 'fog/aws/models/compute/flavors'
 
 class Object

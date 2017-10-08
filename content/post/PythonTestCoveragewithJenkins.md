@@ -53,7 +53,7 @@ Jenkins 同样支持 subversion 等 CVS 工具。
 
 添加一段 **Build Script**:
 
-```
+```shell
 PYTHONPATH=''
 nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package=project1 --cover-inclusive
 python -m coverage xml --include=project1*
@@ -94,7 +94,7 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 
 Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。
 
-```
+```python
 from pycobertura import Cobertura
 from pycobertura import TextReporterDelta
 

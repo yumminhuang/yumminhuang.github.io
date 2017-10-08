@@ -20,7 +20,7 @@ isCJKLanguage = true
 
 当然，还是有必要保留以前提交的历史记录。大概的操作流程是：
 
-```Bash
+```shell
 git clone git@github.com/yumminhuang/Blog.git
 cd Blog
 # Delete the old remote
@@ -67,13 +67,13 @@ EXPOSE 1313
 
 Build 之后生成 `yumminhuang/hugo-docker`， 这样每次运行一条命令，就可以生成网页到 `public` 目录下。
 
-```
+```shell
 docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
 ```
 
 还可以运行如下的命令用来看网页生成的效果。
 
-```
+```shell
 docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
 ```
 
@@ -85,7 +85,7 @@ docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server -
 
 接着，需要使用 [Travis 命令行工具](https://github.com/travis-ci/travis.rb)来对包含新生成 “Personal Access Token”  的变量 `GIT_DEPLOY_REPO` 加密。
 
-```
+```shell
 travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
 ```
 

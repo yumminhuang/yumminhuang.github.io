@@ -12,13 +12,13 @@ Since there are several remote servers, I have to run the server program in the 
 
 At first, I simply add the ampersand (&) at the end of the command like this:
 
-```
+```shell
 ssh user@host "cd /some/directory; ./program &"
 ```
 
 But my script just hangs after it runs first remote server. After googling this problem, I found this command to solve it.
 
-```
+```shell
 ssh -n -f user@host "sh -c 'cd /some/directory; nohup ./program > /dev/null 2>&1 &'"
 ```
 

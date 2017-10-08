@@ -9,7 +9,7 @@ I just learned one trick for debugging Python script from my colleague. It's not
 
 I only need to add single line at the position I want to break.
 
-```
+```python
 import code; code.interact(local=locals())
 ```
 

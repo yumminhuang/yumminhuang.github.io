@@ -92,7 +92,7 @@ Main ideas for my solution:
 * Recursion is the easiest way to handle such DFS algorithm.
 * Be careful about indentation of each line. Adding a `depth` parameter in function. Here is the basic idea:
 
-```
+```python
 def foo(id, depth=0):
     ...
     if depth == 0:

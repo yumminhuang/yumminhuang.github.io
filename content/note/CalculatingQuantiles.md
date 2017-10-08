@@ -66,7 +66,7 @@ Then I realized I should avoid building a list. I should calculate all quantiles
 
 After the online test, I completed it. Here is my final solutions
 
-```
+```python
 import math
 import sys
 

@@ -73,13 +73,13 @@ i3 窗口管理器有一个很重要的概念就是容器（Container）。每�
 ### 安装
 以Ubuntu为例。首先添加i3到源列表。
 
-```
+```shell
 echo "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" >> /etc/apt/sources.list
 ```
 
 然后运行以下指令进行安装。
 
-```
+```shell
 apt-get update
 apt-get --allow-unauthenticated install sur5r-keyring
 apt-get install i3

@@ -63,7 +63,7 @@ Fabric Task 是我个人非常喜欢的功能。定义一个 Task 之后就可�
 
 但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 `datetime`，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。
 
-```
+```python
 from fabric.api import *
 
 def check_log_with_keyword(log_file, keyword):

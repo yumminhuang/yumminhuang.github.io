@@ -44,7 +44,7 @@ date        = "2015-03-16"
 其余添加用户、Linux 基本设置等内容在此不再赘述。
 #### 安装PPTP
 
-```
+```shell
 sudo apt-get install pptpd
 ```
 
@@ -82,14 +82,14 @@ test		pptpd   1234            *
 
 打开 IPv4 转发，并重新载入设置。
 
-```
+```shell
 sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 sudo sysctl -p
 ```
 
 为 PPTP 连接设置 NAT，否则不能访问别的网站。
 
-```
+```shell
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 ```
 
@@ -97,7 +97,7 @@ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
 * 重启 PPTP
 
-```
+```shell
 sudo service pptpd restart
 ```
 

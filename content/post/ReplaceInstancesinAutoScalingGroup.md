@@ -33,7 +33,7 @@ date       = "2014-08-02"
 
 下面提供一份示例代码以供参考：
 
-```
+```python
 #!python
 import sys
 import time

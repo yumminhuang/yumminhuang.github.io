@@ -17,7 +17,7 @@ Two coding problems I encountered in a recent interview.
 Input: Binary tree
   3
  / \
-1   4 
+1   4
  \   \
   2   5
   
@@ -26,7 +26,7 @@ Output: 3, 1, 4, 2, 5
 
 **Solution**
 
-```
+```python
 class Node(object):
     def __init__(self, value, left=None, right=None):
         self.value = value
@@ -56,7 +56,7 @@ def traverse(rootnode):
 
 Output for the given example
 
-```
+```python
 t = Node(3, Node(1, right=Node(2)), Node(4, right=Node(5)))
 traverse(t)
 ```
@@ -73,14 +73,14 @@ The given example is confusing. There are two difficulties:
 1. carry digit when adding two digits, e.g. `[1, 2, 3] + [9, 8, 7]`;
 2. input two arrays of different size, e.g. `[1, 2, 3] + [4, 3, 2, 1]`
 
-Although and the interviewer didn't mention those points, I thought I should consider them. Otherwise, the problem can be easily solved by a loop or one line code of python 
+Although and the interviewer didn't mention those points, I thought I should consider them. Otherwise, the problem can be easily solved by a loop or one line code of python
 `[x + y for x, y in zip(lst1, lst2)]`.
 
 Similar problem solved by C++: [Add two numbers represented by linked lists](http://www.geeksforgeeks.org/sum-of-two-linked-lists/).
 
 **Solution**
 
-```
+```python
 def add(lst1, lst2):
     ret = list()
     # minimum size
@@ -114,7 +114,7 @@ def add(lst1, lst2):
 
 > How to modify your code if input is a list of arrays instead of two arrays?
 
-```
+```python
 def add_lists(*lists):
     return reduce(lambda x, y: add(x, y), lists)
 ```

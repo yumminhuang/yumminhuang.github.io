@@ -21,7 +21,7 @@ For more details about how they work, please see [official documents](https://ge
 
 * `GerritSiteHeader.html`
 
-```
+```html
 <div>
   <div id="logo"><a href="#/"><img src="static/logo.cache.png" height="41" width="32"/></a></div>
   <!-- Add more contents if necessary
@@ -37,7 +37,7 @@ For more details about how they work, please see [official documents](https://ge
 
 * `GerritSiteFooter.html`
 
-```
+```html
 <div>
   <ul>
   <li><a href="https://www.mediawiki.org/wiki/Git_and_Gerrit_FAQ" target="_blank">Frequently Asked Questions</a></li>
@@ -50,7 +50,7 @@ For more details about how they work, please see [official documents](https://ge
 
 * `GerritSite.css`
 
-```
+```css
 #logo {
   display: block !important;
   margin-bottom: -55px;
@@ -79,12 +79,12 @@ We use Ansible to deploy Gerrit. Here are examples that how to update HTML/CSS f
 
 * Adding `GerritSiteHeader.html` to Gerrit
 
-```
+```shell
 ansible production -i hosts [-l <single-gerrit-host>] -m copy -s -a 'src=GerritSiteHeader.html dest=/site_path/etc owner=gerrit2 group=gerrit2 mode=0644' -v
 ```
 
 * Removing `GerritSiteFooter.html`
 
-```
+```shell
 ansible production -i hosts [-l <single-gerrit-host>] -m file -s -a 'dest=/site_path/etc state=absent' -v
 ```

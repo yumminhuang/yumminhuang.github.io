@@ -43,7 +43,7 @@ Two build modes are supported: *Standalone* and *in Gerrit tree*. The standalone
 
 ### Build standalone
 
-```
+```shell
 # clone bucklets library
 git clone https://gerrit.googlesource.com/bucklets
 # checkout the correct bucklets version: Make sure bucklets/buckversion is same as the gerrit/.buckversion

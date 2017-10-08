@@ -108,7 +108,7 @@ hot_standby = on
 接下来，添加 `/var/lib/postgresql/9.4/main/recovery.conf` 文件，配置  *primary*  信息。
 
 ```
-standby_mode = on 
+standby_mode = on
 primary_conninfo = 'host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD'
 trigger_file = '/var/lib/postgresql/postgresql.trigger'
 ```
@@ -132,10 +132,10 @@ rsync -av --exclude pg_xlog --exclude postgresql.conf data/* \
 
 首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。
 
-```
+```shell
 $ sudo apt install xinetd
 $ cat /etc/xinetd.d/git-daemon
- 
+
 # default: off
 # description: The git server offers access to git repositories service git
 service git
@@ -168,7 +168,7 @@ $ sudo /etc/init.d/xinetd restart
 
 ```
 [remote "slave"]
-  url = git://gerrit-slave.example.com/${name}.git 
+  url = git://gerrit-slave.example.com/${name}.git
   mirror = true
   threads = 4
   adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git

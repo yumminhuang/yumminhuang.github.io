@@ -32,7 +32,7 @@ Coveralls 和 Travis CI 一样，仅对 Github 上的开源项目免费。Covera
 
 我一般会在项目中添加一个 `requirements.txt`，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行
 
-```
+```shell
 pip install -r requirements.txt
 ```
 
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 nose 对 coverage.py 的支持非常好，可以在 `nosetests` 命令后添加一系列选项来生成覆盖率。
 
-```
+```shell
 nosetests --with-coverage
 ```
 
@@ -55,7 +55,7 @@ nosetests --with-coverage
 ### 持续集成
 在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 `.travis.yml`。Travis CI 的配置使用的是非常易读的 YAML 文件。
 
-```
+```yaml
 language: python
 python:
     - 2.6
