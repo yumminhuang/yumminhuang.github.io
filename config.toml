@@ -9,6 +9,13 @@ footnoteReturnLinkContents = "↩"
 # (.Summary and .WordCount can work properly in CJKLanguage)
 hasCJKLanguage =  true
 
+# Syntax Highlighting
+pygmentsUseClasses = true
+pygmentsCodefences = true
+pygmentsCodeFencesGuessSyntax = true
+pygmentsOptions = "linenos=inline"
+pygmentsStyle = "monokai"
+
 [params]
     # name of the site author; used in header meta information
     author = "Yaming Huang"
