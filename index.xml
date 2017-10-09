@@ -49,24 +49,22 @@
 &lt;p&gt;来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。&lt;/p&gt;
 
 &lt;p&gt;分布式 Gerrit 架构如下图所示。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;+----------------------+                  +--------------------+
-|                      |                  |                    |
-|    Gerrit Master     |                  |    Gerrit Slave    |
-|       Server         |                  |       Server       |
-|                +-----+-----+            |                    |
-|   +----------+ |  Gerrit   |            |     +----------+   |
-|   |Repository| |Replication|  git push  |     |Repository|   |
-|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
-|   +----------+ +-----+-----+            |     +----------+   |
-|                      |                  |                    |
-|   +--------------+   |                  |  +--------------+  |
-|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
-|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
-|   +--------------+   |                  |  +--------------+  |
-+----------------------+                  +--------------------+
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+----------------------+                  +--------------------+
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                      |                  |                    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|    Gerrit Master     |                  |    Gerrit Slave    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|       Server         |                  |       Server       |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                +-----+-----+            |                    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +----------+ |  Gerrit   |            |     +----------+   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |Repository| |Replication|  git push  |     |Repository|   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +----------+ +-----+-----+            |     +----------+   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                      |                  |                    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +--------------+   |                  |  +--------------+  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +--------------+   |                  |  +--------------+  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+----------------------+                  +--------------------+&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，&lt;code&gt;refs/meta&lt;/code&gt; 分支下的变更或是创建的新代码库）同步到 Slave。&lt;/p&gt;
 
 &lt;p&gt;为了实现数据库的同步，需要将 PostgreSQL 运行在 &lt;a href=&#34;https://www.postgresql.org/docs/9.4/static/hot-standby.html&#34;&gt;Hot Standby 模式&lt;/a&gt;。 在 Gerrit Master 上运行的 PostgreSQL 是 &lt;em&gt;primary&lt;/em&gt; ，可以进行读、写操作； 在 Gerrit Slave 上运行的 PostgreSQL 是 &lt;em&gt;stanby&lt;/em&gt; ，可以和 &lt;em&gt;primary&lt;/em&gt; 保持同步，可以接受客户端的连接，但只能进行读操作。如果 &lt;em&gt;primary&lt;/em&gt; 故障了，整个系统可以迁移（ &lt;em&gt;fail over&lt;/em&gt; ）到 &lt;em&gt;stanby&lt;/em&gt; ，由 &lt;em&gt;stanby&lt;/em&gt; 承担 &lt;em&gt;primary&lt;/em&gt; 的角色。&lt;/p&gt;
@@ -80,58 +78,46 @@
 &lt;h4 id=&#34;gerrit-slave&#34;&gt;Gerrit Slave&lt;/h4&gt;
 
 &lt;p&gt;安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 &lt;code&gt;gerrit.config&lt;/code&gt; 文件里的 &lt;code&gt;[container]&lt;/code&gt; 下面添加 &lt;code&gt;slave = true&lt;/code&gt; 。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[container]
-    user = gerrit2
-    javaHome = /usr/lib/jvm/java-7-oracle/jre
-    javaOptions = -Xmx80g -Xms20g -Xmn2g
-    slave = true
-[database]
-    type = postgresql
-    database = reviewdb
-    hostname = localhost
-    username = gerrit2
-...
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[container]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    user = gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    javaHome = /usr/lib/jvm/java-7-oracle/jre
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    javaOptions = -Xmx80g -Xms20g -Xmn2g
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    slave = true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[database]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    type = postgresql
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    database = reviewdb
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    hostname = localhost
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    username = gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样 Gerrit 才会启动为 Slave。&lt;/p&gt;
 
 &lt;h3 id=&#34;配置-postgresql-数据库&#34;&gt;配置 PostgreSQL 数据库&lt;/h3&gt;
 
 &lt;p&gt;在 Master 上要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，打开 Hot Standby 功能。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;...
-wal_level = hot_standby
-...
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;wal_level = hot_standby
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;还需要在 &lt;code&gt;/etc/postgresql/9.4/main/pg_hba.conf&lt;/code&gt; 添加  &lt;em&gt;stanby&lt;/em&gt; 的 IP，确保 &lt;em&gt;stanby&lt;/em&gt; 可以连接  &lt;em&gt;primary&lt;/em&gt; 进行同步。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 Slave 上首先需要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，设置 PostgreSQL 运行为 &lt;em&gt;stanby&lt;/em&gt; 。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;...
-hot_standby = on
-...
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;hot_standby = on
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;接下来，添加 &lt;code&gt;/var/lib/postgresql/9.4/main/recovery.conf&lt;/code&gt; 文件，配置  &lt;em&gt;primary&lt;/em&gt;  信息。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;standby_mode = on 
-primary_conninfo = &#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&#39;
-trigger_file = &#39;/var/lib/postgresql/postgresql.trigger&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;standby_mode = on
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;primary_conninfo = &amp;#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;trigger_file = &amp;#39;/var/lib/postgresql/postgresql.trigger&amp;#39;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;其中 &lt;code&gt;trigger_file&lt;/code&gt; 被用来触发 &lt;em&gt;fail over&lt;/em&gt; ，此时不需要创建。&lt;/p&gt;
 
 &lt;p&gt;配置完成后，在 &lt;em&gt;primary&lt;/em&gt;  上运行命令将数据拷贝到 &lt;em&gt;standby&lt;/em&gt; 。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* \
-	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;重启两端的 PostgreSQL 后，&lt;em&gt;primary&lt;/em&gt; 和 &lt;em&gt;standby&lt;/em&gt; 将保持同步。&lt;/p&gt;
 
 &lt;p&gt;关于 Hot Standby 的详细的说明，可以参见 Postgresql 的这篇&lt;a href=&#34;https://wiki.postgresql.org/wiki/Hot_Standby&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
@@ -141,32 +127,30 @@ trigger_file = &#39;/var/lib/postgresql/postgresql.trigger&#39;
 &lt;h4 id=&#34;gerrit-slave-1&#34;&gt;Gerrit Slave&lt;/h4&gt;
 
 &lt;p&gt;首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt install xinetd
-$ cat /etc/xinetd.d/git-daemon
- 
-# default: off
-# description: The git server offers access to git repositories service git
-service git
-{
-        disable = no
-        type = UNLISTED
-        port = 9418
-        socket_type = stream
-        wait = no
-        env  = HOME=/home/gerrit2
-        user = gerrit2
-        server = /usr/bin/git
-        only_from = gerrit-master.example.com
-        log_type = SYSLOG daemon info
-        server_args = daemon --inetd --syslog --export-all --enable=upload-pack --enable=receive-pack --base-path=/home/gerrit2/review_site/git --verbose
-        log_on_success += USERID HOST DURATION EXIT
-        log_on_failure += USERID HOST ATTEMPT
-        cps = 150 10
-}
-$ sudo /etc/init.d/xinetd restart
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ sudo apt install xinetd
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ cat /etc/xinetd.d/git-daemon
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# default: off
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# description: The git server offers access to git repositories service git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;service git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;disable&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; no
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; UNLISTED
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;port&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;9418&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;socket_type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; stream
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;wait&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; no
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;env&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HOME&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/home/gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;server&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /usr/bin/git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;only_from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit-master.example.com
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; SYSLOG daemon info
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;server_args&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; daemon --inetd --syslog --export-all --enable&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;upload-pack --enable&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;receive-pack --base-path&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/home/gerrit2/review_site/git --verbose
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_on_success&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; USERID HOST DURATION EXIT
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_on_failure&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; USERID HOST ATTEMPT
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cps&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;150&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ sudo /etc/init.d/xinetd restart&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;重启 xinetd 之后，9418 端口将会开启，可以通过 &lt;code&gt;git://&lt;/code&gt; 访问 Gerrit Slave 上的代码库。&lt;/p&gt;
 
 &lt;h4 id=&#34;gerrit-master&#34;&gt;Gerrit Master&lt;/h4&gt;
@@ -174,14 +158,12 @@ $ sudo /etc/init.d/xinetd restart
 &lt;p&gt;在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 &lt;code&gt;$REVIEW_SITE/plugin&lt;/code&gt; 目录下。&lt;/p&gt;
 
 &lt;p&gt;接下来，添加 &lt;code&gt;$REVIEW_SITE/etc/replication.config&lt;/code&gt; 文件，加上 Gerrit Slave 的配置&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[remote &amp;quot;slave&amp;quot;]
-  url = git://gerrit-slave.example.com/${name}.git 
-  mirror = true
-  threads = 4
-  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[remote &amp;#34;slave&amp;#34;]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  url = git://gerrit-slave.example.com/${name}.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  mirror = true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  threads = 4
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;注意，&lt;code&gt;adminUrl&lt;/code&gt; 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。&lt;/p&gt;
 
 &lt;p&gt;这样，启动 Gerrit Master 之后，每次代码库有变更，Gerrit Replication 插件都会将变更通过 git 协议 Push 到 Slave 上。&lt;/p&gt;
@@ -191,17 +173,13 @@ $ sudo /etc/init.d/xinetd restart
 &lt;hr /&gt;
 
 &lt;p&gt;分布式 Gerrit 搭建完成之后，我们可以添加 &lt;code&gt;.gitconfig&lt;/code&gt; 文件来实现代码上传和下载分流。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[url &amp;quot;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;quot;]
-    insteadOf = gerrit
-    pushInsteadOf = ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;url &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;insteadOf&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pushInsteadOf&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，克隆代码库的时候使用命令&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git clone gerrit:path/to/repo
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git clone gerrit:path/to/repo&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;可以从 Gerrit Slave 下载代码，而 &lt;code&gt;git push&lt;/code&gt; 的时候会自动将代码 Push 到 Gerrit Master。&lt;/p&gt;
 
 &lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
@@ -269,60 +247,52 @@ $ sudo /etc/init.d/xinetd restart
 &lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
 
 &lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-Bash&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
-cd Blog
-# Delete the old remote
-git remote rm origin
-# Add a new remote
-git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
-# (Optional) Modify .git/config for submodules, etc
-vi .git/config
-# Create the new branch and switch to it
-git checkout -b source
-# Push the new branch to remote
-git push origin source
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; Blog
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Delete the old remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git remote rm origin
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Add a new remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# (Optional) Modify .git/config for submodules, etc
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;vi .git/config
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Create the new branch and switch to it
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git checkout -b &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Push the new branch to remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git push origin source&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
 
 &lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
 
 &lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 &lt;a href=&#34;https://github.com/yumminhuang/hugo-docker&#34;&gt;Dockerfile&lt;/a&gt; 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;FROM alpine:latest
-MAINTAINER Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;
-
-ARG HUGO_VERSION=0.17
-
-RUN apk add --update wget ca-certificates &amp;amp;&amp;amp; \
-  cd /tmp/ &amp;amp;&amp;amp; \
-  wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  tar xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  rm -r hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  mv hugo*/hugo* /usr/bin/hugo &amp;amp;&amp;amp; \
-  apk del wget ca-certificates &amp;amp;&amp;amp; \
-  rm /var/cache/apk/*
-
-VOLUME /website
-VOLUME /public
-
-WORKDIR /website
-ENTRYPOINT [&amp;quot;/usr/bin/hugo&amp;quot;]
-
-EXPOSE 1313
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; alpine:latest&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;MAINTAINER&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;ARG &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.17&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;RUN&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; apk add --update wget ca-certificates &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /tmp/ &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  wget https://github.com/spf13/hugo/releases/download/v&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  tar xzf hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  rm -r hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  mv hugo*/hugo* /usr/bin/hugo &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  apk del wget ca-certificates &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  rm /var/cache/apk/*&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /public&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;WORKDIR&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; [&amp;#34;/usr/bin/hugo&amp;#34;]&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;EXPOSE&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; 1313&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo-docker&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;docker run --rm -v &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:/website yumminhuang/hugo:latest&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;docker run --rm -p &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;1313&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:1313 -v &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:/website yumminhuang/hugo:latest server --bind&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.0.0.0 -w -D&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
 
 &lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
@@ -330,44 +300,40 @@ EXPOSE 1313
 &lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
 
 &lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;travis encrypt &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;GIT_DEPLOY_REPO&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;https://GENERATED_TOKEN@github.com/username/reponame.git&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
 
 &lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;env:
-  global:
-  - secure: &amp;quot; LONG TOKEN &amp;quot;
-  - GIT_DEPLOY_DIR=public
-  - GIT_DEPLOY_BRANCH=master
-  - GIT_DEPLOY_USERNAME=&amp;quot;Travis CI&amp;quot;
-  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
-
-branches:
-  only:
-    - source
-
-sudo: required
-
-services:
-  - docker
-
-install:
-  - rm -rf public || exit 0
-  - git config --global user.email &amp;quot;yumminhuang@gmail.com&amp;quot;
-  - git config --global user.name &amp;quot;Travis CI&amp;quot;
-
-script:
-  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-
-after_success:
-  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
-  - bash deploy.sh -m &amp;quot;updating blog `date`&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;env:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  global:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - secure: &amp;#34; LONG TOKEN &amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_DIR=public
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_BRANCH=master
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_USERNAME=&amp;#34;Travis CI&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;branches:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  only:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - source
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo: required
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;services:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - rm -rf public || exit 0
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - git config --global user.email &amp;#34;yumminhuang@gmail.com&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - git config --global user.name &amp;#34;Travis CI&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;after_success:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - bash deploy.sh -m &amp;#34;updating blog `date`&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
 
 &lt;ul&gt;
@@ -414,37 +380,35 @@ after_success:
 &lt;p&gt;于是，我以此开源项目为模板，同时参考了另一篇文章 &lt;a href=&#34;http://harshjv.github.io/blog/setup-latex-pdf-build-using-travis-ci/&#34;&gt;&lt;em&gt;Setup LaTeX PDF build using Travis CI&lt;/em&gt;&lt;/a&gt; 及&lt;a href=&#34;https://github.com/harshjv/travis-ci-latex-pdf&#34;&gt;代码&lt;/a&gt;，将自己的简历实现了自动化编译与发布。&lt;/p&gt;
 
 &lt;p&gt;先看一下我的 &lt;code&gt;.travis.yml&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo: required
-dist: trusty
-before_install:
-- sudo apt-get update
-- sudo apt-get -y --no-install-recommends install texlive-full
-- sudo wget -P /usr/share/fonts/opentype/ https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;quot;
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;quot;
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;quot;
-- sudo mkfontscale
-- sudo mkfontdir
-- sudo fc-cache -f
-script:
-- cd resume
-- make
-- cd ..
-- mv resume/Resume.pdf Resume.pdf
-- mv resume/Resume_ZH.pdf Resume_ZH.pdf
-deploy:
-  provider: releases
-  api_key:
-    secure: [A LONG LONG TOKEN, omit it]
-  file:
-    - Resume.pdf
-    - Resume_ZH.pdf
-  skip_cleanup: true
-  on:
-    repo: yumminhuang/Resume
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo: required
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dist: trusty
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;before_install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo apt-get update
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo apt-get -y --no-install-recommends install texlive-full
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo mkfontscale
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo mkfontdir
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo fc-cache -f
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- cd resume
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- make
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- cd ..
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume.pdf Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume_ZH.pdf Resume_ZH.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;deploy:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  provider: releases
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  api_key:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    secure: [A LONG LONG TOKEN, omit it]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  file:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - Resume_ZH.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  skip_cleanup: true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  on:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    repo: yumminhuang/Resume&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;首先前两行声明了需要的权限和使用 &lt;a href=&#34;https://docs.travis-ci.com/user/trusty-ci-environment/&#34;&gt;Travis CI 的 Trusty（即 Ubuntu 14.04）编译环境&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;接着，&lt;code&gt;before_install&lt;/code&gt; 后的命令用来安装 texlive 和字体，更新系统字体列表。&lt;/p&gt;
@@ -470,45 +434,41 @@ deploy:
 &lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-# install texlive 2015 and dependencies
-apt-get update &amp;amp;&amp;amp; \
-apt-get install -y --no-install-recommends \
-    texlive-latex-extra \
-    texlive-latex-recommended \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-lang-chinese \
-    texlive-formats-extra \
-    lmodern \
-    wget \
-    xzdec
-
-# intsall latex packages
-tlmgr init-usertree
-tlmgr install ulem
-
-cd resume/
-# run xelatex
-xelatex Resume.tex -interaction=nonstopmode
-xelatex Resume_ZH.tex -interaction=nonstopmode
-
-rm *.aux *.log *.out
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# install texlive 2015 and dependencies
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get update &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get install -y --no-install-recommends &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-latex-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-latex-recommended &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-fonts-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-fonts-recommended &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-lang-chinese &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-formats-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    lmodern &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    wget &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    xzdec
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# intsall latex packages
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tlmgr init-usertree
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tlmgr install ulem
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; resume/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# run xelatex
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;xelatex Resume.tex -interaction&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nonstopmode
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;xelatex Resume_ZH.tex -interaction&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nonstopmode
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;rm *.aux *.log *.out&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，使用一个 Ubuntu 16.04 的容器运行该脚本就可以生成简历了。接着，我把 &lt;code&gt;.travis.yml&lt;/code&gt; 的 &lt;code&gt;before_install&lt;/code&gt; 和 &lt;code&gt;script&lt;/code&gt; 过程简化成下面的设置。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;services:
-  - docker
-
-script:
-- docker run --rm -v $(pwd)/resume:/resume ubuntu:xenial bash /resume/build.sh
-- mv resume/Resume.pdf Resume.pdf
-- mv resume/Resume_ZH.pdf Resume_ZH.pdf
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;services:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- docker run --rm -v $(pwd)/resume:/resume ubuntu:xenial bash /resume/build.sh
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume.pdf Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume_ZH.pdf Resume_ZH.pdf&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;主要过程就是创建一个 Ubuntu xenial 容器来运行 &lt;code&gt;build.sh&lt;/code&gt;。后面发布过程的设置和 1.0 版一样。&lt;/p&gt;
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
@@ -516,21 +476,18 @@ script:
 &lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;branches:
-  only:
-    - /^v[\d.]+\d$/
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;branches:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  only:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - /^v[\d.]+\d$/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;需要注意的是，Travis-CI 把 git 的标签（tag）和分支（branch）都视作 branches，关于如何设置特定 branch 进行构建，可以参见&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Building-Specific-Branches&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;这样，我平时可以正常地提交更新而不会触发 Travis-CI。需要发布新的简历时，按照 &lt;code&gt;^v[\d.]+\d$&lt;/code&gt; 的格式，比如 &lt;code&gt;v1.2.1&lt;/code&gt;，加一个标签再提交即可。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git add -a
-git commit -m &amp;quot;Message&amp;quot;
-git tag v1.2.1
-git push -u origin master --tags
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git add -a
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git commit -m &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Message&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git tag v1.2.1
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git push -u origin master --tags&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
           </item>
         
       

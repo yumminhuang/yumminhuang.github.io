@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -105,17 +103,13 @@
 <p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送<code>观测量: 观测值</code>这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。</p>
 
 <p>当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：</p>
-
-<pre><code>&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;</span></pre>
+</div>
 <p>例如，有一个 Metric 叫作 <code>local.metric.random</code>，可以用下面的 Bash 命令发送当前时刻的值 <code>4</code>。</p>
-
-<pre><code>PORT=2003
-SERVER=graphite.your.org
-echo &quot;local.metric.random 4 `date +%s`&quot; | nc -q0 ${SERVER} ${PORT}
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s7d0">PORT</span><span class="s1f40"></span><span class="sfa0">=</span><span class="sc80">2003</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40"></span><span class="s7d0">SERVER</span><span class="s1f40"></span><span class="sfa0">=</span><span class="s1f40">graphite.your.org
+</span><span class="ln">3</span><span class="s1f40"></span><span class="s7d0">echo</span><span class="s1f40"> </span><span class="sc1c">&#34;local.metric.random 4 `date +%s`&#34;</span><span class="s1f40"> </span><span class="s1388">|</span><span class="s1f40"> nc -q0 </span><span class="sc1c">${</span><span class="s7d0">SERVER</span><span class="sc1c">}</span><span class="s1f40"> </span><span class="sc1c">${</span><span class="s7d0">PORT</span><span class="sc1c">}</span></code></pre>
+</div>
 <p>类似地，使用其它编程语言时，可以使用 Socket 发送数据。</p>
 
 <p>另外，Graphite 的 Metric 名称支持以 <code>.</code> 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。</p>
@@ -133,43 +127,33 @@ echo &quot;local.metric.random 4 `date +%s`&quot; | nc -q0 ${SERVER} ${PORT}
 <p>除了支持简单的键／值数据类型，Graphite 还可以通过 <a href="http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events">Events</a> 来存储更复杂的数据。简而言之，Graphite Events 使用了 <code>tag</code> 和 <code>data</code> 两个键来存储更多的信息。</p>
 
 <p>我们可以使用 HTTP POST 向 Graphite 发送一个 Event。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">curl -X POST </span><span class="sc1c">&#34;http://graphite.your.org/events&#34;</span><span class="s1f40"> -d </span><span class="sc1c">&#39;{&#34;what&#34;: &#34;Deployment&#34;, &#34;tags&#34;: &#34;webserver&#34;, &#34;data&#34;: &#34;Deploy webserver&#34;}&#39;</span></code></pre>
+</div>
+<p>下文将会通过一个具体的实例来介绍Events的使用场景。</p>
 
-<p>```curl -X POST &ldquo;<a href="http://graphite.your.org/events&quot;">http://graphite.your.org/events&quot;</a> -d &lsquo;{&ldquo;what&rdquo;: &ldquo;Deployment&rdquo;, &ldquo;tags&rdquo;: &ldquo;webserver&rdquo;, &ldquo;data&rdquo;: &ldquo;Deploy webserver&rdquo;}&rsquo;</p>
+<h2 id="grafana">Grafana</h2>
 
-<pre><code>
-下文将会通过一个具体的实例来介绍Events的使用场景。
+<p>鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 <a href="http://grafana.org/">Grafana</a> 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多<a href="http://grafana.org/features">不错的特性</a>，还可以访问官网提供的 <a href="http://play.grafana.org">Live Demo</a> 来体验 Grafana。</p>
 
-## Grafana
+<p>设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源<sup class="footnote-ref" id="fnref:update"><a rel="footnote" href="#fn:update">1</a></sup>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="ln">1</span><span class="s7df">datasources</span><span class="sfa0">:</span><span class="s1f40"> </span><span class="s1388">{</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40">  </span><span class="s7df">graphite</span><span class="sfa0">:</span><span class="s1f40"> </span><span class="s1388">{</span><span class="s1f40">
+</span><span class="ln">3</span><span class="s1f40">    </span><span class="s7df">type</span><span class="sfa0">:</span><span class="s1f40"> </span><span class="sc1c">&#39;graphite&#39;</span><span class="s1388">,</span><span class="s1f40">
+</span><span class="ln">4</span><span class="s1f40">    </span><span class="s7df">url</span><span class="sfa0">:</span><span class="s1f40"> </span><span class="sc1c">&#34;http://my.graphite.server.com:8080&#34;</span><span class="s1388">,</span><span class="s1f40">
+</span><span class="ln">5</span><span class="s1f40">  </span><span class="s1388">}</span><span class="s1f40">
+</span><span class="ln">6</span><span class="s1f40"></span><span class="s1388">},</span></code></pre>
+</div>
+<p>具体的配置教程可以参见<a href="http://docs.grafana.org/v1.9/installation/">官方文档</a>。</p>
 
-鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 [Grafana](http://grafana.org/) 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多[不错的特性](http://grafana.org/features)，还可以访问官网提供的 [Live Demo](http://play.grafana.org) 来体验 Grafana。
+<h2 id="实例">实例</h2>
 
-设置 Grafana，只需编辑 `config.js` 设置数据来源[^update]。
-
-</code></pre>
-
-<p>datasources: {
-  graphite: {
-    type: &lsquo;graphite&rsquo;,
-    url: &ldquo;<a href="http://my.graphite.server.com:8080&quot;">http://my.graphite.server.com:8080&quot;</a>,
-  }
-},</p>
-
-<pre><code>
-具体的配置教程可以参见[官方文档](http://docs.grafana.org/v1.9/installation/)。
-
-## 实例
-
-我实习所在公司使用 [Jenkins](https://jenkins-ci.org) 部署代码。在部署完成之后，我添加了一段 [post-build script](https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin) 执行下面的脚本。
-
-</code></pre>
-
-<p>#!/bin/bash</p>
-
-<p>HOST=<a href="http://graphite.your.org/events">http://graphite.your.org/events</a>
-echo &lsquo;Posting a deployment event to Graphite&rsquo;
-curl -X POST $HOST -d &lsquo;{&ldquo;what&rdquo;: &ldquo;Deployment&rdquo;, &ldquo;tags&rdquo;: &ldquo;webserver,prd&rdquo;, &ldquo;data&rdquo;: \&ldquo;$BUILD_URL\&ldquo;}&rsquo;
-```</p>
-
+<p>我实习所在公司使用 <a href="https://jenkins-ci.org">Jenkins</a> 部署代码。在部署完成之后，我添加了一段 <a href="https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin">post-build script</a> 执行下面的脚本。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1770">#!/bin/bash
+</span><span class="ln">2</span><span class="s1770"></span><span class="s1f40">
+</span><span class="ln">3</span><span class="s1f40"></span><span class="s7d0">HOST</span><span class="s1f40"></span><span class="sfa0">=</span><span class="s1f40">http://graphite.your.org/events
+</span><span class="ln">4</span><span class="s1f40"></span><span class="s7d0">echo</span><span class="s1f40"> </span><span class="sc1c">&#39;Posting a deployment event to Graphite&#39;</span><span class="s1f40">
+</span><span class="ln">5</span><span class="s1f40">curl -X POST </span><span class="s7d0">$HOST</span><span class="s1f40"> -d </span><span class="sc1c">&#39;{&#34;what&#34;: &#34;Deployment&#34;, &#34;tags&#34;: &#34;webserver,prd&#34;, &#34;data&#34;: \&#34;$BUILD_URL\&#34;}&#39;</span></code></pre>
+</div>
 <p>这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来绘制一幅图显示代码部署的 Events。</p>
 
 <p>利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。</p>
@@ -193,6 +177,15 @@ curl -X POST $HOST -d &lsquo;{&ldquo;what&rdquo;: &ldquo;Deployment&rdquo;, &ldq
 <li><a href="https://codeascraft.com/2010/12/08/track-every-release/">Tracking Every Release</a></li>
 <li><a href="http://joshhertz.se/post/making-annotations-in-graphana">Making Annotations in Graphana</a></li>
 </ol>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:update">Grafana 最新的 2.0 较 1.9 有较大的变化，不再使用 <code>config.js</code> 来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。
+ <a class="footnote-return" href="#fnref:update">↩</a></li>
+</ol>
+</div>
 		</div>
 	</div>
 	<div class="row">

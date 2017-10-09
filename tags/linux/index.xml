@@ -101,17 +101,13 @@
 &lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
 
 &lt;p&gt;以Ubuntu为例。首先添加i3到源列表。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;echo &amp;quot;deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe&amp;quot; &amp;gt;&amp;gt; /etc/apt/sources.list
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;deb http://debian.sur5r.net/i3/ &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;lsb_release -c -s&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; universe&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &amp;gt;&amp;gt; /etc/apt/sources.list&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;然后运行以下指令进行安装。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;apt-get update
-apt-get --allow-unauthenticated install sur5r-keyring
-apt-get install i3
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get update
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get --allow-unauthenticated install sur5r-keyring
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get install i3&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
 
 &lt;p&gt;我之所以放弃 Awesome 的一个很重要的原因就是它的配置过于复杂。诚然，Awesome 的效果要比 i3 酷炫很多，但是设置需要用到 Lua 脚本。很多功能还需要通过安装插件来完成。相反，i3 只需要两个设置文件，而且用的是非常易读的语法。&lt;/p&gt;
@@ -196,10 +192,8 @@ apt-get install i3
 &lt;p&gt;其余添加用户、Linux 基本设置等内容在此不再赘述。&lt;/p&gt;
 
 &lt;h4 id=&#34;安装pptp&#34;&gt;安装PPTP&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install pptpd
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo apt-get install pptpd&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h4 id=&#34;配置&#34;&gt;配置&lt;/h4&gt;
 
 &lt;ul&gt;
@@ -207,12 +201,10 @@ apt-get install i3
 &lt;/ul&gt;
 
 &lt;p&gt;编辑 &lt;code&gt;/etc/pptpd.conf&lt;/code&gt;，添加以下内容(基本上默认设置已经完成或者被注释了)：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;option /etc/ppp/pptpd-options
-localip 192.168.0.1
-remoteip 192.168.0.100-200
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;option /etc/ppp/pptpd-options
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;localip 192.168.0.1
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;remoteip 192.168.0.100-200&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这里是 PPTP 服务器的 IP 地址设为 &lt;code&gt;192.178.0.1&lt;/code&gt; ，把 PPTP 客户端的 IP 地址设置为 &lt;code&gt;192.168.0.100&lt;/code&gt; 到 &lt;code&gt;192.168.0.200&lt;/code&gt; 的区间内。当然你也可以自己的需要和喜欢进行相应的设置&lt;/p&gt;
 
 &lt;ul&gt;
@@ -220,45 +212,35 @@ remoteip 192.168.0.100-200
 &lt;/ul&gt;
 
 &lt;p&gt;编辑 &lt;code&gt;/etc/ppp/pptpd-options&lt;/code&gt; ，添加 DNS 地址。这里我选择的是&lt;a href=&#34;https://developers.google.com/speed/public-dns/&#34;&gt;Google Public DNS&lt;/a&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ms-dns 8.8.8.8
-ms-dns 8.8.4.4
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;ms-dns 8.8.8.8
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;ms-dns 8.8.4.4&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;添加用户&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;编辑 &lt;code&gt;/etc/ppp/chap-secrets&lt;/code&gt;，添加账号和密码。其中第一列为账户名，第二列为密码。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# client    server  secret          IP addresses
-test		pptpd   1234            *
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# client    server  secret          IP addresses
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;test		pptpd   1234            *&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;设置 IP 转发&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;打开 IPv4 转发，并重新载入设置。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo sed -i &#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39; /etc/sysctl.conf
-sudo sysctl -p
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo sed -i &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /etc/sysctl.conf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo sysctl -p&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;为 PPTP 连接设置 NAT，否则不能访问别的网站。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;也可以直接编辑 &lt;code&gt;/etc/rc.local&lt;/code&gt;，在 &lt;code&gt;exit 0&lt;/code&gt; 之前添加以上内容。&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;重启 PPTP&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo service pptpd restart
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo service pptpd restart&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样PPTP服务器就搭建完毕了，可以「科学上网」了！&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -276,18 +258,16 @@ sudo sysctl -p
 &lt;/ul&gt;
 
 &lt;p&gt;第一次设置完毕之后尝试连接 VPN，发现连接失败。重新设置之后依然没有解决，以至于让我怀疑是 Ubuntu14.04 的问题。我新建了一个 Droplet，更换成 Ubuntu12.04 之后还是同样的问题。接着尝试用&lt;code&gt;netstat&lt;/code&gt;检查，发现连接已经建立，但是因为某种原因被断开了。检查&lt;code&gt;/var/log/syslog&lt;/code&gt;，发现了以下内容：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Mar 21 16:54:23 Server pptpd[1808]: GRE: Bad checksum from pppd.
-Mar 21 16:54:53 Server pppd[1809]: LCP: timeout sending Config-Requests
-Mar 21 16:54:53 Server pppd[1809]: Connection terminated.
-Mar 21 16:54:53 Server pppd[1809]: Modem hangup
-Mar 21 16:54:53 Server pppd[1809]: Exit.
-Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:23 Server pptpd[1808]: GRE: Bad checksum from pppd.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pppd[1809]: LCP: timeout sending Config-Requests
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pppd[1809]: Connection terminated.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pppd[1809]: Modem hangup
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pppd[1809]: Exit.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;上网搜索，在 StackOverflow 上找到了&lt;a href=&#34;http://stackoverflow.com/a/21347817&#34;&gt;答案&lt;/a&gt;。至此，终于定位到无法连接的根本原因 —— 是路由器不支持 &lt;code&gt;PPTP Passthrough&lt;/code&gt; 功能。我上路由器厂商的官网一看，果然发现了去年12月发布了一个固件更新用来修复VPN连接的问题。&lt;/p&gt;
 
 &lt;hr /&gt;

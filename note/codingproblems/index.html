@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -93,52 +91,46 @@
 
 <p>Example:</p>
 </blockquote>
-
-<pre><code>Input: Binary tree
-  3
- / \
-1   4 
- \   \
-  2   5
-  
-Output: 3, 1, 4, 2, 5
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">Input: Binary tree
+</span><span class="ln">2</span><span class="s1f40">  3
+</span><span class="ln">3</span><span class="s1f40"> / \
+</span><span class="ln">4</span><span class="s1f40">1   4
+</span><span class="ln">5</span><span class="s1f40"> \   \
+</span><span class="ln">6</span><span class="s1f40">  2   5
+</span><span class="ln">7</span><span class="s1f40">  
+</span><span class="ln">8</span><span class="s1f40">Output: 3, 1, 4, 2, 5</span></pre>
+</div>
 <p><strong>Solution</strong></p>
-
-<pre><code>class Node(object):
-    def __init__(self, value, left=None, right=None):
-        self.value = value
-        self.left = left
-        self.right = right
-
-
-def traverse(rootnode):
-    # The list to save all visited nodes
-    visited = list()
-
-    # BFS
-    thislevel = [rootnode]
-    while thislevel:
-        nextlevel = list()
-        for n in thislevel:
-            visited.append(n.value)
-            if n.left:
-                nextlevel.append(n.left)
-            if n.right:
-                nextlevel.append(n.right)
-
-        thislevel = nextlevel
-    # Print
-    print(', '.join(map(str, visited)))
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln"> 1</span><span class="s3e8">class</span><span class="s1f40"> </span><span class="s7d4">Node</span><span class="s1388">(</span><span class="s7d0">object</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 2</span><span class="s1f40">    </span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d0">__init__</span><span class="s1388">(</span><span class="s7d0">self</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">value</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">left</span><span class="sfa0">=</span><span class="s7d0">None</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">right</span><span class="sfa0">=</span><span class="s7d0">None</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 3</span><span class="s1f40">        </span><span class="s7d0">self</span><span class="sfa0">.</span><span class="s7d0">value</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">value</span><span class="s1f40">
+</span><span class="ln"> 4</span><span class="s1f40">        </span><span class="s7d0">self</span><span class="sfa0">.</span><span class="s7d0">left</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">left</span><span class="s1f40">
+</span><span class="ln"> 5</span><span class="s1f40">        </span><span class="s7d0">self</span><span class="sfa0">.</span><span class="s7d0">right</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">right</span><span class="s1f40">
+</span><span class="ln"> 6</span><span class="s1f40">
+</span><span class="ln"> 7</span><span class="s1f40">
+</span><span class="ln"> 8</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">traverse</span><span class="s1388">(</span><span class="s7d0">rootnode</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 9</span><span class="s1f40">    </span><span class="s1770"># The list to save all visited nodes</span><span class="s1f40">
+</span><span class="ln">10</span><span class="s1f40">    </span><span class="s7d0">visited</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">list</span><span class="s1388">()</span><span class="s1f40">
+</span><span class="ln">11</span><span class="s1f40">
+</span><span class="ln">12</span><span class="s1f40">    </span><span class="s1770"># BFS</span><span class="s1f40">
+</span><span class="ln">13</span><span class="s1f40">    </span><span class="s7d0">thislevel</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">[</span><span class="s7d0">rootnode</span><span class="s1388">]</span><span class="s1f40">
+</span><span class="ln">14</span><span class="s1f40">    </span><span class="s3e8">while</span><span class="s1f40"> </span><span class="s7d0">thislevel</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">15</span><span class="s1f40">        </span><span class="s7d0">nextlevel</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">list</span><span class="s1388">()</span><span class="s1f40">
+</span><span class="ln">16</span><span class="s1f40">        </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">thislevel</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">17</span><span class="s1f40">            </span><span class="s7d0">visited</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">(</span><span class="s7d0">n</span><span class="sfa0">.</span><span class="s7d0">value</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">18</span><span class="s1f40">            </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="sfa0">.</span><span class="s7d0">left</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">19</span><span class="s1f40">                </span><span class="s7d0">nextlevel</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">(</span><span class="s7d0">n</span><span class="sfa0">.</span><span class="s7d0">left</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">20</span><span class="s1f40">            </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="sfa0">.</span><span class="s7d0">right</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">21</span><span class="s1f40">                </span><span class="s7d0">nextlevel</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">(</span><span class="s7d0">n</span><span class="sfa0">.</span><span class="s7d0">right</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">22</span><span class="s1f40">
+</span><span class="ln">23</span><span class="s1f40">        </span><span class="s7d0">thislevel</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">nextlevel</span><span class="s1f40">
+</span><span class="ln">24</span><span class="s1f40">    </span><span class="s1770"># Print</span><span class="s1f40">
+</span><span class="ln">25</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1388">(</span><span class="sc1c"></span><span class="sc1c">&#39;, &#39;</span><span class="sfa0">.</span><span class="s7d0">join</span><span class="s1388">(</span><span class="s7d0">map</span><span class="s1388">(</span><span class="s7d0">str</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">visited</span><span class="s1388">)))</span></code></pre>
+</div>
 <p>Output for the given example</p>
-
-<pre><code>t = Node(3, Node(1, right=Node(2)), Node(4, right=Node(5)))
-traverse(t)
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">1</span><span class="s7d0">t</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">Node</span><span class="s1388">(</span><span class="sc80">3</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">Node</span><span class="s1388">(</span><span class="sc80">1</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">right</span><span class="sfa0">=</span><span class="s7d0">Node</span><span class="s1388">(</span><span class="sc80">2</span><span class="s1388">)),</span><span class="s1f40"> </span><span class="s7d0">Node</span><span class="s1388">(</span><span class="sc80">4</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">right</span><span class="sfa0">=</span><span class="s7d0">Node</span><span class="s1388">(</span><span class="sc80">5</span><span class="s1388">)))</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40"></span><span class="s7d0">traverse</span><span class="s1388">(</span><span class="s7d0">t</span><span class="s1388">)</span></code></pre>
+</div>
 <h3 id="problem-2">Problem 2</h3>
 
 <blockquote>
@@ -160,46 +152,42 @@ traverse(t)
 <p>Similar problem solved by C++: <a href="http://www.geeksforgeeks.org/sum-of-two-linked-lists/">Add two numbers represented by linked lists</a>.</p>
 
 <p><strong>Solution</strong></p>
-
-<pre><code>def add(lst1, lst2):
-    ret = list()
-    # minimum size
-    length = min(len(lst1), len(lst2))
-
-    carry = 0
-    # From left to right
-    for i in range(-1, -(length + 1), -1):
-        ret.append((carry + lst1[i] + lst2[i]) % 10)
-        carry = (carry + lst1[i] + lst2[i]) / 10
-
-    # Adding extra digits
-    if len(lst1) &gt; length:
-        for n in lst1[len(lst1) - length - 1::-1]:
-            ret.append((carry + n) % 10)
-            carry = (carry + n) / 10
-
-    if len(lst2) &gt; length:
-        for n in lst2[len(lst2) - length - 1::-1]:
-            ret.append((carry + n) % 10)
-            carry = (carry + n) / 10
-
-    if carry &gt; 0:
-        ret.append(carry)
-
-    # Reverse result list
-    return ret[::-1]
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln"> 1</span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">add</span><span class="s1388">(</span><span class="s7d0">lst1</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">lst2</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 2</span><span class="s1f40">    </span><span class="s7d0">ret</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">list</span><span class="s1388">()</span><span class="s1f40">
+</span><span class="ln"> 3</span><span class="s1f40">    </span><span class="s1770"># minimum size</span><span class="s1f40">
+</span><span class="ln"> 4</span><span class="s1f40">    </span><span class="s7d0">length</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">min</span><span class="s1388">(</span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">lst1</span><span class="s1388">),</span><span class="s1f40"> </span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">lst2</span><span class="s1388">))</span><span class="s1f40">
+</span><span class="ln"> 5</span><span class="s1f40">
+</span><span class="ln"> 6</span><span class="s1f40">    </span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1f40">
+</span><span class="ln"> 7</span><span class="s1f40">    </span><span class="s1770"># From left to right</span><span class="s1f40">
+</span><span class="ln"> 8</span><span class="s1f40">    </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">i</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">range</span><span class="s1388">(</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">,</span><span class="s1f40"> </span><span class="sfa0">-</span><span class="s1388">(</span><span class="s7d0">length</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="sc80">1</span><span class="s1388">),</span><span class="s1f40"> </span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 9</span><span class="s1f40">        </span><span class="s7d0">ret</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">((</span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">lst1</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">]</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">lst2</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">])</span><span class="s1f40"> </span><span class="sfa0">%</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">10</span><span class="s1f40">        </span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">lst1</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">]</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">lst2</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">])</span><span class="s1f40"> </span><span class="sfa0">/</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1f40">
+</span><span class="ln">11</span><span class="s1f40">
+</span><span class="ln">12</span><span class="s1f40">    </span><span class="s1770"># Adding extra digits</span><span class="s1f40">
+</span><span class="ln">13</span><span class="s1f40">    </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">lst1</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">&gt;</span><span class="s1f40"> </span><span class="s7d0">length</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">14</span><span class="s1f40">        </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">lst1</span><span class="s1388">[</span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">lst1</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s7d0">length</span><span class="s1f40"> </span><span class="sfa0">-</span><span class="s1f40"> </span><span class="sc80">1</span><span class="s1388">::</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">]:</span><span class="s1f40">
+</span><span class="ln">15</span><span class="s1f40">            </span><span class="s7d0">ret</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">((</span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">%</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">16</span><span class="s1f40">            </span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">/</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1f40">
+</span><span class="ln">17</span><span class="s1f40">
+</span><span class="ln">18</span><span class="s1f40">    </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">lst2</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">&gt;</span><span class="s1f40"> </span><span class="s7d0">length</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">19</span><span class="s1f40">        </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">lst2</span><span class="s1388">[</span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">lst2</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s7d0">length</span><span class="s1f40"> </span><span class="sfa0">-</span><span class="s1f40"> </span><span class="sc80">1</span><span class="s1388">::</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">]:</span><span class="s1f40">
+</span><span class="ln">20</span><span class="s1f40">            </span><span class="s7d0">ret</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">((</span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">%</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">21</span><span class="s1f40">            </span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s7d0">n</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">/</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1f40">
+</span><span class="ln">22</span><span class="s1f40">
+</span><span class="ln">23</span><span class="s1f40">    </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">carry</span><span class="s1f40"> </span><span class="sfa0">&gt;</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">24</span><span class="s1f40">        </span><span class="s7d0">ret</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">(</span><span class="s7d0">carry</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln">25</span><span class="s1f40">
+</span><span class="ln">26</span><span class="s1f40">    </span><span class="s1770"># Reverse result list</span><span class="s1f40">
+</span><span class="ln">27</span><span class="s1f40">    </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">ret</span><span class="s1388">[::</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">]</span></code></pre>
+</div>
 <p><strong>Follow Up Problem</strong></p>
 
 <blockquote>
 <p>How to modify your code if input is a list of arrays instead of two arrays?</p>
 </blockquote>
-
-<pre><code>def add_lists(*lists):
-    return reduce(lambda x, y: add(x, y), lists)
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">1</span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">add_lists</span><span class="s1388">(</span><span class="sfa0">*</span><span class="s7d0">lists</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40">    </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">reduce</span><span class="s1388">(</span><span class="s3e8">lambda</span><span class="s1f40"> </span><span class="s7d0">x</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">y</span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">add</span><span class="s1388">(</span><span class="s7d0">x</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">y</span><span class="s1388">),</span><span class="s1f40"> </span><span class="s7d0">lists</span><span class="s1388">)</span></code></pre>
+</div>
         </div>
     </div>
     <div class="row">

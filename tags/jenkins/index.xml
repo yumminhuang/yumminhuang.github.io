@@ -144,13 +144,11 @@
 &lt;h4 id=&#34;运行什么&#34;&gt;运行什么&lt;/h4&gt;
 
 &lt;p&gt;添加一段 &lt;strong&gt;Build Script&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;PYTHONPATH=&#39;&#39;
-nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package=project1 --cover-inclusive
-python -m coverage xml --include=project1*
-pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;project1 --cover-inclusive
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;python -m coverage xml --include&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;project1*
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;pylint -f parseable -d I0011,R0801 project1 &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; tee pylint.out&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这段 Shell 脚本中的三个命令：&lt;/p&gt;
 
 &lt;ol&gt;
@@ -188,28 +186,24 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 &lt;p&gt;没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 &lt;a href=&#34;https://github.com/SurveyMonkey/pycobertura&#34;&gt;Pycobertura&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from pycobertura import Cobertura
-from pycobertura import TextReporterDelta
-
-coverage1 = Cobertura(&#39;coverage1.xml&#39;)
-coverage2 = Cobertura(&#39;coverage2.xml&#39;)
-delta = TextReporterDelta(coverage1, coverage2)
-delta.generate()
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pycobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pycobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage1.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage2.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;generate&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 &lt;strong&gt;Post build script&lt;/strong&gt; 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Coverage Diff for Java code:
-No coverage diff can be found.
-Coverage Diff for Python code:
-Name          Stmts    Miss    Cover
-------------  -------  ------  --------
-dummy/dummy   -        -2      +50.00%
-dummy/dummy2  +2       -       +100.00%
-TOTAL         +2       -2      +50.00%
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Coverage Diff for Java code:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;No coverage diff can be found.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Coverage Diff for Python code:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Name          Stmts    Miss    Cover
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;------------  -------  ------  --------
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dummy/dummy   -        -2      +50.00%
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dummy/dummy2  +2       -       +100.00%
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;TOTAL         +2       -2      +50.00%&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。&lt;/p&gt;
 
 &lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;

@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -90,16 +88,14 @@
 <p>后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到  <a href="https://gohugo.io/">Hugo 官网</a>的首页的时候，看上去非常漂亮，令人印象深刻。</p>
 
 <p>使用 <code>hugo new site SITE_DIR</code> 新建一个 Hugo 之后，生成以下路径：</p>
-
-<pre><code>.
-├── archetypes/
-├── config.toml
-├── content/
-├── data/
-├── layouts/
-└── static/
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">.
+</span><span class="ln">2</span><span class="s1f40">├── archetypes/
+</span><span class="ln">3</span><span class="s1f40">├── config.toml
+</span><span class="ln">4</span><span class="s1f40">├── content/
+</span><span class="ln">5</span><span class="s1f40">├── data/
+</span><span class="ln">6</span><span class="s1f40">├── layouts/
+</span><span class="ln">7</span><span class="s1f40">└── static/</span></pre>
+</div>
 <p><code>config.toml</code> 用来存放设置。<code>content/</code> 里存放的是文章，<code>data/</code> 用来存放一些数据。 <code>static/</code> 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 <code>themes/</code> 里并在<code>config.toml</code> 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。</p>
 
 <p>加下来着重介绍的是 <code>layouts/</code>，这里定义了博客的模版，是自定义 Hugo 最重要的部分。和 Pelican 有很大不同的地方是，Hugo 可以自定义文章的类型（ Type ）。不同的类型可以使用不同的模版。比如，除了第三方主题提供的文章类型，我还想为中文文章新建一个类型 <code>zhpost</code>。只需要在 <code>layouts/</code> 下新建一个 <code>zhpost/</code>。接着，我可以设置中文文章的样式，只需新建一个 <code>single.html</code> 就可以了。我也因此可以在<code>layouts/zhpost/single.html</code> 里引入「汉字标准格式」的 CSS 和 JS。另外，对于第三方主题的模版不满意的话还可以按照相同的路径重写一个。Hugo 会优先读取根目录下 <code>layouts/</code> 里的设置。具体来说，<code>layouts/post/single.html</code> 可以覆盖 <code>themes/THEME/layouts/post/single.html</code>。这样我就可以很容易的替换不满意的模版了。</p>
@@ -109,15 +105,13 @@
 <p>值得一提的是，Go 的模版语言可读性很高，几乎不需要花额外的时间学习。我对照着别人开发的主题照葫芦画瓢就完成了模版的定义和修改。</p>
 
 <p><code>archetypes/</code>，用来存放定义的「原型」。原型的作用是自动添加文字的元数据。比如，我想每次创建 <code>post</code> 类文章的时候都自动添加元数据，只需要在 <code>archetypes/</code> 里添加一个 <code>post.md</code>，并加入以下内容：</p>
-
-<pre><code>+++
-title = &quot;my new post&quot;
-date = &quot;2015-01-12T19:20:04-07:00&quot;
-tags = [&quot;x&quot;, &quot;y&quot;]
-categories = [&quot;x&quot;, &quot;y&quot;]
-+++
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">+++
+</span><span class="ln">2</span><span class="s1f40">title = &#34;my new post&#34;
+</span><span class="ln">3</span><span class="s1f40">date = &#34;2015-01-12T19:20:04-07:00&#34;
+</span><span class="ln">4</span><span class="s1f40">tags = [&#34;x&#34;, &#34;y&#34;]
+</span><span class="ln">5</span><span class="s1f40">categories = [&#34;x&#34;, &#34;y&#34;]
+</span><span class="ln">6</span><span class="s1f40">+++</span></pre>
+</div>
 <p>这样每次运行 <code>hugo new post/ARTICLE.md</code> 的时候都可以自动添加上面的元数据。</p>
 
 <p>Hugo 另外的一个优点是生成博客的速度非常快，生成一个网页的速度可以达到毫秒级别。如果博客的内容很多，Hugo 要比 Pelican、Jekyll 等由动态语言写成的博客生成器有很大的优势。</p>

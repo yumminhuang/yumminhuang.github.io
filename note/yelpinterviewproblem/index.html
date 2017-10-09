@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -104,57 +102,50 @@
 <h3 id="solutions">Solutions</h3>
 
 <p>During the interview, I spent some time to finish it due to the pressure from time and the interviewer. He asked me to review the code after I finished by walking through each step in my function. This process did help me complete the task, cause I found some bugs in my code and fixed them in time. He also asked me the time complexity of my solution. Here is my solution.</p>
-
-<pre><code>def longest_prefix(lst):
-    tmp = list()
-    for i in range(min(map(lambda x: len(x), lst))):
-        for idx, s in enumerate(lst):
-            if idx == 0:
-                tmp.append(s[i])
-            if s[i] != tmp[-1]:
-                return str(tmp[:-1])
-    return str(tmp)
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">1</span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">longest_prefix</span><span class="s1388">(</span><span class="s7d0">lst</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40">    </span><span class="s7d0">tmp</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">list</span><span class="s1388">()</span><span class="s1f40">
+</span><span class="ln">3</span><span class="s1f40">    </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">i</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">range</span><span class="s1388">(</span><span class="s7d0">min</span><span class="s1388">(</span><span class="s7d0">map</span><span class="s1388">(</span><span class="s3e8">lambda</span><span class="s1f40"> </span><span class="s7d0">x</span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">x</span><span class="s1388">),</span><span class="s1f40"> </span><span class="s7d0">lst</span><span class="s1388">))):</span><span class="s1f40">
+</span><span class="ln">4</span><span class="s1f40">        </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">idx</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">s</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">enumerate</span><span class="s1388">(</span><span class="s7d0">lst</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln">5</span><span class="s1f40">            </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">idx</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln">6</span><span class="s1f40">                </span><span class="s7d0">tmp</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">(</span><span class="s7d0">s</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">])</span><span class="s1f40">
+</span><span class="ln">7</span><span class="s1f40">            </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">s</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">]</span><span class="s1f40"> </span><span class="sfa0">!=</span><span class="s1f40"> </span><span class="s7d0">tmp</span><span class="s1388">[</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">]:</span><span class="s1f40">
+</span><span class="ln">8</span><span class="s1f40">                </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">str</span><span class="s1388">(</span><span class="s7d0">tmp</span><span class="s1388">[:</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">])</span><span class="s1f40">
+</span><span class="ln">9</span><span class="s1f40">    </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">str</span><span class="s1388">(</span><span class="s7d0">tmp</span><span class="s1388">)</span></code></pre>
+</div>
 <p>Obviously, my solution is not good. My function does not work when input is a empty list. The return of my function is a list instead of a string. It would be better if modify my solution like this way:</p>
-
-<pre><code>def longest_prefix(lst):
-    if not lst:
-        return ''
-    prefix = []
-    for i in range(min(map(lambda x: len(x), lst))):
-        for idx, item in enumerate(lst):
-            if idx == 0:
-                prefix.append(item[i])
-            if item[i] != prefix[-1]:
-                return ''.join((prefix[:-1]))
-    return ''.join((prefix))
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln"> 1</span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">longest_prefix</span><span class="s1388">(</span><span class="s7d0">lst</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 2</span><span class="s1f40">    </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="sfa0">not</span><span class="s1f40"> </span><span class="s7d0">lst</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln"> 3</span><span class="s1f40">        </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;&#39;</span><span class="s1f40">
+</span><span class="ln"> 4</span><span class="s1f40">    </span><span class="s7d0">prefix</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">[]</span><span class="s1f40">
+</span><span class="ln"> 5</span><span class="s1f40">    </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">i</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">range</span><span class="s1388">(</span><span class="s7d0">min</span><span class="s1388">(</span><span class="s7d0">map</span><span class="s1388">(</span><span class="s3e8">lambda</span><span class="s1f40"> </span><span class="s7d0">x</span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">x</span><span class="s1388">),</span><span class="s1f40"> </span><span class="s7d0">lst</span><span class="s1388">))):</span><span class="s1f40">
+</span><span class="ln"> 6</span><span class="s1f40">        </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">idx</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">item</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">enumerate</span><span class="s1388">(</span><span class="s7d0">lst</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 7</span><span class="s1f40">            </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">idx</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1388">:</span><span class="s1f40">
+</span><span class="ln"> 8</span><span class="s1f40">                </span><span class="s7d0">prefix</span><span class="sfa0">.</span><span class="s7d0">append</span><span class="s1388">(</span><span class="s7d0">item</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">])</span><span class="s1f40">
+</span><span class="ln"> 9</span><span class="s1f40">            </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">item</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">]</span><span class="s1f40"> </span><span class="sfa0">!=</span><span class="s1f40"> </span><span class="s7d0">prefix</span><span class="s1388">[</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">]:</span><span class="s1f40">
+</span><span class="ln">10</span><span class="s1f40">                </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;&#39;</span><span class="sfa0">.</span><span class="s7d0">join</span><span class="s1388">((</span><span class="s7d0">prefix</span><span class="s1388">[:</span><span class="sfa0">-</span><span class="sc80">1</span><span class="s1388">]))</span><span class="s1f40">
+</span><span class="ln">11</span><span class="s1f40">    </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;&#39;</span><span class="sfa0">.</span><span class="s7d0">join</span><span class="s1388">((</span><span class="s7d0">prefix</span><span class="s1388">))</span></code></pre>
+</div>
 <h3 id="better-solutions">Better solutions</h3>
 
 <p>After the interview, I searched this problem and tried to find some better solutions. I want to code like a <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html"><em>pythonista</em></a>. Here are <a href="http://stackoverflow.com/questions/6718196/python-determine-prefix-from-a-set-of-similar-strings">some good solutions</a>.</p>
-
-<pre><code>def commonprefix(m):
-    &quot;&quot;&quot;
-    Return the longest prefix of all list elements.
-    &quot;&quot;&quot;
-    if not m: return ''
-    s1 = min(m)
-    s2 = max(m)
-    for i, c in enumerate(s1):
-        if c != s2[i]:
-            return s1[:i]
-    return s1
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln"> 1</span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">commonprefix</span><span class="s1388">(</span><span class="s7d0">m</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 2</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="ln"> 3</span><span class="sc1c">    Return the longest prefix of all list elements.
+</span><span class="ln"> 4</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
+</span><span class="ln"> 5</span><span class="s1f40">    </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="sfa0">not</span><span class="s1f40"> </span><span class="s7d0">m</span><span class="s1388">:</span><span class="s1f40"> </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;&#39;</span><span class="s1f40">
+</span><span class="ln"> 6</span><span class="s1f40">    </span><span class="s7d0">s1</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">min</span><span class="s1388">(</span><span class="s7d0">m</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln"> 7</span><span class="s1f40">    </span><span class="s7d0">s2</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">max</span><span class="s1388">(</span><span class="s7d0">m</span><span class="s1388">)</span><span class="s1f40">
+</span><span class="ln"> 8</span><span class="s1f40">    </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">i</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">c</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">enumerate</span><span class="s1388">(</span><span class="s7d0">s1</span><span class="s1388">):</span><span class="s1f40">
+</span><span class="ln"> 9</span><span class="s1f40">        </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">c</span><span class="s1f40"> </span><span class="sfa0">!=</span><span class="s1f40"> </span><span class="s7d0">s2</span><span class="s1388">[</span><span class="s7d0">i</span><span class="s1388">]:</span><span class="s1f40">
+</span><span class="ln">10</span><span class="s1f40">            </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">s1</span><span class="s1388">[:</span><span class="s7d0">i</span><span class="s1388">]</span><span class="s1f40">
+</span><span class="ln">11</span><span class="s1f40">    </span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">s1</span></code></pre>
+</div>
 <p>Some guy even found a way to solve this problem using only one line python code.</p>
-
-<pre><code>&gt;&gt;&gt; lst = ['abc', 'abcde', 'abxyz']
-&gt;&gt;&gt; from itertools import takewhile, izip
-&gt;&gt;&gt; ''.join(c[0] for c in takewhile(lambda x: all(x[0] == y for y in x), izip(*lst)))
-'ab'
-</code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">1</span><span class="sfa0">&gt;&gt;&gt;</span><span class="s1f40"> </span><span class="s7d0">lst</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">[</span><span class="sc1c"></span><span class="sc1c">&#39;abc&#39;</span><span class="s1388">,</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;abcde&#39;</span><span class="s1388">,</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;abxyz&#39;</span><span class="s1388">]</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40"></span><span class="sfa0">&gt;&gt;&gt;</span><span class="s1f40"> </span><span class="s3eb">from</span><span class="s1f40"> </span><span class="s7d0">itertools</span><span class="s1f40"> </span><span class="s3eb">import</span><span class="s1f40"> </span><span class="s7d0">takewhile</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">izip</span><span class="s1f40">
+</span><span class="ln">3</span><span class="s1f40"></span><span class="sfa0">&gt;&gt;&gt;</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#39;&#39;</span><span class="sfa0">.</span><span class="s7d0">join</span><span class="s1388">(</span><span class="s7d0">c</span><span class="s1388">[</span><span class="sc80">0</span><span class="s1388">]</span><span class="s1f40"> </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">c</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">takewhile</span><span class="s1388">(</span><span class="s3e8">lambda</span><span class="s1f40"> </span><span class="s7d0">x</span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">all</span><span class="s1388">(</span><span class="s7d0">x</span><span class="s1388">[</span><span class="sc80">0</span><span class="s1388">]</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="s7d0">y</span><span class="s1f40"> </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">y</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">x</span><span class="s1388">),</span><span class="s1f40"> </span><span class="s7d0">izip</span><span class="s1388">(</span><span class="sfa0">*</span><span class="s7d0">lst</span><span class="s1388">)))</span><span class="s1f40">
+</span><span class="ln">4</span><span class="s1f40"></span><span class="sc1c"></span><span class="sc1c">&#39;ab&#39;</span></code></pre>
+</div>
         </div>
     </div>
     <div class="row">

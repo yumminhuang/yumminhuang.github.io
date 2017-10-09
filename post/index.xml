@@ -49,24 +49,22 @@
 &lt;p&gt;来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。&lt;/p&gt;
 
 &lt;p&gt;分布式 Gerrit 架构如下图所示。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;+----------------------+                  +--------------------+
-|                      |                  |                    |
-|    Gerrit Master     |                  |    Gerrit Slave    |
-|       Server         |                  |       Server       |
-|                +-----+-----+            |                    |
-|   +----------+ |  Gerrit   |            |     +----------+   |
-|   |Repository| |Replication|  git push  |     |Repository|   |
-|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
-|   +----------+ +-----+-----+            |     +----------+   |
-|                      |                  |                    |
-|   +--------------+   |                  |  +--------------+  |
-|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
-|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
-|   +--------------+   |                  |  +--------------+  |
-+----------------------+                  +--------------------+
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+----------------------+                  +--------------------+
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                      |                  |                    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|    Gerrit Master     |                  |    Gerrit Slave    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|       Server         |                  |       Server       |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                +-----+-----+            |                    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +----------+ |  Gerrit   |            |     +----------+   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |Repository| |Replication|  git push  |     |Repository|   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +----------+ +-----+-----+            |     +----------+   |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                      |                  |                    |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +--------------+   |                  |  +--------------+  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +--------------+   |                  |  +--------------+  |
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+----------------------+                  +--------------------+&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，&lt;code&gt;refs/meta&lt;/code&gt; 分支下的变更或是创建的新代码库）同步到 Slave。&lt;/p&gt;
 
 &lt;p&gt;为了实现数据库的同步，需要将 PostgreSQL 运行在 &lt;a href=&#34;https://www.postgresql.org/docs/9.4/static/hot-standby.html&#34;&gt;Hot Standby 模式&lt;/a&gt;。 在 Gerrit Master 上运行的 PostgreSQL 是 &lt;em&gt;primary&lt;/em&gt; ，可以进行读、写操作； 在 Gerrit Slave 上运行的 PostgreSQL 是 &lt;em&gt;stanby&lt;/em&gt; ，可以和 &lt;em&gt;primary&lt;/em&gt; 保持同步，可以接受客户端的连接，但只能进行读操作。如果 &lt;em&gt;primary&lt;/em&gt; 故障了，整个系统可以迁移（ &lt;em&gt;fail over&lt;/em&gt; ）到 &lt;em&gt;stanby&lt;/em&gt; ，由 &lt;em&gt;stanby&lt;/em&gt; 承担 &lt;em&gt;primary&lt;/em&gt; 的角色。&lt;/p&gt;
@@ -80,58 +78,46 @@
 &lt;h4 id=&#34;gerrit-slave&#34;&gt;Gerrit Slave&lt;/h4&gt;
 
 &lt;p&gt;安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 &lt;code&gt;gerrit.config&lt;/code&gt; 文件里的 &lt;code&gt;[container]&lt;/code&gt; 下面添加 &lt;code&gt;slave = true&lt;/code&gt; 。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[container]
-    user = gerrit2
-    javaHome = /usr/lib/jvm/java-7-oracle/jre
-    javaOptions = -Xmx80g -Xms20g -Xmn2g
-    slave = true
-[database]
-    type = postgresql
-    database = reviewdb
-    hostname = localhost
-    username = gerrit2
-...
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[container]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    user = gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    javaHome = /usr/lib/jvm/java-7-oracle/jre
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    javaOptions = -Xmx80g -Xms20g -Xmn2g
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    slave = true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[database]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    type = postgresql
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    database = reviewdb
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    hostname = localhost
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    username = gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样 Gerrit 才会启动为 Slave。&lt;/p&gt;
 
 &lt;h3 id=&#34;配置-postgresql-数据库&#34;&gt;配置 PostgreSQL 数据库&lt;/h3&gt;
 
 &lt;p&gt;在 Master 上要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，打开 Hot Standby 功能。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;...
-wal_level = hot_standby
-...
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;wal_level = hot_standby
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;还需要在 &lt;code&gt;/etc/postgresql/9.4/main/pg_hba.conf&lt;/code&gt; 添加  &lt;em&gt;stanby&lt;/em&gt; 的 IP，确保 &lt;em&gt;stanby&lt;/em&gt; 可以连接  &lt;em&gt;primary&lt;/em&gt; 进行同步。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 Slave 上首先需要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，设置 PostgreSQL 运行为 &lt;em&gt;stanby&lt;/em&gt; 。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;...
-hot_standby = on
-...
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;hot_standby = on
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;接下来，添加 &lt;code&gt;/var/lib/postgresql/9.4/main/recovery.conf&lt;/code&gt; 文件，配置  &lt;em&gt;primary&lt;/em&gt;  信息。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;standby_mode = on 
-primary_conninfo = &#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&#39;
-trigger_file = &#39;/var/lib/postgresql/postgresql.trigger&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;standby_mode = on
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;primary_conninfo = &amp;#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&amp;#39;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;trigger_file = &amp;#39;/var/lib/postgresql/postgresql.trigger&amp;#39;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;其中 &lt;code&gt;trigger_file&lt;/code&gt; 被用来触发 &lt;em&gt;fail over&lt;/em&gt; ，此时不需要创建。&lt;/p&gt;
 
 &lt;p&gt;配置完成后，在 &lt;em&gt;primary&lt;/em&gt;  上运行命令将数据拷贝到 &lt;em&gt;standby&lt;/em&gt; 。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* \
-	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;重启两端的 PostgreSQL 后，&lt;em&gt;primary&lt;/em&gt; 和 &lt;em&gt;standby&lt;/em&gt; 将保持同步。&lt;/p&gt;
 
 &lt;p&gt;关于 Hot Standby 的详细的说明，可以参见 Postgresql 的这篇&lt;a href=&#34;https://wiki.postgresql.org/wiki/Hot_Standby&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
@@ -141,32 +127,30 @@ trigger_file = &#39;/var/lib/postgresql/postgresql.trigger&#39;
 &lt;h4 id=&#34;gerrit-slave-1&#34;&gt;Gerrit Slave&lt;/h4&gt;
 
 &lt;p&gt;首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt install xinetd
-$ cat /etc/xinetd.d/git-daemon
- 
-# default: off
-# description: The git server offers access to git repositories service git
-service git
-{
-        disable = no
-        type = UNLISTED
-        port = 9418
-        socket_type = stream
-        wait = no
-        env  = HOME=/home/gerrit2
-        user = gerrit2
-        server = /usr/bin/git
-        only_from = gerrit-master.example.com
-        log_type = SYSLOG daemon info
-        server_args = daemon --inetd --syslog --export-all --enable=upload-pack --enable=receive-pack --base-path=/home/gerrit2/review_site/git --verbose
-        log_on_success += USERID HOST DURATION EXIT
-        log_on_failure += USERID HOST ATTEMPT
-        cps = 150 10
-}
-$ sudo /etc/init.d/xinetd restart
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ sudo apt install xinetd
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ cat /etc/xinetd.d/git-daemon
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# default: off
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# description: The git server offers access to git repositories service git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;service git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;disable&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; no
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; UNLISTED
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;port&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;9418&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;socket_type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; stream
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;wait&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; no
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;env&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HOME&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/home/gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit2
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;server&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /usr/bin/git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;only_from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit-master.example.com
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; SYSLOG daemon info
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;server_args&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; daemon --inetd --syslog --export-all --enable&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;upload-pack --enable&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;receive-pack --base-path&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/home/gerrit2/review_site/git --verbose
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_on_success&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; USERID HOST DURATION EXIT
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_on_failure&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; USERID HOST ATTEMPT
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cps&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;150&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ sudo /etc/init.d/xinetd restart&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;重启 xinetd 之后，9418 端口将会开启，可以通过 &lt;code&gt;git://&lt;/code&gt; 访问 Gerrit Slave 上的代码库。&lt;/p&gt;
 
 &lt;h4 id=&#34;gerrit-master&#34;&gt;Gerrit Master&lt;/h4&gt;
@@ -174,14 +158,12 @@ $ sudo /etc/init.d/xinetd restart
 &lt;p&gt;在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 &lt;code&gt;$REVIEW_SITE/plugin&lt;/code&gt; 目录下。&lt;/p&gt;
 
 &lt;p&gt;接下来，添加 &lt;code&gt;$REVIEW_SITE/etc/replication.config&lt;/code&gt; 文件，加上 Gerrit Slave 的配置&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[remote &amp;quot;slave&amp;quot;]
-  url = git://gerrit-slave.example.com/${name}.git 
-  mirror = true
-  threads = 4
-  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[remote &amp;#34;slave&amp;#34;]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  url = git://gerrit-slave.example.com/${name}.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  mirror = true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  threads = 4
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;注意，&lt;code&gt;adminUrl&lt;/code&gt; 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。&lt;/p&gt;
 
 &lt;p&gt;这样，启动 Gerrit Master 之后，每次代码库有变更，Gerrit Replication 插件都会将变更通过 git 协议 Push 到 Slave 上。&lt;/p&gt;
@@ -191,17 +173,13 @@ $ sudo /etc/init.d/xinetd restart
 &lt;hr /&gt;
 
 &lt;p&gt;分布式 Gerrit 搭建完成之后，我们可以添加 &lt;code&gt;.gitconfig&lt;/code&gt; 文件来实现代码上传和下载分流。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;[url &amp;quot;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;quot;]
-    insteadOf = gerrit
-    pushInsteadOf = ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;url &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;insteadOf&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pushInsteadOf&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，克隆代码库的时候使用命令&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git clone gerrit:path/to/repo
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git clone gerrit:path/to/repo&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;可以从 Gerrit Slave 下载代码，而 &lt;code&gt;git push&lt;/code&gt; 的时候会自动将代码 Push 到 Gerrit Master。&lt;/p&gt;
 
 &lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
@@ -243,60 +221,52 @@ $ sudo /etc/init.d/xinetd restart
 &lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
 
 &lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-Bash&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
-cd Blog
-# Delete the old remote
-git remote rm origin
-# Add a new remote
-git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
-# (Optional) Modify .git/config for submodules, etc
-vi .git/config
-# Create the new branch and switch to it
-git checkout -b source
-# Push the new branch to remote
-git push origin source
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; Blog
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Delete the old remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git remote rm origin
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Add a new remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# (Optional) Modify .git/config for submodules, etc
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;vi .git/config
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Create the new branch and switch to it
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git checkout -b &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Push the new branch to remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git push origin source&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
 
 &lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
 
 &lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 &lt;a href=&#34;https://github.com/yumminhuang/hugo-docker&#34;&gt;Dockerfile&lt;/a&gt; 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;FROM alpine:latest
-MAINTAINER Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;
-
-ARG HUGO_VERSION=0.17
-
-RUN apk add --update wget ca-certificates &amp;amp;&amp;amp; \
-  cd /tmp/ &amp;amp;&amp;amp; \
-  wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  tar xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  rm -r hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  mv hugo*/hugo* /usr/bin/hugo &amp;amp;&amp;amp; \
-  apk del wget ca-certificates &amp;amp;&amp;amp; \
-  rm /var/cache/apk/*
-
-VOLUME /website
-VOLUME /public
-
-WORKDIR /website
-ENTRYPOINT [&amp;quot;/usr/bin/hugo&amp;quot;]
-
-EXPOSE 1313
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; alpine:latest&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;MAINTAINER&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;ARG &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.17&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;RUN&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; apk add --update wget ca-certificates &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /tmp/ &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  wget https://github.com/spf13/hugo/releases/download/v&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  tar xzf hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  rm -r hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  mv hugo*/hugo* /usr/bin/hugo &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  apk del wget ca-certificates &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  rm /var/cache/apk/*&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /public&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;WORKDIR&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; [&amp;#34;/usr/bin/hugo&amp;#34;]&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;EXPOSE&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; 1313&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo-docker&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;docker run --rm -v &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:/website yumminhuang/hugo:latest&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;docker run --rm -p &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;1313&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:1313 -v &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:/website yumminhuang/hugo:latest server --bind&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.0.0.0 -w -D&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
 
 &lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
@@ -304,44 +274,40 @@ EXPOSE 1313
 &lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
 
 &lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;travis encrypt &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;GIT_DEPLOY_REPO&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;https://GENERATED_TOKEN@github.com/username/reponame.git&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
 
 &lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;env:
-  global:
-  - secure: &amp;quot; LONG TOKEN &amp;quot;
-  - GIT_DEPLOY_DIR=public
-  - GIT_DEPLOY_BRANCH=master
-  - GIT_DEPLOY_USERNAME=&amp;quot;Travis CI&amp;quot;
-  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
-
-branches:
-  only:
-    - source
-
-sudo: required
-
-services:
-  - docker
-
-install:
-  - rm -rf public || exit 0
-  - git config --global user.email &amp;quot;yumminhuang@gmail.com&amp;quot;
-  - git config --global user.name &amp;quot;Travis CI&amp;quot;
-
-script:
-  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-
-after_success:
-  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
-  - bash deploy.sh -m &amp;quot;updating blog `date`&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;env:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  global:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - secure: &amp;#34; LONG TOKEN &amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_DIR=public
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_BRANCH=master
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_USERNAME=&amp;#34;Travis CI&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;branches:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  only:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - source
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo: required
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;services:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - rm -rf public || exit 0
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - git config --global user.email &amp;#34;yumminhuang@gmail.com&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - git config --global user.name &amp;#34;Travis CI&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;after_success:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - bash deploy.sh -m &amp;#34;updating blog `date`&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
 
 &lt;ul&gt;
@@ -388,37 +354,35 @@ after_success:
 &lt;p&gt;于是，我以此开源项目为模板，同时参考了另一篇文章 &lt;a href=&#34;http://harshjv.github.io/blog/setup-latex-pdf-build-using-travis-ci/&#34;&gt;&lt;em&gt;Setup LaTeX PDF build using Travis CI&lt;/em&gt;&lt;/a&gt; 及&lt;a href=&#34;https://github.com/harshjv/travis-ci-latex-pdf&#34;&gt;代码&lt;/a&gt;，将自己的简历实现了自动化编译与发布。&lt;/p&gt;
 
 &lt;p&gt;先看一下我的 &lt;code&gt;.travis.yml&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo: required
-dist: trusty
-before_install:
-- sudo apt-get update
-- sudo apt-get -y --no-install-recommends install texlive-full
-- sudo wget -P /usr/share/fonts/opentype/ https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;quot;
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;quot;
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;quot;
-- sudo mkfontscale
-- sudo mkfontdir
-- sudo fc-cache -f
-script:
-- cd resume
-- make
-- cd ..
-- mv resume/Resume.pdf Resume.pdf
-- mv resume/Resume_ZH.pdf Resume_ZH.pdf
-deploy:
-  provider: releases
-  api_key:
-    secure: [A LONG LONG TOKEN, omit it]
-  file:
-    - Resume.pdf
-    - Resume_ZH.pdf
-  skip_cleanup: true
-  on:
-    repo: yumminhuang/Resume
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo: required
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dist: trusty
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;before_install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo apt-get update
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo apt-get -y --no-install-recommends install texlive-full
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo mkfontscale
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo mkfontdir
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo fc-cache -f
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- cd resume
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- make
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- cd ..
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume.pdf Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume_ZH.pdf Resume_ZH.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;deploy:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  provider: releases
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  api_key:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    secure: [A LONG LONG TOKEN, omit it]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  file:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - Resume_ZH.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  skip_cleanup: true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  on:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    repo: yumminhuang/Resume&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;首先前两行声明了需要的权限和使用 &lt;a href=&#34;https://docs.travis-ci.com/user/trusty-ci-environment/&#34;&gt;Travis CI 的 Trusty（即 Ubuntu 14.04）编译环境&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;接着，&lt;code&gt;before_install&lt;/code&gt; 后的命令用来安装 texlive 和字体，更新系统字体列表。&lt;/p&gt;
@@ -444,45 +408,41 @@ deploy:
 &lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-# install texlive 2015 and dependencies
-apt-get update &amp;amp;&amp;amp; \
-apt-get install -y --no-install-recommends \
-    texlive-latex-extra \
-    texlive-latex-recommended \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-lang-chinese \
-    texlive-formats-extra \
-    lmodern \
-    wget \
-    xzdec
-
-# intsall latex packages
-tlmgr init-usertree
-tlmgr install ulem
-
-cd resume/
-# run xelatex
-xelatex Resume.tex -interaction=nonstopmode
-xelatex Resume_ZH.tex -interaction=nonstopmode
-
-rm *.aux *.log *.out
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# install texlive 2015 and dependencies
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get update &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get install -y --no-install-recommends &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-latex-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-latex-recommended &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-fonts-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-fonts-recommended &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-lang-chinese &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-formats-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    lmodern &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    wget &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    xzdec
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# intsall latex packages
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tlmgr init-usertree
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tlmgr install ulem
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; resume/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# run xelatex
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;xelatex Resume.tex -interaction&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nonstopmode
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;xelatex Resume_ZH.tex -interaction&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nonstopmode
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;rm *.aux *.log *.out&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，使用一个 Ubuntu 16.04 的容器运行该脚本就可以生成简历了。接着，我把 &lt;code&gt;.travis.yml&lt;/code&gt; 的 &lt;code&gt;before_install&lt;/code&gt; 和 &lt;code&gt;script&lt;/code&gt; 过程简化成下面的设置。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;services:
-  - docker
-
-script:
-- docker run --rm -v $(pwd)/resume:/resume ubuntu:xenial bash /resume/build.sh
-- mv resume/Resume.pdf Resume.pdf
-- mv resume/Resume_ZH.pdf Resume_ZH.pdf
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;services:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- docker run --rm -v $(pwd)/resume:/resume ubuntu:xenial bash /resume/build.sh
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume.pdf Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume_ZH.pdf Resume_ZH.pdf&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;主要过程就是创建一个 Ubuntu xenial 容器来运行 &lt;code&gt;build.sh&lt;/code&gt;。后面发布过程的设置和 1.0 版一样。&lt;/p&gt;
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
@@ -490,21 +450,18 @@ script:
 &lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;branches:
-  only:
-    - /^v[\d.]+\d$/
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;branches:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  only:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - /^v[\d.]+\d$/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;需要注意的是，Travis-CI 把 git 的标签（tag）和分支（branch）都视作 branches，关于如何设置特定 branch 进行构建，可以参见&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Building-Specific-Branches&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;这样，我平时可以正常地提交更新而不会触发 Travis-CI。需要发布新的简历时，按照 &lt;code&gt;^v[\d.]+\d$&lt;/code&gt; 的格式，比如 &lt;code&gt;v1.2.1&lt;/code&gt;，加一个标签再提交即可。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git add -a
-git commit -m &amp;quot;Message&amp;quot;
-git tag v1.2.1
-git push -u origin master --tags
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git add -a
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git commit -m &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Message&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git tag v1.2.1
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git push -u origin master --tags&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
           </item>
         
       
@@ -755,16 +712,14 @@ git push -u origin master --tags
 &lt;p&gt;后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到  &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo 官网&lt;/a&gt;的首页的时候，看上去非常漂亮，令人印象深刻。&lt;/p&gt;
 
 &lt;p&gt;使用 &lt;code&gt;hugo new site SITE_DIR&lt;/code&gt; 新建一个 Hugo 之后，生成以下路径：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.
-├── archetypes/
-├── config.toml
-├── content/
-├── data/
-├── layouts/
-└── static/
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;├── archetypes/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;├── config.toml
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;├── content/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;├── data/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;├── layouts/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;└── static/&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;config.toml&lt;/code&gt; 用来存放设置。&lt;code&gt;content/&lt;/code&gt; 里存放的是文章，&lt;code&gt;data/&lt;/code&gt; 用来存放一些数据。 &lt;code&gt;static/&lt;/code&gt; 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 &lt;code&gt;themes/&lt;/code&gt; 里并在&lt;code&gt;config.toml&lt;/code&gt; 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。&lt;/p&gt;
 
 &lt;p&gt;加下来着重介绍的是 &lt;code&gt;layouts/&lt;/code&gt;，这里定义了博客的模版，是自定义 Hugo 最重要的部分。和 Pelican 有很大不同的地方是，Hugo 可以自定义文章的类型（ Type ）。不同的类型可以使用不同的模版。比如，除了第三方主题提供的文章类型，我还想为中文文章新建一个类型 &lt;code&gt;zhpost&lt;/code&gt;。只需要在 &lt;code&gt;layouts/&lt;/code&gt; 下新建一个 &lt;code&gt;zhpost/&lt;/code&gt;。接着，我可以设置中文文章的样式，只需新建一个 &lt;code&gt;single.html&lt;/code&gt; 就可以了。我也因此可以在&lt;code&gt;layouts/zhpost/single.html&lt;/code&gt; 里引入「汉字标准格式」的 CSS 和 JS。另外，对于第三方主题的模版不满意的话还可以按照相同的路径重写一个。Hugo 会优先读取根目录下 &lt;code&gt;layouts/&lt;/code&gt; 里的设置。具体来说，&lt;code&gt;layouts/post/single.html&lt;/code&gt; 可以覆盖 &lt;code&gt;themes/THEME/layouts/post/single.html&lt;/code&gt;。这样我就可以很容易的替换不满意的模版了。&lt;/p&gt;
@@ -774,15 +729,13 @@ git push -u origin master --tags
 &lt;p&gt;值得一提的是，Go 的模版语言可读性很高，几乎不需要花额外的时间学习。我对照着别人开发的主题照葫芦画瓢就完成了模版的定义和修改。&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;archetypes/&lt;/code&gt;，用来存放定义的「原型」。原型的作用是自动添加文字的元数据。比如，我想每次创建 &lt;code&gt;post&lt;/code&gt; 类文章的时候都自动添加元数据，只需要在 &lt;code&gt;archetypes/&lt;/code&gt; 里添加一个 &lt;code&gt;post.md&lt;/code&gt;，并加入以下内容：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;+++
-title = &amp;quot;my new post&amp;quot;
-date = &amp;quot;2015-01-12T19:20:04-07:00&amp;quot;
-tags = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
-categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
-+++
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+++
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;title = &amp;#34;my new post&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;date = &amp;#34;2015-01-12T19:20:04-07:00&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tags = [&amp;#34;x&amp;#34;, &amp;#34;y&amp;#34;]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;categories = [&amp;#34;x&amp;#34;, &amp;#34;y&amp;#34;]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+++&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样每次运行 &lt;code&gt;hugo new post/ARTICLE.md&lt;/code&gt; 的时候都可以自动添加上面的元数据。&lt;/p&gt;
 
 &lt;p&gt;Hugo 另外的一个优点是生成博客的速度非常快，生成一个网页的速度可以达到毫秒级别。如果博客的内容很多，Hugo 要比 Pelican、Jekyll 等由动态语言写成的博客生成器有很大的优势。&lt;/p&gt;
@@ -840,47 +793,45 @@ categories = [&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;]
 既然不能使用最新版的 fog，我们可以手动编辑 &lt;code&gt;1.25&lt;/code&gt; 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。&lt;/p&gt;
 
 &lt;p&gt;最后，在同事的指点下，我采用了第三种方法，即 &lt;strong&gt;Monkey Patch&lt;/strong&gt;。我在我司的 Ruby 项目里添加了一个文件 &lt;code&gt;lib/PROJECT_NAME/monkey_patches/flavors.rb&lt;/code&gt;，接着在文件中添加以下代码来修改 &lt;code&gt;fog/aws/models/compute/flavors&lt;/code&gt;：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;require &#39;fog/aws/models/compute/flavors&#39;
-
-class Object
-
-  def redef_without_warning(const, value)
-    mod = self.is_a?(Module) ? self : self.class
-    mod.send(:remove_const, const) if mod.const_defined?(const)
-    mod.const_set(const, value)
-  end
-end
-
-module Fog
-  module Compute
-    class AWS
-      NEW_FLAVORS = FLAVORS + [
-        {
-          :id =&amp;gt; &amp;quot;d2.xlarge&amp;quot;,
-          ...
-        },
-        {
-          :id =&amp;gt; &amp;quot;d2.2xlarge&amp;quot;,
-          ...
-        },
-        {
-          :id =&amp;gt; &amp;quot;d2.4xlarge&amp;quot;,
-          ...
-        },
-        {
-          :id =&amp;gt; &amp;quot;d2.8xlarge&amp;quot;,
-          ...
-        }
-      ]
-
-      redef_without_warning :FLAVORS, NEW_FLAVORS
-
-    end
-  end
-end
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;fog/aws/models/compute/flavors&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d4&#34;&gt;Object&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;redef_without_warning&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;is_a?&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;Module&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:remove_const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const_defined?&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const_set&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;module&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Fog&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;module&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Compute&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d4&#34;&gt;AWS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;NEW_FLAVORS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;FLAVORS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.2xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.4xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;29&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.8xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;30&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;31&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;32&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;33&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;34&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;redef_without_warning&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:FLAVORS&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;NEW_FLAVORS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;35&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;36&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;37&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;38&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;通过在自己的代码中添加一个 Monkey patch，我们成功地实现了向 fog 中动态添加新实例类型。我司终于可以使用 fog 创建 D2 类型的机器了；而且这个方法改动的代码量最小，也更加容易维护。&lt;/p&gt;
@@ -933,10 +884,8 @@ end
 &lt;p&gt;我喜欢为每个项目新建一个 &lt;ruby&gt;virtualenv&lt;rt&gt; 虚拟环境 &lt;/rt&gt;&lt;/ruby&gt;，这样可以确保每个项目的开发环境相互独立，避免发生冲突。&lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt; 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。&lt;/p&gt;
 
 &lt;p&gt;我一般会在项目中添加一个 &lt;code&gt;requirements.txt&lt;/code&gt;，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pip install -r requirements.txt
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;pip install -r requirements.txt&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;就可以安装所有的库。&lt;/p&gt;
 
 &lt;h3 id=&#34;单元测试和测试覆盖&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
@@ -944,10 +893,8 @@ end
 &lt;p&gt;对于 Python 项目，我喜欢使用 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose&lt;/a&gt; 来进行单元测试。此外，我还会使用 &lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;coverage.py&lt;/a&gt; 来测量代码的测试覆盖率。&lt;/p&gt;
 
 &lt;p&gt;nose 对 coverage.py 的支持非常好，可以在 &lt;code&gt;nosetests&lt;/code&gt; 命令后添加一系列选项来生成覆盖率。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;nosetests --with-coverage
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nosetests --with-coverage&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;就可以直接得到测试覆盖率的数据。&lt;/p&gt;
 
 &lt;p&gt;详细的使用方法可以参见 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose 的官方文档&lt;/a&gt; 和&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html&#34;&gt;coverage.py 的官方文档&lt;/a&gt;。&lt;/p&gt;
@@ -955,24 +902,21 @@ end
 &lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 &lt;code&gt;.travis.yml&lt;/code&gt;。Travis CI 的配置使用的是非常易读的 YAML 文件。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;language: python
-python:
-    - 2.6
-    - 2.7
-# command to install dependencies
-install:
-    - pip install -r requirements.txt
-    - pip install coveralls
-# command to run tests
-script:
-    nosetests --cover-package=project --with-coverage
-# coveralls
-after_success:
-    coveralls
-
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;language: python
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;python:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - 2.6
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - 2.7
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# command to install dependencies
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - pip install -r requirements.txt
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - pip install coveralls
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# command to run tests
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    nosetests --cover-package=project --with-coverage
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# coveralls
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;after_success:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    coveralls&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;同样地，也需要在 Coveralls 上开启相应的项目。&lt;/p&gt;
 
 &lt;p&gt;这样，Github 的代码库在每次收到 &lt;code&gt;Push&lt;/code&gt; 和 &lt;code&gt;Pull Request&lt;/code&gt; 的时候，Travis CI 都会按照配置文件上的步骤自动运行测试（或者部署，本样例只有测试。），并且把测试覆盖率的数据发布到 Coveralls。&lt;/p&gt;
@@ -1134,13 +1078,11 @@ after_success:
 &lt;h4 id=&#34;运行什么&#34;&gt;运行什么&lt;/h4&gt;
 
 &lt;p&gt;添加一段 &lt;strong&gt;Build Script&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;PYTHONPATH=&#39;&#39;
-nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package=project1 --cover-inclusive
-python -m coverage xml --include=project1*
-pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;project1 --cover-inclusive
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;python -m coverage xml --include&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;project1*
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;pylint -f parseable -d I0011,R0801 project1 &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; tee pylint.out&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这段 Shell 脚本中的三个命令：&lt;/p&gt;
 
 &lt;ol&gt;
@@ -1178,28 +1120,24 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 &lt;p&gt;没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 &lt;a href=&#34;https://github.com/SurveyMonkey/pycobertura&#34;&gt;Pycobertura&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from pycobertura import Cobertura
-from pycobertura import TextReporterDelta
-
-coverage1 = Cobertura(&#39;coverage1.xml&#39;)
-coverage2 = Cobertura(&#39;coverage2.xml&#39;)
-delta = TextReporterDelta(coverage1, coverage2)
-delta.generate()
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pycobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pycobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage1.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage2.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;generate&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 &lt;strong&gt;Post build script&lt;/strong&gt; 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Coverage Diff for Java code:
-No coverage diff can be found.
-Coverage Diff for Python code:
-Name          Stmts    Miss    Cover
-------------  -------  ------  --------
-dummy/dummy   -        -2      +50.00%
-dummy/dummy2  +2       -       +100.00%
-TOTAL         +2       -2      +50.00%
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Coverage Diff for Java code:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;No coverage diff can be found.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Coverage Diff for Python code:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Name          Stmts    Miss    Cover
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;------------  -------  ------  --------
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dummy/dummy   -        -2      +50.00%
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dummy/dummy2  +2       -       +100.00%
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;TOTAL         +2       -2      +50.00%&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。&lt;/p&gt;
 
 &lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
@@ -1282,19 +1220,17 @@ TOTAL         +2       -2      +50.00%
 &lt;p&gt;开始，我检查的方式是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆之后，再使用 &lt;code&gt;grep&lt;/code&gt; 检查日志文件是否包含 &lt;code&gt;ERROR&lt;/code&gt;、&lt;code&gt;WARNING&lt;/code&gt; 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆，再运行脚本进行检查。&lt;/p&gt;
 
 &lt;p&gt;但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 &lt;code&gt;datetime&lt;/code&gt;，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from fabric.api import *
-
-def check_log_with_keyword(log_file, keyword):
-    with settings(hide(&#39;warnings&#39;,&#39;output&#39;),
-                  host_string=&#39;eb101.ops&#39;,
-                  warn_only=True):
-        result = run(&#39;grep %s %s&#39; % (keyword, filename))
-
-        if result.return_code == 0:
-            print(result)
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;fabric.api&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;check_log_with_keyword&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_file&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;keyword&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;with&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;settings&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;warnings&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;output&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;                  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;host_string&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;eb101.ops&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;                  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;warn_only&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;grep &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;keyword&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;filename&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;return_code&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 &lt;code&gt;with settings()&lt;/code&gt; 来临时更改 &lt;code&gt;env&lt;/code&gt; 变量；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;hide(&#39;warnings&#39;, &#39;output&#39;)&lt;/code&gt; 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 &lt;code&gt;stderr&lt;/code&gt; 和 &lt;code&gt;stdout&lt;/code&gt;；&lt;/li&gt;
@@ -1342,17 +1278,13 @@ def check_log_with_keyword(log_file, keyword):
 &lt;p&gt;Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送&lt;code&gt;观测量: 观测值&lt;/code&gt;这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。&lt;/p&gt;
 
 &lt;p&gt;当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;metric name&amp;gt; &amp;lt;metric value&amp;gt; &amp;lt;metric timestamp&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&amp;lt;metric name&amp;gt; &amp;lt;metric value&amp;gt; &amp;lt;metric timestamp&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;例如，有一个 Metric 叫作 &lt;code&gt;local.metric.random&lt;/code&gt;，可以用下面的 Bash 命令发送当前时刻的值 &lt;code&gt;4&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;PORT=2003
-SERVER=graphite.your.org
-echo &amp;quot;local.metric.random 4 `date +%s`&amp;quot; | nc -q0 ${SERVER} ${PORT}
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;2003&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;graphite.your.org
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;local.metric.random 4 `date +%s`&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; nc -q0 &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;类似地，使用其它编程语言时，可以使用 Socket 发送数据。&lt;/p&gt;
 
 &lt;p&gt;另外，Graphite 的 Metric 名称支持以 &lt;code&gt;.&lt;/code&gt; 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。&lt;/p&gt;
@@ -1370,43 +1302,33 @@ echo &amp;quot;local.metric.random 4 `date +%s`&amp;quot; | nc -q0 ${SERVER} ${P
 &lt;p&gt;除了支持简单的键／值数据类型，Graphite 还可以通过 &lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events&#34;&gt;Events&lt;/a&gt; 来存储更复杂的数据。简而言之，Graphite Events 使用了 &lt;code&gt;tag&lt;/code&gt; 和 &lt;code&gt;data&lt;/code&gt; 两个键来存储更多的信息。&lt;/p&gt;
 
 &lt;p&gt;我们可以使用 HTTP POST 向 Graphite 发送一个 Event。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;curl -X POST &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;http://graphite.your.org/events&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; -d &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver&amp;#34;, &amp;#34;data&amp;#34;: &amp;#34;Deploy webserver&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;下文将会通过一个具体的实例来介绍Events的使用场景。&lt;/p&gt;
 
-&lt;p&gt;```curl -X POST &amp;ldquo;&lt;a href=&#34;http://graphite.your.org/events&amp;quot;&#34;&gt;http://graphite.your.org/events&amp;quot;&lt;/a&gt; -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deployment&amp;rdquo;, &amp;ldquo;tags&amp;rdquo;: &amp;ldquo;webserver&amp;rdquo;, &amp;ldquo;data&amp;rdquo;: &amp;ldquo;Deploy webserver&amp;rdquo;}&amp;rsquo;&lt;/p&gt;
+&lt;h2 id=&#34;grafana&#34;&gt;Grafana&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;
-下文将会通过一个具体的实例来介绍Events的使用场景。
+&lt;p&gt;鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 &lt;a href=&#34;http://grafana.org/&#34;&gt;Grafana&lt;/a&gt; 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多&lt;a href=&#34;http://grafana.org/features&#34;&gt;不错的特性&lt;/a&gt;，还可以访问官网提供的 &lt;a href=&#34;http://play.grafana.org&#34;&gt;Live Demo&lt;/a&gt; 来体验 Grafana。&lt;/p&gt;
 
-## Grafana
+&lt;p&gt;设置 Grafana，只需编辑 &lt;code&gt;config.js&lt;/code&gt; 设置数据来源&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:update&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:update&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7df&#34;&gt;datasources&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7df&#34;&gt;graphite&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7df&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;graphite&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7df&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;http://my.graphite.server.com:8080&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;具体的配置教程可以参见&lt;a href=&#34;http://docs.grafana.org/v1.9/installation/&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 
-鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 [Grafana](http://grafana.org/) 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多[不错的特性](http://grafana.org/features)，还可以访问官网提供的 [Live Demo](http://play.grafana.org) 来体验 Grafana。
+&lt;h2 id=&#34;实例&#34;&gt;实例&lt;/h2&gt;
 
-设置 Grafana，只需编辑 `config.js` 设置数据来源[^update]。
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;datasources: {
-  graphite: {
-    type: &amp;lsquo;graphite&amp;rsquo;,
-    url: &amp;ldquo;&lt;a href=&#34;http://my.graphite.server.com:8080&amp;quot;&#34;&gt;http://my.graphite.server.com:8080&amp;quot;&lt;/a&gt;,
-  }
-},&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;
-具体的配置教程可以参见[官方文档](http://docs.grafana.org/v1.9/installation/)。
-
-## 实例
-
-我实习所在公司使用 [Jenkins](https://jenkins-ci.org) 部署代码。在部署完成之后，我添加了一段 [post-build script](https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin) 执行下面的脚本。
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;#!/bin/bash&lt;/p&gt;
-
-&lt;p&gt;HOST=&lt;a href=&#34;http://graphite.your.org/events&#34;&gt;http://graphite.your.org/events&lt;/a&gt;
-echo &amp;lsquo;Posting a deployment event to Graphite&amp;rsquo;
-curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deployment&amp;rdquo;, &amp;ldquo;tags&amp;rdquo;: &amp;ldquo;webserver,prd&amp;rdquo;, &amp;ldquo;data&amp;rdquo;: \&amp;ldquo;$BUILD_URL\&amp;ldquo;}&amp;rsquo;
-```&lt;/p&gt;
-
+&lt;p&gt;我实习所在公司使用 &lt;a href=&#34;https://jenkins-ci.org&#34;&gt;Jenkins&lt;/a&gt; 部署代码。在部署完成之后，我添加了一段 &lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin&#34;&gt;post-build script&lt;/a&gt; 执行下面的脚本。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HOST&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;http://graphite.your.org/events
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;Posting a deployment event to Graphite&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;curl -X POST &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;$HOST&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; -d &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver,prd&amp;#34;, &amp;#34;data&amp;#34;: \&amp;#34;$BUILD_URL\&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 &lt;code&gt;drawAsInfinite(events(&#39;prd&#39;))&lt;/code&gt; 或者在 Grafana 里使用 &lt;a href=&#34;http://grafana.org/docs/features/annotations/&#34;&gt;Annotations Page&lt;/a&gt; 来绘制一幅图显示代码部署的 Events。&lt;/p&gt;
 
 &lt;p&gt;利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。&lt;/p&gt;
@@ -1429,7 +1351,16 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;li&gt;&lt;a href=&#34;http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events&#34;&gt;Graphite Tip - A Better Way to Store Events&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://codeascraft.com/2010/12/08/track-every-release/&#34;&gt;Tracking Every Release&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://joshhertz.se/post/making-annotations-in-graphana&#34;&gt;Making Annotations in Graphana&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description>
+&lt;/ol&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:update&#34;&gt;Grafana 最新的 2.0 较 1.9 有较大的变化，不再使用 &lt;code&gt;config.js&lt;/code&gt; 来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:update&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
           </item>
         
       
@@ -1451,19 +1382,17 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;p&gt;&lt;img src=&#34;http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif&#34; alt=&#34;Sensu components&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。例如：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;client&amp;quot;: {
-    &amp;quot;name&amp;quot;: &amp;quot;i-424242&amp;quot;,
-    &amp;quot;address&amp;quot;: &amp;quot;127.0.0.1&amp;quot;,
-    &amp;quot;subscriptions&amp;quot;: [
-      &amp;quot;production&amp;quot;,
-      &amp;quot;webserver&amp;quot;
-    ]
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;client&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;i-424242&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;address&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;127.0.0.1&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscriptions&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;webserver&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;其中，&lt;code&gt;subscriptions&lt;/code&gt; 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了&lt;a href=&#34;http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern&#34;&gt;订阅者模式&lt;/a&gt;，相应地，定义监控项目的时候则需要指定 &lt;code&gt;subscribers&lt;/code&gt;（后文中将会提及）。&lt;/p&gt;
 
 &lt;h3 id=&#34;sensu-的优势&#34;&gt;Sensu 的优势&lt;/h3&gt;
@@ -1491,40 +1420,36 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;/ul&gt;
 
 &lt;p&gt;因此，只要定义好返回值和输出，很容易就可以写出一个 Sensu Check。下面就是一个用来监测 &lt;code&gt;chef-client&lt;/code&gt; 进程是否在运行的 Ruby 脚本。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;procs = `ps aux`
-  running = false
-  procs.each_line do |proc|
-    running = true if proc.include?(&#39;chef-client&#39;)
-  end
-  if running
-    puts &#39;OK - Chef client daemon is running&#39;
-    exit 0
-  else
-    puts &#39;WARNING - Chef client daemon is NOT running&#39;
-    exit 1
-  end
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;procs&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;`ps aux`&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;procs&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;each_line&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;do&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;proc&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;proc&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;include?&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;chef-client&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;puts&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;OK - Chef client daemon is running&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;exit&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;puts&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;WARNING - Chef client daemon is NOT running&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;exit&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;写好一个Check的脚本，需要在配置文件中添加它。比如下面,&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;checks&amp;quot;: {
-    &amp;quot;chef_client&amp;quot;: {
-      &amp;quot;command&amp;quot;: &amp;quot;check-chef-client.rb&amp;quot;,
-      &amp;quot;subscribers&amp;quot;: [
-        &amp;quot;production&amp;quot;
-      ],
-      &amp;quot;interval&amp;quot;: 60,
-      &amp;quot;handlers&amp;quot;: [
-        &amp;quot;pagerduty&amp;quot;,
-        &amp;quot;mail&amp;quot;
-      ]
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;chef_client&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;check-chef-client.rb&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;],&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;interval&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handlers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;pagerduty&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mail&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;subscribers&lt;/code&gt; 用来指定订阅者。&lt;code&gt;interval&lt;/code&gt; 定义检查的周期为 &lt;code&gt;60s&lt;/code&gt;，&lt;code&gt;handlers&lt;/code&gt; 则告诉 Sensu 当此 Check 出现异常时使用 &lt;code&gt;pagerduty&lt;/code&gt; 和 &lt;code&gt;mail&lt;/code&gt; 这两个 Handler。&lt;/p&gt;
 
 &lt;h4 id=&#34;sensu-handler&#34;&gt;Sensu Handler&lt;/h4&gt;
@@ -1532,17 +1457,15 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;p&gt;Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 &lt;a href=&#34;http://graphite.wikidot.com&#34;&gt;Graphite&lt;/a&gt;，等等。 Handler 有不同的类型，有常用的 &lt;code&gt;Pipe&lt;/code&gt;，可以将 Event 传入到 &lt;code&gt;STDIN&lt;/code&gt;（可以理解为 &lt;code&gt;cat event.json | handler&lt;/code&gt;）；有 TCP/UDP，将 Event 传入到 Socket 发送。&lt;/p&gt;
 
 &lt;p&gt;下面是一个简单的 Sensu Handler 定义，用来将 Event 的内容发送到指定的邮箱地址。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;handlers&amp;quot;: {
-    &amp;quot;mail&amp;quot;: {
-      &amp;quot;type&amp;quot;: &amp;quot;pipe&amp;quot;,
-      &amp;quot;command&amp;quot;: &amp;quot;mailx -s &#39;sensu event&#39; email@address.com&amp;quot;
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handlers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mail&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;pipe&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mailx -s &amp;#39;sensu event&amp;#39; email@address.com&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h2 id=&#34;基于-sensu-的安全更新监控工具&#34;&gt;基于 Sensu 的安全更新监控工具&lt;/h2&gt;
 
 &lt;p&gt;接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。&lt;/p&gt;
@@ -1564,11 +1487,9 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;h4 id=&#34;安全更新的信息收集&#34;&gt;安全更新的信息收集&lt;/h4&gt;
 
 &lt;p&gt;使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;17 packages can be updated.
-6 updates are security updates.
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;17 packages can be updated.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;6 updates are security updates.&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;以此为源头，我找到了 Debian 系统内自带的一个 Python 脚本 &lt;code&gt;/usr/lib/update-notifier/apt_check.py&lt;/code&gt;。它可以调用 &lt;a href=&#34;https://apt.alioth.debian.org/python-apt-doc/index.html&#34;&gt;python-apt&lt;/a&gt; 库收集系统当前可以安装的安全更新。以此脚本为基础稍加改动就可以得到我们所需要的信息。&lt;/p&gt;
 
 &lt;p&gt;我已经把修改过的脚本做成了一个 &lt;a href=&#34;https://github.com/sensu/sensu-community-plugins/blob/master/plugins/system/package-updates-metric.py&#34;&gt;Sensu Plugin&lt;/a&gt; 提交到了 Sensu 社区。&lt;/p&gt;
@@ -1588,44 +1509,38 @@ curl -X POST $HOST -d &amp;lsquo;{&amp;ldquo;what&amp;rdquo;: &amp;ldquo;Deploym
 &lt;p&gt;因此，整个安全更新监控工具使用了两个 Sensu Check。第一个 Aggregate Check 运行在所有的服务器上，用来收集本地的安全更新。第二个 Check 运行在一台服务器上，它会调用 Aggregate API 读取第一个 Check 的结果，再加以归类、分析。如果有安全更新可以安装，就触发 Handler 发送通知邮件。&lt;/p&gt;
 
 &lt;p&gt;第一个 Check 的定义：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;checks&amp;quot;: {
-    &amp;quot;apt-check&amp;quot;: {
-      &amp;quot;command&amp;quot;: &amp;quot;package-updates-metric.py&amp;quot;,
-      &amp;quot;subscribers&amp;quot;: [
-        &amp;quot;production&amp;quot;
-      ],
-      &amp;quot;interval&amp;quot;: 28800,
-      &amp;quot;aggregate&amp;quot;: true,
-      &amp;quot;handler&amp;quot;: false
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;apt-check&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;package-updates-metric.py&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;],&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;interval&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;28800&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;aggregate&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;第二个Check的定义：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;checks&amp;quot;: {
-    &amp;quot;aggregate_apt_check&amp;quot;: {
-      &amp;quot;command&amp;quot;: &amp;quot;package-updates-check.py&amp;quot;,
-      &amp;quot;subscribers&amp;quot;: [
-        &amp;quot;mg102.ops&amp;quot;
-      ],
-      &amp;quot;publish&amp;quot;: false,
-      &amp;quot;handler&amp;quot;: &amp;quot;package-updates-notify.rb&amp;quot;,
-    }
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;aggregate_apt_check&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;package-updates-check.py&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mg102.ops&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;],&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;publish&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;package-updates-notify.rb&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;其中，&lt;code&gt;package-updates-check.py&lt;/code&gt; 是另外一个 Python 脚本，主要是访问 API 并且读取结果。如果发现了安全更新就输出结果并返回&lt;code&gt;1&lt;/code&gt;，这样就可以触发 &lt;code&gt;package-updates-notify.rb&lt;/code&gt;。这是一个 Ruby 脚本，用来读取第二个 Check 的结果，再把结果分成不同的 subnet 发送邮件。
 另外，这里设置了 &lt;code&gt;&amp;quot;publish&amp;quot;: false&lt;/code&gt;，所以这个 Check 需要手工启动（因为没有必要定时调用，每天一次足矣），可以通过以下命令来手动请求 Sensu Check。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;curl -XPOST http://api.sensu.example.com:4567/check/request -d &#39;{&amp;quot;check&amp;quot;:&amp;quot;aggregate_apt_check&amp;quot;}&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;curl -XPOST http://api.sensu.example.com:4567/check/request -d &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;{&amp;#34;check&amp;#34;:&amp;#34;aggregate_apt_check&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;我添加了一个 Cron job 每天早上定时调用该命令。这样每天早上一到办公室就可以及时获知所有服务器是否需要更新。&lt;/p&gt;
 
 &lt;p&gt;整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。&lt;/p&gt;

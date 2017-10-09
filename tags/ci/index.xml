@@ -30,60 +30,52 @@
 &lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
 
 &lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-Bash&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
-cd Blog
-# Delete the old remote
-git remote rm origin
-# Add a new remote
-git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
-# (Optional) Modify .git/config for submodules, etc
-vi .git/config
-# Create the new branch and switch to it
-git checkout -b source
-# Push the new branch to remote
-git push origin source
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; Blog
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Delete the old remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git remote rm origin
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Add a new remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# (Optional) Modify .git/config for submodules, etc
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;vi .git/config
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Create the new branch and switch to it
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git checkout -b &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# Push the new branch to remote
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git push origin source&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
 
 &lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
 
 &lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 &lt;a href=&#34;https://github.com/yumminhuang/hugo-docker&#34;&gt;Dockerfile&lt;/a&gt; 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-dockerfile&#34;&gt;FROM alpine:latest
-MAINTAINER Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;
-
-ARG HUGO_VERSION=0.17
-
-RUN apk add --update wget ca-certificates &amp;amp;&amp;amp; \
-  cd /tmp/ &amp;amp;&amp;amp; \
-  wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  tar xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  rm -r hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;amp;&amp;amp; \
-  mv hugo*/hugo* /usr/bin/hugo &amp;amp;&amp;amp; \
-  apk del wget ca-certificates &amp;amp;&amp;amp; \
-  rm /var/cache/apk/*
-
-VOLUME /website
-VOLUME /public
-
-WORKDIR /website
-ENTRYPOINT [&amp;quot;/usr/bin/hugo&amp;quot;]
-
-EXPOSE 1313
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; alpine:latest&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;MAINTAINER&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;ARG &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.17&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;RUN&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; apk add --update wget ca-certificates &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /tmp/ &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  wget https://github.com/spf13/hugo/releases/download/v&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  tar xzf hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  rm -r hugo_&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;_Linux-64bit.tar.gz &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  mv hugo*/hugo* /usr/bin/hugo &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  apk del wget ca-certificates &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  rm /var/cache/apk/*&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /public&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;WORKDIR&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; [&amp;#34;/usr/bin/hugo&amp;#34;]&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;ss4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;EXPOSE&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; 1313&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo-docker&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;docker run --rm -v &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:/website yumminhuang/hugo:latest&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;docker run --rm -p &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;1313&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:1313 -v &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;:/website yumminhuang/hugo:latest server --bind&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;.0.0.0 -w -D&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
 
 &lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
@@ -91,44 +83,40 @@ EXPOSE 1313
 &lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
 
 &lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;travis encrypt &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;GIT_DEPLOY_REPO&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;https://GENERATED_TOKEN@github.com/username/reponame.git&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
 
 &lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;env:
-  global:
-  - secure: &amp;quot; LONG TOKEN &amp;quot;
-  - GIT_DEPLOY_DIR=public
-  - GIT_DEPLOY_BRANCH=master
-  - GIT_DEPLOY_USERNAME=&amp;quot;Travis CI&amp;quot;
-  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
-
-branches:
-  only:
-    - source
-
-sudo: required
-
-services:
-  - docker
-
-install:
-  - rm -rf public || exit 0
-  - git config --global user.email &amp;quot;yumminhuang@gmail.com&amp;quot;
-  - git config --global user.name &amp;quot;Travis CI&amp;quot;
-
-script:
-  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-
-after_success:
-  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
-  - bash deploy.sh -m &amp;quot;updating blog `date`&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;env:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  global:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - secure: &amp;#34; LONG TOKEN &amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_DIR=public
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_BRANCH=master
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_USERNAME=&amp;#34;Travis CI&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;branches:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  only:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - source
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo: required
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;services:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - rm -rf public || exit 0
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - git config --global user.email &amp;#34;yumminhuang@gmail.com&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - git config --global user.name &amp;#34;Travis CI&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;after_success:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - bash deploy.sh -m &amp;#34;updating blog `date`&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
 
 &lt;ul&gt;
@@ -175,37 +163,35 @@ after_success:
 &lt;p&gt;于是，我以此开源项目为模板，同时参考了另一篇文章 &lt;a href=&#34;http://harshjv.github.io/blog/setup-latex-pdf-build-using-travis-ci/&#34;&gt;&lt;em&gt;Setup LaTeX PDF build using Travis CI&lt;/em&gt;&lt;/a&gt; 及&lt;a href=&#34;https://github.com/harshjv/travis-ci-latex-pdf&#34;&gt;代码&lt;/a&gt;，将自己的简历实现了自动化编译与发布。&lt;/p&gt;
 
 &lt;p&gt;先看一下我的 &lt;code&gt;.travis.yml&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo: required
-dist: trusty
-before_install:
-- sudo apt-get update
-- sudo apt-get -y --no-install-recommends install texlive-full
-- sudo wget -P /usr/share/fonts/opentype/ https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;quot;
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;quot;
-- sudo wget -P /usr/share/fonts/opentype/ &amp;quot;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;quot;
-- sudo mkfontscale
-- sudo mkfontdir
-- sudo fc-cache -f
-script:
-- cd resume
-- make
-- cd ..
-- mv resume/Resume.pdf Resume.pdf
-- mv resume/Resume_ZH.pdf Resume_ZH.pdf
-deploy:
-  provider: releases
-  api_key:
-    secure: [A LONG LONG TOKEN, omit it]
-  file:
-    - Resume.pdf
-    - Resume_ZH.pdf
-  skip_cleanup: true
-  on:
-    repo: yumminhuang/Resume
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;sudo: required
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dist: trusty
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;before_install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo apt-get update
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo apt-get -y --no-install-recommends install texlive-full
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo wget -P /usr/share/fonts/opentype/ &amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo mkfontscale
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo mkfontdir
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- sudo fc-cache -f
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- cd resume
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- make
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- cd ..
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume.pdf Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume_ZH.pdf Resume_ZH.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;deploy:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  provider: releases
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  api_key:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    secure: [A LONG LONG TOKEN, omit it]
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  file:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - Resume_ZH.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  skip_cleanup: true
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  on:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    repo: yumminhuang/Resume&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;首先前两行声明了需要的权限和使用 &lt;a href=&#34;https://docs.travis-ci.com/user/trusty-ci-environment/&#34;&gt;Travis CI 的 Trusty（即 Ubuntu 14.04）编译环境&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;接着，&lt;code&gt;before_install&lt;/code&gt; 后的命令用来安装 texlive 和字体，更新系统字体列表。&lt;/p&gt;
@@ -231,45 +217,41 @@ deploy:
 &lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
 
 &lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-# install texlive 2015 and dependencies
-apt-get update &amp;amp;&amp;amp; \
-apt-get install -y --no-install-recommends \
-    texlive-latex-extra \
-    texlive-latex-recommended \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-lang-chinese \
-    texlive-formats-extra \
-    lmodern \
-    wget \
-    xzdec
-
-# intsall latex packages
-tlmgr init-usertree
-tlmgr install ulem
-
-cd resume/
-# run xelatex
-xelatex Resume.tex -interaction=nonstopmode
-xelatex Resume_ZH.tex -interaction=nonstopmode
-
-rm *.aux *.log *.out
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# install texlive 2015 and dependencies
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get update &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get install -y --no-install-recommends &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-latex-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-latex-recommended &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-fonts-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-fonts-recommended &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-lang-chinese &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    texlive-formats-extra &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    lmodern &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    wget &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    xzdec
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# intsall latex packages
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tlmgr init-usertree
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;tlmgr install ulem
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cd&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; resume/
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# run xelatex
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;xelatex Resume.tex -interaction&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nonstopmode
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;xelatex Resume_ZH.tex -interaction&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nonstopmode
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;rm *.aux *.log *.out&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这样，使用一个 Ubuntu 16.04 的容器运行该脚本就可以生成简历了。接着，我把 &lt;code&gt;.travis.yml&lt;/code&gt; 的 &lt;code&gt;before_install&lt;/code&gt; 和 &lt;code&gt;script&lt;/code&gt; 过程简化成下面的设置。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;services:
-  - docker
-
-script:
-- docker run --rm -v $(pwd)/resume:/resume ubuntu:xenial bash /resume/build.sh
-- mv resume/Resume.pdf Resume.pdf
-- mv resume/Resume_ZH.pdf Resume_ZH.pdf
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;services:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  - docker
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- docker run --rm -v $(pwd)/resume:/resume ubuntu:xenial bash /resume/build.sh
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume.pdf Resume.pdf
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;- mv resume/Resume_ZH.pdf Resume_ZH.pdf&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;主要过程就是创建一个 Ubuntu xenial 容器来运行 &lt;code&gt;build.sh&lt;/code&gt;。后面发布过程的设置和 1.0 版一样。&lt;/p&gt;
 
 &lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
@@ -277,21 +259,18 @@ script:
 &lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
 
 &lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;branches:
-  only:
-    - /^v[\d.]+\d$/
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;branches:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  only:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - /^v[\d.]+\d$/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;需要注意的是，Travis-CI 把 git 的标签（tag）和分支（branch）都视作 branches，关于如何设置特定 branch 进行构建，可以参见&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Building-Specific-Branches&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;这样，我平时可以正常地提交更新而不会触发 Travis-CI。需要发布新的简历时，按照 &lt;code&gt;^v[\d.]+\d$&lt;/code&gt; 的格式，比如 &lt;code&gt;v1.2.1&lt;/code&gt;，加一个标签再提交即可。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git add -a
-git commit -m &amp;quot;Message&amp;quot;
-git tag v1.2.1
-git push -u origin master --tags
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git add -a
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git commit -m &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Message&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git tag v1.2.1
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git push -u origin master --tags&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
           </item>
         
       
@@ -501,10 +480,8 @@ git push -u origin master --tags
 &lt;p&gt;我喜欢为每个项目新建一个 &lt;ruby&gt;virtualenv&lt;rt&gt; 虚拟环境 &lt;/rt&gt;&lt;/ruby&gt;，这样可以确保每个项目的开发环境相互独立，避免发生冲突。&lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt; 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。&lt;/p&gt;
 
 &lt;p&gt;我一般会在项目中添加一个 &lt;code&gt;requirements.txt&lt;/code&gt;，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;pip install -r requirements.txt
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;pip install -r requirements.txt&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;就可以安装所有的库。&lt;/p&gt;
 
 &lt;h3 id=&#34;单元测试和测试覆盖&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
@@ -512,10 +489,8 @@ git push -u origin master --tags
 &lt;p&gt;对于 Python 项目，我喜欢使用 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose&lt;/a&gt; 来进行单元测试。此外，我还会使用 &lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;coverage.py&lt;/a&gt; 来测量代码的测试覆盖率。&lt;/p&gt;
 
 &lt;p&gt;nose 对 coverage.py 的支持非常好，可以在 &lt;code&gt;nosetests&lt;/code&gt; 命令后添加一系列选项来生成覆盖率。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;nosetests --with-coverage
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nosetests --with-coverage&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;就可以直接得到测试覆盖率的数据。&lt;/p&gt;
 
 &lt;p&gt;详细的使用方法可以参见 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose 的官方文档&lt;/a&gt; 和&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html&#34;&gt;coverage.py 的官方文档&lt;/a&gt;。&lt;/p&gt;
@@ -523,24 +498,21 @@ git push -u origin master --tags
 &lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 &lt;code&gt;.travis.yml&lt;/code&gt;。Travis CI 的配置使用的是非常易读的 YAML 文件。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;language: python
-python:
-    - 2.6
-    - 2.7
-# command to install dependencies
-install:
-    - pip install -r requirements.txt
-    - pip install coveralls
-# command to run tests
-script:
-    nosetests --cover-package=project --with-coverage
-# coveralls
-after_success:
-    coveralls
-
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;language: python
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;python:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - 2.6
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - 2.7
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# command to install dependencies
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;install:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - pip install -r requirements.txt
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    - pip install coveralls
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# command to run tests
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;script:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    nosetests --cover-package=project --with-coverage
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;# coveralls
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;after_success:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    coveralls&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;同样地，也需要在 Coveralls 上开启相应的项目。&lt;/p&gt;
 
 &lt;p&gt;这样，Github 的代码库在每次收到 &lt;code&gt;Push&lt;/code&gt; 和 &lt;code&gt;Pull Request&lt;/code&gt; 的时候，Travis CI 都会按照配置文件上的步骤自动运行测试（或者部署，本样例只有测试。），并且把测试覆盖率的数据发布到 Coveralls。&lt;/p&gt;
@@ -702,13 +674,11 @@ after_success:
 &lt;h4 id=&#34;运行什么&#34;&gt;运行什么&lt;/h4&gt;
 
 &lt;p&gt;添加一段 &lt;strong&gt;Build Script&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;PYTHONPATH=&#39;&#39;
-nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package=project1 --cover-inclusive
-python -m coverage xml --include=project1*
-pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;project1 --cover-inclusive
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;python -m coverage xml --include&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;project1*
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;pylint -f parseable -d I0011,R0801 project1 &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; tee pylint.out&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;这段 Shell 脚本中的三个命令：&lt;/p&gt;
 
 &lt;ol&gt;
@@ -746,28 +716,24 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out
 &lt;p&gt;没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 &lt;a href=&#34;https://github.com/SurveyMonkey/pycobertura&#34;&gt;Pycobertura&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from pycobertura import Cobertura
-from pycobertura import TextReporterDelta
-
-coverage1 = Cobertura(&#39;coverage1.xml&#39;)
-coverage2 = Cobertura(&#39;coverage2.xml&#39;)
-delta = TextReporterDelta(coverage1, coverage2)
-delta.generate()
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pycobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pycobertura&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage1.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage2.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;generate&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 &lt;strong&gt;Post build script&lt;/strong&gt; 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Coverage Diff for Java code:
-No coverage diff can be found.
-Coverage Diff for Python code:
-Name          Stmts    Miss    Cover
-------------  -------  ------  --------
-dummy/dummy   -        -2      +50.00%
-dummy/dummy2  +2       -       +100.00%
-TOTAL         +2       -2      +50.00%
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Coverage Diff for Java code:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;No coverage diff can be found.
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Coverage Diff for Python code:
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;Name          Stmts    Miss    Cover
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;------------  -------  ------  --------
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dummy/dummy   -        -2      +50.00%
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;dummy/dummy2  +2       -       +100.00%
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;TOTAL         +2       -2      +50.00%&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;p&gt;最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。&lt;/p&gt;
 
 &lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;

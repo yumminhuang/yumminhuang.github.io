@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -163,17 +161,13 @@
 <h3 id="安装">安装</h3>
 
 <p>以Ubuntu为例。首先添加i3到源列表。</p>
-
-<pre><code>echo &quot;deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe&quot; &gt;&gt; /etc/apt/sources.list
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s7d0">echo</span><span class="s1f40"> </span><span class="sc1c">&#34;deb http://debian.sur5r.net/i3/ </span><span class="s3e8">$(</span><span class="s1f40">lsb_release -c -s</span><span class="s3e8">)</span><span class="sc1c"> universe&#34;</span><span class="s1f40"> &gt;&gt; /etc/apt/sources.list</span></code></pre>
+</div>
 <p>然后运行以下指令进行安装。</p>
-
-<pre><code>apt-get update
-apt-get --allow-unauthenticated install sur5r-keyring
-apt-get install i3
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">apt-get update
+</span><span class="ln">2</span><span class="s1f40">apt-get --allow-unauthenticated install sur5r-keyring
+</span><span class="ln">3</span><span class="s1f40">apt-get install i3</span></code></pre>
+</div>
 <h3 id="配置">配置</h3>
 
 <p>我之所以放弃 Awesome 的一个很重要的原因就是它的配置过于复杂。诚然，Awesome 的效果要比 i3 酷炫很多，但是设置需要用到 Lua 脚本。很多功能还需要通过安装插件来完成。相反，i3 只需要两个设置文件，而且用的是非常易读的语法。</p>

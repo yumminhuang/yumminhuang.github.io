@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -132,10 +130,8 @@
 <p>其余添加用户、Linux 基本设置等内容在此不再赘述。</p>
 
 <h4 id="安装pptp">安装PPTP</h4>
-
-<pre><code>sudo apt-get install pptpd
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">sudo apt-get install pptpd</span></code></pre>
+</div>
 <h4 id="配置">配置</h4>
 
 <ul>
@@ -143,12 +139,10 @@
 </ul>
 
 <p>编辑 <code>/etc/pptpd.conf</code>，添加以下内容(基本上默认设置已经完成或者被注释了)：</p>
-
-<pre><code>option /etc/ppp/pptpd-options
-localip 192.168.0.1
-remoteip 192.168.0.100-200
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">option /etc/ppp/pptpd-options
+</span><span class="ln">2</span><span class="s1f40">localip 192.168.0.1
+</span><span class="ln">3</span><span class="s1f40">remoteip 192.168.0.100-200</span></pre>
+</div>
 <p>这里是 PPTP 服务器的 IP 地址设为 <code>192.178.0.1</code> ，把 PPTP 客户端的 IP 地址设置为 <code>192.168.0.100</code> 到 <code>192.168.0.200</code> 的区间内。当然你也可以自己的需要和喜欢进行相应的设置</p>
 
 <ul>
@@ -156,45 +150,35 @@ remoteip 192.168.0.100-200
 </ul>
 
 <p>编辑 <code>/etc/ppp/pptpd-options</code> ，添加 DNS 地址。这里我选择的是<a href="https://developers.google.com/speed/public-dns/">Google Public DNS</a>。</p>
-
-<pre><code>ms-dns 8.8.8.8
-ms-dns 8.8.4.4
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">ms-dns 8.8.8.8
+</span><span class="ln">2</span><span class="s1f40">ms-dns 8.8.4.4</span></pre>
+</div>
 <ul>
 <li>添加用户</li>
 </ul>
 
 <p>编辑 <code>/etc/ppp/chap-secrets</code>，添加账号和密码。其中第一列为账户名，第二列为密码。</p>
-
-<pre><code># client    server  secret          IP addresses
-test		pptpd   1234            *
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40"># client    server  secret          IP addresses
+</span><span class="ln">2</span><span class="s1f40">test		pptpd   1234            *</span></pre>
+</div>
 <ul>
 <li>设置 IP 转发</li>
 </ul>
 
 <p>打开 IPv4 转发，并重新载入设置。</p>
-
-<pre><code>sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
-sudo sysctl -p
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">sudo sed -i </span><span class="sc1c">&#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39;</span><span class="s1f40"> /etc/sysctl.conf
+</span><span class="ln">2</span><span class="s1f40">sudo sysctl -p</span></code></pre>
+</div>
 <p>为 PPTP 连接设置 NAT，否则不能访问别的网站。</p>
-
-<pre><code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span></code></pre>
+</div>
 <p>也可以直接编辑 <code>/etc/rc.local</code>，在 <code>exit 0</code> 之前添加以上内容。</p>
 
 <ul>
 <li>重启 PPTP</li>
 </ul>
-
-<pre><code>sudo service pptpd restart
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">sudo service pptpd restart</span></code></pre>
+</div>
 <p>这样PPTP服务器就搭建完毕了，可以「科学上网」了！</p>
 
 <blockquote>
@@ -212,18 +196,16 @@ sudo sysctl -p
 </ul>
 
 <p>第一次设置完毕之后尝试连接 VPN，发现连接失败。重新设置之后依然没有解决，以至于让我怀疑是 Ubuntu14.04 的问题。我新建了一个 Droplet，更换成 Ubuntu12.04 之后还是同样的问题。接着尝试用<code>netstat</code>检查，发现连接已经建立，但是因为某种原因被断开了。检查<code>/var/log/syslog</code>，发现了以下内容：</p>
-
-<pre><code>Mar 21 16:54:23 Server pptpd[1808]: GRE: Bad checksum from pppd.
-Mar 21 16:54:53 Server pppd[1809]: LCP: timeout sending Config-Requests
-Mar 21 16:54:53 Server pppd[1809]: Connection terminated.
-Mar 21 16:54:53 Server pppd[1809]: Modem hangup
-Mar 21 16:54:53 Server pppd[1809]: Exit.
-Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">Mar 21 16:54:23 Server pptpd[1808]: GRE: Bad checksum from pppd.
+</span><span class="ln">2</span><span class="s1f40">Mar 21 16:54:53 Server pppd[1809]: LCP: timeout sending Config-Requests
+</span><span class="ln">3</span><span class="s1f40">Mar 21 16:54:53 Server pppd[1809]: Connection terminated.
+</span><span class="ln">4</span><span class="s1f40">Mar 21 16:54:53 Server pppd[1809]: Modem hangup
+</span><span class="ln">5</span><span class="s1f40">Mar 21 16:54:53 Server pppd[1809]: Exit.
+</span><span class="ln">6</span><span class="s1f40">Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
+</span><span class="ln">7</span><span class="s1f40">Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
+</span><span class="ln">8</span><span class="s1f40">Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
+</span><span class="ln">9</span><span class="s1f40">Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished</span></pre>
+</div>
 <p>上网搜索，在 StackOverflow 上找到了<a href="http://stackoverflow.com/a/21347817">答案</a>。至此，终于定位到无法连接的根本原因 —— 是路由器不支持 <code>PPTP Passthrough</code> 功能。我上路由器厂商的官网一看，果然发现了去年12月发布了一个固件更新用来修复VPN连接的问题。</p>
 
 <hr />

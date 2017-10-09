@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -111,24 +109,22 @@
 <p>来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。</p>
 
 <p>分布式 Gerrit 架构如下图所示。</p>
-
-<pre><code>+----------------------+                  +--------------------+
-|                      |                  |                    |
-|    Gerrit Master     |                  |    Gerrit Slave    |
-|       Server         |                  |       Server       |
-|                +-----+-----+            |                    |
-|   +----------+ |  Gerrit   |            |     +----------+   |
-|   |Repository| |Replication|  git push  |     |Repository|   |
-|   |          +-+  Plugin   +-----------------&gt;+          |   |
-|   +----------+ +-----+-----+            |     +----------+   |
-|                      |                  |                    |
-|   +--------------+   |                  |  +--------------+  |
-|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
-|   |    PRIMARY   +------------------------&gt;+ HOT-STANDBY  |  |
-|   +--------------+   |                  |  +--------------+  |
-+----------------------+                  +--------------------+
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln"> 1</span><span class="s1f40">+----------------------+                  +--------------------+
+</span><span class="ln"> 2</span><span class="s1f40">|                      |                  |                    |
+</span><span class="ln"> 3</span><span class="s1f40">|    Gerrit Master     |                  |    Gerrit Slave    |
+</span><span class="ln"> 4</span><span class="s1f40">|       Server         |                  |       Server       |
+</span><span class="ln"> 5</span><span class="s1f40">|                +-----+-----+            |                    |
+</span><span class="ln"> 6</span><span class="s1f40">|   +----------+ |  Gerrit   |            |     +----------+   |
+</span><span class="ln"> 7</span><span class="s1f40">|   |Repository| |Replication|  git push  |     |Repository|   |
+</span><span class="ln"> 8</span><span class="s1f40">|   |          +-+  Plugin   +-----------------&gt;+          |   |
+</span><span class="ln"> 9</span><span class="s1f40">|   +----------+ +-----+-----+            |     +----------+   |
+</span><span class="ln">10</span><span class="s1f40">|                      |                  |                    |
+</span><span class="ln">11</span><span class="s1f40">|   +--------------+   |                  |  +--------------+  |
+</span><span class="ln">12</span><span class="s1f40">|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+</span><span class="ln">13</span><span class="s1f40">|   |    PRIMARY   +------------------------&gt;+ HOT-STANDBY  |  |
+</span><span class="ln">14</span><span class="s1f40">|   +--------------+   |                  |  +--------------+  |
+</span><span class="ln">15</span><span class="s1f40">+----------------------+                  +--------------------+</span></pre>
+</div>
 <p>在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，<code>refs/meta</code> 分支下的变更或是创建的新代码库）同步到 Slave。</p>
 
 <p>为了实现数据库的同步，需要将 PostgreSQL 运行在 <a href="https://www.postgresql.org/docs/9.4/static/hot-standby.html">Hot Standby 模式</a>。 在 Gerrit Master 上运行的 PostgreSQL 是 <em>primary</em> ，可以进行读、写操作； 在 Gerrit Slave 上运行的 PostgreSQL 是 <em>stanby</em> ，可以和 <em>primary</em> 保持同步，可以接受客户端的连接，但只能进行读操作。如果 <em>primary</em> 故障了，整个系统可以迁移（ <em>fail over</em> ）到 <em>stanby</em> ，由 <em>stanby</em> 承担 <em>primary</em> 的角色。</p>
@@ -142,58 +138,46 @@
 <h4 id="gerrit-slave">Gerrit Slave</h4>
 
 <p>安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 <code>gerrit.config</code> 文件里的 <code>[container]</code> 下面添加 <code>slave = true</code> 。</p>
-
-<pre><code>[container]
-    user = gerrit2
-    javaHome = /usr/lib/jvm/java-7-oracle/jre
-    javaOptions = -Xmx80g -Xms20g -Xmn2g
-    slave = true
-[database]
-    type = postgresql
-    database = reviewdb
-    hostname = localhost
-    username = gerrit2
-...
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln"> 1</span><span class="s1f40">[container]
+</span><span class="ln"> 2</span><span class="s1f40">    user = gerrit2
+</span><span class="ln"> 3</span><span class="s1f40">    javaHome = /usr/lib/jvm/java-7-oracle/jre
+</span><span class="ln"> 4</span><span class="s1f40">    javaOptions = -Xmx80g -Xms20g -Xmn2g
+</span><span class="ln"> 5</span><span class="s1f40">    slave = true
+</span><span class="ln"> 6</span><span class="s1f40">[database]
+</span><span class="ln"> 7</span><span class="s1f40">    type = postgresql
+</span><span class="ln"> 8</span><span class="s1f40">    database = reviewdb
+</span><span class="ln"> 9</span><span class="s1f40">    hostname = localhost
+</span><span class="ln">10</span><span class="s1f40">    username = gerrit2
+</span><span class="ln">11</span><span class="s1f40">...</span></pre>
+</div>
 <p>这样 Gerrit 才会启动为 Slave。</p>
 
 <h3 id="配置-postgresql-数据库">配置 PostgreSQL 数据库</h3>
 
 <p>在 Master 上要配置 <code>/etc/postgresql/9.4/main/postgresql.conf</code>，打开 Hot Standby 功能。</p>
-
-<pre><code>...
-wal_level = hot_standby
-...
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">...
+</span><span class="ln">2</span><span class="s1f40">wal_level = hot_standby
+</span><span class="ln">3</span><span class="s1f40">...</span></pre>
+</div>
 <p>还需要在 <code>/etc/postgresql/9.4/main/pg_hba.conf</code> 添加  <em>stanby</em> 的 IP，确保 <em>stanby</em> 可以连接  <em>primary</em> 进行同步。</p>
-
-<pre><code>host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5</span></pre>
+</div>
 <p>在 Slave 上首先需要配置 <code>/etc/postgresql/9.4/main/postgresql.conf</code>，设置 PostgreSQL 运行为 <em>stanby</em> 。</p>
-
-<pre><code>...
-hot_standby = on
-...
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">...
+</span><span class="ln">2</span><span class="s1f40">hot_standby = on
+</span><span class="ln">3</span><span class="s1f40">...</span></pre>
+</div>
 <p>接下来，添加 <code>/var/lib/postgresql/9.4/main/recovery.conf</code> 文件，配置  <em>primary</em>  信息。</p>
-
-<pre><code>standby_mode = on 
-primary_conninfo = 'host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD'
-trigger_file = '/var/lib/postgresql/postgresql.trigger'
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">standby_mode = on
+</span><span class="ln">2</span><span class="s1f40">primary_conninfo = &#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&#39;
+</span><span class="ln">3</span><span class="s1f40">trigger_file = &#39;/var/lib/postgresql/postgresql.trigger&#39;</span></pre>
+</div>
 <p>其中 <code>trigger_file</code> 被用来触发 <em>fail over</em> ，此时不需要创建。</p>
 
 <p>配置完成后，在 <em>primary</em>  上运行命令将数据拷贝到 <em>standby</em> 。</p>
-
-<pre><code class="language-shell">rsync -av --exclude pg_xlog --exclude postgresql.conf data/* \
-	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">rsync -av --exclude pg_xlog --exclude postgresql.conf data/* </span><span class="sc25">\
+</span><span class="ln">2</span><span class="sc25"></span><span class="s1f40">	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/</span></code></pre>
+</div>
 <p>重启两端的 PostgreSQL 后，<em>primary</em> 和 <em>standby</em> 将保持同步。</p>
 
 <p>关于 Hot Standby 的详细的说明，可以参见 Postgresql 的这篇<a href="https://wiki.postgresql.org/wiki/Hot_Standby">官方文档</a>。</p>
@@ -203,32 +187,30 @@ trigger_file = '/var/lib/postgresql/postgresql.trigger'
 <h4 id="gerrit-slave-1">Gerrit Slave</h4>
 
 <p>首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。</p>
-
-<pre><code>$ sudo apt install xinetd
-$ cat /etc/xinetd.d/git-daemon
- 
-# default: off
-# description: The git server offers access to git repositories service git
-service git
-{
-        disable = no
-        type = UNLISTED
-        port = 9418
-        socket_type = stream
-        wait = no
-        env  = HOME=/home/gerrit2
-        user = gerrit2
-        server = /usr/bin/git
-        only_from = gerrit-master.example.com
-        log_type = SYSLOG daemon info
-        server_args = daemon --inetd --syslog --export-all --enable=upload-pack --enable=receive-pack --base-path=/home/gerrit2/review_site/git --verbose
-        log_on_success += USERID HOST DURATION EXIT
-        log_on_failure += USERID HOST ATTEMPT
-        cps = 150 10
-}
-$ sudo /etc/init.d/xinetd restart
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln"> 1</span><span class="s1f40">$ sudo apt install xinetd
+</span><span class="ln"> 2</span><span class="s1f40">$ cat /etc/xinetd.d/git-daemon
+</span><span class="ln"> 3</span><span class="s1f40">
+</span><span class="ln"> 4</span><span class="s1f40"></span><span class="s1770"># default: off
+</span><span class="ln"> 5</span><span class="s1770"># description: The git server offers access to git repositories service git
+</span><span class="ln"> 6</span><span class="s1770"></span><span class="s1f40">service git
+</span><span class="ln"> 7</span><span class="s1f40"></span><span class="sfa0">{</span><span class="s1f40">
+</span><span class="ln"> 8</span><span class="s1f40">        </span><span class="s7d0">disable</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> no
+</span><span class="ln"> 9</span><span class="s1f40">        </span><span class="s7d0">type</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> UNLISTED
+</span><span class="ln">10</span><span class="s1f40">        </span><span class="s7d0">port</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc80">9418</span><span class="s1f40">
+</span><span class="ln">11</span><span class="s1f40">        </span><span class="s7d0">socket_type</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> stream
+</span><span class="ln">12</span><span class="s1f40">        </span><span class="s7d0">wait</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> no
+</span><span class="ln">13</span><span class="s1f40">        </span><span class="s7d0">env</span><span class="s1f40">  </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">HOME</span><span class="s1f40"></span><span class="sfa0">=</span><span class="s1f40">/home/gerrit2
+</span><span class="ln">14</span><span class="s1f40">        </span><span class="s7d0">user</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> gerrit2
+</span><span class="ln">15</span><span class="s1f40">        </span><span class="s7d0">server</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> /usr/bin/git
+</span><span class="ln">16</span><span class="s1f40">        </span><span class="s7d0">only_from</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> gerrit-master.example.com
+</span><span class="ln">17</span><span class="s1f40">        </span><span class="s7d0">log_type</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> SYSLOG daemon info
+</span><span class="ln">18</span><span class="s1f40">        </span><span class="s7d0">server_args</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> daemon --inetd --syslog --export-all --enable</span><span class="sfa0">=</span><span class="s1f40">upload-pack --enable</span><span class="sfa0">=</span><span class="s1f40">receive-pack --base-path</span><span class="sfa0">=</span><span class="s1f40">/home/gerrit2/review_site/git --verbose
+</span><span class="ln">19</span><span class="s1f40">        </span><span class="s7d0">log_on_success</span><span class="s1f40"> </span><span class="sfa0">+=</span><span class="s1f40"> USERID HOST DURATION EXIT
+</span><span class="ln">20</span><span class="s1f40">        </span><span class="s7d0">log_on_failure</span><span class="s1f40"> </span><span class="sfa0">+=</span><span class="s1f40"> USERID HOST ATTEMPT
+</span><span class="ln">21</span><span class="s1f40">        </span><span class="s7d0">cps</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc80">150</span><span class="s1f40"> </span><span class="sc80">10</span><span class="s1f40">
+</span><span class="ln">22</span><span class="s1f40"></span><span class="sfa0">}</span><span class="s1f40">
+</span><span class="ln">23</span><span class="s1f40">$ sudo /etc/init.d/xinetd restart</span></code></pre>
+</div>
 <p>重启 xinetd 之后，9418 端口将会开启，可以通过 <code>git://</code> 访问 Gerrit Slave 上的代码库。</p>
 
 <h4 id="gerrit-master">Gerrit Master</h4>
@@ -236,14 +218,12 @@ $ sudo /etc/init.d/xinetd restart
 <p>在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 <code>$REVIEW_SITE/plugin</code> 目录下。</p>
 
 <p>接下来，添加 <code>$REVIEW_SITE/etc/replication.config</code> 文件，加上 Gerrit Slave 的配置</p>
-
-<pre><code>[remote &quot;slave&quot;]
-  url = git://gerrit-slave.example.com/${name}.git 
-  mirror = true
-  threads = 4
-  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">[remote &#34;slave&#34;]
+</span><span class="ln">2</span><span class="s1f40">  url = git://gerrit-slave.example.com/${name}.git
+</span><span class="ln">3</span><span class="s1f40">  mirror = true
+</span><span class="ln">4</span><span class="s1f40">  threads = 4
+</span><span class="ln">5</span><span class="s1f40">  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git</span></pre>
+</div>
 <p>注意，<code>adminUrl</code> 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。</p>
 
 <p>这样，启动 Gerrit Master 之后，每次代码库有变更，Gerrit Replication 插件都会将变更通过 git 协议 Push 到 Slave 上。</p>
@@ -253,17 +233,13 @@ $ sudo /etc/init.d/xinetd restart
 <hr />
 
 <p>分布式 Gerrit 搭建完成之后，我们可以添加 <code>.gitconfig</code> 文件来实现代码上传和下载分流。</p>
-
-<pre><code class="language-shell">[url &quot;ssh://&lt;username&gt;@gerrit-slave.example.com:29418&quot;]
-    insteadOf = gerrit
-    pushInsteadOf = ssh://&lt;username&gt;@gerrit-master.example.com:29418
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="sfa0">[</span><span class="s1f40">url </span><span class="sc1c">&#34;ssh://&lt;username&gt;@gerrit-slave.example.com:29418&#34;</span><span class="sfa0">]</span><span class="s1f40">
+</span><span class="ln">2</span><span class="s1f40">    </span><span class="s7d0">insteadOf</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> gerrit
+</span><span class="ln">3</span><span class="s1f40">    </span><span class="s7d0">pushInsteadOf</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> ssh://&lt;username&gt;@gerrit-master.example.com:29418</span></code></pre>
+</div>
 <p>这样，克隆代码库的时候使用命令</p>
-
-<pre><code class="language-shell">git clone gerrit:path/to/repo
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">git clone gerrit:path/to/repo</span></code></pre>
+</div>
 <p>可以从 Gerrit Slave 下载代码，而 <code>git push</code> 的时候会自动将代码 Push 到 Gerrit Master。</p>
 
 <h2 id="参考">参考</h2>

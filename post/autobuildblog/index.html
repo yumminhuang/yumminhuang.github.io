@@ -21,14 +21,12 @@
 
    	
    	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
 
 
     
     <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
     <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     
     <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
@@ -95,60 +93,52 @@
 <p>两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。</p>
 
 <p>当然，还是有必要保留以前提交的历史记录。大概的操作流程是：</p>
-
-<pre><code class="language-Bash">git clone git@github.com/yumminhuang/Blog.git
-cd Blog
-# Delete the old remote
-git remote rm origin
-# Add a new remote
-git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
-# (Optional) Modify .git/config for submodules, etc
-vi .git/config
-# Create the new branch and switch to it
-git checkout -b source
-# Push the new branch to remote
-git push origin source
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln"> 1</span><span class="s1f40">git clone git@github.com/yumminhuang/Blog.git
+</span><span class="ln"> 2</span><span class="s1f40"></span><span class="s7d0">cd</span><span class="s1f40"> Blog
+</span><span class="ln"> 3</span><span class="s1f40"></span><span class="s1770"># Delete the old remote
+</span><span class="ln"> 4</span><span class="s1770"></span><span class="s1f40">git remote rm origin
+</span><span class="ln"> 5</span><span class="s1f40"></span><span class="s1770"># Add a new remote
+</span><span class="ln"> 6</span><span class="s1770"></span><span class="s1f40">git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+</span><span class="ln"> 7</span><span class="s1f40"></span><span class="s1770"># (Optional) Modify .git/config for submodules, etc
+</span><span class="ln"> 8</span><span class="s1770"></span><span class="s1f40">vi .git/config
+</span><span class="ln"> 9</span><span class="s1f40"></span><span class="s1770"># Create the new branch and switch to it
+</span><span class="ln">10</span><span class="s1770"></span><span class="s1f40">git checkout -b </span><span class="s7d0">source</span><span class="s1f40">
+</span><span class="ln">11</span><span class="s1f40"></span><span class="s1770"># Push the new branch to remote
+</span><span class="ln">12</span><span class="s1770"></span><span class="s1f40">git push origin source</span></code></pre>
+</div>
 <p>这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。</p>
 
 <h3 id="docker-for-hugo">Docker for Hugo</h3>
 
 <p>接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 <a href="https://github.com/yumminhuang/hugo-docker">Dockerfile</a> 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。</p>
-
-<pre><code class="language-dockerfile">FROM alpine:latest
-MAINTAINER Yaming Huang &lt;yumminhuang@gmail.com&gt;
-
-ARG HUGO_VERSION=0.17
-
-RUN apk add --update wget ca-certificates &amp;&amp; \
-  cd /tmp/ &amp;&amp; \
-  wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;&amp; \
-  tar xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;&amp; \
-  rm -r hugo_${HUGO_VERSION}_Linux-64bit.tar.gz &amp;&amp; \
-  mv hugo*/hugo* /usr/bin/hugo &amp;&amp; \
-  apk del wget ca-certificates &amp;&amp; \
-  rm /var/cache/apk/*
-
-VOLUME /website
-VOLUME /public
-
-WORKDIR /website
-ENTRYPOINT [&quot;/usr/bin/hugo&quot;]
-
-EXPOSE 1313
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="ln"> 1</span><span class="s3e8">FROM</span><span class="sc1c"> alpine:latest</span><span class="ss4">
+</span><span class="ln"> 2</span><span class="ss4"></span><span class="s3e8">MAINTAINER</span><span class="sc1c"> Yaming Huang &lt;yumminhuang@gmail.com&gt;</span><span class="ss4">
+</span><span class="ln"> 3</span><span class="ss4">
+</span><span class="ln"> 4</span><span class="ss4"></span><span class="s1f40">ARG </span><span class="s7d0">HUGO_VERSION</span><span class="s1f40"></span><span class="sfa0">=</span><span class="sc80">0</span><span class="s1f40">.17</span><span class="ss4">
+</span><span class="ln"> 5</span><span class="ss4">
+</span><span class="ln"> 6</span><span class="ss4"></span><span class="s3e8">RUN</span><span class="s1f40"> apk add --update wget ca-certificates </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln"> 7</span><span class="sc25"></span><span class="s1f40">  </span><span class="s7d0">cd</span><span class="s1f40"> /tmp/ </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln"> 8</span><span class="sc25"></span><span class="s1f40">  wget https://github.com/spf13/hugo/releases/download/v</span><span class="sc1c">${</span><span class="s7d0">HUGO_VERSION</span><span class="sc1c">}</span><span class="s1f40">/hugo_</span><span class="sc1c">${</span><span class="s7d0">HUGO_VERSION</span><span class="sc1c">}</span><span class="s1f40">_Linux-64bit.tar.gz </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln"> 9</span><span class="sc25"></span><span class="s1f40">  tar xzf hugo_</span><span class="sc1c">${</span><span class="s7d0">HUGO_VERSION</span><span class="sc1c">}</span><span class="s1f40">_Linux-64bit.tar.gz </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln">10</span><span class="sc25"></span><span class="s1f40">  rm -r hugo_</span><span class="sc1c">${</span><span class="s7d0">HUGO_VERSION</span><span class="sc1c">}</span><span class="s1f40">_Linux-64bit.tar.gz </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln">11</span><span class="sc25"></span><span class="s1f40">  mv hugo*/hugo* /usr/bin/hugo </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln">12</span><span class="sc25"></span><span class="s1f40">  apk del wget ca-certificates </span><span class="sfa0">&amp;&amp;</span><span class="s1f40"> </span><span class="sc25">\
+</span><span class="ln">13</span><span class="sc25"></span><span class="s1f40">  rm /var/cache/apk/*</span><span class="ss4">
+</span><span class="ln">14</span><span class="ss4">
+</span><span class="ln">15</span><span class="ss4"></span><span class="s3e8">VOLUME</span><span class="sc1c"> /website</span><span class="ss4">
+</span><span class="ln">16</span><span class="ss4"></span><span class="s3e8">VOLUME</span><span class="sc1c"> /public</span><span class="ss4">
+</span><span class="ln">17</span><span class="ss4">
+</span><span class="ln">18</span><span class="ss4"></span><span class="s3e8">WORKDIR</span><span class="sc1c"> /website</span><span class="ss4">
+</span><span class="ln">19</span><span class="ss4"></span><span class="s3e8">ENTRYPOINT</span><span class="sc1c"> [&#34;/usr/bin/hugo&#34;]</span><span class="ss4">
+</span><span class="ln">20</span><span class="ss4">
+</span><span class="ln">21</span><span class="ss4"></span><span class="s3e8">EXPOSE</span><span class="sc1c"> 1313</span></code></pre>
+</div>
 <p>Build 之后生成 <code>yumminhuang/hugo-docker</code>， 这样每次运行一条命令，就可以生成网页到 <code>public</code> 目录下。</p>
-
-<pre><code>docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">docker run --rm -v </span><span class="s3e8">$(</span><span class="s7d0">pwd</span><span class="s3e8">)</span><span class="s1f40">:/website yumminhuang/hugo:latest</span></code></pre>
+</div>
 <p>还可以运行如下的命令用来看网页生成的效果。</p>
-
-<pre><code>docker run --rm -p 1313:1313 -v $(pwd):/website yumminhuang/hugo:latest server --bind=0.0.0.0 -w -D
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">docker run --rm -p </span><span class="sc80">1313</span><span class="s1f40">:1313 -v </span><span class="s3e8">$(</span><span class="s7d0">pwd</span><span class="s3e8">)</span><span class="s1f40">:/website yumminhuang/hugo:latest server --bind</span><span class="sfa0">=</span><span class="sc80">0</span><span class="s1f40">.0.0.0 -w -D</span></code></pre>
+</div>
 <h3 id="travis-ci">Travis CI</h3>
 
 <p>接下来是设置 Travis CI 来进行自动构建。</p>
@@ -156,44 +146,40 @@ EXPOSE 1313
 <p>首先，需要先到 Github 的<a href="https://github.com/settings/tokens">个人设置</a>页面去<a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">创建一个 “Personal Access Token”</a>。确保选择了 <code>repo</code> 下面的 <code>public_repo</code>。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。</p>
 
 <p>接着，需要使用 <a href="https://github.com/travis-ci/travis.rb">Travis 命令行工具</a>来对包含新生成 “Personal Access Token”  的变量 <code>GIT_DEPLOY_REPO</code> 加密。</p>
-
-<pre><code>travis encrypt GIT_DEPLOY_REPO=https://GENERATED_TOKEN@github.com/username/reponame.git
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">travis encrypt </span><span class="s7d0">GIT_DEPLOY_REPO</span><span class="s1f40"></span><span class="sfa0">=</span><span class="s1f40">https://GENERATED_TOKEN@github.com/username/reponame.git</span></code></pre>
+</div>
 <p><code>GIT_DEPLOY_REPO</code> 将用于把网页上传到 Github，后文会有提及。</p>
 
 <p>完整的 <code>.travis.yml</code> 如下所示。</p>
-
-<pre><code class="language-yaml">env:
-  global:
-  - secure: &quot; LONG TOKEN &quot;
-  - GIT_DEPLOY_DIR=public
-  - GIT_DEPLOY_BRANCH=master
-  - GIT_DEPLOY_USERNAME=&quot;Travis CI&quot;
-  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
-
-branches:
-  only:
-    - source
-
-sudo: required
-
-services:
-  - docker
-
-install:
-  - rm -rf public || exit 0
-  - git config --global user.email &quot;yumminhuang@gmail.com&quot;
-  - git config --global user.name &quot;Travis CI&quot;
-
-script:
-  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
-
-after_success:
-  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
-  - bash deploy.sh -m &quot;updating blog `date`&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="s1f40">env:
+</span><span class="ln"> 2</span><span class="s1f40">  global:
+</span><span class="ln"> 3</span><span class="s1f40">  - secure: &#34; LONG TOKEN &#34;
+</span><span class="ln"> 4</span><span class="s1f40">  - GIT_DEPLOY_DIR=public
+</span><span class="ln"> 5</span><span class="s1f40">  - GIT_DEPLOY_BRANCH=master
+</span><span class="ln"> 6</span><span class="s1f40">  - GIT_DEPLOY_USERNAME=&#34;Travis CI&#34;
+</span><span class="ln"> 7</span><span class="s1f40">  - GIT_DEPLOY_EMAIL=yumminhuang@gmail.com
+</span><span class="ln"> 8</span><span class="s1f40">
+</span><span class="ln"> 9</span><span class="s1f40">branches:
+</span><span class="ln">10</span><span class="s1f40">  only:
+</span><span class="ln">11</span><span class="s1f40">    - source
+</span><span class="ln">12</span><span class="s1f40">
+</span><span class="ln">13</span><span class="s1f40">sudo: required
+</span><span class="ln">14</span><span class="s1f40">
+</span><span class="ln">15</span><span class="s1f40">services:
+</span><span class="ln">16</span><span class="s1f40">  - docker
+</span><span class="ln">17</span><span class="s1f40">
+</span><span class="ln">18</span><span class="s1f40">install:
+</span><span class="ln">19</span><span class="s1f40">  - rm -rf public || exit 0
+</span><span class="ln">20</span><span class="s1f40">  - git config --global user.email &#34;yumminhuang@gmail.com&#34;
+</span><span class="ln">21</span><span class="s1f40">  - git config --global user.name &#34;Travis CI&#34;
+</span><span class="ln">22</span><span class="s1f40">
+</span><span class="ln">23</span><span class="s1f40">script:
+</span><span class="ln">24</span><span class="s1f40">  - docker run --rm -v $(pwd):/website yumminhuang/hugo:latest
+</span><span class="ln">25</span><span class="s1f40">
+</span><span class="ln">26</span><span class="s1f40">after_success:
+</span><span class="ln">27</span><span class="s1f40">  - wget https://raw.githubusercontent.com/X1011/git-directory-deploy/master/deploy.sh -O deploy.sh
+</span><span class="ln">28</span><span class="s1f40">  - bash deploy.sh -m &#34;updating blog `date`&#34;</span></code></pre>
+</div>
 <p>在 <code>after_success</code>，也即 Hugo 完成网页生成之后，会使用 <a href="https://github.com/X1011/git-directory-deploy">X1011/git-directory-deploy</a> 里的 <code>deploy.sh</code> 将网页提交并上传到 Github。使用 <code>deploy.sh</code> 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。</p>
 
 <ul>

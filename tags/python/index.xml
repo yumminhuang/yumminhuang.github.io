@@ -88,19 +88,17 @@
 &lt;p&gt;开始，我检查的方式是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆之后，再使用 &lt;code&gt;grep&lt;/code&gt; 检查日志文件是否包含 &lt;code&gt;ERROR&lt;/code&gt;、&lt;code&gt;WARNING&lt;/code&gt; 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆，再运行脚本进行检查。&lt;/p&gt;
 
 &lt;p&gt;但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 &lt;code&gt;datetime&lt;/code&gt;，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;from fabric.api import *
-
-def check_log_with_keyword(log_file, keyword):
-    with settings(hide(&#39;warnings&#39;,&#39;output&#39;),
-                  host_string=&#39;eb101.ops&#39;,
-                  warn_only=True):
-        result = run(&#39;grep %s %s&#39; % (keyword, filename))
-
-        if result.return_code == 0:
-            print(result)
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;fabric.api&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;check_log_with_keyword&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_file&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;keyword&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;with&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;settings&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;warnings&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;output&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;                  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;host_string&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;eb101.ops&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;                  &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;warn_only&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;grep &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;keyword&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;filename&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;return_code&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 &lt;code&gt;with settings()&lt;/code&gt; 来临时更改 &lt;code&gt;env&lt;/code&gt; 变量；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;hide(&#39;warnings&#39;, &#39;output&#39;)&lt;/code&gt; 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 &lt;code&gt;stderr&lt;/code&gt; 和 &lt;code&gt;stdout&lt;/code&gt;；&lt;/li&gt;
@@ -162,130 +160,129 @@ def check_log_with_keyword(log_file, keyword):
 &lt;/ol&gt;
 
 &lt;p&gt;下面提供一份示例代码以供参考：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#!python
-import sys
-import time
-
-from boto.ec2.autoscale import AutoScaleConnection
-from boto.ec2.connection import EC2Connection
-
-AUTO_SCALING_GROUP = &amp;quot;test_auto_scaling_group&amp;quot;
-NEW_INSTANCES = [&amp;quot;i-4acb0666&amp;quot;, &amp;quot;i-4acbqa9&amp;quot;]
-CHECK_INTERVAL = 5
-
-
-def suspend(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Suspend auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    as_conn.suspend_processes(AUTO_SCALING_GROUP)
-    print &amp;quot;Suspend Done\n&amp;quot;
-
-
-def resume(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Resume auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    as_conn.resume_processes(AUTO_SCALING_GROUP)
-    print &amp;quot;Resume Done\n&amp;quot;
-
-
-def get_instance_by_id(ec2conn, inst_id):
-    &amp;quot;&amp;quot;&amp;quot;
-    Get instance by its id
-    &amp;quot;&amp;quot;&amp;quot;
-    ...
-    pass
-
-def deactivate_instance(inst):
-    &amp;quot;&amp;quot;&amp;quot;
-    Deactivate instance
-    &amp;quot;&amp;quot;&amp;quot;
-    ...
-    pass
-
-
-def delete_instances(as_conn, ec2conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Delete instances in auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-    instances = [get_instance_by_id(ec2conn, i.instance_id) for i in as_group.instances]
-    for instance in instances:
-        if instance.state != &amp;quot;terminated&amp;quot;:
-            print &amp;quot;*** Terminate Instance %s&amp;quot; % instance.id
-            deactivate_instance(instance)
-    # All instances should be terminated
-    while any([inst.update() != &amp;quot;terminated&amp;quot; for inst in instances]):
-        sys.stdout.write(&amp;quot;.&amp;quot;)
-        sys.stdout.flush()
-        time.sleep(CHECK_INTERVAL)
-    print &amp;quot;.\nDelete Done\n&amp;quot;
-
-
-def attach_instances(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Attach instances into auto scaling group
-    &amp;quot;&amp;quot;&amp;quot;
-    while True and NEW_INSTANCES:
-        as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-        if len(as_group.instances) == 0:
-            as_conn.attach_instances(AUTO_SCALING_GROUP, NEW_INSTANCES)
-            print &amp;quot;Attach Done\n&amp;quot;
-            return
-        else:
-            print &amp;quot;There are instances still in the group&amp;quot;
-            time.sleep(CHECK_INTERVAL)
-
-
-def set_capacity(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Set desired capacity and minimum size as 0
-    &amp;quot;&amp;quot;&amp;quot;
-    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-    as_group.min_size = 0
-    as_group.desired_capacity = 0
-    as_group.update()
-    print &amp;quot;Set Capacity Done\n&amp;quot;
-
-
-def resume_capacity(as_conn):
-    &amp;quot;&amp;quot;&amp;quot;
-    Resume minimum size as the original value
-    &amp;quot;&amp;quot;&amp;quot;
-    as_group = as_conn.get_all_groups(names=[AUTO_SCALING_GROUP])[0]
-    setattr(as_group,&amp;quot;min_size&amp;quot;, 1)
-    as_group.update()
-    print &amp;quot;Resume Capacity Done\n&amp;quot;
-
-
-def main():
-    as_conn = AutoScaleConnection()
-    ec2conn = EC2Connection()
-
-    print &amp;quot;Suspend Auto Scaling Group&amp;quot;
-    suspend(as_conn)
-
-    print &amp;quot;Delete Instances&amp;quot;
-    delete_instances(as_conn, ec2conn)
-
-    print &amp;quot;Set Capacity&amp;quot;
-    set_capacity(as_conn)
-
-    print &amp;quot;Resume Auto Scaling Group&amp;quot;
-    resume(as_conn)
-
-    print &amp;quot;Attach Instances&amp;quot;
-    attach_instances(as_conn)
-
-    print &amp;quot;Resume Capacity&amp;quot;
-    resume_capacity(as_conn)
-
-
-if __name__ == &amp;quot;__main__&amp;quot;:
-    main()
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ln&#34;&gt;  1&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;#!python&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;boto.ec2.autoscale&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AutoScaleConnection&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;boto.ec2.connection&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3eb&#34;&gt;import&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;EC2Connection&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;test_auto_scaling_group&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;  9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;NEW_INSTANCES&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;i-4acb0666&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;i-4acbqa9&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;CHECK_INTERVAL&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;suspend&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 15&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Suspend auto scaling group
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 16&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;suspend_processes&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Suspend Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;resume&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 23&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Resume auto scaling group
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 24&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;resume_processes&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 29&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;get_instance_by_id&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;inst_id&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 30&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 31&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Get instance by its id
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 32&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 33&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 34&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;pass&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 35&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 36&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;deactivate_instance&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 37&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 38&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Deactivate instance
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 39&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 40&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 41&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;pass&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 42&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 43&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 44&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;delete_instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 45&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 46&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Delete instances in auto scaling group
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 47&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 48&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 49&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;get_instance_by_id&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instance_id&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;in&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 50&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;in&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 51&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;!=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;terminated&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 52&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;*** Terminate Instance &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 53&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;deactivate_instance&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 54&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# All instances should be terminated&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 55&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;any&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;!=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;terminated&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;in&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 56&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;stdout&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 57&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;stdout&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;flush&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 58&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;CHECK_INTERVAL&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 59&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;.&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;Delete Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 60&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 61&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 62&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;attach_instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 63&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 64&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Attach instances into auto scaling group
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 65&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 66&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;and&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;NEW_INSTANCES&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 67&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 68&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 69&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;attach_instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;NEW_INSTANCES&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 70&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Attach Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 71&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;return&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 72&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 73&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;There are instances still in the group&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 74&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;            &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;CHECK_INTERVAL&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 75&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 76&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 77&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;set_capacity&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 78&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 79&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Set desired capacity and minimum size as 0
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 80&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 81&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 82&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;min_size&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 83&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;desired_capacity&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 84&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 85&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Set Capacity Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 86&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 87&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 88&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;resume_capacity&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;):&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 89&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 90&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Resume minimum size as the original value
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 91&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 92&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 93&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;setattr&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;min_size&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 94&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 95&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Capacity Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 96&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 97&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 98&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;():&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 99&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;AutoScaleConnection&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;EC2Connection&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;101&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;102&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Suspend Auto Scaling Group&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;103&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;suspend&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;104&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;105&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Delete Instances&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;106&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;delete_instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;107&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;108&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Set Capacity&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;109&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;set_capacity&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;110&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;111&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Auto Scaling Group&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;112&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;resume&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;113&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;114&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Attach Instances&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;115&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;attach_instances&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;116&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;117&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Capacity&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;118&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;resume_capacity&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;119&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;120&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;121&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;__name__&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;122&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</description>
           </item>
         
       
