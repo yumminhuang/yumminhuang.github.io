@@ -184,7 +184,7 @@ $ sudo /etc/init.d/xinetd restart
 
 分布式 Gerrit 搭建完成之后，我们可以添加 `.gitconfig` 文件来实现代码上传和下载分流。
 
-```shell
+```
 [url "ssh://<username>@gerrit-slave.example.com:29418"]
     insteadOf = gerrit
     pushInsteadOf = ssh://<username>@gerrit-master.example.com:29418
