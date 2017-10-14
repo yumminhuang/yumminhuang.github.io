@@ -101,12 +101,12 @@
 &lt;h3 id=&#34;安装&#34;&gt;安装&lt;/h3&gt;
 
 &lt;p&gt;以Ubuntu为例。首先添加i3到源列表。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;echo&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;deb http://debian.sur5r.net/i3/ &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;lsb_release -c -s&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; universe&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &amp;gt;&amp;gt; /etc/apt/sources.list&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;s7d2&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;deb http://debian.sur5r.net/i3/ &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;$(&lt;/span&gt;lsb_release -c -s&lt;span class=&#34;s3e8&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; universe&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /etc/apt/sources.list&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;然后运行以下指令进行安装。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get update
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get --allow-unauthenticated install sur5r-keyring
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;apt-get install i3&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;apt-get update
+apt-get --allow-unauthenticated install sur5r-keyring
+apt-get install i3&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h3 id=&#34;配置&#34;&gt;配置&lt;/h3&gt;
 

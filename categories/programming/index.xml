@@ -55,44 +55,44 @@
 既然不能使用最新版的 fog，我们可以手动编辑 &lt;code&gt;1.25&lt;/code&gt; 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。&lt;/p&gt;
 
 &lt;p&gt;最后，在同事的指点下，我采用了第三种方法，即 &lt;strong&gt;Monkey Patch&lt;/strong&gt;。我在我司的 Ruby 项目里添加了一个文件 &lt;code&gt;lib/PROJECT_NAME/monkey_patches/flavors.rb&lt;/code&gt;，接着在文件中添加以下代码来修改 &lt;code&gt;fog/aws/models/compute/flavors&lt;/code&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;fog/aws/models/compute/flavors&amp;#39;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d4&#34;&gt;Object&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;redef_without_warning&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;is_a?&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;Module&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;?&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:remove_const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const_defined?&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const_set&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;module&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Fog&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;module&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;Compute&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d4&#34;&gt;AWS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;NEW_FLAVORS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;FLAVORS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.2xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.4xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;27&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;},&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;28&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;29&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:id&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.8xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;30&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;31&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;32&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;33&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;34&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;redef_without_warning&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;:FLAVORS&lt;/span&gt;&lt;span class=&#34;s1388&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d5&#34;&gt;NEW_FLAVORS&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;35&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;36&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;37&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;38&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;s7d2&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;fog/aws/models/compute/flavors&amp;#39;&lt;/span&gt;
+
+&lt;span class=&#34;s3e8&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;s7d4&#34;&gt;Object&lt;/span&gt;
+
+  &lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d4&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s7d9&#34;&gt;redef_without_warning&lt;/span&gt;(const, value)
+    mod &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s7d2&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;is_a?(&lt;span class=&#34;s7d5&#34;&gt;Module&lt;/span&gt;) ? &lt;span class=&#34;s7d2&#34;&gt;self&lt;/span&gt; : &lt;span class=&#34;s7d2&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;class
+    mod&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;send(&lt;span class=&#34;sc2c&#34;&gt;:remove_const&lt;/span&gt;, const) &lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; mod&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;const_defined?(const)
+    mod&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;const_set(const, value)
+  &lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;s3e8&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;Fog&lt;/span&gt;
+  &lt;span class=&#34;s3e8&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;Compute&lt;/span&gt;
+    &lt;span class=&#34;s3e8&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;s7d4&#34;&gt;AWS&lt;/span&gt;
+      &lt;span class=&#34;s7d5&#34;&gt;NEW_FLAVORS&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s7d5&#34;&gt;FLAVORS&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;[&lt;/span&gt;
+        {
+          &lt;span class=&#34;sc2c&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.xlarge&amp;#34;&lt;/span&gt;,
+          &lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;
+        },
+        {
+          &lt;span class=&#34;sc2c&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.2xlarge&amp;#34;&lt;/span&gt;,
+          &lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;
+        },
+        {
+          &lt;span class=&#34;sc2c&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.4xlarge&amp;#34;&lt;/span&gt;,
+          &lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;
+        },
+        {
+          &lt;span class=&#34;sc2c&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;d2.8xlarge&amp;#34;&lt;/span&gt;,
+          &lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;
+        }
+      &lt;span class=&#34;sfa0&#34;&gt;]&lt;/span&gt;
+
+      redef_without_warning &lt;span class=&#34;sc2c&#34;&gt;:FLAVORS&lt;/span&gt;, &lt;span class=&#34;s7d5&#34;&gt;NEW_FLAVORS&lt;/span&gt;
+
+    &lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;
+  &lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
 

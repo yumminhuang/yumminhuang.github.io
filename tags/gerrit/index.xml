@@ -49,21 +49,21 @@
 &lt;p&gt;来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。&lt;/p&gt;
 
 &lt;p&gt;分布式 Gerrit 架构如下图所示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+----------------------+                  +--------------------+
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                      |                  |                    |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|    Gerrit Master     |                  |    Gerrit Slave    |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|       Server         |                  |       Server       |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                +-----+-----+            |                    |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +----------+ |  Gerrit   |            |     +----------+   |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |Repository| |Replication|  git push  |     |Repository|   |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +----------+ +-----+-----+            |     +----------+   |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|                      |                  |                    |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +--------------+   |                  |  +--------------+  |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;|   +--------------+   |                  |  +--------------+  |
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;+----------------------+                  +--------------------+&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;+----------------------+                  +--------------------+
+|                      |                  |                    |
+|    Gerrit Master     |                  |    Gerrit Slave    |
+|       Server         |                  |       Server       |
+|                +-----+-----+            |                    |
+|   +----------+ |  Gerrit   |            |     +----------+   |
+|   |Repository| |Replication|  git push  |     |Repository|   |
+|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
+|   +----------+ +-----+-----+            |     +----------+   |
+|                      |                  |                    |
+|   +--------------+   |                  |  +--------------+  |
+|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
+|   +--------------+   |                  |  +--------------+  |
++----------------------+                  +--------------------+&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，&lt;code&gt;refs/meta&lt;/code&gt; 分支下的变更或是创建的新代码库）同步到 Slave。&lt;/p&gt;
 
@@ -78,45 +78,45 @@
 &lt;h4 id=&#34;gerrit-slave&#34;&gt;Gerrit Slave&lt;/h4&gt;
 
 &lt;p&gt;安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 &lt;code&gt;gerrit.config&lt;/code&gt; 文件里的 &lt;code&gt;[container]&lt;/code&gt; 下面添加 &lt;code&gt;slave = true&lt;/code&gt; 。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[container]
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    user = gerrit2
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    javaHome = /usr/lib/jvm/java-7-oracle/jre
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    javaOptions = -Xmx80g -Xms20g -Xmn2g
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    slave = true
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[database]
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    type = postgresql
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    database = reviewdb
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    hostname = localhost
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    username = gerrit2
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;[container]
+    user = gerrit2
+    javaHome = /usr/lib/jvm/java-7-oracle/jre
+    javaOptions = -Xmx80g -Xms20g -Xmn2g
+    slave = true
+[database]
+    type = postgresql
+    database = reviewdb
+    hostname = localhost
+    username = gerrit2
+...&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;这样 Gerrit 才会启动为 Slave。&lt;/p&gt;
 
 &lt;h3 id=&#34;配置-postgresql-数据库&#34;&gt;配置 PostgreSQL 数据库&lt;/h3&gt;
 
 &lt;p&gt;在 Master 上要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，打开 Hot Standby 功能。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;wal_level = hot_standby
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;...
+wal_level = hot_standby
+...&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;还需要在 &lt;code&gt;/etc/postgresql/9.4/main/pg_hba.conf&lt;/code&gt; 添加  &lt;em&gt;stanby&lt;/em&gt; 的 IP，确保 &lt;em&gt;stanby&lt;/em&gt; 可以连接  &lt;em&gt;primary&lt;/em&gt; 进行同步。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;在 Slave 上首先需要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，设置 PostgreSQL 运行为 &lt;em&gt;stanby&lt;/em&gt; 。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;hot_standby = on
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;...&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;...
+hot_standby = on
+...&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;接下来，添加 &lt;code&gt;/var/lib/postgresql/9.4/main/recovery.conf&lt;/code&gt; 文件，配置  &lt;em&gt;primary&lt;/em&gt;  信息。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;standby_mode = on
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;primary_conninfo = &amp;#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&amp;#39;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;trigger_file = &amp;#39;/var/lib/postgresql/postgresql.trigger&amp;#39;&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;standby_mode = on
+primary_conninfo = &amp;#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&amp;#39;
+trigger_file = &amp;#39;/var/lib/postgresql/postgresql.trigger&amp;#39;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;其中 &lt;code&gt;trigger_file&lt;/code&gt; 被用来触发 &lt;em&gt;fail over&lt;/em&gt; ，此时不需要创建。&lt;/p&gt;
 
 &lt;p&gt;配置完成后，在 &lt;em&gt;primary&lt;/em&gt;  上运行命令将数据拷贝到 &lt;em&gt;standby&lt;/em&gt; 。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* &lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* &lt;span class=&#34;sc25&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;&lt;/span&gt;	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;重启两端的 PostgreSQL 后，&lt;em&gt;primary&lt;/em&gt; 和 &lt;em&gt;standby&lt;/em&gt; 将保持同步。&lt;/p&gt;
 
@@ -127,29 +127,29 @@
 &lt;h4 id=&#34;gerrit-slave-1&#34;&gt;Gerrit Slave&lt;/h4&gt;
 
 &lt;p&gt;首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt; 1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ sudo apt install xinetd
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ cat /etc/xinetd.d/git-daemon
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# default: off
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 5&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# description: The git server offers access to git repositories service git
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 6&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;service git
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 7&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 8&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;disable&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; no
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt; 9&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; UNLISTED
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;port&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;9418&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;11&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;socket_type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; stream
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;12&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;wait&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; no
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;13&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;env&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;HOME&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/home/gerrit2
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit2
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;server&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; /usr/bin/git
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;only_from&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit-master.example.com
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;17&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_type&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; SYSLOG daemon info
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;server_args&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; daemon --inetd --syslog --export-all --enable&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;upload-pack --enable&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;receive-pack --base-path&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;/home/gerrit2/review_site/git --verbose
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;19&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_on_success&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; USERID HOST DURATION EXIT
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;log_on_failure&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; USERID HOST ATTEMPT
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;21&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;cps&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;150&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;$ sudo /etc/init.d/xinetd restart&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ sudo apt install xinetd
+$ cat /etc/xinetd.d/git-daemon
+
+&lt;span class=&#34;s1770&#34;&gt;# default: off
+&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;# description: The git server offers access to git repositories service git
+&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;service git
+&lt;span class=&#34;sfa0&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;s7e3&#34;&gt;disable&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; no
+        &lt;span class=&#34;s7d2&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; UNLISTED
+        &lt;span class=&#34;s7e3&#34;&gt;port&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;9418&lt;/span&gt;
+        &lt;span class=&#34;s7e3&#34;&gt;socket_type&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; stream
+        &lt;span class=&#34;s7d2&#34;&gt;wait&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; no
+        &lt;span class=&#34;s7e3&#34;&gt;env&lt;/span&gt;  &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s7e3&#34;&gt;HOME&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;/home/gerrit2
+        &lt;span class=&#34;s7e3&#34;&gt;user&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; gerrit2
+        &lt;span class=&#34;s7e3&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; /usr/bin/git
+        &lt;span class=&#34;s7e3&#34;&gt;only_from&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; gerrit-master.example.com
+        &lt;span class=&#34;s7e3&#34;&gt;log_type&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; SYSLOG daemon info
+        &lt;span class=&#34;s7e3&#34;&gt;server_args&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; daemon --inetd --syslog --export-all --enable&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;upload-pack --enable&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;receive-pack --base-path&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;/home/gerrit2/review_site/git --verbose
+        &lt;span class=&#34;s7e3&#34;&gt;log_on_success&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt; USERID HOST DURATION EXIT
+        &lt;span class=&#34;s7e3&#34;&gt;log_on_failure&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;+=&lt;/span&gt; USERID HOST ATTEMPT
+        &lt;span class=&#34;s7e3&#34;&gt;cps&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;150&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;10&lt;/span&gt;
+&lt;span class=&#34;sfa0&#34;&gt;}&lt;/span&gt;
+$ sudo /etc/init.d/xinetd restart&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;重启 xinetd 之后，9418 端口将会开启，可以通过 &lt;code&gt;git://&lt;/code&gt; 访问 Gerrit Slave 上的代码库。&lt;/p&gt;
 
@@ -158,11 +158,11 @@
 &lt;p&gt;在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 &lt;code&gt;$REVIEW_SITE/plugin&lt;/code&gt; 目录下。&lt;/p&gt;
 
 &lt;p&gt;接下来，添加 &lt;code&gt;$REVIEW_SITE/etc/replication.config&lt;/code&gt; 文件，加上 Gerrit Slave 的配置&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;[remote &amp;#34;slave&amp;#34;]
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  url = git://gerrit-slave.example.com/${name}.git
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  mirror = true
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  threads = 4
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git&lt;/span&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;[remote &amp;#34;slave&amp;#34;]
+  url = git://gerrit-slave.example.com/${name}.git
+  mirror = true
+  threads = 4
+  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;注意，&lt;code&gt;adminUrl&lt;/code&gt; 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。&lt;/p&gt;
 
@@ -173,12 +173,12 @@
 &lt;hr /&gt;
 
 &lt;p&gt;分布式 Gerrit 搭建完成之后，我们可以添加 &lt;code&gt;.gitconfig&lt;/code&gt; 文件来实现代码上传和下载分流。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;url &lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;insteadOf&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; gerrit
-&lt;/span&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;s7d0&#34;&gt;pushInsteadOf&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt; ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;[url &amp;#34;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;#34;]
+    insteadOf = gerrit
+    pushInsteadOf = ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;这样，克隆代码库的时候使用命令&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;s1f40&#34;&gt;git clone gerrit:path/to/repo&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git clone gerrit:path/to/repo&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;可以从 Gerrit Slave 下载代码，而 &lt;code&gt;git push&lt;/code&gt; 的时候会自动将代码 Push 到 Gerrit Master。&lt;/p&gt;
 

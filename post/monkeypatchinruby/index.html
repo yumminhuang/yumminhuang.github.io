@@ -115,44 +115,44 @@
 既然不能使用最新版的 fog，我们可以手动编辑 <code>1.25</code> 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。</p>
 
 <p>最后，在同事的指点下，我采用了第三种方法，即 <strong>Monkey Patch</strong>。我在我司的 Ruby 项目里添加了一个文件 <code>lib/PROJECT_NAME/monkey_patches/flavors.rb</code>，接着在文件中添加以下代码来修改 <code>fog/aws/models/compute/flavors</code>：</p>
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="ln"> 1</span><span class="s7d0">require</span><span class="s1f40"> </span><span class="sc1c">&#39;fog/aws/models/compute/flavors&#39;</span><span class="s1f40">
-</span><span class="ln"> 2</span><span class="s1f40">
-</span><span class="ln"> 3</span><span class="s1f40"></span><span class="s3e8">class</span><span class="s1f40"> </span><span class="s7d4">Object</span><span class="s1f40">
-</span><span class="ln"> 4</span><span class="s1f40">
-</span><span class="ln"> 5</span><span class="s1f40">  </span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d4"></span><span class="sfa0"></span><span class="s7d9">redef_without_warning</span><span class="s1388">(</span><span class="s7d0">const</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">value</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 6</span><span class="s1f40">    </span><span class="s7d0">mod</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">self</span><span class="sfa0">.</span><span class="s7d0">is_a?</span><span class="s1388">(</span><span class="s7d5">Module</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s1388">?</span><span class="s1f40"> </span><span class="s7d0">self</span><span class="s1f40"> </span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">self</span><span class="sfa0">.</span><span class="s7d0">class</span><span class="s1f40">
-</span><span class="ln"> 7</span><span class="s1f40">    </span><span class="s7d0">mod</span><span class="sfa0">.</span><span class="s7d0">send</span><span class="s1388">(</span><span class="sc1c">:remove_const</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">const</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">mod</span><span class="sfa0">.</span><span class="s7d0">const_defined?</span><span class="s1388">(</span><span class="s7d0">const</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 8</span><span class="s1f40">    </span><span class="s7d0">mod</span><span class="sfa0">.</span><span class="s7d0">const_set</span><span class="s1388">(</span><span class="s7d0">const</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">value</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 9</span><span class="s1f40">  </span><span class="s3e8">end</span><span class="s1f40">
-</span><span class="ln">10</span><span class="s1f40"></span><span class="s3e8">end</span><span class="s1f40">
-</span><span class="ln">11</span><span class="s1f40">
-</span><span class="ln">12</span><span class="s1f40"></span><span class="s3e8">module</span><span class="s1f40"> </span><span class="s7d0">Fog</span><span class="s1f40">
-</span><span class="ln">13</span><span class="s1f40">  </span><span class="s3e8">module</span><span class="s1f40"> </span><span class="s7d0">Compute</span><span class="s1f40">
-</span><span class="ln">14</span><span class="s1f40">    </span><span class="s3e8">class</span><span class="s1f40"> </span><span class="s7d4">AWS</span><span class="s1f40">
-</span><span class="ln">15</span><span class="s1f40">      </span><span class="s7d5">NEW_FLAVORS</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d5">FLAVORS</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="sfa0">[</span><span class="s1f40">
-</span><span class="ln">16</span><span class="s1f40">        </span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">17</span><span class="s1f40">          </span><span class="sc1c">:id</span><span class="s1f40"> </span><span class="sfa0">=&gt;</span><span class="s1f40"> </span><span class="sc1c">&#34;d2.xlarge&#34;</span><span class="s1388">,</span><span class="s1f40">
-</span><span class="ln">18</span><span class="s1f40">          </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">19</span><span class="s1f40">        </span><span class="s1388">},</span><span class="s1f40">
-</span><span class="ln">20</span><span class="s1f40">        </span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">21</span><span class="s1f40">          </span><span class="sc1c">:id</span><span class="s1f40"> </span><span class="sfa0">=&gt;</span><span class="s1f40"> </span><span class="sc1c">&#34;d2.2xlarge&#34;</span><span class="s1388">,</span><span class="s1f40">
-</span><span class="ln">22</span><span class="s1f40">          </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">23</span><span class="s1f40">        </span><span class="s1388">},</span><span class="s1f40">
-</span><span class="ln">24</span><span class="s1f40">        </span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">25</span><span class="s1f40">          </span><span class="sc1c">:id</span><span class="s1f40"> </span><span class="sfa0">=&gt;</span><span class="s1f40"> </span><span class="sc1c">&#34;d2.4xlarge&#34;</span><span class="s1388">,</span><span class="s1f40">
-</span><span class="ln">26</span><span class="s1f40">          </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">27</span><span class="s1f40">        </span><span class="s1388">},</span><span class="s1f40">
-</span><span class="ln">28</span><span class="s1f40">        </span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">29</span><span class="s1f40">          </span><span class="sc1c">:id</span><span class="s1f40"> </span><span class="sfa0">=&gt;</span><span class="s1f40"> </span><span class="sc1c">&#34;d2.8xlarge&#34;</span><span class="s1388">,</span><span class="s1f40">
-</span><span class="ln">30</span><span class="s1f40">          </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">31</span><span class="s1f40">        </span><span class="s1388">}</span><span class="s1f40">
-</span><span class="ln">32</span><span class="s1f40">      </span><span class="sfa0">]</span><span class="s1f40">
-</span><span class="ln">33</span><span class="s1f40">
-</span><span class="ln">34</span><span class="s1f40">      </span><span class="s7d0">redef_without_warning</span><span class="s1f40"> </span><span class="sc1c">:FLAVORS</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d5">NEW_FLAVORS</span><span class="s1f40">
-</span><span class="ln">35</span><span class="s1f40">
-</span><span class="ln">36</span><span class="s1f40">    </span><span class="s3e8">end</span><span class="s1f40">
-</span><span class="ln">37</span><span class="s1f40">  </span><span class="s3e8">end</span><span class="s1f40">
-</span><span class="ln">38</span><span class="s1f40"></span><span class="s3e8">end</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="s7d2">require</span> <span class="sc1c">&#39;fog/aws/models/compute/flavors&#39;</span>
+
+<span class="s3e8">class</span> <span class="s7d4">Object</span>
+
+  <span class="s3e8">def</span> <span class="s7d4"></span><span class="sfa0"></span><span class="s7d9">redef_without_warning</span>(const, value)
+    mod <span class="sfa0">=</span> <span class="s7d2">self</span><span class="sfa0">.</span>is_a?(<span class="s7d5">Module</span>) ? <span class="s7d2">self</span> : <span class="s7d2">self</span><span class="sfa0">.</span>class
+    mod<span class="sfa0">.</span>send(<span class="sc2c">:remove_const</span>, const) <span class="s3e8">if</span> mod<span class="sfa0">.</span>const_defined?(const)
+    mod<span class="sfa0">.</span>const_set(const, value)
+  <span class="s3e8">end</span>
+<span class="s3e8">end</span>
+
+<span class="s3e8">module</span> <span class="s7dd">Fog</span>
+  <span class="s3e8">module</span> <span class="s7dd">Compute</span>
+    <span class="s3e8">class</span> <span class="s7d4">AWS</span>
+      <span class="s7d5">NEW_FLAVORS</span> <span class="sfa0">=</span> <span class="s7d5">FLAVORS</span> <span class="sfa0">+</span> <span class="sfa0">[</span>
+        {
+          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.xlarge&#34;</span>,
+          <span class="sfa0">...</span>
+        },
+        {
+          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.2xlarge&#34;</span>,
+          <span class="sfa0">...</span>
+        },
+        {
+          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.4xlarge&#34;</span>,
+          <span class="sfa0">...</span>
+        },
+        {
+          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.8xlarge&#34;</span>,
+          <span class="sfa0">...</span>
+        }
+      <span class="sfa0">]</span>
+
+      redef_without_warning <span class="sc2c">:FLAVORS</span>, <span class="s7d5">NEW_FLAVORS</span>
+
+    <span class="s3e8">end</span>
+  <span class="s3e8">end</span>
+<span class="s3e8">end</span></code></pre>
 </div>
 <h2 id="总结">总结</h2>
 

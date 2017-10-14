@@ -106,7 +106,7 @@
 <p>我喜欢为每个项目新建一个 <ruby>virtualenv<rt> 虚拟环境 </rt></ruby>，这样可以确保每个项目的开发环境相互独立，避免发生冲突。<a href="https://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a> 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。</p>
 
 <p>我一般会在项目中添加一个 <code>requirements.txt</code>，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">pip install -r requirements.txt</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">pip install -r requirements.txt</code></pre>
 </div>
 <p>就可以安装所有的库。</p>
 
@@ -115,7 +115,7 @@
 <p>对于 Python 项目，我喜欢使用 <a href="https://nose.readthedocs.org/en/latest/">nose</a> 来进行单元测试。此外，我还会使用 <a href="http://nedbatchelder.com/code/coverage/">coverage.py</a> 来测量代码的测试覆盖率。</p>
 
 <p>nose 对 coverage.py 的支持非常好，可以在 <code>nosetests</code> 命令后添加一系列选项来生成覆盖率。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">nosetests --with-coverage</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">nosetests --with-coverage</code></pre>
 </div>
 <p>就可以直接得到测试覆盖率的数据。</p>
 
@@ -124,20 +124,20 @@
 <h3 id="持续集成">持续集成</h3>
 
 <p>在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 <code>.travis.yml</code>。Travis CI 的配置使用的是非常易读的 YAML 文件。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="s1f40">language: python
-</span><span class="ln"> 2</span><span class="s1f40">python:
-</span><span class="ln"> 3</span><span class="s1f40">    - 2.6
-</span><span class="ln"> 4</span><span class="s1f40">    - 2.7
-</span><span class="ln"> 5</span><span class="s1f40"># command to install dependencies
-</span><span class="ln"> 6</span><span class="s1f40">install:
-</span><span class="ln"> 7</span><span class="s1f40">    - pip install -r requirements.txt
-</span><span class="ln"> 8</span><span class="s1f40">    - pip install coveralls
-</span><span class="ln"> 9</span><span class="s1f40"># command to run tests
-</span><span class="ln">10</span><span class="s1f40">script:
-</span><span class="ln">11</span><span class="s1f40">    nosetests --cover-package=project --with-coverage
-</span><span class="ln">12</span><span class="s1f40"># coveralls
-</span><span class="ln">13</span><span class="s1f40">after_success:
-</span><span class="ln">14</span><span class="s1f40">    coveralls</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">language: python
+python:
+    - 2.6
+    - 2.7
+# command to install dependencies
+install:
+    - pip install -r requirements.txt
+    - pip install coveralls
+# command to run tests
+script:
+    nosetests --cover-package=project --with-coverage
+# coveralls
+after_success:
+    coveralls</code></pre>
 </div>
 <p>同样地，也需要在 Coveralls 上开启相应的项目。</p>
 

@@ -80,7 +80,7 @@
             <p>I just learned one trick for debugging Python script from my colleague. It&rsquo;s not such magical  maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script.</p>
 
 <p>I only need to add single line at the position I want to break.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">1</span><span class="s3eb">import</span><span class="s1f40"> </span><span class="s7d0">code</span><span class="s1388">;</span><span class="s1f40"> </span><span class="s7d0">code</span><span class="sfa0">.</span><span class="s7d0">interact</span><span class="s1388">(</span><span class="s7d0">local</span><span class="sfa0">=</span><span class="s7d0">locals</span><span class="s1388">())</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">import</span> <span class="s7dd">code</span>; code<span class="sfa0">.</span>interact(local<span class="sfa0">=</span><span class="s7d2">locals</span>())</code></pre>
 </div>
 <p>After that, run Python script as usual. Python Interpreter will stop at your break point and launch a REPL (<em>Read–eval–print loop</em>) console. You can print out variables to debug.</p>
 

@@ -91,12 +91,12 @@
 <li>Install Maven, see <a href="http://maven.apache.org/install.html">Maven Doc about Installing Apache Maven</a></li>
 <li>Check out plugin source code</li>
 </ul>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">git clone https://gerrit.googlesource.com/plugins/reviewers</span></pre>
+<div class="highlight"><pre class="chroma">git clone https://gerrit.googlesource.com/plugins/reviewers</pre>
 </div>
 <ul>
 <li>Build with Maven</li>
 </ul>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">mvn clean package</span></pre>
+<div class="highlight"><pre class="chroma">mvn clean package</pre>
 </div>
 <p>Maven will automatically download all dependencies and build source code. You will be able to find jar file in <code>$WORKSPACE/target</code> directory.</p>
 
@@ -113,18 +113,18 @@
 <p>Two build modes are supported: <em>Standalone</em> and <em>in Gerrit tree</em>. The standalone build mode is recommended, as this mode doesn&rsquo;t require the Gerrit tree to exist locally.</p>
 
 <h3 id="build-standalone">Build standalone</h3>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln"> 1</span><span class="s1770"># clone bucklets library
-</span><span class="ln"> 2</span><span class="s1770"></span><span class="s1f40">git clone https://gerrit.googlesource.com/bucklets
-</span><span class="ln"> 3</span><span class="s1f40"></span><span class="s1770"># checkout the correct bucklets version: Make sure bucklets/buckversion is same as the gerrit/.buckversion
-</span><span class="ln"> 4</span><span class="s1770"></span><span class="s1f40">git checkout SHA-1
-</span><span class="ln"> 5</span><span class="s1f40"></span><span class="s1770"># link bucklets to the plugin directory
-</span><span class="ln"> 6</span><span class="s1770"></span><span class="s7d0">cd</span><span class="s1f40"> PLUGIN_DIRECTORY
-</span><span class="ln"> 7</span><span class="s1f40">ln -s ../bucklets .
-</span><span class="ln"> 8</span><span class="s1f40"></span><span class="s1770"># link to the .buckversion file
-</span><span class="ln"> 9</span><span class="s1770"></span><span class="s1f40">ln -s bucklets/buckversion .buckversion
-</span><span class="ln">10</span><span class="s1f40"></span><span class="s1770"># build the plugin
-</span><span class="ln">11</span><span class="s1770"></span><span class="s1f40">buck build plugin
-</span><span class="ln">12</span><span class="s1f40"># You will be able to find the plugin in buck-out/gen</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s1770"># clone bucklets library
+</span><span class="s1770"></span>git clone https://gerrit.googlesource.com/bucklets
+<span class="s1770"># checkout the correct bucklets version: Make sure bucklets/buckversion is same as the gerrit/.buckversion
+</span><span class="s1770"></span>git checkout SHA-1
+<span class="s1770"># link bucklets to the plugin directory
+</span><span class="s1770"></span><span class="s7d2">cd</span> PLUGIN_DIRECTORY
+ln -s ../bucklets .
+<span class="s1770"># link to the .buckversion file
+</span><span class="s1770"></span>ln -s bucklets/buckversion .buckversion
+<span class="s1770"># build the plugin
+</span><span class="s1770"></span>buck build plugin
+# You will be able to find the plugin in buck-out/gen</code></pre>
 </div>
 <p><strong>NOTE</strong></p>
 

@@ -118,128 +118,128 @@
 </ol>
 
 <p>下面提供一份示例代码以供参考：</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">  1</span><span class="s1770">#!python</span><span class="s1f40">
-</span><span class="ln">  2</span><span class="s1f40"></span><span class="s3eb">import</span><span class="s1f40"> </span><span class="s7d0">sys</span><span class="s1f40">
-</span><span class="ln">  3</span><span class="s1f40"></span><span class="s3eb">import</span><span class="s1f40"> </span><span class="s7d0">time</span><span class="s1f40">
-</span><span class="ln">  4</span><span class="s1f40">
-</span><span class="ln">  5</span><span class="s1f40"></span><span class="s3eb">from</span><span class="s1f40"> </span><span class="s7d0">boto.ec2.autoscale</span><span class="s1f40"> </span><span class="s3eb">import</span><span class="s1f40"> </span><span class="s7d0">AutoScaleConnection</span><span class="s1f40">
-</span><span class="ln">  6</span><span class="s1f40"></span><span class="s3eb">from</span><span class="s1f40"> </span><span class="s7d0">boto.ec2.connection</span><span class="s1f40"> </span><span class="s3eb">import</span><span class="s1f40"> </span><span class="s7d0">EC2Connection</span><span class="s1f40">
-</span><span class="ln">  7</span><span class="s1f40">
-</span><span class="ln">  8</span><span class="s1f40"></span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;test_auto_scaling_group&#34;</span><span class="s1f40">
-</span><span class="ln">  9</span><span class="s1f40"></span><span class="s7d0">NEW_INSTANCES</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">[</span><span class="sc1c"></span><span class="sc1c">&#34;i-4acb0666&#34;</span><span class="s1388">,</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;i-4acbqa9&#34;</span><span class="s1388">]</span><span class="s1f40">
-</span><span class="ln"> 10</span><span class="s1f40"></span><span class="s7d0">CHECK_INTERVAL</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc80">5</span><span class="s1f40">
-</span><span class="ln"> 11</span><span class="s1f40">
-</span><span class="ln"> 12</span><span class="s1f40">
-</span><span class="ln"> 13</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">suspend</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 14</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 15</span><span class="sc1c">    Suspend auto scaling group
-</span><span class="ln"> 16</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 17</span><span class="s1f40">    </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">suspend_processes</span><span class="s1388">(</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 18</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Suspend Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span><span class="s1f40">
-</span><span class="ln"> 19</span><span class="s1f40">
-</span><span class="ln"> 20</span><span class="s1f40">
-</span><span class="ln"> 21</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">resume</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 22</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 23</span><span class="sc1c">    Resume auto scaling group
-</span><span class="ln"> 24</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 25</span><span class="s1f40">    </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">resume_processes</span><span class="s1388">(</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 26</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Resume Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span><span class="s1f40">
-</span><span class="ln"> 27</span><span class="s1f40">
-</span><span class="ln"> 28</span><span class="s1f40">
-</span><span class="ln"> 29</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">get_instance_by_id</span><span class="s1388">(</span><span class="s7d0">ec2conn</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">inst_id</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 30</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 31</span><span class="sc1c">    Get instance by its id
-</span><span class="ln"> 32</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 33</span><span class="s1f40">    </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln"> 34</span><span class="s1f40">    </span><span class="s3e8">pass</span><span class="s1f40">
-</span><span class="ln"> 35</span><span class="s1f40">
-</span><span class="ln"> 36</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">deactivate_instance</span><span class="s1388">(</span><span class="s7d0">inst</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 37</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 38</span><span class="sc1c">    Deactivate instance
-</span><span class="ln"> 39</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 40</span><span class="s1f40">    </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln"> 41</span><span class="s1f40">    </span><span class="s3e8">pass</span><span class="s1f40">
-</span><span class="ln"> 42</span><span class="s1f40">
-</span><span class="ln"> 43</span><span class="s1f40">
-</span><span class="ln"> 44</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">delete_instances</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">ec2conn</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 45</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 46</span><span class="sc1c">    Delete instances in auto scaling group
-</span><span class="ln"> 47</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 48</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">get_all_groups</span><span class="s1388">(</span><span class="s7d0">names</span><span class="sfa0">=</span><span class="s1388">[</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">])[</span><span class="sc80">0</span><span class="s1388">]</span><span class="s1f40">
-</span><span class="ln"> 49</span><span class="s1f40">    </span><span class="s7d0">instances</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">[</span><span class="s7d0">get_instance_by_id</span><span class="s1388">(</span><span class="s7d0">ec2conn</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">i</span><span class="sfa0">.</span><span class="s7d0">instance_id</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">i</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">as_group</span><span class="sfa0">.</span><span class="s7d0">instances</span><span class="s1388">]</span><span class="s1f40">
-</span><span class="ln"> 50</span><span class="s1f40">    </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">instance</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">instances</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln"> 51</span><span class="s1f40">        </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">instance</span><span class="sfa0">.</span><span class="s7d0">state</span><span class="s1f40"> </span><span class="sfa0">!=</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;terminated&#34;</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln"> 52</span><span class="s1f40">            </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;*** Terminate Instance </span><span class="sc1c">%s</span><span class="sc1c">&#34;</span><span class="s1f40"> </span><span class="sfa0">%</span><span class="s1f40"> </span><span class="s7d0">instance</span><span class="sfa0">.</span><span class="s7d0">id</span><span class="s1f40">
-</span><span class="ln"> 53</span><span class="s1f40">            </span><span class="s7d0">deactivate_instance</span><span class="s1388">(</span><span class="s7d0">instance</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 54</span><span class="s1f40">    </span><span class="s1770"># All instances should be terminated</span><span class="s1f40">
-</span><span class="ln"> 55</span><span class="s1f40">    </span><span class="s3e8">while</span><span class="s1f40"> </span><span class="s7d0">any</span><span class="s1388">([</span><span class="s7d0">inst</span><span class="sfa0">.</span><span class="s7d0">update</span><span class="s1388">()</span><span class="s1f40"> </span><span class="sfa0">!=</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;terminated&#34;</span><span class="s1f40"> </span><span class="s3e8">for</span><span class="s1f40"> </span><span class="s7d0">inst</span><span class="s1f40"> </span><span class="sfa0">in</span><span class="s1f40"> </span><span class="s7d0">instances</span><span class="s1388">]):</span><span class="s1f40">
-</span><span class="ln"> 56</span><span class="s1f40">        </span><span class="s7d0">sys</span><span class="sfa0">.</span><span class="s7d0">stdout</span><span class="sfa0">.</span><span class="s7d0">write</span><span class="s1388">(</span><span class="sc1c"></span><span class="sc1c">&#34;.&#34;</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 57</span><span class="s1f40">        </span><span class="s7d0">sys</span><span class="sfa0">.</span><span class="s7d0">stdout</span><span class="sfa0">.</span><span class="s7d0">flush</span><span class="s1388">()</span><span class="s1f40">
-</span><span class="ln"> 58</span><span class="s1f40">        </span><span class="s7d0">time</span><span class="sfa0">.</span><span class="s7d0">sleep</span><span class="s1388">(</span><span class="s7d0">CHECK_INTERVAL</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 59</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;.</span><span class="sc25">\n</span><span class="sc1c">Delete Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span><span class="s1f40">
-</span><span class="ln"> 60</span><span class="s1f40">
-</span><span class="ln"> 61</span><span class="s1f40">
-</span><span class="ln"> 62</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">attach_instances</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 63</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 64</span><span class="sc1c">    Attach instances into auto scaling group
-</span><span class="ln"> 65</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 66</span><span class="s1f40">    </span><span class="s3e8">while</span><span class="s1f40"> </span><span class="s7d0">True</span><span class="s1f40"> </span><span class="sfa0">and</span><span class="s1f40"> </span><span class="s7d0">NEW_INSTANCES</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln"> 67</span><span class="s1f40">        </span><span class="s7d0">as_group</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">get_all_groups</span><span class="s1388">(</span><span class="s7d0">names</span><span class="sfa0">=</span><span class="s1388">[</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">])[</span><span class="sc80">0</span><span class="s1388">]</span><span class="s1f40">
-</span><span class="ln"> 68</span><span class="s1f40">        </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">len</span><span class="s1388">(</span><span class="s7d0">as_group</span><span class="sfa0">.</span><span class="s7d0">instances</span><span class="s1388">)</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln"> 69</span><span class="s1f40">            </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">attach_instances</span><span class="s1388">(</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">NEW_INSTANCES</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 70</span><span class="s1f40">            </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Attach Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span><span class="s1f40">
-</span><span class="ln"> 71</span><span class="s1f40">            </span><span class="s3e8">return</span><span class="s1f40">
-</span><span class="ln"> 72</span><span class="s1f40">        </span><span class="s3e8">else</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln"> 73</span><span class="s1f40">            </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;There are instances still in the group&#34;</span><span class="s1f40">
-</span><span class="ln"> 74</span><span class="s1f40">            </span><span class="s7d0">time</span><span class="sfa0">.</span><span class="s7d0">sleep</span><span class="s1388">(</span><span class="s7d0">CHECK_INTERVAL</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 75</span><span class="s1f40">
-</span><span class="ln"> 76</span><span class="s1f40">
-</span><span class="ln"> 77</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">set_capacity</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 78</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 79</span><span class="sc1c">    Set desired capacity and minimum size as 0
-</span><span class="ln"> 80</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 81</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">get_all_groups</span><span class="s1388">(</span><span class="s7d0">names</span><span class="sfa0">=</span><span class="s1388">[</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">])[</span><span class="sc80">0</span><span class="s1388">]</span><span class="s1f40">
-</span><span class="ln"> 82</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="sfa0">.</span><span class="s7d0">min_size</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1f40">
-</span><span class="ln"> 83</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="sfa0">.</span><span class="s7d0">desired_capacity</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1f40">
-</span><span class="ln"> 84</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="sfa0">.</span><span class="s7d0">update</span><span class="s1388">()</span><span class="s1f40">
-</span><span class="ln"> 85</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Set Capacity Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span><span class="s1f40">
-</span><span class="ln"> 86</span><span class="s1f40">
-</span><span class="ln"> 87</span><span class="s1f40">
-</span><span class="ln"> 88</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">resume_capacity</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 89</span><span class="s1f40">    </span><span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
-</span><span class="ln"> 90</span><span class="sc1c">    Resume minimum size as the original value
-</span><span class="ln"> 91</span><span class="sc1c">    &#34;&#34;&#34;</span><span class="s1f40">
-</span><span class="ln"> 92</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">as_conn</span><span class="sfa0">.</span><span class="s7d0">get_all_groups</span><span class="s1388">(</span><span class="s7d0">names</span><span class="sfa0">=</span><span class="s1388">[</span><span class="s7d0">AUTO_SCALING_GROUP</span><span class="s1388">])[</span><span class="sc80">0</span><span class="s1388">]</span><span class="s1f40">
-</span><span class="ln"> 93</span><span class="s1f40">    </span><span class="s7d0">setattr</span><span class="s1388">(</span><span class="s7d0">as_group</span><span class="s1388">,</span><span class="sc1c"></span><span class="sc1c">&#34;min_size&#34;</span><span class="s1388">,</span><span class="s1f40"> </span><span class="sc80">1</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln"> 94</span><span class="s1f40">    </span><span class="s7d0">as_group</span><span class="sfa0">.</span><span class="s7d0">update</span><span class="s1388">()</span><span class="s1f40">
-</span><span class="ln"> 95</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Resume Capacity Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span><span class="s1f40">
-</span><span class="ln"> 96</span><span class="s1f40">
-</span><span class="ln"> 97</span><span class="s1f40">
-</span><span class="ln"> 98</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">main</span><span class="s1388">():</span><span class="s1f40">
-</span><span class="ln"> 99</span><span class="s1f40">    </span><span class="s7d0">as_conn</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">AutoScaleConnection</span><span class="s1388">()</span><span class="s1f40">
-</span><span class="ln">100</span><span class="s1f40">    </span><span class="s7d0">ec2conn</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">EC2Connection</span><span class="s1388">()</span><span class="s1f40">
-</span><span class="ln">101</span><span class="s1f40">
-</span><span class="ln">102</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Suspend Auto Scaling Group&#34;</span><span class="s1f40">
-</span><span class="ln">103</span><span class="s1f40">    </span><span class="s7d0">suspend</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln">104</span><span class="s1f40">
-</span><span class="ln">105</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Delete Instances&#34;</span><span class="s1f40">
-</span><span class="ln">106</span><span class="s1f40">    </span><span class="s7d0">delete_instances</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">ec2conn</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln">107</span><span class="s1f40">
-</span><span class="ln">108</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Set Capacity&#34;</span><span class="s1f40">
-</span><span class="ln">109</span><span class="s1f40">    </span><span class="s7d0">set_capacity</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln">110</span><span class="s1f40">
-</span><span class="ln">111</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Resume Auto Scaling Group&#34;</span><span class="s1f40">
-</span><span class="ln">112</span><span class="s1f40">    </span><span class="s7d0">resume</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln">113</span><span class="s1f40">
-</span><span class="ln">114</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Attach Instances&#34;</span><span class="s1f40">
-</span><span class="ln">115</span><span class="s1f40">    </span><span class="s7d0">attach_instances</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln">116</span><span class="s1f40">
-</span><span class="ln">117</span><span class="s1f40">    </span><span class="s3e8">print</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;Resume Capacity&#34;</span><span class="s1f40">
-</span><span class="ln">118</span><span class="s1f40">    </span><span class="s7d0">resume_capacity</span><span class="s1388">(</span><span class="s7d0">as_conn</span><span class="s1388">)</span><span class="s1f40">
-</span><span class="ln">119</span><span class="s1f40">
-</span><span class="ln">120</span><span class="s1f40">
-</span><span class="ln">121</span><span class="s1f40"></span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">__name__</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="sc1c"></span><span class="sc1c">&#34;__main__&#34;</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln">122</span><span class="s1f40">    </span><span class="s7d0">main</span><span class="s1388">()</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s1770">#!python</span>
+<span class="s3e8">import</span> <span class="s7dd">sys</span>
+<span class="s3e8">import</span> <span class="s7dd">time</span>
+
+<span class="s3e8">from</span> <span class="s7dd">boto.ec2.autoscale</span> <span class="s3e8">import</span> AutoScaleConnection
+<span class="s3e8">from</span> <span class="s7dd">boto.ec2.connection</span> <span class="s3e8">import</span> EC2Connection
+
+AUTO_SCALING_GROUP <span class="sfa0">=</span> <span class="sc1c"></span><span class="sc1c">&#34;test_auto_scaling_group&#34;</span>
+NEW_INSTANCES <span class="sfa0">=</span> [<span class="sc1c"></span><span class="sc1c">&#34;i-4acb0666&#34;</span>, <span class="sc1c"></span><span class="sc1c">&#34;i-4acbqa9&#34;</span>]
+CHECK_INTERVAL <span class="sfa0">=</span> <span class="sc80">5</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">suspend</span>(as_conn):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Suspend auto scaling group
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    as_conn<span class="sfa0">.</span>suspend_processes(AUTO_SCALING_GROUP)
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Suspend Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">resume</span>(as_conn):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Resume auto scaling group
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    as_conn<span class="sfa0">.</span>resume_processes(AUTO_SCALING_GROUP)
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Resume Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">get_instance_by_id</span>(ec2conn, inst_id):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Get instance by its id
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    <span class="sfa0">...</span>
+    <span class="s3e8">pass</span>
+
+<span class="s3e8">def</span> <span class="s7d9">deactivate_instance</span>(inst):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Deactivate instance
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    <span class="sfa0">...</span>
+    <span class="s3e8">pass</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">delete_instances</span>(as_conn, ec2conn):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Delete instances in auto scaling group
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    as_group <span class="sfa0">=</span> as_conn<span class="sfa0">.</span>get_all_groups(names<span class="sfa0">=</span>[AUTO_SCALING_GROUP])[<span class="sc80">0</span>]
+    instances <span class="sfa0">=</span> [get_instance_by_id(ec2conn, i<span class="sfa0">.</span>instance_id) <span class="s3e8">for</span> i <span class="sfa1">in</span> as_group<span class="sfa0">.</span>instances]
+    <span class="s3e8">for</span> instance <span class="sfa1">in</span> instances:
+        <span class="s3e8">if</span> instance<span class="sfa0">.</span>state <span class="sfa0">!=</span> <span class="sc1c"></span><span class="sc1c">&#34;terminated&#34;</span>:
+            <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;*** Terminate Instance </span><span class="sc27">%s</span><span class="sc1c">&#34;</span> <span class="sfa0">%</span> instance<span class="sfa0">.</span><span class="s7d2">id</span>
+            deactivate_instance(instance)
+    <span class="s1770"># All instances should be terminated</span>
+    <span class="s3e8">while</span> <span class="s7d2">any</span>([inst<span class="sfa0">.</span>update() <span class="sfa0">!=</span> <span class="sc1c"></span><span class="sc1c">&#34;terminated&#34;</span> <span class="s3e8">for</span> inst <span class="sfa1">in</span> instances]):
+        sys<span class="sfa0">.</span>stdout<span class="sfa0">.</span>write(<span class="sc1c"></span><span class="sc1c">&#34;.&#34;</span>)
+        sys<span class="sfa0">.</span>stdout<span class="sfa0">.</span>flush()
+        time<span class="sfa0">.</span>sleep(CHECK_INTERVAL)
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;.</span><span class="sc25">\n</span><span class="sc1c">Delete Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">attach_instances</span>(as_conn):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Attach instances into auto scaling group
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    <span class="s3e8">while</span> True <span class="sfa1">and</span> NEW_INSTANCES:
+        as_group <span class="sfa0">=</span> as_conn<span class="sfa0">.</span>get_all_groups(names<span class="sfa0">=</span>[AUTO_SCALING_GROUP])[<span class="sc80">0</span>]
+        <span class="s3e8">if</span> <span class="s7d2">len</span>(as_group<span class="sfa0">.</span>instances) <span class="sfa0">==</span> <span class="sc80">0</span>:
+            as_conn<span class="sfa0">.</span>attach_instances(AUTO_SCALING_GROUP, NEW_INSTANCES)
+            <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Attach Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span>
+            <span class="s3e8">return</span>
+        <span class="s3e8">else</span>:
+            <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;There are instances still in the group&#34;</span>
+            time<span class="sfa0">.</span>sleep(CHECK_INTERVAL)
+
+
+<span class="s3e8">def</span> <span class="s7d9">set_capacity</span>(as_conn):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Set desired capacity and minimum size as 0
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    as_group <span class="sfa0">=</span> as_conn<span class="sfa0">.</span>get_all_groups(names<span class="sfa0">=</span>[AUTO_SCALING_GROUP])[<span class="sc80">0</span>]
+    as_group<span class="sfa0">.</span>min_size <span class="sfa0">=</span> <span class="sc80">0</span>
+    as_group<span class="sfa0">.</span>desired_capacity <span class="sfa0">=</span> <span class="sc80">0</span>
+    as_group<span class="sfa0">.</span>update()
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Set Capacity Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">resume_capacity</span>(as_conn):
+    <span class="sc1c"></span><span class="sc1c">&#34;&#34;&#34;
+</span><span class="sc1c">    Resume minimum size as the original value
+</span><span class="sc1c">    &#34;&#34;&#34;</span>
+    as_group <span class="sfa0">=</span> as_conn<span class="sfa0">.</span>get_all_groups(names<span class="sfa0">=</span>[AUTO_SCALING_GROUP])[<span class="sc80">0</span>]
+    <span class="s7d2">setattr</span>(as_group,<span class="sc1c"></span><span class="sc1c">&#34;min_size&#34;</span>, <span class="sc80">1</span>)
+    as_group<span class="sfa0">.</span>update()
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Resume Capacity Done</span><span class="sc25">\n</span><span class="sc1c">&#34;</span>
+
+
+<span class="s3e8">def</span> <span class="s7d9">main</span>():
+    as_conn <span class="sfa0">=</span> AutoScaleConnection()
+    ec2conn <span class="sfa0">=</span> EC2Connection()
+
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Suspend Auto Scaling Group&#34;</span>
+    suspend(as_conn)
+
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Delete Instances&#34;</span>
+    delete_instances(as_conn, ec2conn)
+
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Set Capacity&#34;</span>
+    set_capacity(as_conn)
+
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Resume Auto Scaling Group&#34;</span>
+    resume(as_conn)
+
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Attach Instances&#34;</span>
+    attach_instances(as_conn)
+
+    <span class="s3e8">print</span> <span class="sc1c"></span><span class="sc1c">&#34;Resume Capacity&#34;</span>
+    resume_capacity(as_conn)
+
+
+<span class="s3e8">if</span> __name__ <span class="sfa0">==</span> <span class="sc1c"></span><span class="sc1c">&#34;__main__&#34;</span>:
+    main()</code></pre>
 </div>
 		</div>
 	</div>

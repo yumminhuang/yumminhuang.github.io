@@ -146,16 +146,16 @@
 <p>开始，我检查的方式是使用 <code>ssh</code> 登陆之后，再使用 <code>grep</code> 检查日志文件是否包含 <code>ERROR</code>、<code>WARNING</code> 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 <code>ssh</code> 登陆，再运行脚本进行检查。</p>
 
 <p>但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 <code>datetime</code>，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln"> 1</span><span class="s3eb">from</span><span class="s1f40"> </span><span class="s7d0">fabric.api</span><span class="s1f40"> </span><span class="s3eb">import</span><span class="s1f40"> </span><span class="sfa0">*</span><span class="s1f40">
-</span><span class="ln"> 2</span><span class="s1f40">
-</span><span class="ln"> 3</span><span class="s1f40"></span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">check_log_with_keyword</span><span class="s1388">(</span><span class="s7d0">log_file</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">keyword</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 4</span><span class="s1f40">    </span><span class="s3e8">with</span><span class="s1f40"> </span><span class="s7d0">settings</span><span class="s1388">(</span><span class="s7d0">hide</span><span class="s1388">(</span><span class="sc1c"></span><span class="sc1c">&#39;warnings&#39;</span><span class="s1388">,</span><span class="sc1c"></span><span class="sc1c">&#39;output&#39;</span><span class="s1388">),</span><span class="s1f40">
-</span><span class="ln"> 5</span><span class="s1f40">                  </span><span class="s7d0">host_string</span><span class="sfa0">=</span><span class="sc1c"></span><span class="sc1c">&#39;eb101.ops&#39;</span><span class="s1388">,</span><span class="s1f40">
-</span><span class="ln"> 6</span><span class="s1f40">                  </span><span class="s7d0">warn_only</span><span class="sfa0">=</span><span class="s7d0">True</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln"> 7</span><span class="s1f40">        </span><span class="s7d0">result</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">run</span><span class="s1388">(</span><span class="sc1c"></span><span class="sc1c">&#39;grep </span><span class="sc1c">%s</span><span class="sc1c"> </span><span class="sc1c">%s</span><span class="sc1c">&#39;</span><span class="s1f40"> </span><span class="sfa0">%</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s7d0">keyword</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">filename</span><span class="s1388">))</span><span class="s1f40">
-</span><span class="ln"> 8</span><span class="s1f40">
-</span><span class="ln"> 9</span><span class="s1f40">        </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">result</span><span class="sfa0">.</span><span class="s7d0">return_code</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln">10</span><span class="s1f40">            </span><span class="s3e8">print</span><span class="s1388">(</span><span class="s7d0">result</span><span class="s1388">)</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">from</span> <span class="s7dd">fabric.api</span> <span class="s3e8">import</span> <span class="sfa0">*</span>
+
+<span class="s3e8">def</span> <span class="s7d9">check_log_with_keyword</span>(log_file, keyword):
+    <span class="s3e8">with</span> settings(hide(<span class="sc1c"></span><span class="sc1c">&#39;warnings&#39;</span>,<span class="sc1c"></span><span class="sc1c">&#39;output&#39;</span>),
+                  host_string<span class="sfa0">=</span><span class="sc1c"></span><span class="sc1c">&#39;eb101.ops&#39;</span>,
+                  warn_only<span class="sfa0">=</span>True):
+        result <span class="sfa0">=</span> run(<span class="sc1c"></span><span class="sc1c">&#39;grep </span><span class="sc27">%s</span><span class="sc1c"> </span><span class="sc27">%s</span><span class="sc1c">&#39;</span> <span class="sfa0">%</span> (keyword, filename))
+
+        <span class="s3e8">if</span> result<span class="sfa0">.</span>return_code <span class="sfa0">==</span> <span class="sc80">0</span>:
+            <span class="s3e8">print</span>(result)</code></pre>
 </div>
 <ul>
 <li>使用 <code>with settings()</code> 来临时更改 <code>env</code> 变量；</li>

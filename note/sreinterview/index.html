@@ -94,26 +94,26 @@ Because Site Reliability Team of that company uses Python and I also prefer to P
 <h4 id="question-2">Question 2</h4>
 
 <p>Parse <code>/var/log/syslog</code> and extract values.</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">Dec  3 00:02:54 Mac Google Chrome Helper[69194]: Couldn&#39;t set selectedTextBackgroundColor from default ()
-</span><span class="ln">2</span><span class="s1f40">Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: keychain: -25300
-</span><span class="ln">3</span><span class="s1f40">Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: status: off
-</span><span class="ln">4</span><span class="s1f40">Dec  3 00:03:06 Mac com.apple.xpc.launchd[1] (com.apple.WebKit.Networking.AC8ED90D-0AC0-4666-B213-8BE93DE51E8C[68993]): Service exited with abnormal code: 1
-</span><span class="ln">5</span><span class="s1f40">Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367
-</span><span class="ln">6</span><span class="s1f40">Dec  3 00:03:08 Mac garcon[68729]: host connection &lt;NSXPCConnection: 0x7fc9d8f1eda0&gt; connection from pid 68708 invalidated
-</span><span class="ln">7</span><span class="s1f40">Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367</span></pre>
+<div class="highlight"><pre class="chroma">Dec  3 00:02:54 Mac Google Chrome Helper[69194]: Couldn&#39;t set selectedTextBackgroundColor from default ()
+Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: keychain: -25300
+Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: status: off
+Dec  3 00:03:06 Mac com.apple.xpc.launchd[1] (com.apple.WebKit.Networking.AC8ED90D-0AC0-4666-B213-8BE93DE51E8C[68993]): Service exited with abnormal code: 1
+Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367
+Dec  3 00:03:08 Mac garcon[68729]: host connection &lt;NSXPCConnection: 0x7fc9d8f1eda0&gt; connection from pid 68708 invalidated
+Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367</pre>
 </div>
 <p>Write a script which parses /var/log/messages and generates a CSV with two columns: minute, number_of_messages in sorted time order.</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">minute,number_of_messages
-</span><span class="ln">2</span><span class="s1f40">Dec  3 00:02,1
-</span><span class="ln">3</span><span class="s1f40">Dec  3 00:03,6</span></pre>
+<div class="highlight"><pre class="chroma">minute,number_of_messages
+Dec  3 00:02,1
+Dec  3 00:03,6</pre>
 </div>
 <p>Extract the program name from the field between the hostname and the log message and output those values in columns.</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">minute,number_of_messages,Google Chrome Helper,Safari,com.apple.xpc.launchd,WindowServer,garcon
-</span><span class="ln">2</span><span class="s1f40">Dec  3 00:02,1,0,0,0,0
-</span><span class="ln">3</span><span class="s1f40">Dec  3 00:03,0,2,1,2,1</span></pre>
+<div class="highlight"><pre class="chroma">minute,number_of_messages,Google Chrome Helper,Safari,com.apple.xpc.launchd,WindowServer,garcon
+Dec  3 00:02,1,0,0,0,0
+Dec  3 00:03,0,2,1,2,1</pre>
 </div>
 <p>I think the key part of this problem is <em>regular expression</em>. For the first task, I used the following regular expression:</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">^(.*? \d+ \d+\:\d+).*</span></pre>
+<div class="highlight"><pre class="chroma">^(.*? \d+ \d+\:\d+).*</pre>
 </div>
 <ul>
 <li>Then use <a href="https://docs.python.org/2/library/re.html#re.MatchObject.groups"><code>re.match(regexp, line).groups()</code></a> to extract <code>minute</code>.</li>
@@ -121,7 +121,7 @@ Because Site Reliability Team of that company uses Python and I also prefer to P
 </ul>
 
 <p>For the second task, the regular expression is:</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">^(.*? \d+ \d+\:\d+)\:\d+ .*? (.*?)\: .*</span></pre>
+<div class="highlight"><pre class="chroma">^(.*? \d+ \d+\:\d+)\:\d+ .*? (.*?)\: .*</pre>
 </div>
 <p>The second task also has to find all programs in the log file.</p>
 
@@ -136,16 +136,16 @@ Because Site Reliability Team of that company uses Python and I also prefer to P
 </ul>
 
 <p>Write a function that will take an employee ID and print out the entire hierarchy of employees under that employee. For example, suppose that Flynn Mackie&rsquo;s employee id is &lsquo;A123456789&rsquo; and his only direct reports are Wesley Thomas and Nina Chiswick. If you provide &lsquo;A123456789&rsquo; as input to your function, you will see the sample output below.</p>
-<div class="highlight"><pre class="chroma"><span class="ln"> 1</span><span class="s1f40">Flynn Mackie - Senior VP of Engineering
-</span><span class="ln"> 2</span><span class="s1f40">  Wesley Thomas - VP of Design
-</span><span class="ln"> 3</span><span class="s1f40">    Randall Cosmo - Director of Design
-</span><span class="ln"> 4</span><span class="s1f40">      Brenda Plager - Senior Designer
-</span><span class="ln"> 5</span><span class="s1f40">  Nina Chiswick - VP of Engineering
-</span><span class="ln"> 6</span><span class="s1f40">    Tommy Quinn - Director of Engineering
-</span><span class="ln"> 7</span><span class="s1f40">      Jake Farmer - Frontend Manager
-</span><span class="ln"> 8</span><span class="s1f40">        Liam Freeman - Junior Code Monkey
-</span><span class="ln"> 9</span><span class="s1f40">      Sheila Dunbar - Backend Manager
-</span><span class="ln">10</span><span class="s1f40">        Peter Young - Senior Code Cowboy</span></pre>
+<div class="highlight"><pre class="chroma">Flynn Mackie - Senior VP of Engineering
+  Wesley Thomas - VP of Design
+    Randall Cosmo - Director of Design
+      Brenda Plager - Senior Designer
+  Nina Chiswick - VP of Engineering
+    Tommy Quinn - Director of Engineering
+      Jake Farmer - Frontend Manager
+        Liam Freeman - Junior Code Monkey
+      Sheila Dunbar - Backend Manager
+        Peter Young - Senior Code Cowboy</pre>
 </div>
 <p>Main ideas for my solution:</p>
 
@@ -155,14 +155,14 @@ Because Site Reliability Team of that company uses Python and I also prefer to P
 <li>Recursion is the easiest way to handle such DFS algorithm.</li>
 <li>Be careful about indentation of each line. Adding a <code>depth</code> parameter in function. Here is the basic idea:</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="ln">1</span><span class="s3e8">def</span><span class="s1f40"> </span><span class="s7d9">foo</span><span class="s1388">(</span><span class="s7d0">id</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">depth</span><span class="sfa0">=</span><span class="sc80">0</span><span class="s1388">):</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40">    </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40">    </span><span class="s3e8">if</span><span class="s1f40"> </span><span class="s7d0">depth</span><span class="s1f40"> </span><span class="sfa0">==</span><span class="s1f40"> </span><span class="sc80">0</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40">        </span><span class="s1770"># print without indentation</span><span class="s1f40">
-</span><span class="ln">5</span><span class="s1f40">    </span><span class="s3e8">else</span><span class="s1388">:</span><span class="s1f40">
-</span><span class="ln">6</span><span class="s1f40">        </span><span class="s1770"># print with a prefix &#39; &#39; * 2 * depth</span><span class="s1f40">
-</span><span class="ln">7</span><span class="s1f40">    </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">8</span><span class="s1f40">    </span><span class="s7d0">foo</span><span class="s1388">(</span><span class="s7d0">employee</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">depth</span><span class="s1f40"> </span><span class="sfa0">+</span><span class="s1f40"> </span><span class="sc80">1</span><span class="s1388">)</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">def</span> <span class="s7d9">foo</span>(<span class="s7d2">id</span>, depth<span class="sfa0">=</span><span class="sc80">0</span>):
+    <span class="sfa0">...</span>
+    <span class="s3e8">if</span> depth <span class="sfa0">==</span> <span class="sc80">0</span>:
+        <span class="s1770"># print without indentation</span>
+    <span class="s3e8">else</span>:
+        <span class="s1770"># print with a prefix &#39; &#39; * 2 * depth</span>
+    <span class="sfa0">...</span>
+    foo(employee, depth <span class="sfa0">+</span> <span class="sc80">1</span>)</code></pre>
 </div>
         </div>
     </div>

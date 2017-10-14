@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="How to remove all pyc files from a project?">
+    <meta name="description" content="清理 Docker">
     <meta name="author" content="Yaming Huang">
 
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>How to remove all pyc files from a project? &middot; 临水轩志</title>
+    <title>清理 Docker &middot; 临水轩志</title>
 
    	
     
@@ -59,53 +59,70 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-            <h3>How to remove all pyc files from a project?</h3>
-                <span class="label label-primary">Thu, Jul 31, 2014</span> in
-                
-                    
-                    <a href="/categories/linux">Linux</a>
-                 using tags
-                
-                    
-                    <a href="/tags/linux">Linux</a>
-                
-                     , 
-                    <a href="/tags/shell">Shell</a>
-                
-            </small>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-            <br>
-            <p>I am a paranoid guy. I like to delete all &ldquo;useless&rdquo; files. Today, I want to clean up my project repository. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.
-</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;*.pyc&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span></code></pre>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>清理 Docker</h3>
+				<span class="label label-primary">Fri, Oct 13, 2017</span> in 
+				
+					
+					<a href="/categories/miscellaneous">Miscellaneous</a>
+				 using tags
+				
+					
+					<a href="/tags/docker">Docker</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			<p>在线上环境运行的 Docker 的时候，部署之后往往没有清理旧版本的镜像和关闭的容器。如此一来，长时间运行 Docker，尤其是频繁地更新镜像、启动容器，会消耗大量的磁盘空间。</p>
+
+<p>本文汇总几条用来清理 Docker 的命令。</p>
+
+<p></p>
+
+<h2 id="清理-docker-容器">清理 Docker 容器</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker ps --filter <span class="s7e3">status</span><span class="sfa0">=</span>dead --filter <span class="s7e3">status</span><span class="sfa0">=</span>exited -aq | xargs -r docker rm -v</code></pre>
 </div>
-<p>OR</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;*.pyc&#34;</span> -delete;</code></pre>
+<h2 id="清理-docker-镜像">清理 Docker 镜像</h2>
+
+<p>清理 <em>dangling</em> 的镜像。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker images -q -f <span class="s7e3">dangling</span><span class="sfa0">=</span><span class="s7d2">true</span> | xargs -r docker rmi</code></pre>
 </div>
-<p>I can also delete all <code>*.class</code> files for Java project and <code>.o</code> files for C project in this way.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;*.class&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span>
-find . -name <span class="sc1c">&#34;*.o&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span></code></pre>
+<p>清理所有当前不在运行的镜像<sup class="footnote-ref" id="fnref:exp"><a rel="footnote" href="#fn:exp">1</a></sup>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker rmi <span class="s3e8">$(</span>grep -xvf &lt;<span class="sfa0">(</span>docker ps -a --format <span class="sc1c">&#39;{{.Image}}&#39;</span><span class="s3e8">)</span> &lt;<span class="sfa0">(</span>docker images | tail -n +2 | grep -v <span class="sc1c">&#39;&lt;none&gt;&#39;</span> | awk <span class="sc1c">&#39;{ print $1&#34;:&#34;$2 }&#39;</span><span class="sfa0">))</span></code></pre>
 </div>
-<p>Or I can delete all files whose name starts with &lsquo;test&rsquo;.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;test*&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span></code></pre>
+<p>清理一周前的镜像。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker images --no-trunc --format <span class="sc1c">&#39;{{.ID}} {{.CreatedSince}}&#39;</span> | grep <span class="sc1c">&#39; weeks&#39;</span> | awk <span class="sc1c">&#39;{ print $1 }&#39;</span> | <span class="sc25">\
+</span><span class="sc25"></span>       xargs --no-run-if-empty docker rmi</code></pre>
 </div>
-<p><strong>Reference:</strong></p>
+<h2 id="清理-docker-volume">清理 Docker Volume</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker volume ls -q -f <span class="s7e3">dangling</span><span class="sfa0">=</span><span class="s7d2">true</span> | xargs -r docker volume rm</code></pre>
+</div>
+<h2 id="参考">参考</h2>
 
 <ul>
-<li><a href="http://stackoverflow.com/questions/785519/how-do-i-remove-all-pyc-files-from-a-project">How do I remove all .pyc files from a project?</a></li>
+<li><a href="https://github.com/moby/moby/issues/9054#issuecomment-184246090">comment on Github Issue</a></li>
+<li><a href="https://lebkowski.name/docker-volumes/">Cleaning up docker to reclaim disk space</a></li>
 </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <hr>
-        </div>
-    </div>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:exp">此命令清理效果好，却容易误删当前没有运行但未来仍会使用的镜像。
+ <a class="footnote-return" href="#fnref:exp">↩</a></li>
+</ol>
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
 </div>
 
     <div class="container">

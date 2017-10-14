@@ -88,13 +88,13 @@
 <p>后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到  <a href="https://gohugo.io/">Hugo 官网</a>的首页的时候，看上去非常漂亮，令人印象深刻。</p>
 
 <p>使用 <code>hugo new site SITE_DIR</code> 新建一个 Hugo 之后，生成以下路径：</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">.
-</span><span class="ln">2</span><span class="s1f40">├── archetypes/
-</span><span class="ln">3</span><span class="s1f40">├── config.toml
-</span><span class="ln">4</span><span class="s1f40">├── content/
-</span><span class="ln">5</span><span class="s1f40">├── data/
-</span><span class="ln">6</span><span class="s1f40">├── layouts/
-</span><span class="ln">7</span><span class="s1f40">└── static/</span></pre>
+<div class="highlight"><pre class="chroma">.
+├── archetypes/
+├── config.toml
+├── content/
+├── data/
+├── layouts/
+└── static/</pre>
 </div>
 <p><code>config.toml</code> 用来存放设置。<code>content/</code> 里存放的是文章，<code>data/</code> 用来存放一些数据。 <code>static/</code> 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 <code>themes/</code> 里并在<code>config.toml</code> 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。</p>
 
@@ -105,12 +105,12 @@
 <p>值得一提的是，Go 的模版语言可读性很高，几乎不需要花额外的时间学习。我对照着别人开发的主题照葫芦画瓢就完成了模版的定义和修改。</p>
 
 <p><code>archetypes/</code>，用来存放定义的「原型」。原型的作用是自动添加文字的元数据。比如，我想每次创建 <code>post</code> 类文章的时候都自动添加元数据，只需要在 <code>archetypes/</code> 里添加一个 <code>post.md</code>，并加入以下内容：</p>
-<div class="highlight"><pre class="chroma"><span class="ln">1</span><span class="s1f40">+++
-</span><span class="ln">2</span><span class="s1f40">title = &#34;my new post&#34;
-</span><span class="ln">3</span><span class="s1f40">date = &#34;2015-01-12T19:20:04-07:00&#34;
-</span><span class="ln">4</span><span class="s1f40">tags = [&#34;x&#34;, &#34;y&#34;]
-</span><span class="ln">5</span><span class="s1f40">categories = [&#34;x&#34;, &#34;y&#34;]
-</span><span class="ln">6</span><span class="s1f40">+++</span></pre>
+<div class="highlight"><pre class="chroma">+++
+title = &#34;my new post&#34;
+date = &#34;2015-01-12T19:20:04-07:00&#34;
+tags = [&#34;x&#34;, &#34;y&#34;]
+categories = [&#34;x&#34;, &#34;y&#34;]
++++</pre>
 </div>
 <p>这样每次运行 <code>hugo new post/ARTICLE.md</code> 的时候都可以自动添加上面的元数据。</p>
 

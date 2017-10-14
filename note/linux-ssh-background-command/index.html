@@ -83,10 +83,10 @@
 </p>
 
 <p>At first, I simply add the ampersand (&amp;) at the end of the command like this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">ssh user@host </span><span class="sc1c">&#34;cd /some/directory; ./program &amp;&#34;</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ssh user@host <span class="sc1c">&#34;cd /some/directory; ./program &amp;&#34;</span></code></pre>
 </div>
 <p>But my script just hangs after it runs first remote server. After googling this problem, I found this command to solve it.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="ln">1</span><span class="s1f40">ssh -n -f user@host </span><span class="sc1c">&#34;sh -c &#39;cd /some/directory; nohup ./program &gt; /dev/null 2&gt;&amp;1 &amp;&#39;&#34;</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">ssh -n -f user@host <span class="sc1c">&#34;sh -c &#39;cd /some/directory; nohup ./program &gt; /dev/null 2&gt;&amp;1 &amp;&#39;&#34;</span></code></pre>
 </div>
 <p>This command is quiet complicated. It need to use <a href="http://en.wikipedia.org/wiki/Nohup"><code>nohup</code></a> as well as output redirection. But it works and solved my problem.</p>
 

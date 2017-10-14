@@ -91,101 +91,101 @@
 <h4 id="1-1-创建对象">1.1 创建对象</h4>
 
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="s7d0">obj</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s3e8">new</span><span class="s1f40"> </span><span class="s7d0">MyClass</span><span class="sfa0">();</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">obj <span class="sfa0">=</span> <span class="s3e8">new</span> MyClass<span class="sfa0">();</span></code></pre>
 </div>
 <p><strong>Objective-C:</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="s7d0">MyClass</span><span class="s1f40"> </span><span class="sfa0">*</span><span class="s7d0">obj</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s1388">[[</span><span class="s7d0">MyClass</span><span class="s1f40"> </span><span class="s7d0">alloc</span><span class="s1388">]</span><span class="s1f40"> </span><span class="s7d0">init</span><span class="s1388">];</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c">MyClass <span class="sfa0">*</span>obj <span class="sfa0">=</span> [[MyClass alloc] init];</code></pre>
 </div>
 <h4 id="1-2-调用方法">1.2 调用方法</h4>
 
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="s7d0">obj</span><span class="sfa0">.</span><span class="s7d1">method1</span><span class="sfa0">()</span><span class="s1f40"> </span><span class="s1770">// 没有参数
-</span><span class="ln">2</span><span class="s1770"></span><span class="s7d0">obj</span><span class="sfa0">.</span><span class="s7d1">method2</span><span class="sfa0">(</span><span class="s7d0">arg1</span><span class="sfa0">)</span><span class="s1f40"> </span><span class="s1770">// 一个参数
-</span><span class="ln">3</span><span class="s1770"></span><span class="s7d0">obj</span><span class="sfa0">.</span><span class="s7d1">method3</span><span class="sfa0">(</span><span class="s7d0">arg1</span><span class="sfa0">,</span><span class="s7d0">arg2</span><span class="sfa0">)</span><span class="s1f40"> </span><span class="sfa0">//</span><span class="s1f40"> </span><span class="s7d0">多个参数</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">obj<span class="sfa0">.</span><span class="s7d1">method1</span><span class="sfa0">()</span> <span class="s1770">// 没有参数
+</span><span class="s1770"></span>obj<span class="sfa0">.</span><span class="s7d1">method2</span><span class="sfa0">(</span>arg1<span class="sfa0">)</span> <span class="s1770">// 一个参数
+</span><span class="s1770"></span>obj<span class="sfa0">.</span><span class="s7d1">method3</span><span class="sfa0">(</span>arg1<span class="sfa0">,</span>arg2<span class="sfa0">)</span> <span class="sfa0">//</span> 多个参数</code></pre>
 </div>
 <p><strong>Objective-C:</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="s1388">[</span><span class="s7d0">obj</span><span class="s1f40"> </span><span class="s7d0">method1</span><span class="s1388">]</span><span class="s1f40"> </span><span class="s1770">// 没有参数
-</span><span class="ln">2</span><span class="s1770"></span><span class="s1388">[</span><span class="s7d0">obj</span><span class="s1f40"> </span><span class="s7d0">method2</span><span class="s1f40"></span><span class="s1388">:</span><span class="s7d0">arg1</span><span class="s1388">]</span><span class="s1f40"> </span><span class="s1770">// 一个参数
-</span><span class="ln">3</span><span class="s1770"></span><span class="s1388">[</span><span class="s7d0">obj</span><span class="s1f40"> </span><span class="s7d0">method3</span><span class="s1f40"></span><span class="s1388">:</span><span class="s7d0">arg2</span><span class="s1f40"> </span><span class="s7d0">andArg</span><span class="s1f40"></span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">arg2</span><span class="s1388">]</span><span class="s1f40"> </span><span class="sfa0">//</span><span class="s1f40"> </span><span class="ss4">多个参数</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c">[obj method1] <span class="s1770">// 没有参数
+</span><span class="s1770"></span>[obj <span class="s7dc">method2</span>:arg1] <span class="s1770">// 一个参数
+</span><span class="s1770"></span>[obj <span class="s7dc">method3</span>:arg2 <span class="s7dc">andArg</span>: arg2] <span class="sfa0">//</span> <span class="ss4">多个参数</span></code></pre>
 </div>
 <h3 id="2-类的定义">2. 类的定义</h3>
 
 <p><strong>Java:</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="s3e8">public</span><span class="s1f40"> </span><span class="s3e8">class</span><span class="s1f40"> </span><span class="s7d4">MyClass</span><span class="s1f40"> </span><span class="s7d0">extend</span><span class="s1f40"> </span><span class="s7d0">SuperClass</span><span class="s1f40"> </span><span class="sfa0">{</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40">    </span><span class="s3e8">private</span><span class="s1f40"> </span><span class="s3e8">int</span><span class="s1f40"> </span><span class="s7d0">attr1</span><span class="sfa0">;</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40">
-</span><span class="ln">5</span><span class="s1f40">    </span><span class="s3e8">public</span><span class="s1f40"> </span><span class="s3e8">void</span><span class="s1f40"> </span><span class="s7d9">method1</span><span class="s1f40"></span><span class="sfa0">()</span><span class="s1f40"> </span><span class="sfa0">{</span><span class="s1f40">
-</span><span class="ln">6</span><span class="s1f40">        </span><span class="sfa0">...</span><span class="s1f40">
-</span><span class="ln">7</span><span class="s1f40">    </span><span class="sfa0">}</span><span class="s1f40">
-</span><span class="ln">8</span><span class="s1f40"></span><span class="sfa0">}</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="s3e8">public</span> <span class="s3e8">class</span> <span class="s7d4">MyClass</span> extend SuperClass <span class="sfa0">{</span>
+
+    <span class="s3e8">private</span> <span class="s3ee">int</span> attr1<span class="sfa0">;</span>
+
+    <span class="s3e8">public</span> <span class="s3ee">void</span> <span class="s7d9">method1</span><span class="sfa0">()</span> <span class="sfa0">{</span>
+        <span class="sfa0">...</span>
+    <span class="sfa0">}</span>
+<span class="sfa0">}</span></code></pre>
 </div>
 <p><strong>Objective-C:</strong></p>
 
 <p>Objectove-C 定义一个类时需要两个文件，分别是负责声明的 Header File 和负责具体实现的 Implementation File。</p>
 
 <p>MyClass.h</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="ss4">@</span><span class="s7d0">interface</span><span class="s1f40"> </span><span class="s7d0">MyClass</span><span class="s1f40"> </span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">SuperClass</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40"></span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40">    </span><span class="s3e8">int</span><span class="s1f40"> </span><span class="s7d0">attr1</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40"></span><span class="s1388">}</span><span class="s1f40">
-</span><span class="ln">5</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">method1</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">6</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">method2</span><span class="s1f40"></span><span class="s1388">:</span><span class="s1f40"> </span><span class="s3e8">int</span><span class="s1f40"> </span><span class="s7d0">arg1</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">7</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">method3</span><span class="s1f40"></span><span class="s1388">:</span><span class="s1f40"> </span><span class="s3e8">int</span><span class="s1f40"> </span><span class="s7d0">arg1</span><span class="s1f40"> </span><span class="s7d0">andArg</span><span class="s1f40"></span><span class="s1388">:</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s7d0">NSString</span><span class="s1f40"> </span><span class="sfa0">*</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">arg2</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">8</span><span class="s1f40"></span><span class="sfa0">+</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">classMethod</span><span class="s1388">;</span><span class="s1f40"> </span><span class="s1770">// 相当于 Java 中的 static 方法
-</span><span class="ln">9</span><span class="s1770"></span><span class="ss4">@</span><span class="s7d0">end</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ss4">@</span>interface <span class="s7dc">MyClass</span> : SuperClass
+{
+    <span class="s3ee">int</span> attr1;
+}
+<span class="sfa0">-</span> (<span class="s3ee">void</span>) method1;
+<span class="sfa0">-</span> (<span class="s3ee">void</span>) <span class="s7dc">method2</span>: <span class="s3ee">int</span> arg1;
+<span class="sfa0">-</span> (<span class="s3ee">void</span>) <span class="s7dc">method3</span>: <span class="s3ee">int</span> arg1 <span class="s7dc">andArg</span>: (NSString <span class="sfa0">*</span>) arg2;
+<span class="sfa0">+</span> (<span class="s3ee">void</span>) classMethod; <span class="s1770">// 相当于 Java 中的 static 方法
+</span><span class="s1770"></span><span class="ss4">@</span>end</code></pre>
 </div>
 <p>MyClass.m</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="s1770">#import&#34;MyClass.h&#34;
-</span><span class="ln">2</span><span class="s1770"></span><span class="ss4">@</span><span class="s7d0">implementation</span><span class="s1f40"> </span><span class="s7d0">MyClass</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">method1</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40"></span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">5</span><span class="s1f40">    </span><span class="s1388">...</span><span class="s1f40">
-</span><span class="ln">6</span><span class="s1f40"></span><span class="s1388">}</span><span class="s1f40">
-</span><span class="ln">7</span><span class="s1f40"></span><span class="s1388">...</span><span class="s1f40">
-</span><span class="ln">8</span><span class="s1f40"></span><span class="ss4">@</span><span class="s7d0">end</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="s17d4">#import&#34;MyClass.h&#34;
+</span><span class="s17d4"></span><span class="ss4">@</span>implementation MyClass
+<span class="sfa0">-</span> (<span class="s3ee">void</span>) method1
+{
+    ...
+}
+...
+<span class="ss4">@</span>end</code></pre>
 </div>
 <p>此外，Objective-C 还有一个非常方便的 “语法糖”——<code>@property</code> 和 <code>@synthesize</code> 两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
 在头文件中加上 <code>@property int attr1;</code> 就等同于声明了两个方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="s1f40">	</span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">int</span><span class="s1388">)</span><span class="s7d0">attr1</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40">	</span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s7d0">setAttr1</span><span class="s1f40"></span><span class="s1388">:(</span><span class="s3e8">int</span><span class="s1388">)</span><span class="s7d0">newAttr1</span><span class="s1388">;</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c">	<span class="sfa0">-</span> (<span class="s3ee">int</span>)attr1;
+	<span class="sfa0">-</span> (<span class="s3ee">void</span>)<span class="s7dc">setAttr1</span>:(<span class="s3ee">int</span>)newAttr1;</code></pre>
 </div>
 <p>实现文件里加上 <code>@synthesize attr1;</code> 就等同于定义了两个方法：</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">int</span><span class="s1388">)</span><span class="s7d0">attr1</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40"></span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40">	</span><span class="s3e8">return</span><span class="s1f40"> </span><span class="s7d0">attr1</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40"></span><span class="s1388">}</span><span class="s1f40">
-</span><span class="ln">5</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s7d0">setAttr1</span><span class="s1f40"></span><span class="s1388">:(</span><span class="s3e8">int</span><span class="s1388">)</span><span class="s7d0">newAttr1</span><span class="s1f40">
-</span><span class="ln">6</span><span class="s1f40"></span><span class="s1388">{</span><span class="s1f40">
-</span><span class="ln">7</span><span class="s1f40">   	</span><span class="s7d0">attr1</span><span class="s1f40"> </span><span class="sfa0">=</span><span class="s1f40"> </span><span class="s7d0">newAttr1</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">8</span><span class="s1f40"></span><span class="s1388">}</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="sfa0">-</span> (<span class="s3ee">int</span>)attr1
+{
+	<span class="s3e8">return</span> attr1;
+}
+<span class="sfa0">-</span>(<span class="s3ee">void</span>)<span class="s7dc">setAttr1</span>:(<span class="s3ee">int</span>)newAttr1
+{
+   	attr1 <span class="sfa0">=</span> newAttr1;
+}</code></pre>
 </div>
 <h3 id="3-协议-接口-的定义">3. 协议（接口）的定义</h3>
 
 <p><strong>Java:</strong>
 定义接口</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="s3e8">public</span><span class="s1f40"> </span><span class="s3e8">interface</span><span class="s1f40"> </span><span class="s7d4">MyInterface</span><span class="s1f40"> </span><span class="sfa0">{</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40">	</span><span class="s3e8">public</span><span class="s1f40"> </span><span class="s3e8">void</span><span class="s1f40"> </span><span class="s7d9">aInterfaceMethod</span><span class="s1f40"></span><span class="sfa0">();</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40">	</span><span class="s3e8">public</span><span class="s1f40"> </span><span class="s3e8">void</span><span class="s1f40"> </span><span class="s7d9">anotherInterfaceMethod</span><span class="s1f40"></span><span class="sfa0">();</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40"></span><span class="sfa0">}</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="s3e8">public</span> <span class="s3e8">interface</span> <span class="s7d4">MyInterface</span> <span class="sfa0">{</span>
+	<span class="s3e8">public</span> <span class="s3ee">void</span> <span class="s7d9">aInterfaceMethod</span><span class="sfa0">();</span>
+	<span class="s3e8">public</span> <span class="s3ee">void</span> <span class="s7d9">anotherInterfaceMethod</span><span class="sfa0">();</span>
+<span class="sfa0">}</span></code></pre>
 </div>
 <p>实现接口</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="s3e8">public</span><span class="s1f40"> </span><span class="s3e8">class</span><span class="s1f40"> </span><span class="s7d4">MyClass</span><span class="s1f40"> </span><span class="s7d0">extend</span><span class="s1f40"> </span><span class="s7d0">SuperClass</span><span class="s1f40"> </span><span class="s3e8">implements</span><span class="s1f40"> </span><span class="s7d0">MyInterface</span><span class="s1f40"> </span><span class="sfa0">{</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40">	</span><span class="s1770">// method declarations
-</span><span class="ln">3</span><span class="s1770"></span><span class="sfa0">}</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="s3e8">public</span> <span class="s3e8">class</span> <span class="s7d4">MyClass</span> extend SuperClass <span class="s3e8">implements</span> MyInterface <span class="sfa0">{</span>
+	<span class="s1770">// method declarations
+</span><span class="s1770"></span><span class="sfa0">}</span></code></pre>
 </div>
 <p><strong>Objective-C:</strong>
 在 Objective-C 中，用关键字 <code>@protocol</code> 定义协议，也就是 Java 中的接口。</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="ss4">@</span><span class="s7d0">protocol</span><span class="s1f40"> </span><span class="s7d0">MyProtocol</span><span class="s1f40">
-</span><span class="ln">2</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">aProtocolMethod</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40"></span><span class="sfa0">-</span><span class="s1f40"> </span><span class="s1388">(</span><span class="s3e8">void</span><span class="s1388">)</span><span class="s1f40"> </span><span class="s7d0">anotherProcotolMethod</span><span class="s1388">;</span><span class="s1f40">
-</span><span class="ln">4</span><span class="s1f40"></span><span class="ss4">@</span><span class="s7d0">end</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ss4">@</span>protocol MyProtocol
+<span class="sfa0">-</span> (<span class="s3ee">void</span>) aProtocolMethod;
+<span class="sfa0">-</span> (<span class="s3ee">void</span>) anotherProcotolMethod;
+<span class="ss4">@</span>end</code></pre>
 </div>
 <p>当一个类需要实现协议时，</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="ln">1</span><span class="s1770">#import &#34;MyProtocol.h&#34;
-</span><span class="ln">2</span><span class="s1770"></span><span class="ss4">@</span><span class="s7d0">interface</span><span class="s1f40"> </span><span class="s7d0">MyClass</span><span class="s1f40"> </span><span class="s1388">:</span><span class="s1f40"> </span><span class="s7d0">SuperClass</span><span class="s1f40"> </span><span class="sfa0">&lt;</span><span class="s7d0">MyProtocol</span><span class="s1388">,</span><span class="s1f40"> </span><span class="s7d0">AnotherProtocol</span><span class="sfa0">&gt;</span><span class="s1f40">
-</span><span class="ln">3</span><span class="s1f40">	</span><span class="s1770">// method declarations
-</span><span class="ln">4</span><span class="s1770"></span><span class="ss4">@</span><span class="s7d0">end</span></code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="s17d4">#import &#34;MyProtocol.h&#34;
+</span><span class="s17d4"></span><span class="ss4">@</span>interface <span class="s7dc">MyClass</span> : SuperClass <span class="sfa0">&lt;</span>MyProtocol, AnotherProtocol<span class="sfa0">&gt;</span>
+	<span class="s1770">// method declarations
+</span><span class="s1770"></span><span class="ss4">@</span>end</code></pre>
 </div>
 <hr />
 
