@@ -103,13 +103,11 @@
 <p>Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送<code>观测量: 观测值</code>这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。</p>
 
 <p>当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：</p>
-<div class="highlight"><pre class="chroma">&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;</pre>
-</div>
+<div class="highlight"><pre class="chroma">&lt;metric name&gt; &lt;metric value&gt; &lt;metric timestamp&gt;</pre></div>
 <p>例如，有一个 Metric 叫作 <code>local.metric.random</code>，可以用下面的 Bash 命令发送当前时刻的值 <code>4</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s7e3">PORT</span><span class="sfa0">=</span><span class="sc80">2003</span>
-<span class="s7e3">SERVER</span><span class="sfa0">=</span>graphite.your.org
-<span class="s7d2">echo</span> <span class="sc1c">&#34;local.metric.random 4 `date +%s`&#34;</span> | nc -q0 <span class="sc27">${</span><span class="s7e3">SERVER</span><span class="sc27">}</span> <span class="sc27">${</span><span class="s7e3">PORT</span><span class="sc27">}</span></code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">PORT</span><span class="o">=</span><span class="m">2003</span>
+<span class="nv">SERVER</span><span class="o">=</span>graphite.your.org
+<span class="nb">echo</span> <span class="s2">&#34;local.metric.random 4 `date +%s`&#34;</span> <span class="p">|</span> nc -q0 <span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span> <span class="si">${</span><span class="nv">PORT</span><span class="si">}</span></code></pre></div>
 <p>类似地，使用其它编程语言时，可以使用 Socket 发送数据。</p>
 
 <p>另外，Graphite 的 Metric 名称支持以 <code>.</code> 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。</p>
@@ -127,8 +125,7 @@
 <p>除了支持简单的键／值数据类型，Graphite 还可以通过 <a href="http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events">Events</a> 来存储更复杂的数据。简而言之，Graphite Events 使用了 <code>tag</code> 和 <code>data</code> 两个键来存储更多的信息。</p>
 
 <p>我们可以使用 HTTP POST 向 Graphite 发送一个 Event。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">curl -X POST <span class="sc1c">&#34;http://graphite.your.org/events&#34;</span> -d <span class="sc1c">&#39;{&#34;what&#34;: &#34;Deployment&#34;, &#34;tags&#34;: &#34;webserver&#34;, &#34;data&#34;: &#34;Deploy webserver&#34;}&#39;</span></code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">curl -X POST <span class="s2">&#34;http://graphite.your.org/events&#34;</span> -d <span class="s1">&#39;{&#34;what&#34;: &#34;Deployment&#34;, &#34;tags&#34;: &#34;webserver&#34;, &#34;data&#34;: &#34;Deploy webserver&#34;}&#39;</span></code></pre></div>
 <p>下文将会通过一个具体的实例来介绍Events的使用场景。</p>
 
 <h2 id="grafana">Grafana</h2>
@@ -136,24 +133,22 @@
 <p>鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 <a href="http://grafana.org/">Grafana</a> 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多<a href="http://grafana.org/features">不错的特性</a>，还可以访问官网提供的 <a href="http://play.grafana.org">Live Demo</a> 来体验 Grafana。</p>
 
 <p>设置 Grafana，只需编辑 <code>config.js</code> 设置数据来源<sup class="footnote-ref" id="fnref:update"><a rel="footnote" href="#fn:update">1</a></sup>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">datasources<span class="sfa0">:</span> {
-  graphite<span class="sfa0">:</span> {
-    type<span class="sfa0">:</span> <span class="sc1c">&#39;graphite&#39;</span>,
-    url<span class="sfa0">:</span> <span class="sc1c">&#34;http://my.graphite.server.com:8080&#34;</span>,
-  }
-},</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">datasources</span><span class="o">:</span> <span class="p">{</span>
+  <span class="nx">graphite</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;graphite&#39;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;http://my.graphite.server.com:8080&#34;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">},</span></code></pre></div>
 <p>具体的配置教程可以参见<a href="http://docs.grafana.org/v1.9/installation/">官方文档</a>。</p>
 
 <h2 id="实例">实例</h2>
 
 <p>我实习所在公司使用 <a href="https://jenkins-ci.org">Jenkins</a> 部署代码。在部署完成之后，我添加了一段 <a href="https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin">post-build script</a> 执行下面的脚本。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s1770">#!/bin/bash
-</span><span class="s1770"></span>
-<span class="s7e3">HOST</span><span class="sfa0">=</span>http://graphite.your.org/events
-<span class="s7d2">echo</span> <span class="sc1c">&#39;Posting a deployment event to Graphite&#39;</span>
-curl -X POST <span class="s7e3">$HOST</span> -d <span class="sc1c">&#39;{&#34;what&#34;: &#34;Deployment&#34;, &#34;tags&#34;: &#34;webserver,prd&#34;, &#34;data&#34;: \&#34;$BUILD_URL\&#34;}&#39;</span></code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="nv">HOST</span><span class="o">=</span>http://graphite.your.org/events
+<span class="nb">echo</span> <span class="s1">&#39;Posting a deployment event to Graphite&#39;</span>
+curl -X POST <span class="nv">$HOST</span> -d <span class="s1">&#39;{&#34;what&#34;: &#34;Deployment&#34;, &#34;tags&#34;: &#34;webserver,prd&#34;, &#34;data&#34;: \&#34;$BUILD_URL\&#34;}&#39;</span></code></pre></div>
 <p>这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 <code>drawAsInfinite(events('prd'))</code> 或者在 Grafana 里使用 <a href="http://grafana.org/docs/features/annotations/">Annotations Page</a> 来绘制一幅图显示代码部署的 Events。</p>
 
 <p>利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。</p>

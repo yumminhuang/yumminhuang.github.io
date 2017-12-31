@@ -79,8 +79,7 @@
 &lt;p&gt;我喜欢为每个项目新建一个 &lt;ruby&gt;virtualenv&lt;rt&gt; 虚拟环境 &lt;/rt&gt;&lt;/ruby&gt;，这样可以确保每个项目的开发环境相互独立，避免发生冲突。&lt;a href=&#34;https://virtualenvwrapper.readthedocs.org/en/latest/&#34;&gt;virtualenvwrapper&lt;/a&gt; 是一个让人方便使用 virtualenv 的小工具。它把如新建 virtualenv、切换 virtualenv 等常用的操作都封装成了简单的指令。&lt;/p&gt;
 
 &lt;p&gt;我一般会在项目中添加一个 &lt;code&gt;requirements.txt&lt;/code&gt;，里面列出项目所依赖的 Pip 库。这样在 virtualenv 中，直接运行&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;pip install -r requirements.txt&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;pip install -r requirements.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;就可以安装所有的库。&lt;/p&gt;
 
 &lt;h3 id=&#34;单元测试和测试覆盖&#34;&gt;单元测试和测试覆盖&lt;/h3&gt;
@@ -88,8 +87,7 @@
 &lt;p&gt;对于 Python 项目，我喜欢使用 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose&lt;/a&gt; 来进行单元测试。此外，我还会使用 &lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;coverage.py&lt;/a&gt; 来测量代码的测试覆盖率。&lt;/p&gt;
 
 &lt;p&gt;nose 对 coverage.py 的支持非常好，可以在 &lt;code&gt;nosetests&lt;/code&gt; 命令后添加一系列选项来生成覆盖率。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;nosetests --with-coverage&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;nosetests --with-coverage&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;就可以直接得到测试覆盖率的数据。&lt;/p&gt;
 
 &lt;p&gt;详细的使用方法可以参见 &lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nose 的官方文档&lt;/a&gt; 和&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html&#34;&gt;coverage.py 的官方文档&lt;/a&gt;。&lt;/p&gt;
@@ -97,21 +95,20 @@
 &lt;h3 id=&#34;持续集成&#34;&gt;持续集成&lt;/h3&gt;
 
 &lt;p&gt;在 Github 上新建项目之后，在 Travis CI 的页面上开启该项目。（新建的项目可能不会及时出现在 Travis CI 页面上，需要手动同步一下 Github 的项目。）接着，在 Github 项目里添加 Travis CI 的配置文件 &lt;code&gt;.travis.yml&lt;/code&gt;。Travis CI 的配置使用的是非常易读的 YAML 文件。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;language: python
-python:
-    - 2.6
-    - 2.7
-# command to install dependencies
-install:
-    - pip install -r requirements.txt
-    - pip install coveralls
-# command to run tests
-script:
-    nosetests --cover-package=project --with-coverage
-# coveralls
-after_success:
-    coveralls&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;language&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;python&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;python&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2.6&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2.7&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# command to install dependencies&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;install&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;pip&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;install&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-r&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;requirements.txt&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;pip&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;install&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;coveralls&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# command to run tests&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;nosetests&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--cover-package=project&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--with-coverage&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# coveralls&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;after_success&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;coveralls&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;同样地，也需要在 Coveralls 上开启相应的项目。&lt;/p&gt;
 
 &lt;p&gt;这样，Github 的代码库在每次收到 &lt;code&gt;Push&lt;/code&gt; 和 &lt;code&gt;Pull Request&lt;/code&gt; 的时候，Travis CI 都会按照配置文件上的步骤自动运行测试（或者部署，本样例只有测试。），并且把测试覆盖率的数据发布到 Coveralls。&lt;/p&gt;
@@ -273,11 +270,10 @@ after_success:
 &lt;h4 id=&#34;运行什么&#34;&gt;运行什么&lt;/h4&gt;
 
 &lt;p&gt;添加一段 &lt;strong&gt;Build Script&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;s7e3&#34;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;project1 --cover-inclusive
-python -m coverage xml --include&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;project1*
-pylint -f parseable -d I0011,R0801 project1 | tee pylint.out&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;PYTHONPATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;project1 --cover-inclusive
+python -m coverage xml --include&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;project1*
+pylint -f parseable -d I0011,R0801 project1 &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tee pylint.out&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这段 Shell 脚本中的三个命令：&lt;/p&gt;
 
 &lt;ol&gt;
@@ -315,14 +311,13 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out&lt;/code&gt;&lt;/pr
 &lt;p&gt;没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 &lt;a href=&#34;https://github.com/SurveyMonkey/pycobertura&#34;&gt;Pycobertura&lt;/a&gt;。&lt;/p&gt;
 
 &lt;p&gt;Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;s3e8&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;pycobertura&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; Cobertura
-&lt;span class=&#34;s3e8&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;pycobertura&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; TextReporterDelta
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pycobertura&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Cobertura&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pycobertura&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;TextReporterDelta&lt;/span&gt;
 
-coverage1 &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; Cobertura(&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage1.xml&amp;#39;&lt;/span&gt;)
-coverage2 &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; Cobertura(&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;coverage2.xml&amp;#39;&lt;/span&gt;)
-delta &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; TextReporterDelta(coverage1, coverage2)
-delta&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;generate()&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;span class=&#34;n&#34;&gt;coverage1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;coverage1.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;coverage2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Cobertura&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;coverage2.xml&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;TextReporterDelta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;coverage1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;coverage2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;generate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 &lt;strong&gt;Post build script&lt;/strong&gt; 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;Coverage Diff for Java code:
 No coverage diff can be found.
@@ -331,8 +326,7 @@ Name          Stmts    Miss    Cover
 ------------  -------  ------  --------
 dummy/dummy   -        -2      +50.00%
 dummy/dummy2  +2       -       +100.00%
-TOTAL         +2       -2      +50.00%&lt;/pre&gt;
-&lt;/div&gt;
+TOTAL         +2       -2      +50.00%&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。&lt;/p&gt;
 
 &lt;h3 id=&#34;参考文献&#34;&gt;参考文献&lt;/h3&gt;
@@ -415,17 +409,16 @@ TOTAL         +2       -2      +50.00%&lt;/pre&gt;
 &lt;p&gt;开始，我检查的方式是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆之后，再使用 &lt;code&gt;grep&lt;/code&gt; 检查日志文件是否包含 &lt;code&gt;ERROR&lt;/code&gt;、&lt;code&gt;WARNING&lt;/code&gt; 等关键字。后来，我发现检查日志文件的操作都是一些重复操作，于是就写了一个 Bash 脚本来进行检查。这样，每天检查的过程就是使用 &lt;code&gt;ssh&lt;/code&gt; 登陆，再运行脚本进行检查。&lt;/p&gt;
 
 &lt;p&gt;但是，这样检查日志还是有一些麻烦，这促使我转而使用 Fabric。第一，每天都需要远程登录。使用 Fabric 可以直接在本地运行。第二，因为日志每天晚上会回滚，我不仅要检查当天的日志文件，还要检查昨天的日志来确保昨天下班之后程序没有出问题，而日志的名称会随着日期变化。在 Bash 里计算日期是一件相当麻烦的事情。但是，使用 Fabric 之后，因为可以利用 Python 的 &lt;code&gt;datetime&lt;/code&gt;，计算日期就变得非常容易了。下面就是用来检查日志是否包含关键字的函数。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;s3e8&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;fabric.api&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;*&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;fabric.api&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;check_log_with_keyword&lt;/span&gt;(log_file, keyword):
-    &lt;span class=&#34;s3e8&#34;&gt;with&lt;/span&gt; settings(hide(&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;warnings&amp;#39;&lt;/span&gt;,&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;output&amp;#39;&lt;/span&gt;),
-                  host_string&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;eb101.ops&amp;#39;&lt;/span&gt;,
-                  warn_only&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;True):
-        result &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; run(&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;grep &lt;/span&gt;&lt;span class=&#34;sc27&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt; &lt;/span&gt;&lt;span class=&#34;sc27&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;%&lt;/span&gt; (keyword, filename))
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;check_log_with_keyword&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;log_file&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;keyword&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;warnings&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;output&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+                  &lt;span class=&#34;n&#34;&gt;host_string&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;eb101.ops&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                  &lt;span class=&#34;n&#34;&gt;warn_only&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;result&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;grep &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt; &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keyword&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;filename&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
 
-        &lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; result&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;return_code &lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;:
-            &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt;(result)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;return_code&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;使用 &lt;code&gt;with settings()&lt;/code&gt; 来临时更改 &lt;code&gt;env&lt;/code&gt; 变量；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;hide(&#39;warnings&#39;, &#39;output&#39;)&lt;/code&gt; 可以设置 Fabric 输出（不是远程执行的指令的输出），隐藏 &lt;code&gt;stderr&lt;/code&gt; 和 &lt;code&gt;stdout&lt;/code&gt;；&lt;/li&gt;
@@ -473,13 +466,11 @@ TOTAL         +2       -2      +50.00%&lt;/pre&gt;
 &lt;p&gt;Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送&lt;code&gt;观测量: 观测值&lt;/code&gt;这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。&lt;/p&gt;
 
 &lt;p&gt;当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&amp;lt;metric name&amp;gt; &amp;lt;metric value&amp;gt; &amp;lt;metric timestamp&amp;gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&amp;lt;metric name&amp;gt; &amp;lt;metric value&amp;gt; &amp;lt;metric timestamp&amp;gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;例如，有一个 Metric 叫作 &lt;code&gt;local.metric.random&lt;/code&gt;，可以用下面的 Bash 命令发送当前时刻的值 &lt;code&gt;4&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;s7e3&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;sc80&#34;&gt;2003&lt;/span&gt;
-&lt;span class=&#34;s7e3&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;graphite.your.org
-&lt;span class=&#34;s7d2&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;local.metric.random 4 `date +%s`&amp;#34;&lt;/span&gt; | nc -q0 &lt;span class=&#34;sc27&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7e3&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;sc27&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;sc27&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;s7e3&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;sc27&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2003&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;graphite.your.org
+&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;local.metric.random 4 `date +%s`&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc -q0 &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;类似地，使用其它编程语言时，可以使用 Socket 发送数据。&lt;/p&gt;
 
 &lt;p&gt;另外，Graphite 的 Metric 名称支持以 &lt;code&gt;.&lt;/code&gt; 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。&lt;/p&gt;
@@ -497,8 +488,7 @@ TOTAL         +2       -2      +50.00%&lt;/pre&gt;
 &lt;p&gt;除了支持简单的键／值数据类型，Graphite 还可以通过 &lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events&#34;&gt;Events&lt;/a&gt; 来存储更复杂的数据。简而言之，Graphite Events 使用了 &lt;code&gt;tag&lt;/code&gt; 和 &lt;code&gt;data&lt;/code&gt; 两个键来存储更多的信息。&lt;/p&gt;
 
 &lt;p&gt;我们可以使用 HTTP POST 向 Graphite 发送一个 Event。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;curl -X POST &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;http://graphite.your.org/events&amp;#34;&lt;/span&gt; -d &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver&amp;#34;, &amp;#34;data&amp;#34;: &amp;#34;Deploy webserver&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;curl -X POST &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://graphite.your.org/events&amp;#34;&lt;/span&gt; -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver&amp;#34;, &amp;#34;data&amp;#34;: &amp;#34;Deploy webserver&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;下文将会通过一个具体的实例来介绍Events的使用场景。&lt;/p&gt;
 
 &lt;h2 id=&#34;grafana&#34;&gt;Grafana&lt;/h2&gt;
@@ -506,24 +496,22 @@ TOTAL         +2       -2      +50.00%&lt;/pre&gt;
 &lt;p&gt;鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 &lt;a href=&#34;http://grafana.org/&#34;&gt;Grafana&lt;/a&gt; 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多&lt;a href=&#34;http://grafana.org/features&#34;&gt;不错的特性&lt;/a&gt;，还可以访问官网提供的 &lt;a href=&#34;http://play.grafana.org&#34;&gt;Live Demo&lt;/a&gt; 来体验 Grafana。&lt;/p&gt;
 
 &lt;p&gt;设置 Grafana，只需编辑 &lt;code&gt;config.js&lt;/code&gt; 设置数据来源&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:update&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:update&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;datasources&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-  graphite&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-    type&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;graphite&amp;#39;&lt;/span&gt;,
-    url&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;http://my.graphite.server.com:8080&amp;#34;&lt;/span&gt;,
-  }
-},&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;nx&#34;&gt;datasources&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;graphite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;graphite&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://my.graphite.server.com:8080&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;具体的配置教程可以参见&lt;a href=&#34;http://docs.grafana.org/v1.9/installation/&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
 
 &lt;h2 id=&#34;实例&#34;&gt;实例&lt;/h2&gt;
 
 &lt;p&gt;我实习所在公司使用 &lt;a href=&#34;https://jenkins-ci.org&#34;&gt;Jenkins&lt;/a&gt; 部署代码。在部署完成之后，我添加了一段 &lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin&#34;&gt;post-build script&lt;/a&gt; 执行下面的脚本。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;s1770&#34;&gt;#!/bin/bash
-&lt;/span&gt;&lt;span class=&#34;s1770&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;s7e3&#34;&gt;HOST&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;http://graphite.your.org/events
-&lt;span class=&#34;s7d2&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;Posting a deployment event to Graphite&amp;#39;&lt;/span&gt;
-curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver,prd&amp;#34;, &amp;#34;data&amp;#34;: \&amp;#34;$BUILD_URL\&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;HOST&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;http://graphite.your.org/events
+&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Posting a deployment event to Graphite&amp;#39;&lt;/span&gt;
+curl -X POST &lt;span class=&#34;nv&#34;&gt;$HOST&lt;/span&gt; -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver,prd&amp;#34;, &amp;#34;data&amp;#34;: \&amp;#34;$BUILD_URL\&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 &lt;code&gt;drawAsInfinite(events(&#39;prd&#39;))&lt;/code&gt; 或者在 Grafana 里使用 &lt;a href=&#34;http://grafana.org/docs/features/annotations/&#34;&gt;Annotations Page&lt;/a&gt; 来绘制一幅图显示代码部署的 Events。&lt;/p&gt;
 
 &lt;p&gt;利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。&lt;/p&gt;
@@ -577,17 +565,16 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 &lt;p&gt;&lt;img src=&#34;http://sensuapp.org/docs/0.16/img/sensu-diagram-87a902f0.gif&#34; alt=&#34;Sensu components&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Sensu 采用 C/S 结构，有用来发送指令、存储数据的 Sensu Server 和被监控的对象 Sensu Client。Sensu Server 和 Sensu Client 之间使用 RabbitMQ 进行通信，Server 端使用 Redis 存储数据。每一个 Sensu Client 使用 JSON 进行设置。例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;{
-  &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;client&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;i-424242&amp;#34;&lt;/span&gt;,
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;address&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;127.0.0.1&amp;#34;&lt;/span&gt;,
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscriptions&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; [
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;webserver&amp;#34;&lt;/span&gt;
-    ]
-  }
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;s2&#34;&gt;&amp;#34;client&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;i-424242&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;address&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;127.0.0.1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;subscriptions&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;webserver&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;其中，&lt;code&gt;subscriptions&lt;/code&gt; 指定了 Sensu Client 订阅哪些监控项目。 Sensu 采用了&lt;a href=&#34;http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern&#34;&gt;订阅者模式&lt;/a&gt;，相应地，定义监控项目的时候则需要指定 &lt;code&gt;subscribers&lt;/code&gt;（后文中将会提及）。&lt;/p&gt;
 
 &lt;h3 id=&#34;sensu-的优势&#34;&gt;Sensu 的优势&lt;/h3&gt;
@@ -615,36 +602,34 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 &lt;/ul&gt;
 
 &lt;p&gt;因此，只要定义好返回值和输出，很容易就可以写出一个 Sensu Check。下面就是一个用来监测 &lt;code&gt;chef-client&lt;/code&gt; 进程是否在运行的 Ruby 脚本。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;  procs &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;`ps aux`&lt;/span&gt;
-  running &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s3ec&#34;&gt;false&lt;/span&gt;
-  procs&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;each_line &lt;span class=&#34;s3e8&#34;&gt;do&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;s7d2&#34;&gt;proc&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;|&lt;/span&gt;
-    running &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s3ec&#34;&gt;true&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;s7d2&#34;&gt;proc&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;include?(&lt;span class=&#34;sc1c&#34;&gt;&amp;#39;chef-client&amp;#39;&lt;/span&gt;)
-  &lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;
-  &lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; running
-    &lt;span class=&#34;s7d2&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;OK - Chef client daemon is running&amp;#39;&lt;/span&gt;
-    &lt;span class=&#34;s7d2&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;
-  &lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;else&lt;/span&gt;
-    &lt;span class=&#34;s7d2&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;WARNING - Chef client daemon is NOT running&amp;#39;&lt;/span&gt;
-    &lt;span class=&#34;s7d2&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;1&lt;/span&gt;
-  &lt;span class=&#34;sfa0&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s3e8&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;  &lt;span class=&#34;n&#34;&gt;procs&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`ps aux`&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;false&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;procs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;each_line&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;proc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;true&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;proc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;include?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;chef-client&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;OK - Chef client daemon is running&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+  &lt;span class=&#34;o&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;puts&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;WARNING - Chef client daemon is NOT running&amp;#39;&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+  &lt;span class=&#34;o&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;写好一个Check的脚本，需要在配置文件中添加它。比如下面,&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;{
-  &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;chef_client&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;check-chef-client.rb&amp;#34;&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; [
-        &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;
-      ],
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;interval&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;60&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handlers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; [
-        &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;pagerduty&amp;#34;&lt;/span&gt;,
-        &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mail&amp;#34;&lt;/span&gt;
-      ]
-    }
-  }
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;s2&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;chef_client&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;check-chef-client.rb&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;interval&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;handlers&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;#34;pagerduty&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;#34;mail&amp;#34;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;subscribers&lt;/code&gt; 用来指定订阅者。&lt;code&gt;interval&lt;/code&gt; 定义检查的周期为 &lt;code&gt;60s&lt;/code&gt;，&lt;code&gt;handlers&lt;/code&gt; 则告诉 Sensu 当此 Check 出现异常时使用 &lt;code&gt;pagerduty&lt;/code&gt; 和 &lt;code&gt;mail&lt;/code&gt; 这两个 Handler。&lt;/p&gt;
 
 &lt;h4 id=&#34;sensu-handler&#34;&gt;Sensu Handler&lt;/h4&gt;
@@ -652,15 +637,14 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 &lt;p&gt;Sensu Handler 用来处理 Sensu Check 产生的 Event，例如发送邮件通知，将采集的数据发送到 &lt;a href=&#34;http://graphite.wikidot.com&#34;&gt;Graphite&lt;/a&gt;，等等。 Handler 有不同的类型，有常用的 &lt;code&gt;Pipe&lt;/code&gt;，可以将 Event 传入到 &lt;code&gt;STDIN&lt;/code&gt;（可以理解为 &lt;code&gt;cat event.json | handler&lt;/code&gt;）；有 TCP/UDP，将 Event 传入到 Socket 发送。&lt;/p&gt;
 
 &lt;p&gt;下面是一个简单的 Sensu Handler 定义，用来将 Event 的内容发送到指定的邮箱地址。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;{
-  &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handlers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mail&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;pipe&amp;#34;&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mailx -s &amp;#39;sensu event&amp;#39; email@address.com&amp;#34;&lt;/span&gt;
-    }
-  }
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;s2&#34;&gt;&amp;#34;handlers&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;mail&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;pipe&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;mailx -s &amp;#39;sensu event&amp;#39; email@address.com&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id=&#34;基于-sensu-的安全更新监控工具&#34;&gt;基于 Sensu 的安全更新监控工具&lt;/h2&gt;
 
 &lt;p&gt;接下来，结合我这次实习里的一个项目来详细地介绍一下 Sensu 的使用。&lt;/p&gt;
@@ -683,8 +667,7 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 
 &lt;p&gt;使用 Debian/Ubuntu 的用户都知道，每次登陆都会看到类似的信息：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;17 packages can be updated.
-6 updates are security updates.&lt;/pre&gt;
-&lt;/div&gt;
+6 updates are security updates.&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以此为源头，我找到了 Debian 系统内自带的一个 Python 脚本 &lt;code&gt;/usr/lib/update-notifier/apt_check.py&lt;/code&gt;。它可以调用 &lt;a href=&#34;https://apt.alioth.debian.org/python-apt-doc/index.html&#34;&gt;python-apt&lt;/a&gt; 库收集系统当前可以安装的安全更新。以此脚本为基础稍加改动就可以得到我们所需要的信息。&lt;/p&gt;
 
 &lt;p&gt;我已经把修改过的脚本做成了一个 &lt;a href=&#34;https://github.com/sensu/sensu-community-plugins/blob/master/plugins/system/package-updates-metric.py&#34;&gt;Sensu Plugin&lt;/a&gt; 提交到了 Sensu 社区。&lt;/p&gt;
@@ -704,38 +687,35 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 &lt;p&gt;因此，整个安全更新监控工具使用了两个 Sensu Check。第一个 Aggregate Check 运行在所有的服务器上，用来收集本地的安全更新。第二个 Check 运行在一台服务器上，它会调用 Aggregate API 读取第一个 Check 的结果，再加以归类、分析。如果有安全更新可以安装，就触发 Handler 发送通知邮件。&lt;/p&gt;
 
 &lt;p&gt;第一个 Check 的定义：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;{
-  &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;apt-check&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;package-updates-metric.py&amp;#34;&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; [
-        &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;
-      ],
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;interval&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;28800&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;aggregate&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;true&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;false&lt;/span&gt;
-    }
-  }
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;s2&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;apt-check&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;package-updates-metric.py&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;#34;production&amp;#34;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;interval&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;28800&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;aggregate&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;第二个Check的定义：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;{
-  &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-    &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;aggregate_apt_check&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; {
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;package-updates-check.py&amp;#34;&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; [
-        &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;mg102.ops&amp;#34;&lt;/span&gt;
-      ],
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;publish&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;false&lt;/span&gt;,
-      &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class=&#34;sfa0&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&amp;#34;package-updates-notify.rb&amp;#34;&lt;/span&gt;,
-    }
-  }
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;s2&#34;&gt;&amp;#34;checks&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s2&#34;&gt;&amp;#34;aggregate_apt_check&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;package-updates-check.py&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;subscribers&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;s2&#34;&gt;&amp;#34;mg102.ops&amp;#34;&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;publish&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+      &lt;span class=&#34;s2&#34;&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;package-updates-notify.rb&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;其中，&lt;code&gt;package-updates-check.py&lt;/code&gt; 是另外一个 Python 脚本，主要是访问 API 并且读取结果。如果发现了安全更新就输出结果并返回&lt;code&gt;1&lt;/code&gt;，这样就可以触发 &lt;code&gt;package-updates-notify.rb&lt;/code&gt;。这是一个 Ruby 脚本，用来读取第二个 Check 的结果，再把结果分成不同的 subnet 发送邮件。
 另外，这里设置了 &lt;code&gt;&amp;quot;publish&amp;quot;: false&lt;/code&gt;，所以这个 Check 需要手工启动（因为没有必要定时调用，每天一次足矣），可以通过以下命令来手动请求 Sensu Check。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;curl -XPOST http://api.sensu.example.com:4567/check/request -d &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;{&amp;#34;check&amp;#34;:&amp;#34;aggregate_apt_check&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;curl -XPOST http://api.sensu.example.com:4567/check/request -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;check&amp;#34;:&amp;#34;aggregate_apt_check&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;我添加了一个 Cron job 每天早上定时调用该命令。这样每天早上一到办公室就可以及时获知所有服务器是否需要更新。&lt;/p&gt;
 
 &lt;p&gt;整个工具就基本完成了。剩下的内容就是写一个 Chef 的 Recipe，把工具部署到所有的服务器上。&lt;/p&gt;
@@ -902,8 +882,7 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 &lt;p&gt;其余添加用户、Linux 基本设置等内容在此不再赘述。&lt;/p&gt;
 
 &lt;h4 id=&#34;安装pptp&#34;&gt;安装PPTP&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo apt-get install pptpd&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo apt-get install pptpd&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&#34;配置&#34;&gt;配置&lt;/h4&gt;
 
 &lt;ul&gt;
@@ -913,8 +892,7 @@ curl -X POST &lt;span class=&#34;s7e3&#34;&gt;$HOST&lt;/span&gt; -d &lt;span cla
 &lt;p&gt;编辑 &lt;code&gt;/etc/pptpd.conf&lt;/code&gt;，添加以下内容(基本上默认设置已经完成或者被注释了)：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;option /etc/ppp/pptpd-options
 localip 192.168.0.1
-remoteip 192.168.0.100-200&lt;/pre&gt;
-&lt;/div&gt;
+remoteip 192.168.0.100-200&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这里是 PPTP 服务器的 IP 地址设为 &lt;code&gt;192.178.0.1&lt;/code&gt; ，把 PPTP 客户端的 IP 地址设置为 &lt;code&gt;192.168.0.100&lt;/code&gt; 到 &lt;code&gt;192.168.0.200&lt;/code&gt; 的区间内。当然你也可以自己的需要和喜欢进行相应的设置&lt;/p&gt;
 
 &lt;ul&gt;
@@ -923,34 +901,29 @@ remoteip 192.168.0.100-200&lt;/pre&gt;
 
 &lt;p&gt;编辑 &lt;code&gt;/etc/ppp/pptpd-options&lt;/code&gt; ，添加 DNS 地址。这里我选择的是&lt;a href=&#34;https://developers.google.com/speed/public-dns/&#34;&gt;Google Public DNS&lt;/a&gt;。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;ms-dns 8.8.8.8
-ms-dns 8.8.4.4&lt;/pre&gt;
-&lt;/div&gt;
+ms-dns 8.8.4.4&lt;/pre&gt;&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;添加用户&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;编辑 &lt;code&gt;/etc/ppp/chap-secrets&lt;/code&gt;，添加账号和密码。其中第一列为账户名，第二列为密码。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;# client    server  secret          IP addresses
-test		pptpd   1234            *&lt;/pre&gt;
-&lt;/div&gt;
+test		pptpd   1234            *&lt;/pre&gt;&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;设置 IP 转发&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;打开 IPv4 转发，并重新载入设置。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo sed -i &lt;span class=&#34;sc1c&#34;&gt;&amp;#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&amp;#39;&lt;/span&gt; /etc/sysctl.conf
-sudo sysctl -p&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo sed -i &lt;span class=&#34;s1&#34;&gt;&amp;#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&amp;#39;&lt;/span&gt; /etc/sysctl.conf
+sudo sysctl -p&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;为 PPTP 连接设置 NAT，否则不能访问别的网站。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;也可以直接编辑 &lt;code&gt;/etc/rc.local&lt;/code&gt;，在 &lt;code&gt;exit 0&lt;/code&gt; 之前添加以上内容。&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;重启 PPTP&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo service pptpd restart&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo service pptpd restart&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这样PPTP服务器就搭建完毕了，可以「科学上网」了！&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -976,8 +949,7 @@ Mar 21 16:54:53 Server pppd[1809]: Exit.
 Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
 Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
 Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished&lt;/pre&gt;
-&lt;/div&gt;
+Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;上网搜索，在 StackOverflow 上找到了&lt;a href=&#34;http://stackoverflow.com/a/21347817&#34;&gt;答案&lt;/a&gt;。至此，终于定位到无法连接的根本原因 —— 是路由器不支持 &lt;code&gt;PPTP Passthrough&lt;/code&gt; 功能。我上路由器厂商的官网一看，果然发现了去年12月发布了一个固件更新用来修复VPN连接的问题。&lt;/p&gt;
 
 &lt;hr /&gt;
@@ -1058,129 +1030,128 @@ Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connecti
 &lt;/ol&gt;
 
 &lt;p&gt;下面提供一份示例代码以供参考：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;s1770&#34;&gt;#!python&lt;/span&gt;
-&lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;sys&lt;/span&gt;
-&lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;time&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;ch&#34;&gt;#!python&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;sys&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;time&lt;/span&gt;
 
-&lt;span class=&#34;s3e8&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;boto.ec2.autoscale&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; AutoScaleConnection
-&lt;span class=&#34;s3e8&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s7dd&#34;&gt;boto.ec2.connection&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;import&lt;/span&gt; EC2Connection
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;boto.ec2.autoscale&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoScaleConnection&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;boto.ec2.connection&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;EC2Connection&lt;/span&gt;
 
-AUTO_SCALING_GROUP &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;test_auto_scaling_group&amp;#34;&lt;/span&gt;
-NEW_INSTANCES &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; [&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;i-4acb0666&amp;#34;&lt;/span&gt;, &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;i-4acbqa9&amp;#34;&lt;/span&gt;]
-CHECK_INTERVAL &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;5&lt;/span&gt;
-
-
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;suspend&lt;/span&gt;(as_conn):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Suspend auto scaling group
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;suspend_processes(AUTO_SCALING_GROUP)
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Suspend Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;test_auto_scaling_group&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;NEW_INSTANCES&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;i-4acb0666&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;i-4acbqa9&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;CHECK_INTERVAL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;resume&lt;/span&gt;(as_conn):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Resume auto scaling group
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;resume_processes(AUTO_SCALING_GROUP)
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;suspend&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Suspend auto scaling group
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;suspend_processes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Suspend Done&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;get_instance_by_id&lt;/span&gt;(ec2conn, inst_id):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Get instance by its id
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;
-    &lt;span class=&#34;s3e8&#34;&gt;pass&lt;/span&gt;
-
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;deactivate_instance&lt;/span&gt;(inst):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Deactivate instance
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;sfa0&#34;&gt;...&lt;/span&gt;
-    &lt;span class=&#34;s3e8&#34;&gt;pass&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;resume&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Resume auto scaling group
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;resume_processes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Resume Done&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;delete_instances&lt;/span&gt;(as_conn, ec2conn):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Delete instances in auto scaling group
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    as_group &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;get_all_groups(names&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;[AUTO_SCALING_GROUP])[&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;]
-    instances &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; [get_instance_by_id(ec2conn, i&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;instance_id) &lt;span class=&#34;s3e8&#34;&gt;for&lt;/span&gt; i &lt;span class=&#34;sfa1&#34;&gt;in&lt;/span&gt; as_group&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;instances]
-    &lt;span class=&#34;s3e8&#34;&gt;for&lt;/span&gt; instance &lt;span class=&#34;sfa1&#34;&gt;in&lt;/span&gt; instances:
-        &lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; instance&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;state &lt;span class=&#34;sfa0&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;terminated&amp;#34;&lt;/span&gt;:
-            &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;*** Terminate Instance &lt;/span&gt;&lt;span class=&#34;sc27&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;sfa0&#34;&gt;%&lt;/span&gt; instance&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;s7d2&#34;&gt;id&lt;/span&gt;
-            deactivate_instance(instance)
-    &lt;span class=&#34;s1770&#34;&gt;# All instances should be terminated&lt;/span&gt;
-    &lt;span class=&#34;s3e8&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;s7d2&#34;&gt;any&lt;/span&gt;([inst&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;update() &lt;span class=&#34;sfa0&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;terminated&amp;#34;&lt;/span&gt; &lt;span class=&#34;s3e8&#34;&gt;for&lt;/span&gt; inst &lt;span class=&#34;sfa1&#34;&gt;in&lt;/span&gt; instances]):
-        sys&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;stdout&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;write(&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)
-        sys&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;stdout&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;flush()
-        time&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;sleep(CHECK_INTERVAL)
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;.&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;Delete Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_instance_by_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;inst_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Get instance by its id
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;deactivate_instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Deactivate instance
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;attach_instances&lt;/span&gt;(as_conn):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Attach instances into auto scaling group
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;s3e8&#34;&gt;while&lt;/span&gt; True &lt;span class=&#34;sfa1&#34;&gt;and&lt;/span&gt; NEW_INSTANCES:
-        as_group &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;get_all_groups(names&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;[AUTO_SCALING_GROUP])[&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;]
-        &lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;s7d2&#34;&gt;len&lt;/span&gt;(as_group&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;instances) &lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;:
-            as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;attach_instances(AUTO_SCALING_GROUP, NEW_INSTANCES)
-            &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Attach Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;
-            &lt;span class=&#34;s3e8&#34;&gt;return&lt;/span&gt;
-        &lt;span class=&#34;s3e8&#34;&gt;else&lt;/span&gt;:
-            &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;There are instances still in the group&amp;#34;&lt;/span&gt;
-            time&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;sleep(CHECK_INTERVAL)
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;delete_instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Delete instances in auto scaling group
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;instances&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_instance_by_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance_id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;state&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;terminated&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;*** Terminate Instance &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;id&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;deactivate_instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# All instances should be terminated&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;any&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;([&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;inst&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;terminated&amp;#34;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;inst&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stdout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;sys&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;stdout&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flush&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CHECK_INTERVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;.&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;Delete Done&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;set_capacity&lt;/span&gt;(as_conn):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Set desired capacity and minimum size as 0
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    as_group &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;get_all_groups(names&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;[AUTO_SCALING_GROUP])[&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;]
-    as_group&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;min_size &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;
-    as_group&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;desired_capacity &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;
-    as_group&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;update()
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Set Capacity Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;attach_instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Attach instances into auto scaling group
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;NEW_INSTANCES&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;attach_instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;NEW_INSTANCES&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Attach Done&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;There are instances still in the group&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CHECK_INTERVAL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;resume_capacity&lt;/span&gt;(as_conn):
-    &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    Resume minimum size as the original value
-&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    as_group &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; as_conn&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;get_all_groups(names&lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt;[AUTO_SCALING_GROUP])[&lt;span class=&#34;sc80&#34;&gt;0&lt;/span&gt;]
-    &lt;span class=&#34;s7d2&#34;&gt;setattr&lt;/span&gt;(as_group,&lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;min_size&amp;#34;&lt;/span&gt;, &lt;span class=&#34;sc80&#34;&gt;1&lt;/span&gt;)
-    as_group&lt;span class=&#34;sfa0&#34;&gt;.&lt;/span&gt;update()
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Capacity Done&lt;/span&gt;&lt;span class=&#34;sc25&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;set_capacity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Set desired capacity and minimum size as 0
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;min_size&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;desired_capacity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Set Capacity Done&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;s7d9&#34;&gt;main&lt;/span&gt;():
-    as_conn &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; AutoScaleConnection()
-    ec2conn &lt;span class=&#34;sfa0&#34;&gt;=&lt;/span&gt; EC2Connection()
-
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Suspend Auto Scaling Group&amp;#34;&lt;/span&gt;
-    suspend(as_conn)
-
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Delete Instances&amp;#34;&lt;/span&gt;
-    delete_instances(as_conn, ec2conn)
-
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Set Capacity&amp;#34;&lt;/span&gt;
-    set_capacity(as_conn)
-
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Auto Scaling Group&amp;#34;&lt;/span&gt;
-    resume(as_conn)
-
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Attach Instances&amp;#34;&lt;/span&gt;
-    attach_instances(as_conn)
-
-    &lt;span class=&#34;s3e8&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;Resume Capacity&amp;#34;&lt;/span&gt;
-    resume_capacity(as_conn)
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;resume_capacity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    Resume minimum size as the original value
+&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_all_groups&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AUTO_SCALING_GROUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;setattr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;min_size&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_group&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Resume Capacity Done&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
 
 
-&lt;span class=&#34;s3e8&#34;&gt;if&lt;/span&gt; __name__ &lt;span class=&#34;sfa0&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;sc1c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sc1c&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
-    main()&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;</description>
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AutoScaleConnection&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;ec2conn&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;EC2Connection&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Suspend Auto Scaling Group&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;suspend&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Delete Instances&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;delete_instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ec2conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Set Capacity&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;set_capacity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Resume Auto Scaling Group&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;resume&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Attach Instances&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;attach_instances&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Resume Capacity&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;resume_capacity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;as_conn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;__name__&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
           </item>
         
       

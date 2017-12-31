@@ -138,11 +138,10 @@
 <h4 id="运行什么">运行什么</h4>
 
 <p>添加一段 <strong>Build Script</strong>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s7e3">PYTHONPATH</span><span class="sfa0">=</span><span class="sc1c">&#39;&#39;</span>
-nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package<span class="sfa0">=</span>project1 --cover-inclusive
-python -m coverage xml --include<span class="sfa0">=</span>project1*
-pylint -f parseable -d I0011,R0801 project1 | tee pylint.out</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+nosetests --with-xunit --all-modules --traverse-namespace --with-coverage --cover-package<span class="o">=</span>project1 --cover-inclusive
+python -m coverage xml --include<span class="o">=</span>project1*
+pylint -f parseable -d I0011,R0801 project1 <span class="p">|</span> tee pylint.out</code></pre></div>
 <p>这段 Shell 脚本中的三个命令：</p>
 
 <ol>
@@ -180,14 +179,13 @@ pylint -f parseable -d I0011,R0801 project1 | tee pylint.out</code></pre>
 <p>没想到 Python 连这种冷僻的使用场景都有第三方的库支持，还不只一个。我们使用的是 <a href="https://github.com/SurveyMonkey/pycobertura">Pycobertura</a>。</p>
 
 <p>Pycobertura 可以直接比较两个 Cobertura 格式的 xml 文件，从而得到覆盖率的变化值。</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">from</span> <span class="s7dd">pycobertura</span> <span class="s3e8">import</span> Cobertura
-<span class="s3e8">from</span> <span class="s7dd">pycobertura</span> <span class="s3e8">import</span> TextReporterDelta
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pycobertura</span> <span class="kn">import</span> <span class="n">Cobertura</span>
+<span class="kn">from</span> <span class="nn">pycobertura</span> <span class="kn">import</span> <span class="n">TextReporterDelta</span>
 
-coverage1 <span class="sfa0">=</span> Cobertura(<span class="sc1c"></span><span class="sc1c">&#39;coverage1.xml&#39;</span>)
-coverage2 <span class="sfa0">=</span> Cobertura(<span class="sc1c"></span><span class="sc1c">&#39;coverage2.xml&#39;</span>)
-delta <span class="sfa0">=</span> TextReporterDelta(coverage1, coverage2)
-delta<span class="sfa0">.</span>generate()</code></pre>
-</div>
+<span class="n">coverage1</span> <span class="o">=</span> <span class="n">Cobertura</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;coverage1.xml&#39;</span><span class="p">)</span>
+<span class="n">coverage2</span> <span class="o">=</span> <span class="n">Cobertura</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;coverage2.xml&#39;</span><span class="p">)</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">TextReporterDelta</span><span class="p">(</span><span class="n">coverage1</span><span class="p">,</span> <span class="n">coverage2</span><span class="p">)</span>
+<span class="n">delta</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span></code></pre></div>
 <p>于是，我创建了一个 Fabric Task，调用 Pycobertura 分析测试生成的 xml 文件和 Master branch 的 xml 文件。在 Jenkins 里添加一段 <strong>Post build script</strong> 来运行 Fabric，这样 Build 完成之后就可以运行 Fabric 程序得到类似下面的输出结果：</p>
 <div class="highlight"><pre class="chroma">Coverage Diff for Java code:
 No coverage diff can be found.
@@ -196,8 +194,7 @@ Name          Stmts    Miss    Cover
 ------------  -------  ------  --------
 dummy/dummy   -        -2      +50.00%
 dummy/dummy2  +2       -       +100.00%
-TOTAL         +2       -2      +50.00%</pre>
-</div>
+TOTAL         +2       -2      +50.00%</pre></div>
 <p>最后剩下的就是把之前一步的结果以评论的形式发布到 Bitbucket 里。这里，我们又添加了一个 Fabric 的 Task，通过调用 Bitbucket 的 API 把得到的结果发布到 Pull Request 的页面里。</p>
 
 <h3 id="参考文献">参考文献</h3>

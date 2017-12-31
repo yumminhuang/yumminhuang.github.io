@@ -130,8 +130,7 @@
 <p>其余添加用户、Linux 基本设置等内容在此不再赘述。</p>
 
 <h4 id="安装pptp">安装PPTP</h4>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo apt-get install pptpd</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo apt-get install pptpd</code></pre></div>
 <h4 id="配置">配置</h4>
 
 <ul>
@@ -141,8 +140,7 @@
 <p>编辑 <code>/etc/pptpd.conf</code>，添加以下内容(基本上默认设置已经完成或者被注释了)：</p>
 <div class="highlight"><pre class="chroma">option /etc/ppp/pptpd-options
 localip 192.168.0.1
-remoteip 192.168.0.100-200</pre>
-</div>
+remoteip 192.168.0.100-200</pre></div>
 <p>这里是 PPTP 服务器的 IP 地址设为 <code>192.178.0.1</code> ，把 PPTP 客户端的 IP 地址设置为 <code>192.168.0.100</code> 到 <code>192.168.0.200</code> 的区间内。当然你也可以自己的需要和喜欢进行相应的设置</p>
 
 <ul>
@@ -151,34 +149,29 @@ remoteip 192.168.0.100-200</pre>
 
 <p>编辑 <code>/etc/ppp/pptpd-options</code> ，添加 DNS 地址。这里我选择的是<a href="https://developers.google.com/speed/public-dns/">Google Public DNS</a>。</p>
 <div class="highlight"><pre class="chroma">ms-dns 8.8.8.8
-ms-dns 8.8.4.4</pre>
-</div>
+ms-dns 8.8.4.4</pre></div>
 <ul>
 <li>添加用户</li>
 </ul>
 
 <p>编辑 <code>/etc/ppp/chap-secrets</code>，添加账号和密码。其中第一列为账户名，第二列为密码。</p>
 <div class="highlight"><pre class="chroma"># client    server  secret          IP addresses
-test		pptpd   1234            *</pre>
-</div>
+test		pptpd   1234            *</pre></div>
 <ul>
 <li>设置 IP 转发</li>
 </ul>
 
 <p>打开 IPv4 转发，并重新载入设置。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo sed -i <span class="sc1c">&#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39;</span> /etc/sysctl.conf
-sudo sysctl -p</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo sed -i <span class="s1">&#39;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g&#39;</span> /etc/sysctl.conf
+sudo sysctl -p</code></pre></div>
 <p>为 PPTP 连接设置 NAT，否则不能访问别的网站。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code></pre></div>
 <p>也可以直接编辑 <code>/etc/rc.local</code>，在 <code>exit 0</code> 之前添加以上内容。</p>
 
 <ul>
 <li>重启 PPTP</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo service pptpd restart</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">sudo service pptpd restart</code></pre></div>
 <p>这样PPTP服务器就搭建完毕了，可以「科学上网」了！</p>
 
 <blockquote>
@@ -204,8 +197,7 @@ Mar 21 16:54:53 Server pppd[1809]: Exit.
 Mar 21 16:54:53 Server pptpd[1808]: GRE: read(fd=6,buffer=80504c0,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs
 Mar 21 16:54:53 Server pptpd[1808]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)
 Mar 21 16:54:53 Server pptpd[1808]: CTRL: Reaping child PPP[1809]
-Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished</pre>
-</div>
+Mar 21 16:54:53 Server pptpd[1808]: CTRL: Client 50.164.202.163 control connection finished</pre></div>
 <p>上网搜索，在 StackOverflow 上找到了<a href="http://stackoverflow.com/a/21347817">答案</a>。至此，终于定位到无法连接的根本原因 —— 是路由器不支持 <code>PPTP Passthrough</code> 功能。我上路由器厂商的官网一看，果然发现了去年12月发布了一个固件更新用来修复VPN连接的问题。</p>
 
 <hr />

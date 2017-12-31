@@ -98,39 +98,36 @@
  \   \
   2   5
   
-Output: 3, 1, 4, 2, 5</pre>
-</div>
+Output: 3, 1, 4, 2, 5</pre></div>
 <p><strong>Solution</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">class</span> <span class="s7d4">Node</span>(<span class="s7d2">object</span>):
-    <span class="s3e8">def</span> __init__(self, value, left<span class="sfa0">=</span>None, right<span class="sfa0">=</span>None):
-        self<span class="sfa0">.</span>value <span class="sfa0">=</span> value
-        self<span class="sfa0">.</span>left <span class="sfa0">=</span> left
-        self<span class="sfa0">.</span>right <span class="sfa0">=</span> right
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
 
 
-<span class="s3e8">def</span> <span class="s7d9">traverse</span>(rootnode):
-    <span class="s1770"># The list to save all visited nodes</span>
-    visited <span class="sfa0">=</span> <span class="s7d2">list</span>()
+<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">rootnode</span><span class="p">):</span>
+    <span class="c1"># The list to save all visited nodes</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
-    <span class="s1770"># BFS</span>
-    thislevel <span class="sfa0">=</span> [rootnode]
-    <span class="s3e8">while</span> thislevel:
-        nextlevel <span class="sfa0">=</span> <span class="s7d2">list</span>()
-        <span class="s3e8">for</span> n <span class="sfa1">in</span> thislevel:
-            visited<span class="sfa0">.</span>append(n<span class="sfa0">.</span>value)
-            <span class="s3e8">if</span> n<span class="sfa0">.</span>left:
-                nextlevel<span class="sfa0">.</span>append(n<span class="sfa0">.</span>left)
-            <span class="s3e8">if</span> n<span class="sfa0">.</span>right:
-                nextlevel<span class="sfa0">.</span>append(n<span class="sfa0">.</span>right)
+    <span class="c1"># BFS</span>
+    <span class="n">thislevel</span> <span class="o">=</span> <span class="p">[</span><span class="n">rootnode</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">thislevel</span><span class="p">:</span>
+        <span class="n">nextlevel</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">thislevel</span><span class="p">:</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="n">nextlevel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="n">nextlevel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
 
-        thislevel <span class="sfa0">=</span> nextlevel
-    <span class="s1770"># Print</span>
-    <span class="s3e8">print</span>(<span class="sc1c"></span><span class="sc1c">&#39;, &#39;</span><span class="sfa0">.</span>join(<span class="s7d2">map</span>(<span class="s7d2">str</span>, visited)))</code></pre>
-</div>
+        <span class="n">thislevel</span> <span class="o">=</span> <span class="n">nextlevel</span>
+    <span class="c1"># Print</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">visited</span><span class="p">)))</span></code></pre></div>
 <p>Output for the given example</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">t <span class="sfa0">=</span> Node(<span class="sc80">3</span>, Node(<span class="sc80">1</span>, right<span class="sfa0">=</span>Node(<span class="sc80">2</span>)), Node(<span class="sc80">4</span>, right<span class="sfa0">=</span>Node(<span class="sc80">5</span>)))
-traverse(t)</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">t</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">Node</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">Node</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+<span class="n">traverse</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></code></pre></div>
 <h3 id="problem-2">Problem 2</h3>
 
 <blockquote>
@@ -152,42 +149,40 @@ traverse(t)</code></pre>
 <p>Similar problem solved by C++: <a href="http://www.geeksforgeeks.org/sum-of-two-linked-lists/">Add two numbers represented by linked lists</a>.</p>
 
 <p><strong>Solution</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">def</span> <span class="s7d9">add</span>(lst1, lst2):
-    ret <span class="sfa0">=</span> <span class="s7d2">list</span>()
-    <span class="s1770"># minimum size</span>
-    length <span class="sfa0">=</span> <span class="s7d2">min</span>(<span class="s7d2">len</span>(lst1), <span class="s7d2">len</span>(lst2))
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="c1"># minimum size</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lst1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst2</span><span class="p">))</span>
 
-    carry <span class="sfa0">=</span> <span class="sc80">0</span>
-    <span class="s1770"># From left to right</span>
-    <span class="s3e8">for</span> i <span class="sfa1">in</span> <span class="s7d2">range</span>(<span class="sfa0">-</span><span class="sc80">1</span>, <span class="sfa0">-</span>(length <span class="sfa0">+</span> <span class="sc80">1</span>), <span class="sfa0">-</span><span class="sc80">1</span>):
-        ret<span class="sfa0">.</span>append((carry <span class="sfa0">+</span> lst1[i] <span class="sfa0">+</span> lst2[i]) <span class="sfa0">%</span> <span class="sc80">10</span>)
-        carry <span class="sfa0">=</span> (carry <span class="sfa0">+</span> lst1[i] <span class="sfa0">+</span> lst2[i]) <span class="sfa0">/</span> <span class="sc80">10</span>
+    <span class="n">carry</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># From left to right</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">carry</span> <span class="o">+</span> <span class="n">lst1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">lst2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">carry</span> <span class="o">=</span> <span class="p">(</span><span class="n">carry</span> <span class="o">+</span> <span class="n">lst1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">lst2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="mi">10</span>
 
-    <span class="s1770"># Adding extra digits</span>
-    <span class="s3e8">if</span> <span class="s7d2">len</span>(lst1) <span class="sfa0">&gt;</span> length:
-        <span class="s3e8">for</span> n <span class="sfa1">in</span> lst1[<span class="s7d2">len</span>(lst1) <span class="sfa0">-</span> length <span class="sfa0">-</span> <span class="sc80">1</span>::<span class="sfa0">-</span><span class="sc80">1</span>]:
-            ret<span class="sfa0">.</span>append((carry <span class="sfa0">+</span> n) <span class="sfa0">%</span> <span class="sc80">10</span>)
-            carry <span class="sfa0">=</span> (carry <span class="sfa0">+</span> n) <span class="sfa0">/</span> <span class="sc80">10</span>
+    <span class="c1"># Adding extra digits</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">length</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">lst1</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">lst1</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">carry</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">carry</span> <span class="o">=</span> <span class="p">(</span><span class="n">carry</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
 
-    <span class="s3e8">if</span> <span class="s7d2">len</span>(lst2) <span class="sfa0">&gt;</span> length:
-        <span class="s3e8">for</span> n <span class="sfa1">in</span> lst2[<span class="s7d2">len</span>(lst2) <span class="sfa0">-</span> length <span class="sfa0">-</span> <span class="sc80">1</span>::<span class="sfa0">-</span><span class="sc80">1</span>]:
-            ret<span class="sfa0">.</span>append((carry <span class="sfa0">+</span> n) <span class="sfa0">%</span> <span class="sc80">10</span>)
-            carry <span class="sfa0">=</span> (carry <span class="sfa0">+</span> n) <span class="sfa0">/</span> <span class="sc80">10</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">length</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">lst2</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">lst2</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">carry</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">carry</span> <span class="o">=</span> <span class="p">(</span><span class="n">carry</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
 
-    <span class="s3e8">if</span> carry <span class="sfa0">&gt;</span> <span class="sc80">0</span>:
-        ret<span class="sfa0">.</span>append(carry)
+    <span class="k">if</span> <span class="n">carry</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">carry</span><span class="p">)</span>
 
-    <span class="s1770"># Reverse result list</span>
-    <span class="s3e8">return</span> ret[::<span class="sfa0">-</span><span class="sc80">1</span>]</code></pre>
-</div>
+    <span class="c1"># Reverse result list</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code></pre></div>
 <p><strong>Follow Up Problem</strong></p>
 
 <blockquote>
 <p>How to modify your code if input is a list of arrays instead of two arrays?</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">def</span> <span class="s7d9">add_lists</span>(<span class="sfa0">*</span>lists):
-    <span class="s3e8">return</span> <span class="s7d2">reduce</span>(<span class="s3e8">lambda</span> x, y: add(x, y), lists)</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">add_lists</span><span class="p">(</span><span class="o">*</span><span class="n">lists</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">lists</span><span class="p">)</span></code></pre></div>
         </div>
     </div>
     <div class="row">

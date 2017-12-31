@@ -97,8 +97,7 @@ M
 v1 c1
 v2 c2
 ...
-vn cn</pre>
-</div>
+vn cn</pre></div>
 <p>Here Q is the Q-quantile, M is the number of v/c pairs. v<sub>i</sub> is a value in the population, and c<sub>i</sub> is its count. Values of v<sub>i</sub> are guaranteed to be distinct, but may not necessarily appear in order.</p>
 
 <p>For example:</p>
@@ -106,8 +105,7 @@ vn cn</pre>
 3
 7 2
 6 2
-5 2</pre>
-</div>
+5 2</pre></div>
 <p>The population of number is <code>{7, 7, 6, 6, 5, 5}</code> and we need to calculate the two 3-quantiles of this population.</p>
 
 <h2 id="output-format">Output format</h2>
@@ -116,8 +114,7 @@ vn cn</pre>
 
 <p>Sample output for the above example:</p>
 <div class="highlight"><pre class="chroma">5
-6</pre>
-</div>
+6</pre></div>
 <h2 id="constraints">Constraints</h2>
 
 <ol>
@@ -136,43 +133,42 @@ memory limit when population is large.</p>
 <p>Then I realized I should avoid building a list. I should calculate all quantiles&rsquo; indexes and retrieve values from v/c pairs. I believe the second idea is reasonable, However, in next 30 minutes, I spent too much time on considering data structure for saving pairs, sorting, loop through pairs. I didn&rsquo;t submit correct code in time.</p>
 
 <p>After the online test, I completed it. Here is my final solutions</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">import</span> <span class="s7dd">math</span>
-<span class="s3e8">import</span> <span class="s7dd">sys</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="s1770"># Read lines from stdin</span>
-lines <span class="sfa0">=</span> sys<span class="sfa0">.</span>stdin<span class="sfa0">.</span>readlines()
+<span class="c1"># Read lines from stdin</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 
-<span class="s1770"># Read Q and M</span>
-Q <span class="sfa0">=</span> <span class="s7d2">int</span>(lines[<span class="sc80">0</span>]<span class="sfa0">.</span>rstrip())
-M <span class="sfa0">=</span> <span class="s7d2">int</span>(lines[<span class="sc80">1</span>]<span class="sfa0">.</span>rstrip())
+<span class="c1"># Read Q and M</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+<span class="n">M</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
 
-<span class="s1770"># Read population and save numbers and their counts in a list as format</span>
-<span class="s1770"># [[v1, c1], [v2, c2], ...]</span>
-<span class="s7d2">input</span> <span class="sfa0">=</span> <span class="s7d2">list</span>()
-<span class="s3e8">for</span> line <span class="sfa1">in</span> lines[<span class="sc80">2</span>:]:
-    v, c <span class="sfa0">=</span> line<span class="sfa0">.</span>rstrip()<span class="sfa0">.</span>split()
-    <span class="s7d2">input</span><span class="sfa0">.</span>append([<span class="s7d2">int</span>(v), <span class="s7d2">int</span>(c)])
+<span class="c1"># Read population and save numbers and their counts in a list as format</span>
+<span class="c1"># [[v1, c1], [v2, c2], ...]</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">:]:</span>
+    <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">input</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)])</span>
 
-<span class="s1770"># Sort by number</span>
-array <span class="sfa0">=</span> <span class="s7d2">sorted</span>(<span class="s7d2">input</span>, key<span class="sfa0">=</span><span class="s3e8">lambda</span> pair: pair[<span class="sc80">0</span>])
+<span class="c1"># Sort by number</span>
+<span class="n">array</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<span class="s1770"># Re-organize array by changing count in each pair to value&#39;s last index</span>
-total <span class="sfa0">=</span> <span class="sc80">0</span>
-<span class="s3e8">for</span> pair <span class="sfa1">in</span> array:
-    total <span class="sfa0">+=</span> pair[<span class="sc80">1</span>]
-    pair[<span class="sc80">1</span>] <span class="sfa0">=</span> total
+<span class="c1"># Re-organize array by changing count in each pair to value&#39;s last index</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span>
 
-<span class="s1770"># Find Q-quantiles and print it to stdout</span>
-k <span class="sfa0">=</span> <span class="sc80">1</span>
-<span class="s3e8">for</span> v, i <span class="sfa1">in</span> array:
-    <span class="s3e8">if</span> math<span class="sfa0">.</span>ceil(total <span class="sfa0">*</span> k <span class="sfa0">/</span> Q) <span class="sfa0">&gt;=</span> total:
-        <span class="s3e8">break</span>
-    <span class="s3e8">elif</span> i <span class="sfa0">&lt;</span> math<span class="sfa0">.</span>ceil(total <span class="sfa0">*</span> k <span class="sfa0">/</span> Q):
-        <span class="s3e8">pass</span>
-    <span class="s3e8">else</span>:
-        <span class="s3e8">print</span>(v)
-        k <span class="sfa0">+=</span> <span class="sc80">1</span></code></pre>
-</div>
+<span class="c1"># Find Q-quantiles and print it to stdout</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">total</span> <span class="o">*</span> <span class="n">k</span> <span class="o">/</span> <span class="n">Q</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">total</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">total</span> <span class="o">*</span> <span class="n">k</span> <span class="o">/</span> <span class="n">Q</span><span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span></code></pre></div>
 <p>Frankly speaking, this coding problem is not very difficult. I could have solved it quickly.</p>
         </div>
     </div>

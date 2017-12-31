@@ -82,18 +82,14 @@
             <br>
             <p>I am a paranoid guy. I like to delete all &ldquo;useless&rdquo; files. Today, I want to clean up my project repository. There are lots of <code>.pyc</code> files. And I found this command, which is very convenient to batch delete files in a directory.
 </p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;*.pyc&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span></code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="s2">&#34;*.pyc&#34;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span></code></pre></div>
 <p>OR</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;*.pyc&#34;</span> -delete;</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="s2">&#34;*.pyc&#34;</span> -delete<span class="p">;</span></code></pre></div>
 <p>I can also delete all <code>*.class</code> files for Java project and <code>.o</code> files for C project in this way.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;*.class&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span>
-find . -name <span class="sc1c">&#34;*.o&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span></code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="s2">&#34;*.class&#34;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span>
+find . -name <span class="s2">&#34;*.o&#34;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span></code></pre></div>
 <p>Or I can delete all files whose name starts with &lsquo;test&rsquo;.</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="sc1c">&#34;test*&#34;</span> -exec rm -rf <span class="sfa0">{}</span> <span class="sc25">\;</span></code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">find . -name <span class="s2">&#34;test*&#34;</span> -exec rm -rf <span class="o">{}</span> <span class="se">\;</span></code></pre></div>
 <p><strong>Reference:</strong></p>
 
 <ul>

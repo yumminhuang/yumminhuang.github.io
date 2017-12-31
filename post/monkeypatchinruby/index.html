@@ -115,45 +115,44 @@
 既然不能使用最新版的 fog，我们可以手动编辑 <code>1.25</code> 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。</p>
 
 <p>最后，在同事的指点下，我采用了第三种方法，即 <strong>Monkey Patch</strong>。我在我司的 Ruby 项目里添加了一个文件 <code>lib/PROJECT_NAME/monkey_patches/flavors.rb</code>，接着在文件中添加以下代码来修改 <code>fog/aws/models/compute/flavors</code>：</p>
-<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="s7d2">require</span> <span class="sc1c">&#39;fog/aws/models/compute/flavors&#39;</span>
+<div class="highlight"><pre class="chroma"><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;fog/aws/models/compute/flavors&#39;</span>
 
-<span class="s3e8">class</span> <span class="s7d4">Object</span>
+<span class="k">class</span> <span class="nc">Object</span>
 
-  <span class="s3e8">def</span> <span class="s7d4"></span><span class="sfa0"></span><span class="s7d9">redef_without_warning</span>(const, value)
-    mod <span class="sfa0">=</span> <span class="s7d2">self</span><span class="sfa0">.</span>is_a?(<span class="s7d5">Module</span>) ? <span class="s7d2">self</span> : <span class="s7d2">self</span><span class="sfa0">.</span>class
-    mod<span class="sfa0">.</span>send(<span class="sc2c">:remove_const</span>, const) <span class="s3e8">if</span> mod<span class="sfa0">.</span>const_defined?(const)
-    mod<span class="sfa0">.</span>const_set(const, value)
-  <span class="s3e8">end</span>
-<span class="s3e8">end</span>
+  <span class="k">def</span> <span class="nc"></span><span class="o"></span><span class="nf">redef_without_warning</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="no">Module</span><span class="p">)</span> <span class="p">?</span> <span class="nb">self</span> <span class="p">:</span> <span class="nb">self</span><span class="o">.</span><span class="n">class</span>
+    <span class="n">mod</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:remove_const</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span> <span class="k">if</span> <span class="n">mod</span><span class="o">.</span><span class="n">const_defined?</span><span class="p">(</span><span class="n">const</span><span class="p">)</span>
+    <span class="n">mod</span><span class="o">.</span><span class="n">const_set</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 
-<span class="s3e8">module</span> <span class="s7dd">Fog</span>
-  <span class="s3e8">module</span> <span class="s7dd">Compute</span>
-    <span class="s3e8">class</span> <span class="s7d4">AWS</span>
-      <span class="s7d5">NEW_FLAVORS</span> <span class="sfa0">=</span> <span class="s7d5">FLAVORS</span> <span class="sfa0">+</span> <span class="sfa0">[</span>
-        {
-          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.xlarge&#34;</span>,
-          <span class="sfa0">...</span>
-        },
-        {
-          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.2xlarge&#34;</span>,
-          <span class="sfa0">...</span>
-        },
-        {
-          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.4xlarge&#34;</span>,
-          <span class="sfa0">...</span>
-        },
-        {
-          <span class="sc2c">:id</span> <span class="sfa0">=&gt;</span> <span class="sc1c">&#34;d2.8xlarge&#34;</span>,
-          <span class="sfa0">...</span>
-        }
-      <span class="sfa0">]</span>
+<span class="k">module</span> <span class="nn">Fog</span>
+  <span class="k">module</span> <span class="nn">Compute</span>
+    <span class="k">class</span> <span class="nc">AWS</span>
+      <span class="no">NEW_FLAVORS</span> <span class="o">=</span> <span class="no">FLAVORS</span> <span class="o">+</span> <span class="o">[</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&#34;d2.xlarge&#34;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&#34;d2.2xlarge&#34;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&#34;d2.4xlarge&#34;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="s2">&#34;d2.8xlarge&#34;</span><span class="p">,</span>
+          <span class="o">...</span>
+        <span class="p">}</span>
+      <span class="o">]</span>
 
-      redef_without_warning <span class="sc2c">:FLAVORS</span>, <span class="s7d5">NEW_FLAVORS</span>
+      <span class="n">redef_without_warning</span> <span class="ss">:FLAVORS</span><span class="p">,</span> <span class="no">NEW_FLAVORS</span>
 
-    <span class="s3e8">end</span>
-  <span class="s3e8">end</span>
-<span class="s3e8">end</span></code></pre>
-</div>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
 <h2 id="总结">总结</h2>
 
 <p>通过在自己的代码中添加一个 Monkey patch，我们成功地实现了向 fog 中动态添加新实例类型。我司终于可以使用 fog 创建 D2 类型的机器了；而且这个方法改动的代码量最小，也更加容易维护。</p>

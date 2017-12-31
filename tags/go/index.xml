@@ -31,8 +31,7 @@
 ├── content/
 ├── data/
 ├── layouts/
-└── static/&lt;/pre&gt;
-&lt;/div&gt;
+└── static/&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;code&gt;config.toml&lt;/code&gt; 用来存放设置。&lt;code&gt;content/&lt;/code&gt; 里存放的是文章，&lt;code&gt;data/&lt;/code&gt; 用来存放一些数据。 &lt;code&gt;static/&lt;/code&gt; 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 &lt;code&gt;themes/&lt;/code&gt; 里并在&lt;code&gt;config.toml&lt;/code&gt; 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。&lt;/p&gt;
 
 &lt;p&gt;加下来着重介绍的是 &lt;code&gt;layouts/&lt;/code&gt;，这里定义了博客的模版，是自定义 Hugo 最重要的部分。和 Pelican 有很大不同的地方是，Hugo 可以自定义文章的类型（ Type ）。不同的类型可以使用不同的模版。比如，除了第三方主题提供的文章类型，我还想为中文文章新建一个类型 &lt;code&gt;zhpost&lt;/code&gt;。只需要在 &lt;code&gt;layouts/&lt;/code&gt; 下新建一个 &lt;code&gt;zhpost/&lt;/code&gt;。接着，我可以设置中文文章的样式，只需新建一个 &lt;code&gt;single.html&lt;/code&gt; 就可以了。我也因此可以在&lt;code&gt;layouts/zhpost/single.html&lt;/code&gt; 里引入「汉字标准格式」的 CSS 和 JS。另外，对于第三方主题的模版不满意的话还可以按照相同的路径重写一个。Hugo 会优先读取根目录下 &lt;code&gt;layouts/&lt;/code&gt; 里的设置。具体来说，&lt;code&gt;layouts/post/single.html&lt;/code&gt; 可以覆盖 &lt;code&gt;themes/THEME/layouts/post/single.html&lt;/code&gt;。这样我就可以很容易的替换不满意的模版了。&lt;/p&gt;
@@ -47,8 +46,7 @@ title = &amp;#34;my new post&amp;#34;
 date = &amp;#34;2015-01-12T19:20:04-07:00&amp;#34;
 tags = [&amp;#34;x&amp;#34;, &amp;#34;y&amp;#34;]
 categories = [&amp;#34;x&amp;#34;, &amp;#34;y&amp;#34;]
-+++&lt;/pre&gt;
-&lt;/div&gt;
++++&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这样每次运行 &lt;code&gt;hugo new post/ARTICLE.md&lt;/code&gt; 的时候都可以自动添加上面的元数据。&lt;/p&gt;
 
 &lt;p&gt;Hugo 另外的一个优点是生成博客的速度非常快，生成一个网页的速度可以达到毫秒级别。如果博客的内容很多，Hugo 要比 Pelican、Jekyll 等由动态语言写成的博客生成器有很大的优势。&lt;/p&gt;

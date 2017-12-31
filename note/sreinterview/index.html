@@ -100,29 +100,24 @@ Dec  3 00:03:05 Mac Safari[68992]: KeychainGetICDPStatus: status: off
 Dec  3 00:03:06 Mac com.apple.xpc.launchd[1] (com.apple.WebKit.Networking.AC8ED90D-0AC0-4666-B213-8BE93DE51E8C[68993]): Service exited with abnormal code: 1
 Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367
 Dec  3 00:03:08 Mac garcon[68729]: host connection &lt;NSXPCConnection: 0x7fc9d8f1eda0&gt; connection from pid 68708 invalidated
-Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367</pre>
-</div>
+Dec  3 00:03:08 Mac WindowServer[68664]: CGXGetConnectionProperty: Invalid connection 20367</pre></div>
 <p>Write a script which parses /var/log/messages and generates a CSV with two columns: minute, number_of_messages in sorted time order.</p>
 <div class="highlight"><pre class="chroma">minute,number_of_messages
 Dec  3 00:02,1
-Dec  3 00:03,6</pre>
-</div>
+Dec  3 00:03,6</pre></div>
 <p>Extract the program name from the field between the hostname and the log message and output those values in columns.</p>
 <div class="highlight"><pre class="chroma">minute,number_of_messages,Google Chrome Helper,Safari,com.apple.xpc.launchd,WindowServer,garcon
 Dec  3 00:02,1,0,0,0,0
-Dec  3 00:03,0,2,1,2,1</pre>
-</div>
+Dec  3 00:03,0,2,1,2,1</pre></div>
 <p>I think the key part of this problem is <em>regular expression</em>. For the first task, I used the following regular expression:</p>
-<div class="highlight"><pre class="chroma">^(.*? \d+ \d+\:\d+).*</pre>
-</div>
+<div class="highlight"><pre class="chroma">^(.*? \d+ \d+\:\d+).*</pre></div>
 <ul>
 <li>Then use <a href="https://docs.python.org/2/library/re.html#re.MatchObject.groups"><code>re.match(regexp, line).groups()</code></a> to extract <code>minute</code>.</li>
 <li><a href="https://docs.python.org/2/library/collections.html#collections.Counter">collections.Counter</a> can count objects.</li>
 </ul>
 
 <p>For the second task, the regular expression is:</p>
-<div class="highlight"><pre class="chroma">^(.*? \d+ \d+\:\d+)\:\d+ .*? (.*?)\: .*</pre>
-</div>
+<div class="highlight"><pre class="chroma">^(.*? \d+ \d+\:\d+)\:\d+ .*? (.*?)\: .*</pre></div>
 <p>The second task also has to find all programs in the log file.</p>
 
 <h4 id="question-3">Question 3</h4>
@@ -145,8 +140,7 @@ Dec  3 00:03,0,2,1,2,1</pre>
       Jake Farmer - Frontend Manager
         Liam Freeman - Junior Code Monkey
       Sheila Dunbar - Backend Manager
-        Peter Young - Senior Code Cowboy</pre>
-</div>
+        Peter Young - Senior Code Cowboy</pre></div>
 <p>Main ideas for my solution:</p>
 
 <ul>
@@ -155,15 +149,14 @@ Dec  3 00:03,0,2,1,2,1</pre>
 <li>Recursion is the easiest way to handle such DFS algorithm.</li>
 <li>Be careful about indentation of each line. Adding a <code>depth</code> parameter in function. Here is the basic idea:</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s3e8">def</span> <span class="s7d9">foo</span>(<span class="s7d2">id</span>, depth<span class="sfa0">=</span><span class="sc80">0</span>):
-    <span class="sfa0">...</span>
-    <span class="s3e8">if</span> depth <span class="sfa0">==</span> <span class="sc80">0</span>:
-        <span class="s1770"># print without indentation</span>
-    <span class="s3e8">else</span>:
-        <span class="s1770"># print with a prefix &#39; &#39; * 2 * depth</span>
-    <span class="sfa0">...</span>
-    foo(employee, depth <span class="sfa0">+</span> <span class="sc80">1</span>)</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># print without indentation</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># print with a prefix &#39; &#39; * 2 * depth</span>
+    <span class="o">...</span>
+    <span class="n">foo</span><span class="p">(</span><span class="n">employee</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></code></pre></div>
         </div>
     </div>
     <div class="row">

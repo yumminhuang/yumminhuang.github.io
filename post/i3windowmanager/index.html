@@ -161,13 +161,11 @@
 <h3 id="安装">安装</h3>
 
 <p>以Ubuntu为例。首先添加i3到源列表。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s7d2">echo</span> <span class="sc1c">&#34;deb http://debian.sur5r.net/i3/ </span><span class="s3e8">$(</span>lsb_release -c -s<span class="s3e8">)</span><span class="sc1c"> universe&#34;</span> &gt;&gt; /etc/apt/sources.list</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> <span class="s2">&#34;deb http://debian.sur5r.net/i3/ </span><span class="k">$(</span>lsb_release -c -s<span class="k">)</span><span class="s2"> universe&#34;</span> &gt;&gt; /etc/apt/sources.list</code></pre></div>
 <p>然后运行以下指令进行安装。</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">apt-get update
 apt-get --allow-unauthenticated install sur5r-keyring
-apt-get install i3</code></pre>
-</div>
+apt-get install i3</code></pre></div>
 <h3 id="配置">配置</h3>
 
 <p>我之所以放弃 Awesome 的一个很重要的原因就是它的配置过于复杂。诚然，Awesome 的效果要比 i3 酷炫很多，但是设置需要用到 Lua 脚本。很多功能还需要通过安装插件来完成。相反，i3 只需要两个设置文件，而且用的是非常易读的语法。</p>
