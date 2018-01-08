@@ -5,310 +5,48 @@
     <link>https://yumminhuang.github.io/tags/docker/</link>
     <description>Recent content in Docker on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2017 ~ Yaming Huang</copyright>
+    <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Fri, 13 Oct 2017 22:26:29 +0800</lastBuildDate>
-    <atom:link href="/tags/docker/" rel="self" type="application/rss+xml" />
     
+	<atom:link href="https://yumminhuang.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>清理 Docker</title>
+      <link>https://yumminhuang.github.io/post/dockerclenup/</link>
+      <pubDate>Fri, 13 Oct 2017 22:26:29 +0800</pubDate>
       
-        
-          <item>
-            <title>清理 Docker</title>
-            <link>https://yumminhuang.github.io/post/dockerclenup/</link>
-            <pubDate>Fri, 13 Oct 2017 22:26:29 +0800</pubDate>
-            
-            <guid>https://yumminhuang.github.io/post/dockerclenup/</guid>
-            <description>&lt;p&gt;在线上环境运行的 Docker 的时候，部署之后往往没有清理旧版本的镜像和关闭的容器。如此一来，长时间运行 Docker，尤其是频繁地更新镜像、启动容器，会消耗大量的磁盘空间。&lt;/p&gt;
+      <guid>https://yumminhuang.github.io/post/dockerclenup/</guid>
+      <description>&lt;p&gt;在线上环境运行的 Docker 的时候，部署之后往往没有清理旧版本的镜像和关闭的容器。如此一来，长时间运行 Docker，尤其是频繁地更新镜像、启动容器，会消耗大量的磁盘空间。&lt;/p&gt;
 
 &lt;p&gt;本文汇总几条用来清理 Docker 的命令。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;清理-docker-容器&#34;&gt;清理 Docker 容器&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker ps --filter &lt;span class=&#34;nv&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;dead --filter &lt;span class=&#34;nv&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;exited -aq &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -r docker rm -v&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&#34;清理-docker-镜像&#34;&gt;清理 Docker 镜像&lt;/h2&gt;
-
-&lt;p&gt;清理 &lt;em&gt;dangling&lt;/em&gt; 的镜像。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker images -q -f &lt;span class=&#34;nv&#34;&gt;dangling&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -r docker rmi&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;清理所有当前不在运行的镜像&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:exp&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:exp&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker rmi &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;grep -xvf &amp;lt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;docker ps -a --format &lt;span class=&#34;s1&#34;&gt;&amp;#39;{{.Image}}&amp;#39;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; &amp;lt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;docker images &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n +2 &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -v &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;lt;none&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;{ print $1&amp;#34;:&amp;#34;$2 }&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;清理一周前的镜像。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker images --no-trunc --format &lt;span class=&#34;s1&#34;&gt;&amp;#39;{{.ID}} {{.CreatedSince}}&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;s1&#34;&gt;&amp;#39; weeks&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;{ print $1 }&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;       xargs --no-run-if-empty docker rmi&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&#34;清理-docker-volume&#34;&gt;清理 Docker Volume&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker volume ls -q -f &lt;span class=&#34;nv&#34;&gt;dangling&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -r docker volume rm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/moby/moby/issues/9054#issuecomment-184246090&#34;&gt;comment on Github Issue&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://lebkowski.name/docker-volumes/&#34;&gt;Cleaning up docker to reclaim disk space&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:exp&#34;&gt;此命令清理效果好，却容易误删当前没有运行但未来仍会使用的镜像。
- &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:exp&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;</description>
-          </item>
-        
-      
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
+    <item>
+      <title>自动构建 Github Pages 博客</title>
+      <link>https://yumminhuang.github.io/post/autobuildblog/</link>
+      <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
       
-        
-          <item>
-            <title>自动构建 Github Pages 博客</title>
-            <link>https://yumminhuang.github.io/post/autobuildblog/</link>
-            <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
-            
-            <guid>https://yumminhuang.github.io/post/autobuildblog/</guid>
-            <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
+      <guid>https://yumminhuang.github.io/post/autobuildblog/</guid>
+      <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;整理工作&#34;&gt;整理工作&lt;/h3&gt;
-
-&lt;p&gt;之前，为了搭建 &lt;a href=&#34;https://pages.github.com/&#34;&gt;Github Pages&lt;/a&gt; 的博客，我创建了两个代码库。一个是存放网站的 yumminhuang.github.io.git，另外一个是存放 Hugo 配置和文章的 Blog.git。每次发布一篇文章，都需要同步两个代码库。&lt;/p&gt;
-
-&lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
-
-&lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
-&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; Blog
-&lt;span class=&#34;c1&#34;&gt;# Delete the old remote
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git remote rm origin
-&lt;span class=&#34;c1&#34;&gt;# Add a new remote
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
-&lt;span class=&#34;c1&#34;&gt;# (Optional) Modify .git/config for submodules, etc
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;vi .git/config
-&lt;span class=&#34;c1&#34;&gt;# Create the new branch and switch to it
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git checkout -b &lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;# Push the new branch to remote
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git push origin source&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
-
-&lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
-
-&lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 &lt;a href=&#34;https://github.com/yumminhuang/hugo-docker&#34;&gt;Dockerfile&lt;/a&gt; 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; alpine:latest&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;MAINTAINER&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;ARG &lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.17&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;RUN&lt;/span&gt; apk add --update wget ca-certificates &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /tmp/ &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  wget https://github.com/spf13/hugo/releases/download/v&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/hugo_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_Linux-64bit.tar.gz &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  tar xzf hugo_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_Linux-64bit.tar.gz &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  rm -r hugo_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_Linux-64bit.tar.gz &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  mv hugo*/hugo* /usr/bin/hugo &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  apk del wget ca-certificates &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  rm /var/cache/apk/*&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; /public&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WORKDIR&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; [&amp;#34;/usr/bin/hugo&amp;#34;]&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;EXPOSE&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; 1313&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo-docker&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker run --rm -v &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;:/website yumminhuang/hugo:latest&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker run --rm -p &lt;span class=&#34;m&#34;&gt;1313&lt;/span&gt;:1313 -v &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;:/website yumminhuang/hugo:latest server --bind&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0.0.0 -w -D&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
-
-&lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
-
-&lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
-
-&lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;travis encrypt &lt;span class=&#34;nv&#34;&gt;GIT_DEPLOY_REPO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;https://GENERATED_TOKEN@github.com/username/reponame.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
-
-&lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;env&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;global&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;secure&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34; LONG TOKEN &amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_DIR=public&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_BRANCH=master&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_USERNAME=&lt;span class=&#34;s2&#34;&gt;&amp;#34;Travis CI&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_EMAIL=yumminhuang@gmail.com&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;branches&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;only&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;source&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;sudo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;required&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;services&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;install&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;rm&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-rf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;public&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;|&lt;span class=&#34;sd&#34;&gt;| exit 0
-&lt;/span&gt;&lt;span class=&#34;sd&#34;&gt;  - git config --global user.email &amp;#34;yumminhuang@gmail.com&amp;#34;
-&lt;/span&gt;&lt;span class=&#34;sd&#34;&gt;  - git config --global user.name &amp;#34;Travis CI&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;run&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--rm&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-v&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;$(pwd)&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;/website&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;yumminhuang/hugo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;latest&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;after_success&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;https&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;//raw.githubusercontent.com/X&lt;span class=&#34;m&#34;&gt;1011&lt;/span&gt;/git-directory-deploy/master/deploy.sh&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-O&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;deploy.sh&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;bash&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;deploy.sh&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-m&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;updating blog `date`&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;GIT_DEPLOY_DIR&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;GIT_DEPLOY_BRANCH&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;GIT_DEPLOY_USERNAME&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;GIT_DEPLOY_EMAIL&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;接下来，在 Travis CI 上完成授权，就能够在每次提交到 &lt;code&gt;source&lt;/code&gt; 分支后出发自动构建了。&lt;/p&gt;
-
-&lt;h3 id=&#34;参考内容&#34;&gt;参考内容&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;http://speps.github.io/articles/hugo-setup/&#34;&gt;Setup Hugo with Travis CI and GitHub Pages&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://blog.hypriot.com/post/static-website-generation-on-steriods-with-docker/&#34;&gt;Static Website Generation on Steriods with Docker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jojomi/docker-hugo&#34;&gt;jojomi/docker-hugo&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description>
-          </item>
-        
-      
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
+    <item>
+      <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
+      <link>https://yumminhuang.github.io/post/autobuildresume/</link>
+      <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
       
-        
-          <item>
-            <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
-            <link>https://yumminhuang.github.io/post/autobuildresume/</link>
-            <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
-            
-            <guid>https://yumminhuang.github.io/post/autobuildresume/</guid>
-            <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
+      <guid>https://yumminhuang.github.io/post/autobuildresume/</guid>
+      <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;本文中提到的简历已经放在了 &lt;a href=&#34;https://github.com/yumminhuang/Resume&#34;&gt;GitHub&lt;/a&gt; 上，欢迎参考。&lt;/p&gt;
-
-&lt;p&gt;当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。&lt;/p&gt;
-
-&lt;h3 id=&#34;使用-travis-ci-自动发布&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
-
-&lt;p&gt;上周在 &lt;a href=&#34;http://www.latexstudio.net&#34;&gt;LaTeX 开源小屋&lt;/a&gt;看到一篇&lt;a href=&#34;http://www.latexstudio.net/archives/5892&#34;&gt;文章&lt;/a&gt;。文章中介绍了 GitHub 上一个&lt;a href=&#34;https://github.com/SivilTaram/BUAAOS-guide-book&#34;&gt;北航小操作系统实验指导书&lt;/a&gt;的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 &lt;a href=&#34;https://help.github.com/articles/about-releases/&#34;&gt;GitHub Release 页面&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;于是，我以此开源项目为模板，同时参考了另一篇文章 &lt;a href=&#34;http://harshjv.github.io/blog/setup-latex-pdf-build-using-travis-ci/&#34;&gt;&lt;em&gt;Setup LaTeX PDF build using Travis CI&lt;/em&gt;&lt;/a&gt; 及&lt;a href=&#34;https://github.com/harshjv/travis-ci-latex-pdf&#34;&gt;代码&lt;/a&gt;，将自己的简历实现了自动化编译与发布。&lt;/p&gt;
-
-&lt;p&gt;先看一下我的 &lt;code&gt;.travis.yml&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;sudo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;required&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;dist&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;trusty&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;before_install&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;apt-get&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;update&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;apt-get&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-y&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--no-install-recommends&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;install&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;texlive-full&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;https&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;//github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mkfontscale&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mkfontdir&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;fc-cache&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-f&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;cd&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;make&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;cd&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;..&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume.pdf&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;deploy&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;provider&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;releases&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;api_key&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;secure&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;A&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;LONG&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;LONG&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;TOKEN&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;omit&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;it&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;file&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume.pdf&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;skip_cleanup&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;on&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;repo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;yumminhuang/Resume&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;首先前两行声明了需要的权限和使用 &lt;a href=&#34;https://docs.travis-ci.com/user/trusty-ci-environment/&#34;&gt;Travis CI 的 Trusty（即 Ubuntu 14.04）编译环境&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;接着，&lt;code&gt;before_install&lt;/code&gt; 后的命令用来安装 texlive 和字体，更新系统字体列表。&lt;/p&gt;
-
-&lt;p&gt;然后，在 &lt;code&gt;script&lt;/code&gt; 阶段，运行 &lt;code&gt;make&lt;/code&gt; 命令编译，移动 PDF 文件到项目的根目录。&lt;/p&gt;
-
-&lt;p&gt;最后，在 &lt;code&gt;deploy&lt;/code&gt; 阶段，使用 Travis-CI 的 API 将文件发布到 Github Release。这里，需要一个 &lt;code&gt;api_key&lt;/code&gt;，可以运行 &lt;a href=&#34;https://github.com/travis-ci/travis.rb#installation&#34;&gt;Travis 命令行客户端&lt;/a&gt;来生成。关于使用 Travis-CI 将文件发布到 Github Release 的更详细内容还请参考 &lt;a href=&#34;https://docs.travis-ci.com/user/deployment/releases&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;这样，我就完成了可以自动编译、自动发布的 &lt;a href=&#34;https://github.com/yumminhuang/Resume/releases/tag/v1.0&#34;&gt;1.0 版&lt;/a&gt;。&lt;/p&gt;
-
-&lt;h3 id=&#34;优化持续发布流程&#34;&gt;优化持续发布流程&lt;/h3&gt;
-
-&lt;p&gt;1.0 版完成只实现了自动化，还有一些不令人满意的地方。&lt;/p&gt;
-
-&lt;p&gt;第一，安装过程复杂，构建花费时间长。每次构建大概需要 10 分钟左右，大部分的时间都花在安装 texlive 上。「北航实验指导书」中选择安装 texlive-full，这避免了缺少依赖的问题，但却安装了很多没有用的依赖，同时花费了大量时间。另外，下载字体也花费了一定的时间。&lt;/p&gt;
-
-&lt;p&gt;第二，频繁的不必要的构建。按照「北航实验指导书」中的设置，每次提交一个更新都会触发构建。事实上，这是没有必要的，因为有时候可能只是更新 README，而非 LaTeX 源码。「北航实验指导书」中为了避免这一问题，很多提交更新都加上了 &lt;code&gt;[ci skip]&lt;/code&gt; 的前缀来&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Skipping-a-build&#34;&gt;跳过自动构建&lt;/a&gt;。这样无形中增加了开发过程的负担。&lt;/p&gt;
-
-&lt;p&gt;最后，编译出来的中文简历格式令我不要满意。Ubuntu trusty 的环境中，使用 &lt;code&gt;apt-get&lt;/code&gt; 只能安装 texlive 2013；而我的中文简历使用了新版 ctex 的特性，需要用到 texlive 2015。如果在 trusty 里下载 texlive 2015 的镜像安装可能又需要安装更多的工具链，很麻烦；在 Ubuntu 15.10 和 Ubuntu 16.04 中倒是可以使用 &lt;code&gt;apt-get&lt;/code&gt; 安装 texlive 2015，但 Travis-CI 似乎只提供了 Ubuntu trusty，没有更新的版本。&lt;/p&gt;
-
-&lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
-
-&lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
-
-&lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;# install texlive 2015 and dependencies
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;apt-get update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;apt-get install -y --no-install-recommends &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-latex-extra &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-latex-recommended &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-fonts-extra &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-fonts-recommended &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-lang-chinese &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-formats-extra &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    lmodern &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    wget &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    xzdec
-
-&lt;span class=&#34;c1&#34;&gt;# intsall latex packages
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;tlmgr init-usertree
-tlmgr install ulem
-
-&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; resume/
-&lt;span class=&#34;c1&#34;&gt;# run xelatex
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;xelatex Resume.tex -interaction&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nonstopmode
-xelatex Resume_ZH.tex -interaction&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nonstopmode
-
-rm *.aux *.log *.out&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这样，使用一个 Ubuntu 16.04 的容器运行该脚本就可以生成简历了。接着，我把 &lt;code&gt;.travis.yml&lt;/code&gt; 的 &lt;code&gt;before_install&lt;/code&gt; 和 &lt;code&gt;script&lt;/code&gt; 过程简化成下面的设置。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;services&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;run&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--rm&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-v&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;$(pwd)/resume&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;/resume&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;ubuntu&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;xenial&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;bash&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/resume/build.sh&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume.pdf&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume_ZH.pdf&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;主要过程就是创建一个 Ubuntu xenial 容器来运行 &lt;code&gt;build.sh&lt;/code&gt;。后面发布过程的设置和 1.0 版一样。&lt;/p&gt;
-
-&lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
-
-&lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
-
-&lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;branches&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;only&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/^v&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;\d.&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;+\d$/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;需要注意的是，Travis-CI 把 git 的标签（tag）和分支（branch）都视作 branches，关于如何设置特定 branch 进行构建，可以参见&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Building-Specific-Branches&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;这样，我平时可以正常地提交更新而不会触发 Travis-CI。需要发布新的简历时，按照 &lt;code&gt;^v[\d.]+\d$&lt;/code&gt; 的格式，比如 &lt;code&gt;v1.2.1&lt;/code&gt;，加一个标签再提交即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git add -a
-git commit -m &lt;span class=&#34;s2&#34;&gt;&amp;#34;Message&amp;#34;&lt;/span&gt;
-git tag v1.2.1
-git push -u origin master --tags&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-          </item>
-        
-      
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
   </channel>
 </rss>

@@ -5,15 +5,45 @@
     <link>https://yumminhuang.github.io/categories/gerrit/</link>
     <description>Recent content in Gerrit on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2017 ~ Yaming Huang</copyright>
+    <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Sat, 03 Dec 2016 14:21:57 +0800</lastBuildDate>
-    <atom:link href="/categories/gerrit/" rel="self" type="application/rss+xml" />
     
-      
+	<atom:link href="https://yumminhuang.github.io/categories/gerrit/index.xml" rel="self" type="application/rss+xml" />
     
-      
     
+    <item>
+      <title>Build Gerrit Plugins</title>
+      <link>https://yumminhuang.github.io/note/buildgerritplugin/</link>
+      <pubDate>Sat, 03 Dec 2016 14:21:57 +0800</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/buildgerritplugin/</guid>
+      <description>Gerrit plugins can be built with both Buck and Maven.
+NOTE: Developing Gerrit plugins requires installing JDK first.
+Build by Maven If plugin contains pom.xml file, it can be built with Maven.
+ Install Maven, see Maven Doc about Installing Apache Maven Check out plugin source code  git clone https://gerrit.googlesource.com/plugins/reviewers  Build with Maven  mvn clean package Maven will automatically download all dependencies and build source code. You will be able to find jar file in $WORKSPACE/target directory.</description>
+    </item>
+    
+    <item>
+      <title>Customize Gerrit Homepage</title>
+      <link>https://yumminhuang.github.io/note/gerrithomepage/</link>
+      <pubDate>Sat, 03 Dec 2016 14:20:37 +0800</pubDate>
+      
+      <guid>https://yumminhuang.github.io/note/gerrithomepage/</guid>
+      <description>Customized Homepage To customize Gerrit homepage, we added the following files:
+ $site_path/etc/GerritSiteHeader.html HTML is inserted below the menu bar, but above any page content. This is a good location for an organizational logo. $site_path/etc/GerritSiteFooter.html HTML is inserted at the bottom of the page, below all other content. Display links to FAQ, user guides, etc. $site_path/etc/GerritSite.css The customized CSS rules are inlined into the top of the HTML page. $site_path/static/logo.</description>
+    </item>
+    
+    <item>
+      <title>Find Gerrit Outdated Projects</title>
+      <link>https://yumminhuang.github.io/note/findgerritoutdatedprojects/</link>
+      <pubDate>Sat, 03 Dec 2016 14:09:23 +0800</pubDate>
+      
+      <guid>https://yumminhuang.github.io/note/findgerritoutdatedprojects/</guid>
+      <description>Recently, I had a job to clean up our Gerrit server. First of all, I have to find projects which we can deprecate and remove them.
+Here is the solution how I found outdated Gerrit Projects.
+Gerrit Administrator can use gerrit gsql command to access Gerrit backend database and query outdated projects. The below SQL can find projects whose lastest changes were updated 180 days ago.
+ The results could be the candidates of deprecating projects.</description>
+    </item>
     
   </channel>
 </rss>

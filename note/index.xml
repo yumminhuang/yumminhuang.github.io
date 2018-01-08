@@ -5,29 +5,123 @@
     <link>https://yumminhuang.github.io/note/</link>
     <description>Recent content in Notes on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2017 ~ Yaming Huang</copyright>
+    <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Sat, 03 Dec 2016 14:21:57 +0800</lastBuildDate>
-    <atom:link href="/note/" rel="self" type="application/rss+xml" />
     
-      
+	<atom:link href="https://yumminhuang.github.io/note/index.xml" rel="self" type="application/rss+xml" />
     
-      
     
+    <item>
+      <title>Build Gerrit Plugins</title>
+      <link>https://yumminhuang.github.io/note/buildgerritplugin/</link>
+      <pubDate>Sat, 03 Dec 2016 14:21:57 +0800</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/buildgerritplugin/</guid>
+      <description>Gerrit plugins can be built with both Buck and Maven.
+NOTE: Developing Gerrit plugins requires installing JDK first.
+Build by Maven If plugin contains pom.xml file, it can be built with Maven.
+ Install Maven, see Maven Doc about Installing Apache Maven Check out plugin source code  git clone https://gerrit.googlesource.com/plugins/reviewers  Build with Maven  mvn clean package Maven will automatically download all dependencies and build source code. You will be able to find jar file in $WORKSPACE/target directory.</description>
+    </item>
     
+    <item>
+      <title>Customize Gerrit Homepage</title>
+      <link>https://yumminhuang.github.io/note/gerrithomepage/</link>
+      <pubDate>Sat, 03 Dec 2016 14:20:37 +0800</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/gerrithomepage/</guid>
+      <description>Customized Homepage To customize Gerrit homepage, we added the following files:
+ $site_path/etc/GerritSiteHeader.html HTML is inserted below the menu bar, but above any page content. This is a good location for an organizational logo. $site_path/etc/GerritSiteFooter.html HTML is inserted at the bottom of the page, below all other content. Display links to FAQ, user guides, etc. $site_path/etc/GerritSite.css The customized CSS rules are inlined into the top of the HTML page. $site_path/static/logo.</description>
+    </item>
     
+    <item>
+      <title>Find Gerrit Outdated Projects</title>
+      <link>https://yumminhuang.github.io/note/findgerritoutdatedprojects/</link>
+      <pubDate>Sat, 03 Dec 2016 14:09:23 +0800</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/findgerritoutdatedprojects/</guid>
+      <description>Recently, I had a job to clean up our Gerrit server. First of all, I have to find projects which we can deprecate and remove them.
+Here is the solution how I found outdated Gerrit Projects.
+Gerrit Administrator can use gerrit gsql command to access Gerrit backend database and query outdated projects. The below SQL can find projects whose lastest changes were updated 180 days ago.
+ The results could be the candidates of deprecating projects.</description>
+    </item>
     
+    <item>
+      <title>Two Coding Problems</title>
+      <link>https://yumminhuang.github.io/note/codingproblems/</link>
+      <pubDate>Fri, 18 Dec 2015 16:53:33 -0500</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/codingproblems/</guid>
+      <description>Two coding problems I encountered in a recent interview.
+Problem 1  Problem: Print a binary tree row-by-row, from top to bottom.
+Example:
+ Input: Binary tree 3 / \ 1 4 \ \ 2 5 Output: 3, 1, 4, 2, 5 Solution
+class Node(object): def __init__(self, value, left=None, right=None): self.value = value self.left = left self.right = right def traverse(rootnode): # The list to save all visited nodes visited = list() # BFS thislevel = [rootnode] while thislevel: nextlevel = list() for n in thislevel: visited.</description>
+    </item>
     
+    <item>
+      <title>Site Reliability Engineer Interview</title>
+      <link>https://yumminhuang.github.io/note/sreinterview/</link>
+      <pubDate>Thu, 03 Dec 2015 23:35:42 -0500</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/sreinterview/</guid>
+      <description>&lt;p&gt;Recently, I had a phone interview for a position of Site Reliability Engineer. They asked me four questions in 60 minutes. I was asked to writing code on &lt;a href=&#34;http://collabedit.com/&#34;&gt;collabedit&lt;/a&gt;
+Because Site Reliability Team of that company uses Python and I also prefer to Python, so all solutions are written in Python.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
+    <item>
+      <title>Calculating Quantiles</title>
+      <link>https://yumminhuang.github.io/note/calculatingquantiles/</link>
+      <pubDate>Thu, 03 Dec 2015 21:12:18 -0500</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/calculatingquantiles/</guid>
+      <description>&lt;p&gt;This problem is from my recent online coding test. I didn&amp;rsquo;t solve it in the limited time cause I used a wrong way. When I realize that, I don&amp;rsquo;t have enough time to fix it. I feel regretful for failing the test.
+&lt;/p&gt;</description>
+    </item>
     
+    <item>
+      <title>One Trick for Debugging Python</title>
+      <link>https://yumminhuang.github.io/note/pythondebugtrick/</link>
+      <pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/pythondebugtrick/</guid>
+      <description>I just learned one trick for debugging Python script from my colleague. It&amp;rsquo;s not such magical maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script.
+I only need to add single line at the position I want to break.
+import code; code.interact(local=locals()) After that, run Python script as usual. Python Interpreter will stop at your break point and launch a REPL (Read–eval–print loop) console.</description>
+    </item>
     
+    <item>
+      <title>Yelp Interview Problem</title>
+      <link>https://yumminhuang.github.io/note/yelpinterviewproblem/</link>
+      <pubDate>Tue, 18 Nov 2014 00:00:00 +0000</pubDate>
       
+      <guid>https://yumminhuang.github.io/note/yelpinterviewproblem/</guid>
+      <description>&lt;p&gt;Today, I had a skype interview with Yelp.
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>How to remove all pyc files from a project?</title>
+      <link>https://yumminhuang.github.io/note/removepyc/</link>
+      <pubDate>Thu, 31 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://yumminhuang.github.io/note/removepyc/</guid>
+      <description>&lt;p&gt;I am a paranoid guy. I like to delete all &amp;ldquo;useless&amp;rdquo; files. Today, I want to clean up my project repository. There are lots of &lt;code&gt;.pyc&lt;/code&gt; files. And I found this command, which is very convenient to batch delete files in a directory.
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Execute a Command in the Background on Remote Server using SSH</title>
+      <link>https://yumminhuang.github.io/note/linux-ssh-background-command/</link>
+      <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://yumminhuang.github.io/note/linux-ssh-background-command/</guid>
+      <description>&lt;p&gt;In a project, I have to deploy a simple server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since there are several remote servers, I have to run the server program in the background on all remote machines.
+&lt;/p&gt;</description>
+    </item>
     
   </channel>
 </rss>

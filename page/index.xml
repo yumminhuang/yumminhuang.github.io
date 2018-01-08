@@ -5,13 +5,29 @@
     <link>https://yumminhuang.github.io/page/</link>
     <description>Recent content in Pages on 临水轩志</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>2017 ~ Yaming Huang</copyright>
+    <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Tue, 10 Nov 2015 22:40:22 -0500</lastBuildDate>
-    <atom:link href="/page/" rel="self" type="application/rss+xml" />
     
-      
+	<atom:link href="https://yumminhuang.github.io/page/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>License</title>
+      <link>https://yumminhuang.github.io/page/license/</link>
+      <pubDate>Tue, 10 Nov 2015 22:40:22 -0500</pubDate>
       
+      <guid>https://yumminhuang.github.io/page/license/</guid>
+      <description>This website is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License, except where indicated otherwise. 除非特别说明，本网站采用知识共享署名-非商业性使用 4.0 国际许可协议进行许可。</description>
+    </item>
+    
+    <item>
+      <title>关于／About</title>
+      <link>https://yumminhuang.github.io/page/about/</link>
+      <pubDate>Tue, 10 Nov 2015 22:29:59 -0500</pubDate>
+      
+      <guid>https://yumminhuang.github.io/page/about/</guid>
+      <description>欢迎访问我的博客。 Thanks for visiting! I am a master student in computer science at Northeastern University. This site will aggregate my scattered online presence and hopefully provide a place for recording what I learn. 自我介绍 我目前是东北大学计算机与信息科学学院的在读硕士研究</description>
+    </item>
     
   </channel>
 </rss>
