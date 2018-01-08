@@ -18,7 +18,7 @@ pygmentsStyle = "emacs"
 [params]
     # name of the site author; used in header meta information
     author = "Yaming Huang"
-    copyright = "2017 ~ Yaming Huang"
+    copyright = "2018 ~ Yaming Huang"
 
     use_summaries = true
 
