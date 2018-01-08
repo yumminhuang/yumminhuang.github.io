@@ -7,161 +7,761 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Sun, 31 Dec 2017 17:25:51 +0800</lastBuildDate>
+    <atom:link href="/categories/miscellaneous/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/categories/miscellaneous/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>程序员使用的笔记软件</title>
-      <link>https://yumminhuang.github.io/post/quiver_snippetslab/</link>
-      <pubDate>Sun, 31 Dec 2017 17:25:51 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/post/quiver_snippetslab/</guid>
-      <description>&lt;p&gt;我一直在寻找一款工作上适合程序员使用的笔记软件。工作的时候，经常需要记录一些代码片段和笔记。这类笔记大部分都不成体系，记录的都是一些工作上的要点和代码片段。有的时候只是临时保存一小段代码。&lt;/p&gt;
+        
+          <item>
+            <title>程序员使用的笔记软件</title>
+            <link>https://yumminhuang.github.io/post/quiver_snippetslab/</link>
+            <pubDate>Sun, 31 Dec 2017 17:25:51 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/quiver_snippetslab/</guid>
+            <description>&lt;p&gt;我一直在寻找一款工作上适合程序员使用的笔记软件。工作的时候，经常需要记录一些代码片段和笔记。这类笔记大部分都不成体系，记录的都是一些工作上的要点和代码片段。有的时候只是临时保存一小段代码。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>清理 Docker</title>
-      <link>https://yumminhuang.github.io/post/dockerclenup/</link>
-      <pubDate>Fri, 13 Oct 2017 22:26:29 +0800</pubDate>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;细细想来，对于笔记软件，我有主要有这样一些需求：
+1. 支持代码块的语法高亮，可以定制字体、配色；
+2. 以 Markdown 进行编辑；
+3. 支持全文搜索；
+4. 支持数据备份，笔记导出；
+5. 可以使用文件夹或者标签 （Tag）进行分类管理；
+6. 多设备之间云同步，最好不需要注册账号，直接使用 iCloud、Dropbox 来同步；
+7. 小巧、快速；
+8. 虽然我现在几乎没有激动办公的场景，但如果能够在 iOS 设备上使用也是个加分项。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;虽然现在市面上有各式各样的笔记软件，但还是有一些让我不太满意的地方。&lt;/p&gt;
+
+&lt;p&gt;我用 Evernote 很长一段时间了。我很喜欢使用 Evernote 剪切网上的文章做整理归纳，但是糟糕的编辑体验（不支持 Markdown），免费账号两个设备同步的数量限制，让我觉得 Evernote 当工作的笔记软件有很多问题。&lt;/p&gt;
+
+&lt;p&gt;后来使用了一段时间的 &lt;a href=&#34;http://www.bear-writer.com&#34;&gt;Bear&lt;/a&gt;。这是一款不错的笔记软件，满足了我大部分的需求，但是不支持代码块语法高亮让我觉得这不是一款面向程序员的软件。毕竟我有相当一部分的笔记是代码片段 (&lt;em&gt;code snippets&lt;/em&gt;)。&lt;/p&gt;
+
+&lt;p&gt;后来，有一天在网上看到了一款叫 &lt;a href=&#34;https://boostnote.io&#34;&gt;Boostnote&lt;/a&gt; 的开源软件。这是一款基于 Electron 开发的，面向程序员的笔记软件。可能是程序员群体都有类似的需求，这款软件几乎满足了我的全部需求。遗憾的是 Boostnote 的体积非常臃肿（Mac 客户端已经有一百多兆），搜索的速度较慢。而且 UX  方面的使用体验也不太令人满意。在试用了大概一周后，我放弃了 Boostnote。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;直到最近，我在 App Store 的 Apps for Developers 的板块里发现了 &lt;a href=&#34;http://happenapps.com&#34;&gt;Quiver&lt;/a&gt;  和 &lt;a href=&#34;https://www.renfei.org/snippets-lab/&#34;&gt;SnippetsLab&lt;/a&gt; 这两个软件，终于找到了满意的笔记软件。这两个软件都是面向程序员的笔记本软件。Quiver 号称 _The Programmer&amp;rsquo;s Notebook_，SnippetsLab 号称 _The missing code snippets manager_。 无论是外观界面，还是一些细节的处理上，两款软件都算得上精品。看一下 SnippetsLab 的&lt;a href=&#34;https://www.renfei.org/snippets-lab/manual/mac/index.html&#34;&gt;文档&lt;/a&gt;，就能体会到软件开发者的用心。&lt;/p&gt;
+
+&lt;p&gt;相比之下，Quiver 的功能更全面一些，包括有 iOS 版的客户端， 支持 LaTeX  格式的公式和流程图渲染，支持版本管理及演示模式。Quiver 引入了 &lt;a href=&#34;https://github.com/HappenApps/Quiver/wiki/Getting-Started&#34;&gt;Cell&lt;/a&gt; 的概念，编辑起来不是特别顺畅；而 SnippetsLab 的编辑和搜索功能使相对简洁一些，用起来也更加便捷。在选择到底购买哪个软件上，我还是犹豫了很久。两款软件都满足了我的需求，核心功能上也没有太大的区别，甚至连价格都是相同的 ¥68。在综合了官网的介绍和一些网上的评测文章（我在网上并没有找到两款软件的比较文章），并且试用了 Quiver 之后，最后还是考虑了价格的因素。趁着 SnippetsLab 在年底促销的时机，花了 30 块钱买了 SnippetsLab。&lt;/p&gt;
+
+&lt;p&gt;在购买了 SnippetsLab 之后不久，我在 &lt;a href=&#34;https://news.ycombinator.com/item?id=16016813&#34;&gt;Hacker News&lt;/a&gt; 上看到了 &lt;a href=&#34;https://medleytext.net&#34;&gt;MedleyText&lt;/a&gt; 的介绍。 这是一款跨平台的，面向程序员的笔记软件。不过暂时还没有使用，看以后有机会的时候再体验一下。&lt;/p&gt;</description>
+          </item>
+        
       
-      <guid>https://yumminhuang.github.io/post/dockerclenup/</guid>
-      <description>&lt;p&gt;在线上环境运行的 Docker 的时候，部署之后往往没有清理旧版本的镜像和关闭的容器。如此一来，长时间运行 Docker，尤其是频繁地更新镜像、启动容器，会消耗大量的磁盘空间。&lt;/p&gt;
+    
+      
+        
+          <item>
+            <title>清理 Docker</title>
+            <link>https://yumminhuang.github.io/post/dockerclenup/</link>
+            <pubDate>Fri, 13 Oct 2017 22:26:29 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/dockerclenup/</guid>
+            <description>&lt;p&gt;在线上环境运行的 Docker 的时候，部署之后往往没有清理旧版本的镜像和关闭的容器。如此一来，长时间运行 Docker，尤其是频繁地更新镜像、启动容器，会消耗大量的磁盘空间。&lt;/p&gt;
 
 &lt;p&gt;本文汇总几条用来清理 Docker 的命令。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>搭建分布式 Gerrit 集群</title>
-      <link>https://yumminhuang.github.io/post/distributedgerrit/</link>
-      <pubDate>Sun, 10 Sep 2017 11:31:51 +0800</pubDate>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;清理-docker-容器&#34;&gt;清理 Docker 容器&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker ps --filter &lt;span class=&#34;nv&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;dead --filter &lt;span class=&#34;nv&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;exited -aq &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -r docker rm -v&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;清理-docker-镜像&#34;&gt;清理 Docker 镜像&lt;/h2&gt;
+
+&lt;p&gt;清理 &lt;em&gt;dangling&lt;/em&gt; 的镜像。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker images -q -f &lt;span class=&#34;nv&#34;&gt;dangling&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -r docker rmi&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;清理所有当前不在运行的镜像&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:exp&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:exp&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker rmi &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;grep -xvf &amp;lt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;docker ps -a --format &lt;span class=&#34;s1&#34;&gt;&amp;#39;{{.Image}}&amp;#39;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; &amp;lt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;docker images &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -n +2 &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep -v &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;lt;none&amp;gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;{ print $1&amp;#34;:&amp;#34;$2 }&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;清理一周前的镜像。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker images --no-trunc --format &lt;span class=&#34;s1&#34;&gt;&amp;#39;{{.ID}} {{.CreatedSince}}&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep &lt;span class=&#34;s1&#34;&gt;&amp;#39; weeks&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; awk &lt;span class=&#34;s1&#34;&gt;&amp;#39;{ print $1 }&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;       xargs --no-run-if-empty docker rmi&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;清理-docker-volume&#34;&gt;清理 Docker Volume&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker volume ls -q -f &lt;span class=&#34;nv&#34;&gt;dangling&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; xargs -r docker volume rm&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/moby/moby/issues/9054#issuecomment-184246090&#34;&gt;comment on Github Issue&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://lebkowski.name/docker-volumes/&#34;&gt;Cleaning up docker to reclaim disk space&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:exp&#34;&gt;此命令清理效果好，却容易误删当前没有运行但未来仍会使用的镜像。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:exp&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+          </item>
+        
       
-      <guid>https://yumminhuang.github.io/post/distributedgerrit/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.gerritcodereview.com&#34;&gt;Gerrit&lt;/a&gt; 是由 Google为了管理 Android 项目而开发的，一款免费、开源的代码审查软件。Gerrit 使用 Git 作为底层版本控制系统，提供了代码审查、权限管理等功能。&lt;/p&gt;
+    
+      
+        
+          <item>
+            <title>搭建分布式 Gerrit 集群</title>
+            <link>https://yumminhuang.github.io/post/distributedgerrit/</link>
+            <pubDate>Sun, 10 Sep 2017 11:31:51 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/distributedgerrit/</guid>
+            <description>&lt;p&gt;&lt;a href=&#34;https://www.gerritcodereview.com&#34;&gt;Gerrit&lt;/a&gt; 是由 Google为了管理 Android 项目而开发的，一款免费、开源的代码审查软件。Gerrit 使用 Git 作为底层版本控制系统，提供了代码审查、权限管理等功能。&lt;/p&gt;
 
 &lt;p&gt;本文将会简单介绍如何搭建分布式 Gerrit 集群，即搭建由一个可以读写的 Gerrit Master 和若干个只读的 Gerrit Slave 组成的 Gerrit 集群。Gerrit Slave 可以实时同步 Gerrit Master 的数据，保证代码的一致性。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>自动构建 Github Pages 博客</title>
-      <link>https://yumminhuang.github.io/post/autobuildblog/</link>
-      <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;分布式的架构可以用来：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;分流下载：下载代码可以从只读的 Slave 下载，从而减轻 Master 的负载。如果 Slave 和 Master 在不同地区，还可以起到加速下载的功效。&lt;/li&gt;
+&lt;li&gt;灾备切换：如果 Master 出现故障，可以切换到 Slave 继续工作。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;分布式-gerrit-架构&#34;&gt;分布式 Gerrit 架构&lt;/h2&gt;
+
+&lt;p&gt;Gerrit 里的数据主要是两部分：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Git 代码库，用来存储代码；&lt;/li&gt;
+&lt;li&gt;数据库&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:database&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:database&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，用来存储代码提交（Change），用户、分组权限等信息。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;因此在实现分布式 Gerrit 时，对应两部分数据，我们需要通过：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.postgresql.org&#34;&gt;PostgreSQL&lt;/a&gt; &lt;a href=&#34;https://wiki.postgresql.org/wiki/Streaming_Replication&#34;&gt;Streaming Replication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gerrit.googlesource.com/plugins/replication&#34;&gt;&lt;em&gt;Gerrit Replication&lt;/em&gt; 插件&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;来实现 Gerrit Master 和 Gerrit Slave 之间的数据同步。&lt;/p&gt;
+
+&lt;p&gt;分布式 Gerrit 架构如下图所示。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;+----------------------+                  +--------------------+
+|                      |                  |                    |
+|    Gerrit Master     |                  |    Gerrit Slave    |
+|       Server         |                  |       Server       |
+|                +-----+-----+            |                    |
+|   +----------+ |  Gerrit   |            |     +----------+   |
+|   |Repository| |Replication|  git push  |     |Repository|   |
+|   |          +-+  Plugin   +-----------------&amp;gt;+          |   |
+|   +----------+ +-----+-----+            |     +----------+   |
+|                      |                  |                    |
+|   +--------------+   |                  |  +--------------+  |
+|   |   PostgreSQL |   |  Replication     |  | PostgreSQL   |  |
+|   |    PRIMARY   +------------------------&amp;gt;+ HOT-STANDBY  |  |
+|   +--------------+   |                  |  +--------------+  |
++----------------------+                  +--------------------+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在 Gerrit Master 和 Slave 上都有一个相同的 Git 代码库（*Repository*），Gerrit Replication 插件可以用来将 Master 上收到的更新（新提交的 commit，&lt;code&gt;refs/meta&lt;/code&gt; 分支下的变更或是创建的新代码库）同步到 Slave。&lt;/p&gt;
+
+&lt;p&gt;为了实现数据库的同步，需要将 PostgreSQL 运行在 &lt;a href=&#34;https://www.postgresql.org/docs/9.4/static/hot-standby.html&#34;&gt;Hot Standby 模式&lt;/a&gt;。 在 Gerrit Master 上运行的 PostgreSQL 是 &lt;em&gt;primary&lt;/em&gt; ，可以进行读、写操作； 在 Gerrit Slave 上运行的 PostgreSQL 是 &lt;em&gt;stanby&lt;/em&gt; ，可以和 &lt;em&gt;primary&lt;/em&gt; 保持同步，可以接受客户端的连接，但只能进行读操作。如果 &lt;em&gt;primary&lt;/em&gt; 故障了，整个系统可以迁移（ &lt;em&gt;fail over&lt;/em&gt; ）到 &lt;em&gt;stanby&lt;/em&gt; ，由 &lt;em&gt;stanby&lt;/em&gt; 承担 &lt;em&gt;primary&lt;/em&gt; 的角色。&lt;/p&gt;
+
+&lt;h2 id=&#34;分布式-gerrit-配置&#34;&gt;分布式 Gerrit 配置&lt;/h2&gt;
+
+&lt;h3 id=&#34;配置-gerrit&#34;&gt;配置 Gerrit&lt;/h3&gt;
+
+&lt;p&gt;对于安装和配置 Gerrit Master，分布式的搭建和单点的搭建并没有区别。&lt;/p&gt;
+
+&lt;h4 id=&#34;gerrit-slave&#34;&gt;Gerrit Slave&lt;/h4&gt;
+
+&lt;p&gt;安装和配置 Gerrit Slave 上的 Gerrit 的时候，需要注意在 &lt;code&gt;gerrit.config&lt;/code&gt; 文件里的 &lt;code&gt;[container]&lt;/code&gt; 下面添加 &lt;code&gt;slave = true&lt;/code&gt; 。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;[container]
+    user = gerrit2
+    javaHome = /usr/lib/jvm/java-7-oracle/jre
+    javaOptions = -Xmx80g -Xms20g -Xmn2g
+    slave = true
+[database]
+    type = postgresql
+    database = reviewdb
+    hostname = localhost
+    username = gerrit2
+...&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样 Gerrit 才会启动为 Slave。&lt;/p&gt;
+
+&lt;h3 id=&#34;配置-postgresql-数据库&#34;&gt;配置 PostgreSQL 数据库&lt;/h3&gt;
+
+&lt;p&gt;在 Master 上要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，打开 Hot Standby 功能。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;...
+wal_level = hot_standby
+...&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;还需要在 &lt;code&gt;/etc/postgresql/9.4/main/pg_hba.conf&lt;/code&gt; 添加  &lt;em&gt;stanby&lt;/em&gt; 的 IP，确保 &lt;em&gt;stanby&lt;/em&gt; 可以连接  &lt;em&gt;primary&lt;/em&gt; 进行同步。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;host   replication   all    POSTGRES.STANDBY.IP.ADDRESS/32       md5&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在 Slave 上首先需要配置 &lt;code&gt;/etc/postgresql/9.4/main/postgresql.conf&lt;/code&gt;，设置 PostgreSQL 运行为 &lt;em&gt;stanby&lt;/em&gt; 。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;...
+hot_standby = on
+...&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;接下来，添加 &lt;code&gt;/var/lib/postgresql/9.4/main/recovery.conf&lt;/code&gt; 文件，配置  &lt;em&gt;primary&lt;/em&gt;  信息。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;standby_mode = on
+primary_conninfo = &amp;#39;host=POSTGRES.PRIMAY.IP.ADDRESS port=5432 user=replicator password=PASSWORD&amp;#39;
+trigger_file = &amp;#39;/var/lib/postgresql/postgresql.trigger&amp;#39;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;其中 &lt;code&gt;trigger_file&lt;/code&gt; 被用来触发 &lt;em&gt;fail over&lt;/em&gt; ，此时不需要创建。&lt;/p&gt;
+
+&lt;p&gt;配置完成后，在 &lt;em&gt;primary&lt;/em&gt;  上运行命令将数据拷贝到 &lt;em&gt;standby&lt;/em&gt; 。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;rsync -av --exclude pg_xlog --exclude postgresql.conf data/* &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;	POSTGRES.STANDBY.IP.ADDRESS:/var/lib/postgresql/data/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;重启两端的 PostgreSQL 后，&lt;em&gt;primary&lt;/em&gt; 和 &lt;em&gt;standby&lt;/em&gt; 将保持同步。&lt;/p&gt;
+
+&lt;p&gt;关于 Hot Standby 的详细的说明，可以参见 Postgresql 的这篇&lt;a href=&#34;https://wiki.postgresql.org/wiki/Hot_Standby&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h3 id=&#34;配置-gerrit-replication&#34;&gt;配置 Gerrit Replication&lt;/h3&gt;
+
+&lt;h4 id=&#34;gerrit-slave-1&#34;&gt;Gerrit Slave&lt;/h4&gt;
+
+&lt;p&gt;首先需要在 Gerrit Slave 上配置 xinetd，用来提供 git daemon 服务。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ sudo apt install xinetd
+$ cat /etc/xinetd.d/git-daemon
+
+&lt;span class=&#34;c1&#34;&gt;# default: off
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# description: The git server offers access to git repositories service git
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;service git
+&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nv&#34;&gt;disable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no
+        &lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; UNLISTED
+        &lt;span class=&#34;nv&#34;&gt;port&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;9418&lt;/span&gt;
+        &lt;span class=&#34;nv&#34;&gt;socket_type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; stream
+        &lt;span class=&#34;nb&#34;&gt;wait&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no
+        &lt;span class=&#34;nv&#34;&gt;env&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;HOME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/home/gerrit2
+        &lt;span class=&#34;nv&#34;&gt;user&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; gerrit2
+        &lt;span class=&#34;nv&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; /usr/bin/git
+        &lt;span class=&#34;nv&#34;&gt;only_from&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; gerrit-master.example.com
+        &lt;span class=&#34;nv&#34;&gt;log_type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; SYSLOG daemon info
+        &lt;span class=&#34;nv&#34;&gt;server_args&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; daemon --inetd --syslog --export-all --enable&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;upload-pack --enable&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;receive-pack --base-path&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/home/gerrit2/review_site/git --verbose
+        &lt;span class=&#34;nv&#34;&gt;log_on_success&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; USERID HOST DURATION EXIT
+        &lt;span class=&#34;nv&#34;&gt;log_on_failure&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; USERID HOST ATTEMPT
+        &lt;span class=&#34;nv&#34;&gt;cps&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;150&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+$ sudo /etc/init.d/xinetd restart&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;重启 xinetd 之后，9418 端口将会开启，可以通过 &lt;code&gt;git://&lt;/code&gt; 访问 Gerrit Slave 上的代码库。&lt;/p&gt;
+
+&lt;h4 id=&#34;gerrit-master&#34;&gt;Gerrit Master&lt;/h4&gt;
+
+&lt;p&gt;在 Gerrit Master 上，首先需要安装 Gerrit Replication 插件，下载对应 Gerrit 版本的 Replication 插件 jar 文件，并添加到 &lt;code&gt;$REVIEW_SITE/plugin&lt;/code&gt; 目录下。&lt;/p&gt;
+
+&lt;p&gt;接下来，添加 &lt;code&gt;$REVIEW_SITE/etc/replication.config&lt;/code&gt; 文件，加上 Gerrit Slave 的配置&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;[remote &amp;#34;slave&amp;#34;]
+  url = git://gerrit-slave.example.com/${name}.git
+  mirror = true
+  threads = 4
+  adminUrl = ssh://gerrit-slave.example.com/home/gerrit2/review_site/git/${name}.git&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;注意，&lt;code&gt;adminUrl&lt;/code&gt; 的路径要按照 Gerrit Slave 上代码库真实的存放路径设置。&lt;/p&gt;
+
+&lt;p&gt;这样，启动 Gerrit Master 之后，每次代码库有变更，Gerrit Replication 插件都会将变更通过 git 协议 Push 到 Slave 上。&lt;/p&gt;
+
+&lt;p&gt;通常，在启动 Gerrit Slave 之前，需要将代码库拷贝到 Slave 机器上，以缩短首次同步的时间。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;分布式 Gerrit 搭建完成之后，我们可以添加 &lt;code&gt;.gitconfig&lt;/code&gt; 文件来实现代码上传和下载分流。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;[url &amp;#34;ssh://&amp;lt;username&amp;gt;@gerrit-slave.example.com:29418&amp;#34;]
+    insteadOf = gerrit
+    pushInsteadOf = ssh://&amp;lt;username&amp;gt;@gerrit-master.example.com:29418&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样，克隆代码库的时候使用命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git clone gerrit:path/to/repo&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;可以从 Gerrit Slave 下载代码，而 &lt;code&gt;git push&lt;/code&gt; 的时候会自动将代码 Push 到 Gerrit Master。&lt;/p&gt;
+
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.google.com/community/tutorials/setting-up-postgres-hot-standby#understanding-hot-standby&#34;&gt;Setting Up Postgres Hot Standby&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:database&#34;&gt;Gerrit 支持大部分主流的关系型数据库，具体的配置方法可以参见&lt;a href=&#34;https://gerrit-review.googlesource.com/Documentation/database-setup.html&#34;&gt;建立数据库&lt;/a&gt; 和&lt;a href=&#34;https://gerrit-review.googlesource.com/Documentation/config-gerrit.html#database&#34;&gt;配置数据库&lt;/a&gt;的官方文档。本文以 PostgreSQL 为例。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:database&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+          </item>
+        
       
-      <guid>https://yumminhuang.github.io/post/autobuildblog/</guid>
-      <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
+    
+      
+        
+          <item>
+            <title>自动构建 Github Pages 博客</title>
+            <link>https://yumminhuang.github.io/post/autobuildblog/</link>
+            <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/autobuildblog/</guid>
+            <description>&lt;p&gt;之前曾经写过了一篇 &lt;a href=&#34;https://yumminhuang.github.io/post/AutoBuildResume/&#34;&gt;使用 Travis CI 和 Docker 自动构建 LaTeX 简历&lt;/a&gt;，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。&lt;/p&gt;
 
 &lt;p&gt;以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
-      <link>https://yumminhuang.github.io/post/autobuildresume/</link>
-      <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
-      
-      <guid>https://yumminhuang.github.io/post/autobuildresume/</guid>
-      <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Two Coding Problems</title>
-      <link>https://yumminhuang.github.io/note/codingproblems/</link>
-      <pubDate>Fri, 18 Dec 2015 16:53:33 -0500</pubDate>
+&lt;h3 id=&#34;整理工作&#34;&gt;整理工作&lt;/h3&gt;
+
+&lt;p&gt;之前，为了搭建 &lt;a href=&#34;https://pages.github.com/&#34;&gt;Github Pages&lt;/a&gt; 的博客，我创建了两个代码库。一个是存放网站的 yumminhuang.github.io.git，另外一个是存放 Hugo 配置和文章的 Blog.git。每次发布一篇文章，都需要同步两个代码库。&lt;/p&gt;
+
+&lt;p&gt;两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
+
+&lt;p&gt;当然，还是有必要保留以前提交的历史记录。大概的操作流程是：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git clone git@github.com/yumminhuang/Blog.git
+&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; Blog
+&lt;span class=&#34;c1&#34;&gt;# Delete the old remote
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git remote rm origin
+&lt;span class=&#34;c1&#34;&gt;# Add a new remote
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+&lt;span class=&#34;c1&#34;&gt;# (Optional) Modify .git/config for submodules, etc
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;vi .git/config
+&lt;span class=&#34;c1&#34;&gt;# Create the new branch and switch to it
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git checkout -b &lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# Push the new branch to remote
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;git push origin source&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。&lt;/p&gt;
+
+&lt;h3 id=&#34;docker-for-hugo&#34;&gt;Docker for Hugo&lt;/h3&gt;
+
+&lt;p&gt;接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 &lt;a href=&#34;https://github.com/yumminhuang/hugo-docker&#34;&gt;Dockerfile&lt;/a&gt; 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; alpine:latest&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;MAINTAINER&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; Yaming Huang &amp;lt;yumminhuang@gmail.com&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;ARG &lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.17&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;RUN&lt;/span&gt; apk add --update wget ca-certificates &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /tmp/ &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  wget https://github.com/spf13/hugo/releases/download/v&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/hugo_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_Linux-64bit.tar.gz &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  tar xzf hugo_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_Linux-64bit.tar.gz &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  rm -r hugo_&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;HUGO_VERSION&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;_Linux-64bit.tar.gz &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  mv hugo*/hugo* /usr/bin/hugo &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  apk del wget ca-certificates &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  rm /var/cache/apk/*&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;VOLUME&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; /public&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WORKDIR&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; /website&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; [&amp;#34;/usr/bin/hugo&amp;#34;]&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;EXPOSE&lt;/span&gt;&lt;span class=&#34;s&#34;&gt; 1313&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Build 之后生成 &lt;code&gt;yumminhuang/hugo-docker&lt;/code&gt;， 这样每次运行一条命令，就可以生成网页到 &lt;code&gt;public&lt;/code&gt; 目录下。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker run --rm -v &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;:/website yumminhuang/hugo:latest&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;还可以运行如下的命令用来看网页生成的效果。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker run --rm -p &lt;span class=&#34;m&#34;&gt;1313&lt;/span&gt;:1313 -v &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;pwd&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;:/website yumminhuang/hugo:latest server --bind&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;.0.0.0 -w -D&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;travis-ci&#34;&gt;Travis CI&lt;/h3&gt;
+
+&lt;p&gt;接下来是设置 Travis CI 来进行自动构建。&lt;/p&gt;
+
+&lt;p&gt;首先，需要先到 Github 的&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;个人设置&lt;/a&gt;页面去&lt;a href=&#34;https://help.github.com/articles/creating-an-access-token-for-command-line-use/&#34;&gt;创建一个 “Personal Access Token”&lt;/a&gt;。确保选择了 &lt;code&gt;repo&lt;/code&gt; 下面的 &lt;code&gt;public_repo&lt;/code&gt;。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。&lt;/p&gt;
+
+&lt;p&gt;接着，需要使用 &lt;a href=&#34;https://github.com/travis-ci/travis.rb&#34;&gt;Travis 命令行工具&lt;/a&gt;来对包含新生成 “Personal Access Token”  的变量 &lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 加密。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;travis encrypt &lt;span class=&#34;nv&#34;&gt;GIT_DEPLOY_REPO&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;https://GENERATED_TOKEN@github.com/username/reponame.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt; 将用于把网页上传到 Github，后文会有提及。&lt;/p&gt;
+
+&lt;p&gt;完整的 &lt;code&gt;.travis.yml&lt;/code&gt; 如下所示。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;env&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;global&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;secure&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34; LONG TOKEN &amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_DIR=public&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_BRANCH=master&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_USERNAME=&lt;span class=&#34;s2&#34;&gt;&amp;#34;Travis CI&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;GIT_DEPLOY_EMAIL=yumminhuang@gmail.com&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;branches&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;only&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;source&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;sudo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;required&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;services&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;install&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;rm&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-rf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;public&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;|&lt;span class=&#34;sd&#34;&gt;| exit 0
+&lt;/span&gt;&lt;span class=&#34;sd&#34;&gt;  - git config --global user.email &amp;#34;yumminhuang@gmail.com&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;sd&#34;&gt;  - git config --global user.name &amp;#34;Travis CI&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;run&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--rm&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-v&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;$(pwd)&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;/website&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;yumminhuang/hugo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;latest&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;after_success&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;https&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;//raw.githubusercontent.com/X&lt;span class=&#34;m&#34;&gt;1011&lt;/span&gt;/git-directory-deploy/master/deploy.sh&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-O&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;deploy.sh&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;bash&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;deploy.sh&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-m&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;updating blog `date`&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;在 &lt;code&gt;after_success&lt;/code&gt;，也即 Hugo 完成网页生成之后，会使用 &lt;a href=&#34;https://github.com/X1011/git-directory-deploy&#34;&gt;X1011/git-directory-deploy&lt;/a&gt; 里的 &lt;code&gt;deploy.sh&lt;/code&gt; 将网页提交并上传到 Github。使用 &lt;code&gt;deploy.sh&lt;/code&gt; 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_REPO&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_DIR&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_BRANCH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_USERNAME&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GIT_DEPLOY_EMAIL&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接下来，在 Travis CI 上完成授权，就能够在每次提交到 &lt;code&gt;source&lt;/code&gt; 分支后出发自动构建了。&lt;/p&gt;
+
+&lt;h3 id=&#34;参考内容&#34;&gt;参考内容&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://speps.github.io/articles/hugo-setup/&#34;&gt;Setup Hugo with Travis CI and GitHub Pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.hypriot.com/post/static-website-generation-on-steriods-with-docker/&#34;&gt;Static Website Generation on Steriods with Docker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/jojomi/docker-hugo&#34;&gt;jojomi/docker-hugo&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+          </item>
+        
       
-      <guid>https://yumminhuang.github.io/note/codingproblems/</guid>
-      <description>Two coding problems I encountered in a recent interview.
-Problem 1  Problem: Print a binary tree row-by-row, from top to bottom.
-Example:
- Input: Binary tree 3 / \ 1 4 \ \ 2 5 Output: 3, 1, 4, 2, 5 Solution
-class Node(object): def __init__(self, value, left=None, right=None): self.value = value self.left = left self.right = right def traverse(rootnode): # The list to save all visited nodes visited = list() # BFS thislevel = [rootnode] while thislevel: nextlevel = list() for n in thislevel: visited.</description>
-    </item>
     
-    <item>
-      <title>如何选择开源项目的证书</title>
-      <link>https://yumminhuang.github.io/post/chooseaopensourcelicense/</link>
-      <pubDate>Fri, 18 Dec 2015 10:27:50 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/post/chooseaopensourcelicense/</guid>
-      <description>&lt;p&gt;世界上的开源许可证有很多。除了常见的 &lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache&lt;/a&gt;，&lt;a href=&#34;http://en.wikipedia.org/wiki/BSD_licenses&#34;&gt;BSD&lt;/a&gt;， &lt;a href=&#34;https://en.wikipedia.org/wiki/MIT_License&#34;&gt;MIT&lt;/a&gt; 等之外，还有一些奇特的证书，比如 &lt;a href=&#34;http://www.wtfpl.net/&#34;&gt;WTFPL (Do What the Fuck You Want to Public License)&lt;/a&gt;。Github 还专门做了一个&lt;a href=&#34;http://choosealicense.com/&#34;&gt;网站&lt;/a&gt; 介绍了常见的开源证书。&lt;/p&gt;
+        
+          <item>
+            <title>使用 Travis CI 和 Docker 自动构建 LaTeX 简历</title>
+            <link>https://yumminhuang.github.io/post/autobuildresume/</link>
+            <pubDate>Fri, 08 Apr 2016 15:17:48 -0400</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/autobuildresume/</guid>
+            <description>&lt;p&gt;又快到了求职季，最近一段时间总是频繁更新的简历。之前，我的简历更新流程是先修改简历，使用 MacTeX 编译，再把 PDF 版的简历同步到几个网盘备份。过程倒也不算繁琐。但再做过几个月的运维开放之后，我对自动化有着近乎偏执的热情。这几天经过不断的尝试和摸索，在 Travis-CI 上运行了十几个 Build 之后，终于使用 Docker 实现了一个便捷的自动化发布 LaTeX 简历的方法。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;本文中提到的简历已经放在了 &lt;a href=&#34;https://github.com/yumminhuang/Resume&#34;&gt;GitHub&lt;/a&gt; 上，欢迎参考。&lt;/p&gt;
+
+&lt;p&gt;当然，本文的主要内容集中在持续发布的流程，而非 LaTeX 和 Docker 的使用，所以对 LaTeX 简历和 Docker 命令不做细致的解释。事实上，GitHub 上有很多精美的 LaTeX 简历模板，我的简历也借鉴了其中的一个模板。&lt;/p&gt;
+
+&lt;h3 id=&#34;使用-travis-ci-自动发布&#34;&gt;使用 Travis-CI 自动发布&lt;/h3&gt;
+
+&lt;p&gt;上周在 &lt;a href=&#34;http://www.latexstudio.net&#34;&gt;LaTeX 开源小屋&lt;/a&gt;看到一篇&lt;a href=&#34;http://www.latexstudio.net/archives/5892&#34;&gt;文章&lt;/a&gt;。文章中介绍了 GitHub 上一个&lt;a href=&#34;https://github.com/SivilTaram/BUAAOS-guide-book&#34;&gt;北航小操作系统实验指导书&lt;/a&gt;的代码库。这个代码库里使用 Travis-CI 与 LaTeX 构建开源中文 PDF。每次提交到 GitHub 之后，可以自动运行 Travis-CI 编译，并将 PDF 文件发布到 &lt;a href=&#34;https://help.github.com/articles/about-releases/&#34;&gt;GitHub Release 页面&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;于是，我以此开源项目为模板，同时参考了另一篇文章 &lt;a href=&#34;http://harshjv.github.io/blog/setup-latex-pdf-build-using-travis-ci/&#34;&gt;&lt;em&gt;Setup LaTeX PDF build using Travis CI&lt;/em&gt;&lt;/a&gt; 及&lt;a href=&#34;https://github.com/harshjv/travis-ci-latex-pdf&#34;&gt;代码&lt;/a&gt;，将自己的简历实现了自动化编译与发布。&lt;/p&gt;
+
+&lt;p&gt;先看一下我的 &lt;code&gt;.travis.yml&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;sudo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;required&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;dist&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;trusty&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;before_install&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;apt-get&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;update&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;apt-get&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-y&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--no-install-recommends&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;install&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;texlive-full&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;https&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;//github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeFangsongStd-Regular.otf&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeHeitiStd-Regular%20(v5.010).otf&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeKaitiStd-Regular%20(v5.010).otf&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;wget&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-P&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/usr/share/fonts/opentype/&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;https://github.com/SivilTaram/BUAAOS-guide-book/raw/master/guide-book/fonts/AdobeSongStd-Light%20(v5.010).otf&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mkfontscale&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mkfontdir&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;sudo&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;fc-cache&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-f&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;cd&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;make&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;cd&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;..&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume.pdf&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;deploy&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;provider&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;releases&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;api_key&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;secure&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;A&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;LONG&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;LONG&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;TOKEN&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;omit&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;it&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;file&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume.pdf&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;skip_cleanup&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;on&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;repo&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;yumminhuang/Resume&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;首先前两行声明了需要的权限和使用 &lt;a href=&#34;https://docs.travis-ci.com/user/trusty-ci-environment/&#34;&gt;Travis CI 的 Trusty（即 Ubuntu 14.04）编译环境&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;接着，&lt;code&gt;before_install&lt;/code&gt; 后的命令用来安装 texlive 和字体，更新系统字体列表。&lt;/p&gt;
+
+&lt;p&gt;然后，在 &lt;code&gt;script&lt;/code&gt; 阶段，运行 &lt;code&gt;make&lt;/code&gt; 命令编译，移动 PDF 文件到项目的根目录。&lt;/p&gt;
+
+&lt;p&gt;最后，在 &lt;code&gt;deploy&lt;/code&gt; 阶段，使用 Travis-CI 的 API 将文件发布到 Github Release。这里，需要一个 &lt;code&gt;api_key&lt;/code&gt;，可以运行 &lt;a href=&#34;https://github.com/travis-ci/travis.rb#installation&#34;&gt;Travis 命令行客户端&lt;/a&gt;来生成。关于使用 Travis-CI 将文件发布到 Github Release 的更详细内容还请参考 &lt;a href=&#34;https://docs.travis-ci.com/user/deployment/releases&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;这样，我就完成了可以自动编译、自动发布的 &lt;a href=&#34;https://github.com/yumminhuang/Resume/releases/tag/v1.0&#34;&gt;1.0 版&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h3 id=&#34;优化持续发布流程&#34;&gt;优化持续发布流程&lt;/h3&gt;
+
+&lt;p&gt;1.0 版完成只实现了自动化，还有一些不令人满意的地方。&lt;/p&gt;
+
+&lt;p&gt;第一，安装过程复杂，构建花费时间长。每次构建大概需要 10 分钟左右，大部分的时间都花在安装 texlive 上。「北航实验指导书」中选择安装 texlive-full，这避免了缺少依赖的问题，但却安装了很多没有用的依赖，同时花费了大量时间。另外，下载字体也花费了一定的时间。&lt;/p&gt;
+
+&lt;p&gt;第二，频繁的不必要的构建。按照「北航实验指导书」中的设置，每次提交一个更新都会触发构建。事实上，这是没有必要的，因为有时候可能只是更新 README，而非 LaTeX 源码。「北航实验指导书」中为了避免这一问题，很多提交更新都加上了 &lt;code&gt;[ci skip]&lt;/code&gt; 的前缀来&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Skipping-a-build&#34;&gt;跳过自动构建&lt;/a&gt;。这样无形中增加了开发过程的负担。&lt;/p&gt;
+
+&lt;p&gt;最后，编译出来的中文简历格式令我不要满意。Ubuntu trusty 的环境中，使用 &lt;code&gt;apt-get&lt;/code&gt; 只能安装 texlive 2013；而我的中文简历使用了新版 ctex 的特性，需要用到 texlive 2015。如果在 trusty 里下载 texlive 2015 的镜像安装可能又需要安装更多的工具链，很麻烦；在 Ubuntu 15.10 和 Ubuntu 16.04 中倒是可以使用 &lt;code&gt;apt-get&lt;/code&gt; 安装 texlive 2015，但 Travis-CI 似乎只提供了 Ubuntu trusty，没有更新的版本。&lt;/p&gt;
+
+&lt;p&gt;为了解决这三个问题，我做了两点改进。&lt;/p&gt;
+
+&lt;h4 id=&#34;使用-docker-编译&#34;&gt;使用 Docker 编译&lt;/h4&gt;
+
+&lt;p&gt;既然 Ubuntu 16.04 可以安装运行 texlive 16.04，何不使用 Docker 容器来运行？同时，为了避免安装没用的软件包，我花了一些时间找出了编译中文 LaTeX 的必要依赖和宏包，然后将安装和编译的过程写成一个脚本 &lt;code&gt;build.sh&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# install texlive 2015 and dependencies
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;apt-get update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;apt-get install -y --no-install-recommends &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-latex-extra &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-latex-recommended &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-fonts-extra &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-fonts-recommended &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-lang-chinese &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    texlive-formats-extra &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    lmodern &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    wget &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    xzdec
+
+&lt;span class=&#34;c1&#34;&gt;# intsall latex packages
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;tlmgr init-usertree
+tlmgr install ulem
+
+&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; resume/
+&lt;span class=&#34;c1&#34;&gt;# run xelatex
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;xelatex Resume.tex -interaction&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nonstopmode
+xelatex Resume_ZH.tex -interaction&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nonstopmode
+
+rm *.aux *.log *.out&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样，使用一个 Ubuntu 16.04 的容器运行该脚本就可以生成简历了。接着，我把 &lt;code&gt;.travis.yml&lt;/code&gt; 的 &lt;code&gt;before_install&lt;/code&gt; 和 &lt;code&gt;script&lt;/code&gt; 过程简化成下面的设置。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;services&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;script&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;docker&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;run&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;--rm&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;-v&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;$(pwd)/resume&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;/resume&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;ubuntu&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;xenial&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;bash&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/resume/build.sh&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume.pdf&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;mv&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;resume/Resume_ZH.pdf&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;Resume_ZH.pdf&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;主要过程就是创建一个 Ubuntu xenial 容器来运行 &lt;code&gt;build.sh&lt;/code&gt;。后面发布过程的设置和 1.0 版一样。&lt;/p&gt;
+
+&lt;p&gt;最后，使用 Docker 之后，不仅可以编译出格式满意的简历，而且我惊喜地发现整个构建过程耗时 3 分钟多，只有之前的 1/3。&lt;/p&gt;
+
+&lt;h4 id=&#34;build-tagged-commits-only&#34;&gt;Build tagged commits only&lt;/h4&gt;
+
+&lt;p&gt;为了避免不必要的构建，我在 &lt;code&gt;.travis.yml&lt;/code&gt; 中加入下面三行内容作为「白名单」，即使用正则表达式规定需要构建的 branches。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;branches&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;only&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;-&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;/^v&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;\d.&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;+\d$/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;需要注意的是，Travis-CI 把 git 的标签（tag）和分支（branch）都视作 branches，关于如何设置特定 branch 进行构建，可以参见&lt;a href=&#34;https://docs.travis-ci.com/user/customizing-the-build/#Building-Specific-Branches&#34;&gt;Travis-CI 的官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;这样，我平时可以正常地提交更新而不会触发 Travis-CI。需要发布新的简历时，按照 &lt;code&gt;^v[\d.]+\d$&lt;/code&gt; 的格式，比如 &lt;code&gt;v1.2.1&lt;/code&gt;，加一个标签再提交即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git add -a
+git commit -m &lt;span class=&#34;s2&#34;&gt;&amp;#34;Message&amp;#34;&lt;/span&gt;
+git tag v1.2.1
+git push -u origin master --tags&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+          </item>
+        
+      
+    
+      
+    
+      
+        
+          <item>
+            <title>如何选择开源项目的证书</title>
+            <link>https://yumminhuang.github.io/post/chooseaopensourcelicense/</link>
+            <pubDate>Fri, 18 Dec 2015 10:27:50 -0500</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/chooseaopensourcelicense/</guid>
+            <description>&lt;p&gt;世界上的开源许可证有很多。除了常见的 &lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;Apache&lt;/a&gt;，&lt;a href=&#34;http://en.wikipedia.org/wiki/BSD_licenses&#34;&gt;BSD&lt;/a&gt;， &lt;a href=&#34;https://en.wikipedia.org/wiki/MIT_License&#34;&gt;MIT&lt;/a&gt; 等之外，还有一些奇特的证书，比如 &lt;a href=&#34;http://www.wtfpl.net/&#34;&gt;WTFPL (Do What the Fuck You Want to Public License)&lt;/a&gt;。Github 还专门做了一个&lt;a href=&#34;http://choosealicense.com/&#34;&gt;网站&lt;/a&gt; 介绍了常见的开源证书。&lt;/p&gt;
 
 &lt;p&gt;然而开源证书虽多，却很少有人会仔细研究证书上的法律条文，搞清楚它们的区别。我最近看了 Github 的网站，又看了一些网上的文章，稍稍研究了几个常用证书的区别，以及如何为开源项目选择证书。故撰此文以供参考。&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Site Reliability Engineer Interview</title>
-      <link>https://yumminhuang.github.io/note/sreinterview/</link>
-      <pubDate>Thu, 03 Dec 2015 23:35:42 -0500</pubDate>
-      
-      <guid>https://yumminhuang.github.io/note/sreinterview/</guid>
-      <description>&lt;p&gt;Recently, I had a phone interview for a position of Site Reliability Engineer. They asked me four questions in 60 minutes. I was asked to writing code on &lt;a href=&#34;http://collabedit.com/&#34;&gt;collabedit&lt;/a&gt;
-Because Site Reliability Team of that company uses Python and I also prefer to Python, so all solutions are written in Python.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Calculating Quantiles</title>
-      <link>https://yumminhuang.github.io/note/calculatingquantiles/</link>
-      <pubDate>Thu, 03 Dec 2015 21:12:18 -0500</pubDate>
+&lt;p&gt;如果开源的内容不是代码，可以选择&lt;a href=&#34;http://creativecommons.org/&#34;&gt;知识共享许可协议&lt;/a&gt;。针对是否需要署名使用，是否可以商用等问题，知识共享许可协议有许多不同的版本，可以访问&lt;a href=&#34;http://creativecommons.org/choose/&#34;&gt;链接&lt;/a&gt;来选择一个合适的知识共享许可协议。&lt;/p&gt;
+
+&lt;p&gt;关于开源的代码，可以依次回答以下的问题来确定开源证书。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;是否允许他人闭源使用你的代码？
+
+&lt;ul&gt;
+&lt;li&gt;是：继续回答问题2&lt;/li&gt;
+&lt;li&gt;否：&lt;a href=&#34;http://www.gnu.org/licenses/gpl-3.0.en.html&#34;&gt;GPL&lt;/a&gt; (The GNU General Public License)&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;如果他人修改了你的代码，是否需要了解修改？
+
+&lt;ul&gt;
+&lt;li&gt;是：&lt;a href=&#34;https://www.eclipse.org/legal/epl-v10.html&#34;&gt;EPL&lt;/a&gt; (Eclipse Public License)&lt;/li&gt;
+&lt;li&gt;否：继续回答问题3&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;是否打算为代码注册专利？
+
+&lt;ul&gt;
+&lt;li&gt;是：Apache License&lt;/li&gt;
+&lt;li&gt;否：继续回答问题4&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;他人发布时是否需要显式地附带你的证书？
+
+&lt;ul&gt;
+&lt;li&gt;是：BSD License&lt;/li&gt;
+&lt;li&gt;否：MIT License&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;我没有研究各个开源证书的条文，以上内容也只是我的个人理解，难免有错误之处。所以，为一个正式的项目选择开源证书之前，最好还是仔细确认一遍。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;GPL &lt;a href=&#34;https://opensource.org/licenses/gpl-license&#34;&gt;不同的版本之间也有区别&lt;/a&gt;，其中细微的差别对我来说实在难以理解。总之，GPL 是一个 &lt;a href=&#34;http://www.gnu.org/licenses/copyleft.html&#34;&gt;copyleft&lt;/a&gt; 的协议。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+          </item>
+        
       
-      <guid>https://yumminhuang.github.io/note/calculatingquantiles/</guid>
-      <description>&lt;p&gt;This problem is from my recent online coding test. I didn&amp;rsquo;t solve it in the limited time cause I used a wrong way. When I realize that, I don&amp;rsquo;t have enough time to fix it. I feel regretful for failing the test.
-&lt;/p&gt;</description>
-    </item>
     
-    <item>
-      <title>将博客由 Pelican 迁移到 Hugo</title>
-      <link>https://yumminhuang.github.io/post/migratetohugo/</link>
-      <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/post/migratetohugo/</guid>
-      <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
-&lt;/p&gt;</description>
-    </item>
     
-    <item>
-      <title>One Trick for Debugging Python</title>
-      <link>https://yumminhuang.github.io/note/pythondebugtrick/</link>
-      <pubDate>Mon, 11 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/pythondebugtrick/</guid>
-      <description>I just learned one trick for debugging Python script from my colleague. It&amp;rsquo;s not such magical maybe most of Pythonistee have already used it everyday), but I think it is very useful to debug Python script.
-I only need to add single line at the position I want to break.
-import code; code.interact(local=locals()) After that, run Python script as usual. Python Interpreter will stop at your break point and launch a REPL (Read–eval–print loop) console.</description>
-    </item>
     
-    <item>
-      <title>Yelp Interview Problem</title>
-      <link>https://yumminhuang.github.io/note/yelpinterviewproblem/</link>
-      <pubDate>Tue, 18 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/yelpinterviewproblem/</guid>
-      <description>&lt;p&gt;Today, I had a skype interview with Yelp.
-&lt;/p&gt;</description>
-    </item>
+        
+          <item>
+            <title>将博客由 Pelican 迁移到 Hugo</title>
+            <link>https://yumminhuang.github.io/post/migratetohugo/</link>
+            <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/migratetohugo/</guid>
+            <description>&lt;p&gt;前两天花了一些时间研究了一下 &lt;a href=&#34;https://gohugo.io/overview/introduction/&#34;&gt;Hugo 的文档&lt;/a&gt;，并且把博客从 &lt;a href=&#34;http://blog.getpelican.com/&#34;&gt;Pelican&lt;/a&gt; 迁移到 Hugo。
+&lt;/p&gt;
+
+&lt;p&gt;Pelican 是一个优秀的静态博客生成器。当初选用 Pelican 的主要是因为它是用 Python 开发的，而我又对 Python 比较熟悉。而且 Pelican 有很多由第三方开发者制作的插件提供了更多的功能。但是长期使用的过程中还是有一些小小的麻烦。当初，我想给博客里的中文文章添加&lt;a href=&#34;https://css.hanzi.co/&#34;&gt;「汉字标准格式」&lt;/a&gt; 这个框架，需要向模版里添加一段引入 CSS 和 JS 代码。但是 Pelican 的模版不易更改，我需要为了修改一两行 HTML 文件 Fork 之前的模版，方法既不优雅，维护成本又很高。另外，Pelican 的模版似乎是全局性的，所有的页面都使用相同的模版。&lt;/p&gt;
+
+&lt;p&gt;后来，无意之间发现 Hugo 在配置和文件结构上和 Pelican 有很大的不同，大大地提高了可配置性，可以解决上述的两个问题。此外，第一次看到  &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo 官网&lt;/a&gt;的首页的时候，看上去非常漂亮，令人印象深刻。&lt;/p&gt;
+
+&lt;p&gt;使用 &lt;code&gt;hugo new site SITE_DIR&lt;/code&gt; 新建一个 Hugo 之后，生成以下路径：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;.
+├── archetypes/
+├── config.toml
+├── content/
+├── data/
+├── layouts/
+└── static/&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;config.toml&lt;/code&gt; 用来存放设置。&lt;code&gt;content/&lt;/code&gt; 里存放的是文章，&lt;code&gt;data/&lt;/code&gt; 用来存放一些数据。 &lt;code&gt;static/&lt;/code&gt; 里是需要引入的 CSS 或图片之类的文件。如果需要添加现场的主题模版，可以添加到 &lt;code&gt;themes/&lt;/code&gt; 里并在&lt;code&gt;config.toml&lt;/code&gt; 里设置。这些内容和 Pelican、Jekyll 一样，有的也可以望文生义，猜到大致的作用。&lt;/p&gt;
+
+&lt;p&gt;加下来着重介绍的是 &lt;code&gt;layouts/&lt;/code&gt;，这里定义了博客的模版，是自定义 Hugo 最重要的部分。和 Pelican 有很大不同的地方是，Hugo 可以自定义文章的类型（ Type ）。不同的类型可以使用不同的模版。比如，除了第三方主题提供的文章类型，我还想为中文文章新建一个类型 &lt;code&gt;zhpost&lt;/code&gt;。只需要在 &lt;code&gt;layouts/&lt;/code&gt; 下新建一个 &lt;code&gt;zhpost/&lt;/code&gt;。接着，我可以设置中文文章的样式，只需新建一个 &lt;code&gt;single.html&lt;/code&gt; 就可以了。我也因此可以在&lt;code&gt;layouts/zhpost/single.html&lt;/code&gt; 里引入「汉字标准格式」的 CSS 和 JS。另外，对于第三方主题的模版不满意的话还可以按照相同的路径重写一个。Hugo 会优先读取根目录下 &lt;code&gt;layouts/&lt;/code&gt; 里的设置。具体来说，&lt;code&gt;layouts/post/single.html&lt;/code&gt; 可以覆盖 &lt;code&gt;themes/THEME/layouts/post/single.html&lt;/code&gt;。这样我就可以很容易的替换不满意的模版了。&lt;/p&gt;
+
+&lt;p&gt;Hugo 的可定制性非常高，从 404 页面，到文章列表的页面都可以修改，而且可以做到不同类型的文章使用不一样的样式。具体的配置需要参考&lt;a href=&#34;http://themes.gohugo.io/&#34;&gt;第三方的主题&lt;/a&gt;的设置和 Hugo 的文档。&lt;/p&gt;
+
+&lt;p&gt;值得一提的是，Go 的模版语言可读性很高，几乎不需要花额外的时间学习。我对照着别人开发的主题照葫芦画瓢就完成了模版的定义和修改。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;archetypes/&lt;/code&gt;，用来存放定义的「原型」。原型的作用是自动添加文字的元数据。比如，我想每次创建 &lt;code&gt;post&lt;/code&gt; 类文章的时候都自动添加元数据，只需要在 &lt;code&gt;archetypes/&lt;/code&gt; 里添加一个 &lt;code&gt;post.md&lt;/code&gt;，并加入以下内容：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;+++
+title = &amp;#34;my new post&amp;#34;
+date = &amp;#34;2015-01-12T19:20:04-07:00&amp;#34;
+tags = [&amp;#34;x&amp;#34;, &amp;#34;y&amp;#34;]
+categories = [&amp;#34;x&amp;#34;, &amp;#34;y&amp;#34;]
++++&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样每次运行 &lt;code&gt;hugo new post/ARTICLE.md&lt;/code&gt; 的时候都可以自动添加上面的元数据。&lt;/p&gt;
+
+&lt;p&gt;Hugo 另外的一个优点是生成博客的速度非常快，生成一个网页的速度可以达到毫秒级别。如果博客的内容很多，Hugo 要比 Pelican、Jekyll 等由动态语言写成的博客生成器有很大的优势。&lt;/p&gt;
+
+&lt;p&gt;当然，Hugo 也有不足。比如，Hugo 默认是不支持代码高亮的，需要额外设置。此外，在 Pelican 里，可以通过 &lt;a href=&#34;https://github.com/yuex/cjk-auto-spacing&#34;&gt;cjk-auto-spacing&lt;/a&gt; 插件来自动在英文单词和汉字之间插入空格，这对于有大量中英文混排的技术笔记来说非常方便。但是，目前我还没有找到 Hugo 有类似的解决方法，暂时只能在写文章的时候手工加入空格。&lt;/p&gt;
+
+&lt;p&gt;刚开始使用 Hugo，有一些诸如 Taxonomies，Section 之类的功能还没有仔细研究。这篇文章也是草草完成，不慎严谨，俟后完善。&lt;/p&gt;</description>
+          </item>
+        
+      
     
-    <item>
-      <title>Objective-C 语法总结</title>
-      <link>https://yumminhuang.github.io/post/objective-creference/</link>
-      <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/post/objective-creference/</guid>
-      <description>&lt;p&gt;最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。&lt;/p&gt;
+    
+      
+    
+      
+        
+          <item>
+            <title>Objective-C 语法总结</title>
+            <link>https://yumminhuang.github.io/post/objective-creference/</link>
+            <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/objective-creference/</guid>
+            <description>&lt;p&gt;最近在学习 Objective-C。产生学习 Objective-C 的想法已经很久了，但是以前每次看到 Objective-C 代码就会觉得语法非常奇怪，于是学习的动力就受到的打击。恰逢放假，可以平心静气地学习 Objective-C。&lt;/p&gt;
 
 &lt;p&gt;在看过了 Objective-C 的基本语法之后，明白了为什么之前会觉得 Objective-C 的语法奇怪。绝大部分的面向对象的程序语言，包括 C++、Java、Python 等在调用方法的格式都是 &lt;code&gt;object.method(argument1, argument2...)&lt;/code&gt;。然而 Objective-C 的格式却是 &lt;code&gt;[object method: argument1 andArg: argument2...]&lt;/code&gt;。所以长期使用 C++, Java 的程序员在第一次看到 Objective-C 代码时，对这些语法肯定有一些不适应。但是适应这些语法并仔细研究之后感觉 Objective-C 的语法也有它的优点。
-&lt;/p&gt;</description>
-    </item>
+&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;废话不多说，上干货。下面以 Java 作比对，总结一下 Objective-C 的语法。&lt;/p&gt;
+
+&lt;h3 id=&#34;1-基本语法&#34;&gt;1. 基本语法&lt;/h3&gt;
+
+&lt;h4 id=&#34;1-1-创建对象&#34;&gt;1.1 创建对象&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MyClass&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;MyClass&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MyClass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;alloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;1-2-调用方法&#34;&gt;1.2 调用方法&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;method1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 没有参数
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;method2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arg1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 一个参数
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;method3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arg1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arg2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;多个参数&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 没有参数
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;method2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arg1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 一个参数
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;obj&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;method3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;arg2&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;andArg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arg2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;多个参数&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;2-类的定义&#34;&gt;2. 类的定义&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MyClass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;extend&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SuperClass&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;attr1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;;&lt;/span&gt;
+
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;method1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Objectove-C 定义一个类时需要两个文件，分别是负责声明的 Header File 和负责具体实现的 Implementation File。&lt;/p&gt;
+
+&lt;p&gt;MyClass.h&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;MyClass&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SuperClass&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;attr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;method2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arg1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;method3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arg1&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;andArg&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;NSString&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;arg2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;classMethod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 相当于 Java 中的 static 方法
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;MyClass.m&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#import&amp;#34;MyClass.h&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;implementation&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MyClass&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;method1&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;...&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;此外，Objective-C 还有一个非常方便的 “语法糖”——&lt;code&gt;@property&lt;/code&gt; 和 &lt;code&gt;@synthesize&lt;/code&gt; 两个关键字。使用这两个关键字之后可以让编译好器自动编写一个与数据成员同名的方法声明从而省去读写方法的声明。
+在头文件中加上 &lt;code&gt;@property int attr1;&lt;/code&gt; 就等同于声明了两个方法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;	&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;attr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+	&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;setAttr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newAttr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;实现文件里加上 &lt;code&gt;@synthesize attr1;&lt;/code&gt; 就等同于定义了两个方法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;attr1&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;attr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;setAttr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;newAttr1&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+   	&lt;span class=&#34;n&#34;&gt;attr1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;newAttr1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;3-协议-接口-的定义&#34;&gt;3. 协议（接口）的定义&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Java:&lt;/strong&gt;
+定义接口&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MyInterface&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;aInterfaceMethod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+	&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;anotherInterfaceMethod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;();&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;实现接口&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MyClass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;extend&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SuperClass&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;implements&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MyInterface&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;// method declarations
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Objective-C:&lt;/strong&gt;
+在 Objective-C 中，用关键字 &lt;code&gt;@protocol&lt;/code&gt; 定义协议，也就是 Java 中的接口。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;protocol&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MyProtocol&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;aProtocolMethod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;anotherProcotolMethod&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;当一个类需要实现协议时，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#import &amp;#34;MyProtocol.h&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interface&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;MyClass&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SuperClass&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MyProtocol&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AnotherProtocol&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;// method declarations
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;由于我也是初学 Objective-C，难免有错误和总结不全面的地方，恳请指正。&lt;/p&gt;</description>
+          </item>
+        
+      
     
   </channel>
 </rss>

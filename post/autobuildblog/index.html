@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="自动构建 Github Pages 博客">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>自动构建 Github Pages 博客 &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>自动构建 Github Pages 博客</h3>
+				<span class="label label-primary">Sat, Nov 12, 2016</span> in 
+				
+					
+					<a href="/categories/miscellaneous">Miscellaneous</a>
+				 using tags
+				
+					
+					<a href="/tags/ci">CI</a>
+				
+					 , 
+					<a href="/tags/docker">Docker</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			<p>之前曾经写过了一篇 <a href="https://yumminhuang.github.io/post/AutoBuildResume/">使用 Travis CI 和 Docker 自动构建 LaTeX 简历</a>，介绍了使用 Travis CI 和 Docker 自动构建和发布 LaTeX 简历的方法。</p>
+
+<p>以前每次写了新文章之后，都需要在笔记本上运行一下 Hugo 再将生成的网页上传到 Github。虽然使用脚本也可以做到一键发布，但总觉得不够流畅。昨天，我又使用了同样的方法，将基于 Github Pages 的博客也实现了自动构建和发布。</p>
+
+<p></p>
+
+<h3 id="整理工作">整理工作</h3>
+
+<p>之前，为了搭建 <a href="https://pages.github.com/">Github Pages</a> 的博客，我创建了两个代码库。一个是存放网站的 yumminhuang.github.io.git，另外一个是存放 Hugo 配置和文章的 Blog.git。每次发布一篇文章，都需要同步两个代码库。</p>
+
+<p>两个代码库也没有必要。于是我把 Blog.git 库删除了，把 Hugo 的配置和文章都存放在了 yumminhuang.github.io.git 的 source 分支里。</p>
+
+<p>当然，还是有必要保留以前提交的历史记录。大概的操作流程是：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git clone git@github.com/yumminhuang/Blog.git
+<span class="nb">cd</span> Blog
+<span class="c1"># Delete the old remote
+</span><span class="c1"></span>git remote rm origin
+<span class="c1"># Add a new remote
+</span><span class="c1"></span>git remote add origin git@github.com:yumminhuang/yumminhuang.github.io.git
+<span class="c1"># (Optional) Modify .git/config for submodules, etc
+</span><span class="c1"></span>vi .git/config
+<span class="c1"># Create the new branch and switch to it
+</span><span class="c1"></span>git checkout -b <span class="nb">source</span>
+<span class="c1"># Push the new branch to remote
+</span><span class="c1"></span>git push origin source</code></pre></div>
+<p>这样，原来 Blog.git 里的内容和提交历史就保存到了 yumminhuang.github.io.git 的 source 分支里。</p>
+
+<h3 id="docker-for-hugo">Docker for Hugo</h3>
+
+<p>接下来的任务就是创建一个 Docker 容器来生成网页。参考了一些网上的 Hugo Dockerfile 之后，我写了如下的一个 <a href="https://github.com/yumminhuang/hugo-docker">Dockerfile</a> 用来生成 Docker Image。 这个 Image 只安装了 Hugo，比较小巧，压缩后只有 8MB，很适合用来在 CI 系统上使用。</p>
+<div class="highlight"><pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> alpine:latest</span><span class="err">
+</span><span class="err"></span><span class="k">MAINTAINER</span><span class="s"> Yaming Huang &lt;yumminhuang@gmail.com&gt;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span>ARG <span class="nv">HUGO_VERSION</span><span class="o">=</span><span class="m">0</span>.17<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> apk add --update wget ca-certificates <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  <span class="nb">cd</span> /tmp/ <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  wget https://github.com/spf13/hugo/releases/download/v<span class="si">${</span><span class="nv">HUGO_VERSION</span><span class="si">}</span>/hugo_<span class="si">${</span><span class="nv">HUGO_VERSION</span><span class="si">}</span>_Linux-64bit.tar.gz <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  tar xzf hugo_<span class="si">${</span><span class="nv">HUGO_VERSION</span><span class="si">}</span>_Linux-64bit.tar.gz <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  rm -r hugo_<span class="si">${</span><span class="nv">HUGO_VERSION</span><span class="si">}</span>_Linux-64bit.tar.gz <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  mv hugo*/hugo* /usr/bin/hugo <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  apk del wget ca-certificates <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>  rm /var/cache/apk/*<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">VOLUME</span><span class="s"> /website</span><span class="err">
+</span><span class="err"></span><span class="k">VOLUME</span><span class="s"> /public</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /website</span><span class="err">
+</span><span class="err"></span><span class="k">ENTRYPOINT</span><span class="s"> [&#34;/usr/bin/hugo&#34;]</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 1313</span></code></pre></div>
+<p>Build 之后生成 <code>yumminhuang/hugo-docker</code>， 这样每次运行一条命令，就可以生成网页到 <code>public</code> 目录下。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/website yumminhuang/hugo:latest</code></pre></div>
+<p>还可以运行如下的命令用来看网页生成的效果。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -p <span class="m">1313</span>:1313 -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/website yumminhuang/hugo:latest server --bind<span class="o">=</span><span class="m">0</span>.0.0.0 -w -D</code></pre></div>
+<h3 id="travis-ci">Travis CI</h3>
+
+<p>接下来是设置 Travis CI 来进行自动构建。</p>
+
+<p>首先，需要先到 Github 的<a href="https://github.com/settings/tokens">个人设置</a>页面去<a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">创建一个 “Personal Access Token”</a>。确保选择了 <code>repo</code> 下面的 <code>public_repo</code>。 创建出来的 “Personal Access Token” 可以用来读、写代码库，所以要妥善保管，不能外泄。</p>
+
+<p>接着，需要使用 <a href="https://github.com/travis-ci/travis.rb">Travis 命令行工具</a>来对包含新生成 “Personal Access Token”  的变量 <code>GIT_DEPLOY_REPO</code> 加密。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">travis encrypt <span class="nv">GIT_DEPLOY_REPO</span><span class="o">=</span>https://GENERATED_TOKEN@github.com/username/reponame.git</code></pre></div>
+<p><code>GIT_DEPLOY_REPO</code> 将用于把网页上传到 Github，后文会有提及。</p>
+
+<p>完整的 <code>.travis.yml</code> 如下所示。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">env<span class="p">:</span><span class="w">
+</span><span class="w">  </span>global<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>secure<span class="p">:</span><span class="w"> </span><span class="s2">&#34; LONG TOKEN &#34;</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>GIT_DEPLOY_DIR=public<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>GIT_DEPLOY_BRANCH=master<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>GIT_DEPLOY_USERNAME=<span class="s2">&#34;Travis CI&#34;</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>GIT_DEPLOY_EMAIL=yumminhuang@gmail.com<span class="w">
+</span><span class="w">
+</span><span class="w"></span>branches<span class="p">:</span><span class="w">
+</span><span class="w">  </span>only<span class="p">:</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>source<span class="w">
+</span><span class="w">
+</span><span class="w"></span>sudo<span class="p">:</span><span class="w"> </span>required<span class="w">
+</span><span class="w">
+</span><span class="w"></span>services<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>docker<span class="w">
+</span><span class="w">
+</span><span class="w"></span>install<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>public<span class="w"> </span>|<span class="sd">| exit 0
+</span><span class="sd">  - git config --global user.email &#34;yumminhuang@gmail.com&#34;
+</span><span class="sd">  - git config --global user.name &#34;Travis CI&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>script<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>$(pwd)<span class="p">:</span>/website<span class="w"> </span>yumminhuang/hugo<span class="p">:</span>latest<span class="w">
+</span><span class="w">
+</span><span class="w"></span>after_success<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>wget<span class="w"> </span>https<span class="p">:</span>//raw.githubusercontent.com/X<span class="m">1011</span>/git-directory-deploy/master/deploy.sh<span class="w"> </span>-O<span class="w"> </span>deploy.sh<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>bash<span class="w"> </span>deploy.sh<span class="w"> </span>-m<span class="w"> </span><span class="s2">&#34;updating blog `date`&#34;</span></code></pre></div>
+<p>在 <code>after_success</code>，也即 Hugo 完成网页生成之后，会使用 <a href="https://github.com/X1011/git-directory-deploy">X1011/git-directory-deploy</a> 里的 <code>deploy.sh</code> 将网页提交并上传到 Github。使用 <code>deploy.sh</code> 只需要设置这几个变量，就可以完成把一个目录同步到 Github 的功能。</p>
+
+<ul>
+<li><code>GIT_DEPLOY_REPO</code></li>
+<li><code>GIT_DEPLOY_DIR</code></li>
+<li><code>GIT_DEPLOY_BRANCH</code></li>
+<li><code>GIT_DEPLOY_USERNAME</code></li>
+<li><code>GIT_DEPLOY_EMAIL</code></li>
+</ul>
+
+<p>接下来，在 Travis CI 上完成授权，就能够在每次提交到 <code>source</code> 分支后出发自动构建了。</p>
+
+<h3 id="参考内容">参考内容</h3>
+
+<ol>
+<li><a href="http://speps.github.io/articles/hugo-setup/">Setup Hugo with Travis CI and GitHub Pages</a></li>
+<li><a href="http://blog.hypriot.com/post/static-website-generation-on-steriods-with-docker/">Static Website Generation on Steriods with Docker</a></li>
+<li><a href="https://github.com/jojomi/docker-hugo">jojomi/docker-hugo</a></li>
+</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2018 ~ Yaming Huang ~ Powered By <a href="http://gohugo.io/">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+

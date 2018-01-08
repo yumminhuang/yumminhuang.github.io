@@ -7,19 +7,109 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Sat, 27 Jun 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/programming/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/categories/programming/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Ruby 中的猴子补丁</title>
-      <link>https://yumminhuang.github.io/post/monkeypatchinruby/</link>
-      <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/post/monkeypatchinruby/</guid>
-      <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
-&lt;/p&gt;</description>
-    </item>
+        
+          <item>
+            <title>Ruby 中的猴子补丁</title>
+            <link>https://yumminhuang.github.io/post/monkeypatchinruby/</link>
+            <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/monkeypatchinruby/</guid>
+            <description>&lt;p&gt;之前一段时间，在实习工作当中，使用到了一种有些独特的编程技巧；而且该技巧又有一个奇特的名称：「猴子补丁」。
+&lt;/p&gt;
+
+&lt;h2 id=&#34;猴子补丁&#34;&gt;猴子补丁&lt;/h2&gt;
+
+&lt;p&gt;猴子补丁（&lt;a href=&#34;https://en.wikipedia.org/wiki/Monkey_patch&#34;&gt;Monkey Patch&lt;/a&gt;）是一种特殊的编程技巧。Monkey patch 可以用来在运行时动态地修改（扩展）类或模块。我们可以通过添加 Monkey Patch 来修改不满足自己需求的第三方库，也可以添加 Monkey Patch 零时修改代码中的错误。&lt;/p&gt;
+
+&lt;h3 id=&#34;词源&#34;&gt;词源&lt;/h3&gt;
+
+&lt;p&gt;Monkey patch 最早被称作 Guerrilla patch，形容这种补丁像游击队员一样狡猾。后来因为发音相似，被称为 Gorilla patch。因为大猩猩不够可爱，后改称为 Monkey patch。&lt;/p&gt;
+
+&lt;h3 id=&#34;使用场景&#34;&gt;使用场景&lt;/h3&gt;
+
+&lt;p&gt;以我的理解，Monkey patch 有两种使用场景：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;紧急的安全性补丁，即 Hotfix；&lt;/li&gt;
+&lt;li&gt;修改或扩展库中的属性和方法。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;在-ruby-中使用-monkey-patch&#34;&gt;在 Ruby 中使用 Monkey Patch&lt;/h2&gt;
+
+&lt;p&gt;我当时遇到的场景是这样的：&lt;/p&gt;
+
+&lt;p&gt;我司使用第三方库 &lt;a href=&#34;http://fog.io/&#34;&gt;fog&lt;/a&gt; 进行 EC2 的操作。创建实例等很多命令都需要设置实例类型这个参数。在 fog 里，EC2 的所有类型都定义在 &lt;code&gt;fog/aws/models/compute/flavors.rb&lt;/code&gt; 的 &lt;code&gt;FLAVORS&lt;/code&gt; 数组里。如果设置的类型不在 &lt;code&gt;FLAVORS&lt;/code&gt; 数组里，fog 都会视作是无效的参数而报错。&lt;/p&gt;
+
+&lt;p&gt;后来，亚马逊发布了新的实例类型 &lt;code&gt;D2&lt;/code&gt;。虽然 Ruby 的第三方社区非常活跃，但是 fog 的开发社区还是没有及时添加 D2 到 &lt;code&gt;flavors.rb&lt;/code&gt; 里；而我司的工作又迫切需要使用 D2 类型的实例。&lt;/p&gt;
+
+&lt;p&gt;背景交待完毕，接下来看看有什么样的解决方法。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;方法一&lt;/strong&gt;：我们可以向 fog 提交一个 Pull Request 来添加新类型。&lt;/p&gt;
+
+&lt;p&gt;但是这个方法行不通。我们使用的 &lt;a href=&#34;https://github.com/chef/knife-ec2&#34;&gt;knife-ec2&lt;/a&gt; 对 fog 的版本依赖必须是 &lt;code&gt;1.25.*&lt;/code&gt;，但是 fog 已经更新到了 &lt;code&gt;1.31.0&lt;/code&gt;，而且 fog 从 &lt;code&gt;1.27.0&lt;/code&gt; 开始结构上有很大的变化。显然，我们不可能再等 knife-ec2 升级支持新版本的 fog，所以我们提交 Pull Request 更新 fog 不能解决问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;方法二&lt;/strong&gt;：手动更新旧版 fog
+既然不能使用最新版的 fog，我们可以手动编辑 &lt;code&gt;1.25&lt;/code&gt; 版的 fog，再打包成 Gem 使用。这个方法比前一个方法更容易操作，但是带来的问题时不易于维护。为了一个极小的改动，把自己的代码加入到第三方库中总是让人觉得不够「干净」。&lt;/p&gt;
+
+&lt;p&gt;最后，在同事的指点下，我采用了第三种方法，即 &lt;strong&gt;Monkey Patch&lt;/strong&gt;。我在我司的 Ruby 项目里添加了一个文件 &lt;code&gt;lib/PROJECT_NAME/monkey_patches/flavors.rb&lt;/code&gt;，接着在文件中添加以下代码来修改 &lt;code&gt;fog/aws/models/compute/flavors&lt;/code&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;nb&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;fog/aws/models/compute/flavors&amp;#39;&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Object&lt;/span&gt;
+
+  &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;redef_without_warning&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;mod&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_a?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Module&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;?&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;self&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;class&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:remove_const&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;const_defined?&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;mod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;const_set&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;Fog&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;Compute&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;AWS&lt;/span&gt;
+      &lt;span class=&#34;no&#34;&gt;NEW_FLAVORS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;FLAVORS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;ss&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;d2.xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+          &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;ss&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;d2.2xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+          &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;ss&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;d2.4xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+          &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+          &lt;span class=&#34;ss&#34;&gt;:id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;d2.8xlarge&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+          &lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+      &lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+
+      &lt;span class=&#34;n&#34;&gt;redef_without_warning&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;:FLAVORS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;no&#34;&gt;NEW_FLAVORS&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;通过在自己的代码中添加一个 Monkey patch，我们成功地实现了向 fog 中动态添加新实例类型。我司终于可以使用 fog 创建 D2 类型的机器了；而且这个方法改动的代码量最小，也更加容易维护。&lt;/p&gt;
+
+&lt;p&gt;Monkey Patch 并非是完美的解决方法，它会引入一些&lt;a href=&#34;https://en.wikipedia.org/wiki/Monkey_patch#Pitfalls&#34;&gt;陷阱&lt;/a&gt;。所以这个技巧在软件工程领域还有一些争议。不过，我还是觉得 Monkey Patch 是一个不错的零时性解决方法。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.justinweiss.com/blog/2015/01/20/3-ways-to-monkey-patch-without-making-a-mess/&#34;&gt;3 Ways to Monkey-patch Without Making a Mess&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://devblog.avdi.org/2008/02/23/why-monkeypatching-is-destroying-ruby/&#34;&gt;Monkeypatching is Destroying Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+          </item>
+        
+      
     
   </channel>
 </rss>

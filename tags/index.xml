@@ -7,189 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Sat, 02 Aug 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Aws</title>
-      <link>https://yumminhuang.github.io/tags/aws/</link>
-      <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/aws/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Boto</title>
-      <link>https://yumminhuang.github.io/tags/boto/</link>
-      <pubDate>Sat, 02 Aug 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/boto/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Ci</title>
-      <link>https://yumminhuang.github.io/tags/ci/</link>
-      <pubDate>Sat, 12 Nov 2016 12:31:51 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/ci/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Devops</title>
-      <link>https://yumminhuang.github.io/tags/devops/</link>
-      <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/devops/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Docker</title>
-      <link>https://yumminhuang.github.io/tags/docker/</link>
-      <pubDate>Fri, 13 Oct 2017 22:26:29 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/docker/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Fabric</title>
-      <link>https://yumminhuang.github.io/tags/fabric/</link>
-      <pubDate>Thu, 16 Apr 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/fabric/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Gerrit</title>
-      <link>https://yumminhuang.github.io/tags/gerrit/</link>
-      <pubDate>Sun, 10 Sep 2017 11:31:51 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/gerrit/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Git</title>
-      <link>https://yumminhuang.github.io/tags/git/</link>
-      <pubDate>Sat, 13 Feb 2016 16:36:21 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/git/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Go</title>
-      <link>https://yumminhuang.github.io/tags/go/</link>
-      <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/go/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Grafana</title>
-      <link>https://yumminhuang.github.io/tags/grafana/</link>
-      <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/grafana/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Graphite</title>
-      <link>https://yumminhuang.github.io/tags/graphite/</link>
-      <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/graphite/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Hugo</title>
-      <link>https://yumminhuang.github.io/tags/hugo/</link>
-      <pubDate>Fri, 13 Nov 2015 09:38:53 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/hugo/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Interview</title>
-      <link>https://yumminhuang.github.io/tags/interview/</link>
-      <pubDate>Fri, 18 Dec 2015 16:53:33 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/interview/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Jenkins</title>
-      <link>https://yumminhuang.github.io/tags/jenkins/</link>
-      <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/jenkins/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Linux</title>
-      <link>https://yumminhuang.github.io/tags/linux/</link>
-      <pubDate>Sun, 29 Mar 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/tags/linux/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Objective C</title>
-      <link>https://yumminhuang.github.io/tags/objective-c/</link>
-      <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://yumminhuang.github.io/tags/objective-c/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://yumminhuang.github.io/tags/python/</link>
-      <pubDate>Fri, 18 Dec 2015 16:53:33 -0500</pubDate>
-      
-      <guid>https://yumminhuang.github.io/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ruby</title>
-      <link>https://yumminhuang.github.io/tags/ruby/</link>
-      <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://yumminhuang.github.io/tags/ruby/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Sensu</title>
-      <link>https://yumminhuang.github.io/tags/sensu/</link>
-      <pubDate>Sat, 04 Apr 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://yumminhuang.github.io/tags/sensu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Shell</title>
-      <link>https://yumminhuang.github.io/tags/shell/</link>
-      <pubDate>Thu, 31 Jul 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://yumminhuang.github.io/tags/shell/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

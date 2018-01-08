@@ -7,54 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Fri, 18 Dec 2015 16:53:33 -0500</lastBuildDate>
+    <atom:link href="/tags/interview/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Two Coding Problems</title>
-      <link>https://yumminhuang.github.io/note/codingproblems/</link>
-      <pubDate>Fri, 18 Dec 2015 16:53:33 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/codingproblems/</guid>
-      <description>Two coding problems I encountered in a recent interview.
-Problem 1  Problem: Print a binary tree row-by-row, from top to bottom.
-Example:
- Input: Binary tree 3 / \ 1 4 \ \ 2 5 Output: 3, 1, 4, 2, 5 Solution
-class Node(object): def __init__(self, value, left=None, right=None): self.value = value self.left = left self.right = right def traverse(rootnode): # The list to save all visited nodes visited = list() # BFS thislevel = [rootnode] while thislevel: nextlevel = list() for n in thislevel: visited.</description>
-    </item>
     
-    <item>
-      <title>Site Reliability Engineer Interview</title>
-      <link>https://yumminhuang.github.io/note/sreinterview/</link>
-      <pubDate>Thu, 03 Dec 2015 23:35:42 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/sreinterview/</guid>
-      <description>&lt;p&gt;Recently, I had a phone interview for a position of Site Reliability Engineer. They asked me four questions in 60 minutes. I was asked to writing code on &lt;a href=&#34;http://collabedit.com/&#34;&gt;collabedit&lt;/a&gt;
-Because Site Reliability Team of that company uses Python and I also prefer to Python, so all solutions are written in Python.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
     
-    <item>
-      <title>Calculating Quantiles</title>
-      <link>https://yumminhuang.github.io/note/calculatingquantiles/</link>
-      <pubDate>Thu, 03 Dec 2015 21:12:18 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/calculatingquantiles/</guid>
-      <description>&lt;p&gt;This problem is from my recent online coding test. I didn&amp;rsquo;t solve it in the limited time cause I used a wrong way. When I realize that, I don&amp;rsquo;t have enough time to fix it. I feel regretful for failing the test.
-&lt;/p&gt;</description>
-    </item>
     
-    <item>
-      <title>Yelp Interview Problem</title>
-      <link>https://yumminhuang.github.io/note/yelpinterviewproblem/</link>
-      <pubDate>Tue, 18 Nov 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/yelpinterviewproblem/</guid>
-      <description>&lt;p&gt;Today, I had a skype interview with Yelp.
-&lt;/p&gt;</description>
-    </item>
     
   </channel>
 </rss>

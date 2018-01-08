@@ -7,81 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Tue, 02 Jun 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title></title>
-      <link>https://yumminhuang.github.io/categories/</link>
-      <pubDate>Tue, 02 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Devops</title>
-      <link>https://yumminhuang.github.io/categories/devops/</link>
-      <pubDate>Sat, 05 Mar 2016 17:29:12 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/devops/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Gerrit</title>
-      <link>https://yumminhuang.github.io/categories/gerrit/</link>
-      <pubDate>Sat, 03 Dec 2016 14:21:57 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/gerrit/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Link</title>
-      <link>https://yumminhuang.github.io/categories/link/</link>
-      <pubDate>Mon, 08 Jan 2018 21:51:56 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/link/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Linux</title>
-      <link>https://yumminhuang.github.io/categories/linux/</link>
-      <pubDate>Sun, 29 Mar 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/linux/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Miscellaneous</title>
-      <link>https://yumminhuang.github.io/categories/miscellaneous/</link>
-      <pubDate>Sun, 31 Dec 2017 17:25:51 +0800</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/miscellaneous/</guid>
-      <description></description>
-    </item>
     
-    <item>
-      <title>Programming</title>
-      <link>https://yumminhuang.github.io/categories/programming/</link>
-      <pubDate>Sat, 27 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/categories/programming/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>随笔</title>
-      <link>https://yumminhuang.github.io/categories/%E9%9A%8F%E7%AC%94/</link>
-      <pubDate>Mon, 07 Mar 2016 16:18:47 -0500</pubDate>
-      
-      <guid>https://yumminhuang.github.io/categories/%E9%9A%8F%E7%AC%94/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

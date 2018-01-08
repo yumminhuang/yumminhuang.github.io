@@ -7,23 +7,117 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Wed, 08 Apr 2015 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/graphite/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/tags/graphite/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Graphite 和 Grafana 简介</title>
-      <link>https://yumminhuang.github.io/post/graphiteandgrafana/</link>
-      <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/post/graphiteandgrafana/</guid>
-      <description>&lt;h2 id=&#34;graphite&#34;&gt;Graphite&lt;/h2&gt;
+        
+          <item>
+            <title>Graphite 和 Grafana 简介</title>
+            <link>https://yumminhuang.github.io/post/graphiteandgrafana/</link>
+            <pubDate>Wed, 08 Apr 2015 00:00:00 +0000</pubDate>
+            
+            <guid>https://yumminhuang.github.io/post/graphiteandgrafana/</guid>
+            <description>&lt;h2 id=&#34;graphite&#34;&gt;Graphite&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://graphite.wikidot.com/start&#34;&gt;Graphite&lt;/a&gt; 是一款开源的监控绘图工具。&lt;/p&gt;
 
 &lt;p&gt;Graphite 可以实时收集、存储、显示时间序列类型的数据（time series data）。它主要有三个部分构成：
-&lt;/p&gt;</description>
-    </item>
+&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/graphite-project/carbon&#34;&gt;carbon&lt;/a&gt;&lt;/strong&gt; —— 基于 &lt;a href=&#34;https://twistedmatrix.com/trac/&#34;&gt;Twisted&lt;/a&gt; 的进程，用来接收数据；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/graphite-project/whisper&#34;&gt;whisper&lt;/a&gt;&lt;/strong&gt; —— 专门存储时间序列类型数据的小型数据库；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/graphite-project/graphite-web&#34;&gt;graphite webapp&lt;/a&gt;&lt;/strong&gt; —— 基于 Django 的网页应用程序。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/graphite-project/graphite-web/master/webapp/content/img/overview.png&#34; alt=&#34;Graphite Overview&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;向graphite发送数据&#34;&gt;向Graphite发送数据&lt;/h3&gt;
+
+&lt;p&gt;Graphite 的使用非常简单。我们可以定义一个被观测量（Metric）。Metric 使用键／值的数据类型。只要不断发送&lt;code&gt;观测量: 观测值&lt;/code&gt;这一键值组合，就可以得到以时间为X轴，观测值为 Y 轴的图。&lt;/p&gt;
+
+&lt;p&gt;当我们使用诸如 collectd、Sensu 之类的工具收集到数据之后，只需要向 Graphite 的服务器发送以下格式的 TCP 报文即可：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&amp;lt;metric name&amp;gt; &amp;lt;metric value&amp;gt; &amp;lt;metric timestamp&amp;gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;例如，有一个 Metric 叫作 &lt;code&gt;local.metric.random&lt;/code&gt;，可以用下面的 Bash 命令发送当前时刻的值 &lt;code&gt;4&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;nv&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2003&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;graphite.your.org
+&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;local.metric.random 4 `date +%s`&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; nc -q0 &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;SERVER&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;PORT&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;类似地，使用其它编程语言时，可以使用 Socket 发送数据。&lt;/p&gt;
+
+&lt;p&gt;另外，Graphite 的 Metric 名称支持以 &lt;code&gt;.&lt;/code&gt; 作为分隔符的多级嵌套。例如我可以定义下面三个 Metric。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;webserver.system.cpu_usage&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;webserver.system.mem_load&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;webserver.network.input&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Graphite 将以树型结构展示这三个 Metric。因此，使用 Graphite 的第一步就是给 Metric 选取一个合适的名称。关于如何组织 Metric 的名称，可以参阅文章 &lt;a href=&#34;http://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/&#34;&gt;Practical Guide to StatsD/Graphite Monitoring&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h3 id=&#34;graphite-event&#34;&gt;Graphite Event&lt;/h3&gt;
+
+&lt;p&gt;除了支持简单的键／值数据类型，Graphite 还可以通过 &lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html#graphite.render.functions.events&#34;&gt;Events&lt;/a&gt; 来存储更复杂的数据。简而言之，Graphite Events 使用了 &lt;code&gt;tag&lt;/code&gt; 和 &lt;code&gt;data&lt;/code&gt; 两个键来存储更多的信息。&lt;/p&gt;
+
+&lt;p&gt;我们可以使用 HTTP POST 向 Graphite 发送一个 Event。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;curl -X POST &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://graphite.your.org/events&amp;#34;&lt;/span&gt; -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver&amp;#34;, &amp;#34;data&amp;#34;: &amp;#34;Deploy webserver&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;下文将会通过一个具体的实例来介绍Events的使用场景。&lt;/p&gt;
+
+&lt;h2 id=&#34;grafana&#34;&gt;Grafana&lt;/h2&gt;
+
+&lt;p&gt;鉴于 Graphite 的界面过于简单，功能比较单一，可以使用 &lt;a href=&#34;http://grafana.org/&#34;&gt;Grafana&lt;/a&gt; 作为 Graphite 的控制台。 Grafana 是一款开源的图形控制台，有很多&lt;a href=&#34;http://grafana.org/features&#34;&gt;不错的特性&lt;/a&gt;，还可以访问官网提供的 &lt;a href=&#34;http://play.grafana.org&#34;&gt;Live Demo&lt;/a&gt; 来体验 Grafana。&lt;/p&gt;
+
+&lt;p&gt;设置 Grafana，只需编辑 &lt;code&gt;config.js&lt;/code&gt; 设置数据来源&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:update&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:update&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;nx&#34;&gt;datasources&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nx&#34;&gt;graphite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;graphite&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nx&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://my.graphite.server.com:8080&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;具体的配置教程可以参见&lt;a href=&#34;http://docs.grafana.org/v1.9/installation/&#34;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&#34;实例&#34;&gt;实例&lt;/h2&gt;
+
+&lt;p&gt;我实习所在公司使用 &lt;a href=&#34;https://jenkins-ci.org&#34;&gt;Jenkins&lt;/a&gt; 部署代码。在部署完成之后，我添加了一段 &lt;a href=&#34;https://wiki.jenkins-ci.org/display/JENKINS/PostBuildScript+Plugin&#34;&gt;post-build script&lt;/a&gt; 执行下面的脚本。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;HOST&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;http://graphite.your.org/events
+&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Posting a deployment event to Graphite&amp;#39;&lt;/span&gt;
+curl -X POST &lt;span class=&#34;nv&#34;&gt;$HOST&lt;/span&gt; -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;Deployment&amp;#34;, &amp;#34;tags&amp;#34;: &amp;#34;webserver,prd&amp;#34;, &amp;#34;data&amp;#34;: \&amp;#34;$BUILD_URL\&amp;#34;}&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样，每次部署完成之后都会发送一个 Deployment Event 到 Graphite。接着，可以在 Graphite 里添加 &lt;code&gt;drawAsInfinite(events(&#39;prd&#39;))&lt;/code&gt; 或者在 Grafana 里使用 &lt;a href=&#34;http://grafana.org/docs/features/annotations/&#34;&gt;Annotations Page&lt;/a&gt; 来绘制一幅图显示代码部署的 Events。&lt;/p&gt;
+
+&lt;p&gt;利用 Graphite Events 和 Metrics，我们可以将代码部署和其他指征叠加在一幅图里，从而分析每次代码部署和其它指征的关系。&lt;/p&gt;
+
+&lt;p&gt;比如，在 &lt;em&gt;Tracking Every Release&lt;/em&gt; 一文中，作者使用了该方法将 &lt;code&gt;PHP Warning&lt;/code&gt; 和 &lt;code&gt;Code deploy&lt;/code&gt; 叠加在一幅图里。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://codeascraft.com/wp-content/uploads/2010/12/warnings_1hr_deploys3.png&#34; alt=&#34;Track Release&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;从图中，我们可以发现第一次代码部署之后导致了大量的警告信息，经过随后的两次 Hotfix 之后，警告信息基本消除。&lt;/p&gt;
+
+&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+
+&lt;p&gt;本文非常简要地介绍了 Graphite 和 Grafana 的一些特性和使用场景。我也是在实习当中第一次接触到这两个工具，很多具体的细节还在摸索之中。&lt;/p&gt;
+
+&lt;p&gt;总之，Graphite 是一个易扩展，使用简便的监控绘图工具，在这里推荐给大家使用。&lt;/p&gt;
+
+&lt;h2 id=&#34;参考文献&#34;&gt;参考文献&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://obfuscurity.com/2014/01/Graphite-Tip-A-Better-Way-to-Store-Events&#34;&gt;Graphite Tip - A Better Way to Store Events&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://codeascraft.com/2010/12/08/track-every-release/&#34;&gt;Tracking Every Release&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://joshhertz.se/post/making-annotations-in-graphana&#34;&gt;Making Annotations in Graphana&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:update&#34;&gt;Grafana 最新的 2.0 较 1.9 有较大的变化，不再使用 &lt;code&gt;config.js&lt;/code&gt; 来进行配置，需要将配置保存到数据库中。相应章节暂未更新，俟后补。
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:update&#34;&gt;↩&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+          </item>
+        
+      
     
   </channel>
 </rss>

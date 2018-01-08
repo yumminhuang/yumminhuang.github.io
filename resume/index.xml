@@ -7,29 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Fri, 13 Nov 2015 10:19:57 -0500</lastBuildDate>
+    <atom:link href="/resume/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/resume/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Resume</title>
-      <link>https://yumminhuang.github.io/resume/resume/</link>
-      <pubDate>Fri, 13 Nov 2015 10:19:57 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/resume/resume/</guid>
-      <description>PROFESSIONAL EXPERIENCE LeEco Zhixin, Beijing, China, Jul. 2016 — Jul. 2017
-DevOps Engineer
- Managed the distributed Gerrit cluster, which hosts about 1TB codebase, for providing the code host service to over 1500 developers around the world Established a real-time data analysis platform that collecting data from Jenkins build and Gerrit cluster to provide data analysis and decision support Built a continuous delivery pipeline for PHP project based on Jenkinsfile Developed an Ansible playbook for Gerrit and ELK cluster, implementing automated deployment and configuration  BitSight, Cambridge, MA, Jan.</description>
-    </item>
     
-    <item>
-      <title>简历</title>
-      <link>https://yumminhuang.github.io/resume/resume_zh/</link>
-      <pubDate>Fri, 13 Nov 2015 10:19:57 -0500</pubDate>
       
-      <guid>https://yumminhuang.github.io/resume/resume_zh/</guid>
-      <description>职业经历 乐视致新，北京，2016 年 7 月 —— 2017 年 7 月 DevOps 运维开发工程师 管理分布式 Gerrit 集群，托管近 1TB 代码库，为全球约 1500 名研发人员提供代码托管服务； 搭</description>
-    </item>
     
   </channel>
 </rss>

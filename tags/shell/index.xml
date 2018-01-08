@@ -7,31 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <copyright>2018 ~ Yaming Huang</copyright>
     <lastBuildDate>Thu, 31 Jul 2014 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/shell/" rel="self" type="application/rss+xml" />
     
-	<atom:link href="https://yumminhuang.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>How to remove all pyc files from a project?</title>
-      <link>https://yumminhuang.github.io/note/removepyc/</link>
-      <pubDate>Thu, 31 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/removepyc/</guid>
-      <description>&lt;p&gt;I am a paranoid guy. I like to delete all &amp;ldquo;useless&amp;rdquo; files. Today, I want to clean up my project repository. There are lots of &lt;code&gt;.pyc&lt;/code&gt; files. And I found this command, which is very convenient to batch delete files in a directory.
-&lt;/p&gt;</description>
-    </item>
     
-    <item>
-      <title>Execute a Command in the Background on Remote Server using SSH</title>
-      <link>https://yumminhuang.github.io/note/linux-ssh-background-command/</link>
-      <pubDate>Sun, 04 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://yumminhuang.github.io/note/linux-ssh-background-command/</guid>
-      <description>&lt;p&gt;In a project, I have to deploy a simple server program on several remote servers. So I wrote a shell script to deploy and run the program using &lt;code&gt;scp&lt;/code&gt; and &lt;code&gt;ssh&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Since there are several remote servers, I have to run the server program in the background on all remote machines.
-&lt;/p&gt;</description>
-    </item>
     
   </channel>
 </rss>

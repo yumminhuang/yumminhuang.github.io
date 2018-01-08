@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="清理 Docker">
+    <meta name="author" content="Yaming Huang">
+
+    <meta name="keyword" content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>清理 Docker &middot; 临水轩志</title>
+
+   	
+    
+        <link rel="stylesheet" href="https://yumminhuang.github.io/css/theme/yeti.css">
+    
+
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/font-awesome.min.css">
+
+   	
+   	<link rel="stylesheet" href="https://yumminhuang.github.io/css/style.css">
+    <link rel="stylesheet" href="https://yumminhuang.github.io/css/syntax.css">
+
+
+    
+    <script src="https://yumminhuang.github.io/js/jquery.min-2.2.4.js"></script>
+    <script src="https://yumminhuang.github.io/js/bootstrap.min-3.3.7.js"></script>
+
+    
+    <link href="" rel="alternate" type="application/rss+xml" title="临水轩志" />
+</head>
+<body lang="en">
+    
+    <div class="container">
+    <div class="row">
+        <div class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://yumminhuang.github.io">临水轩志</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://yumminhuang.github.io">首页</a></li>
+                    <li><a href="https://yumminhuang.github.io/post/">技术笔记</a></li>
+                    
+                      <li><a href="/note/"> TechNote </a></li>
+                    
+                      <li><a href="/page/about/"> 关于 </a></li>
+                    
+                      <li><a href="/zhpost/"> 随笔 </a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<h3>清理 Docker</h3>
+				<span class="label label-primary">Fri, Oct 13, 2017</span> in 
+				
+					
+					<a href="/categories/miscellaneous">Miscellaneous</a>
+				 using tags
+				
+					
+					<a href="/tags/docker">Docker</a>
+				
+			</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10">
+			<br>
+			<p>在线上环境运行的 Docker 的时候，部署之后往往没有清理旧版本的镜像和关闭的容器。如此一来，长时间运行 Docker，尤其是频繁地更新镜像、启动容器，会消耗大量的磁盘空间。</p>
+
+<p>本文汇总几条用来清理 Docker 的命令。</p>
+
+<p></p>
+
+<h2 id="清理-docker-容器">清理 Docker 容器</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker ps --filter <span class="nv">status</span><span class="o">=</span>dead --filter <span class="nv">status</span><span class="o">=</span>exited -aq <span class="p">|</span> xargs -r docker rm -v</code></pre></div>
+<h2 id="清理-docker-镜像">清理 Docker 镜像</h2>
+
+<p>清理 <em>dangling</em> 的镜像。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker images -q -f <span class="nv">dangling</span><span class="o">=</span><span class="nb">true</span> <span class="p">|</span> xargs -r docker rmi</code></pre></div>
+<p>清理所有当前不在运行的镜像<sup class="footnote-ref" id="fnref:exp"><a rel="footnote" href="#fn:exp">1</a></sup>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker rmi <span class="k">$(</span>grep -xvf &lt;<span class="o">(</span>docker ps -a --format <span class="s1">&#39;{{.Image}}&#39;</span><span class="k">)</span> &lt;<span class="o">(</span>docker images <span class="p">|</span> tail -n +2 <span class="p">|</span> grep -v <span class="s1">&#39;&lt;none&gt;&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $1&#34;:&#34;$2 }&#39;</span><span class="o">))</span></code></pre></div>
+<p>清理一周前的镜像。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker images --no-trunc --format <span class="s1">&#39;{{.ID}} {{.CreatedSince}}&#39;</span> <span class="p">|</span> grep <span class="s1">&#39; weeks&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $1 }&#39;</span> <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>       xargs --no-run-if-empty docker rmi</code></pre></div>
+<h2 id="清理-docker-volume">清理 Docker Volume</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker volume ls -q -f <span class="nv">dangling</span><span class="o">=</span><span class="nb">true</span> <span class="p">|</span> xargs -r docker volume rm</code></pre></div>
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://github.com/moby/moby/issues/9054#issuecomment-184246090">comment on Github Issue</a></li>
+<li><a href="https://lebkowski.name/docker-volumes/">Cleaning up docker to reclaim disk space</a></li>
+</ul>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:exp">此命令清理效果好，却容易误删当前没有运行但未来仍会使用的镜像。
+ <a class="footnote-return" href="#fnref:exp">↩</a></li>
+</ol>
+</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+		</div>
+	</div>
+</div>
+
+    <div class="container">
+        <div class="row col-md-12">
+            <footer>
+                <div class="pull-left">
+                    <p>
+                        &copy; 2018 ~ Yaming Huang ~ Powered By <a href="http://gohugo.io/">Hugo</a> ~ <a href="https://yumminhuang.github.io/page/license">License</a>
+                    </p>
+                </div>
+
+                
+                <div class="pull-right">
+                    
+                        <a href="https://www.linkedin.com/in/yaming-huang-6a09325b" target="_blank">
+                        <i class="fa fa-linkedin fa-2x"></i></a>
+                    
+                    
+                    
+                        <a href="https://github.com/yumminhuang" target="_blank">
+                        <i class="fa fa-github fa-2x"></i></a>
+                    
+                    
+                        <a href="https://instagram.com/yumminhuang/" target="_blank">
+                        <i class="fa fa-instagram fa-2x"></i></a>
+                    
+                    
+                        <a href="https://twitter.com/yumminhuang" target="_blank">
+                        <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                    
+                        <a href="http://weibo.com/yumminhuang" target="_blank">
+                        <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                    
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    
+    </body>
+</html>
+
