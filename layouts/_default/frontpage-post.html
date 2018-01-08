@@ -100,7 +100,7 @@
     {{ else if eq .Type "link" }}
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <h3><a href="{{.Permalink}}">{{ .Title }}</a></h3>
+                <h3><a href="{{ .Params.ref }}">{{ .Title }}</a></h3>
                 <small>
                     <span class="label label-primary">
                         {{ if .Site.Params.strings.date_format }}
@@ -109,11 +109,7 @@
                             {{ .Date.Format "Mon, Jan 2, 2006" }}
                         {{ end }}
                     </span>
-                    &nbsp; authored by {{ .Params.author }} &nbsp;in
-                    {{ range $i, $e :=.Params.categories }}
-                        {{if $i}} , {{end}}
-                        <a href="/categories/{{ . | urlize }}">{{ . }}</a>
-                    {{ end }}
+                    &nbsp; authored by {{ .Params.author }}
                 </small>
             </div>
         </div>
@@ -129,3 +125,4 @@
             </div>
         </div>
     {{ end }}
+

@@ -4,7 +4,6 @@ author = "Adam Wiggins"
 date = 2018-01-08T21:51:56+08:00
 ref = "https://www.12factor.net/"
 type = "link"
-categories = ["Link"]
 
 +++
 

@@ -4,7 +4,6 @@ author = "Kyle"
 date = 2017-07-06T20:48:02+08:00
 ref = "https://hk1229.cn/article/why-no-wechat.html"
 type = "link"
-categories = ["Link"]
 +++
 
 我目前在生活中还不能完全摆脱微信，虽然我仍然在不断地努力尝试中。除了「为什么我不用微信」里提到的诸多原因之外，每当：
