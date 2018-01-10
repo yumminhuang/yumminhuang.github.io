@@ -1,7 +1,6 @@
 baseurl     = "https://yumminhuang.github.io"  # the baseurl for your website
 title       = "临水轩志"     # blog title
 paginate    = 10             # the number of posts on a page
-theme       = "hugo-multi-bootswatch"
 
 footnoteReturnLinkContents = "↩"
 
